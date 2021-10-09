@@ -1,4 +1,4 @@
-name: NuGet
+name: publish to nuget
 
 on:
   push:
@@ -7,25 +7,29 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-
+  publish:
+    name: build, pack & publish
     runs-on: ubuntu-latest
     strategy:
       matrix:
         dotnet-version: ["3.1.x"]
         
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core SDK ${{matrix.dotnet-version}}
-      uses: actions/setup-dotnet@v1.7.2
-      with:
-        dotnet-version: ${{matrix.dotnet-version}}
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Publish Ajuna.NetApi
-      uses: brandedoutcast/publish-nuget@v2.5.2
-      with:
+      - uses: actions/checkout@v2
+
+      - name: setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{matrix.dotnet-version}}
+
+      # Publish
+      - name: publish on version change
+        id: publish_nuget
+        uses: rohith/publish-nuget@v2
+        with:
+          # Filepath of the project to be packaged, relative to root of repository
           PROJECT_FILE_PATH: Ajuna.NetApi/Ajuna.NetApi.csproj
+          # NuGet package id, used for version detection & defaults to project name
+          PACKAGE_NAME: Ajuna.NetApi
+          # API key to authenticate with NuGet server
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
