@@ -8,7 +8,7 @@
     <Authors>Cedric Decoster</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>Ajuna Network Substrate NETStandard2.0 API</Description>
-    <PackageProjectUrl>https://github.com/ajuna-network/Ajuna.NetApi/tree/master/Ajuna.NetApi</PackageProjectUrl>
+    <PackageProjectUrl>https://ajuna.io</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/ajuna-network/Ajuna.NetApi</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
