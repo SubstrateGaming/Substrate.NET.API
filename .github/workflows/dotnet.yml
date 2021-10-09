@@ -24,8 +24,6 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test --filter Ajuna.NetApi.TestNode\!~Ajuna.NetApi.TestNode --no-build --verbosity normal
     - name: Publish Ajuna.NetApi
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
