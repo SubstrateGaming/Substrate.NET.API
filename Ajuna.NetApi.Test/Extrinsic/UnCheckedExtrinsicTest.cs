@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Schnorrkel;
-using AjunaNetApi;
-using AjunaNetApi.Model.Calls;
-using AjunaNetApi.Model.Extrinsics;
-using AjunaNetApi.Model.Rpc;
-using AjunaNetApi.Model.Types;
-using AjunaNetApi.Model.Types.Base;
+using Ajuna.NetApi;
+using Ajuna.NetApi.Model.Calls;
+using Ajuna.NetApi.Model.Extrinsics;
+using Ajuna.NetApi.Model.Rpc;
+using Ajuna.NetApi.Model.Types;
+using Ajuna.NetApi.Model.Types.Base;
 
-namespace AjunaNetApiTest.Extrinsic
+namespace Ajuna.NetApi.Test.Extrinsic
 {
     public class UnCheckedExtrinsicTest
     {

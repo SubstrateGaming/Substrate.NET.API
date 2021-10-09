@@ -1,4 +1,4 @@
-﻿namespace AjunaNetApi.BIP39
+﻿namespace Ajuna.NetApi.BIP39
 {
     //Words obtained from wordlist documented at https://github.com/bitcoin/bips/blob/master/bip-0039/bip-0039-wordlists.md
 

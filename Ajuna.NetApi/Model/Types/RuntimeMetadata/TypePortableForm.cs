@@ -1,9 +1,9 @@
-﻿using AjunaNetApi.Model.Types.Base;
-using AjunaNetApi.Model.Types.Primitive;
-using AjunaNetApi.Model.Types.Struct;
+﻿using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
+using Ajuna.NetApi.Model.Types.Struct;
 using System;
 
-namespace AjunaNetApi.Model.Types.Metadata.V14
+namespace Ajuna.NetApi.Model.Types.Metadata.V14
 {
     public class TypePortableForm : BaseType
     {

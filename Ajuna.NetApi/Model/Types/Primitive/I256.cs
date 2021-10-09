@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Numerics;
 
-namespace AjunaNetApi.Model.Types.Primitive
+namespace Ajuna.NetApi.Model.Types.Primitive
 {
     public class I256 : BasePrim<BigInteger>
     {

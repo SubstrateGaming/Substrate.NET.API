@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using AjunaNetApi.Model.Meta;
+using Ajuna.NetApi.Model.Meta;
 using System.Collections.Generic;
 
-namespace AjunaNetApi.Model.Extrinsics
+namespace Ajuna.NetApi.Model.Extrinsics
 {
     public class Method
     {

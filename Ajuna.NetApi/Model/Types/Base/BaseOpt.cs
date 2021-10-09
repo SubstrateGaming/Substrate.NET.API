@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
-using AjunaNetApi.Model.Types.Primitive;
+using Ajuna.NetApi.Model.Types.Primitive;
 using System;
 using System.Collections.Generic;
 
-namespace AjunaNetApi.Model.Types.Base
+namespace Ajuna.NetApi.Model.Types.Base
 {
     public class BaseOpt<T> : IType where T : IType, new()
     {

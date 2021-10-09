@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using AjunaNetApi.Model.Types;
+using Ajuna.NetApi.Model.Types;
 using System;
 
-namespace AjunaNetApi.Model.Extrinsics
+namespace Ajuna.NetApi.Model.Extrinsics
 {
     public class Era : IEncodable
     {

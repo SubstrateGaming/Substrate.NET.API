@@ -1,10 +1,10 @@
 using System;
 using NUnit.Framework;
-using AjunaNetApi;
-using AjunaNetApi.Model.Extrinsics;
-using AjunaNetApi.Model.Types.Base;
+using Ajuna.NetApi;
+using Ajuna.NetApi.Model.Extrinsics;
+using Ajuna.NetApi.Model.Types.Base;
 
-namespace AjunaNetApiTest.Extrinsic
+namespace Ajuna.NetApi.Test.Extrinsic
 {
     public class SignedExtensionsTest
     {

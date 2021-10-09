@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace AjunaNetApi.Model.Types.Base
+namespace Ajuna.NetApi.Model.Types.Base
 {
     public abstract class BaseType : IType
     {

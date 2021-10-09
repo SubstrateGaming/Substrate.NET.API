@@ -1,4 +1,4 @@
-﻿namespace AjunaNetApi.Model.Types.Primitive
+﻿namespace Ajuna.NetApi.Model.Types.Primitive
 {
     public class Bool : BasePrim<bool>
     {

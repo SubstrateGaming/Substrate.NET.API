@@ -1,9 +1,9 @@
-﻿using AjunaNetApi.Model.Types.Base;
-using AjunaNetApi.Model.Types.Metadata.V14;
-using AjunaNetApi.Model.Types.Primitive;
+﻿using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Metadata.V14;
+using Ajuna.NetApi.Model.Types.Primitive;
 using System;
 
-namespace AjunaNetApi.Model.Types.Struct
+namespace Ajuna.NetApi.Model.Types.Struct
 {
     public class RuntimeMetadata : BaseType
     {

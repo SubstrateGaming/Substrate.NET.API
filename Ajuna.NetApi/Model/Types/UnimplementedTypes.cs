@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AjunaNetApi.Model.Types
+namespace Ajuna.NetApi.Model.Types
 {
     public class DispatchError
     {

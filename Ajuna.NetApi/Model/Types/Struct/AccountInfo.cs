@@ -1,8 +1,8 @@
 ﻿using System;
-using AjunaNetApi.Model.Types.Base;
-using AjunaNetApi.Model.Types.Primitive;
+using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
 
-namespace AjunaNetApi.Model.Types.Struct
+namespace Ajuna.NetApi.Model.Types.Struct
 {
     public class AccountInfo : BaseType
     {

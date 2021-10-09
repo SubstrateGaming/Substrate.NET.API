@@ -1,6 +1,6 @@
-﻿using AjunaNetApi.Model.Extrinsics;
+﻿using Ajuna.NetApi.Model.Extrinsics;
 
-namespace AjunaNetApi.Model.Rpc
+namespace Ajuna.NetApi.Model.Rpc
 {
     public class Block
     {

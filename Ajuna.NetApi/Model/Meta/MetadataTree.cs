@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using AjunaNetApi.Model.Meta;
-using AjunaNetApi.Model.Types.Metadata.V14;
+using Ajuna.NetApi.Model.Meta;
+using Ajuna.NetApi.Model.Types.Metadata.V14;
 using System.Collections.Generic;
 
-namespace AjunaNetApi.Model.Meta
+namespace Ajuna.NetApi.Model.Meta
 {
     public class NodeType
     {

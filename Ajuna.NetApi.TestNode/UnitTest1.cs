@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Ajuna.NetApi.TestNode
+namespace AjunaNetApi.NetApi.TestNode
 {
     public class Tests
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AjunaNetApi.Exceptions
+namespace Ajuna.NetApi.Exceptions
 {
     public class ClientNotConnectedException : Exception
     {

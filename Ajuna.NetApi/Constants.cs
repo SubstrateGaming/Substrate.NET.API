@@ -1,4 +1,4 @@
-﻿namespace AjunaNetApi
+﻿namespace Ajuna.NetApi
 {
     public class Constants
     {

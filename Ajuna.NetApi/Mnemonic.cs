@@ -5,9 +5,9 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using AjunaNetApi.BIP39;
+using Ajuna.NetApi.BIP39;
 
-namespace AjunaNetApi
+namespace Ajuna.NetApi
 {
     public static class Mnemonic
     {

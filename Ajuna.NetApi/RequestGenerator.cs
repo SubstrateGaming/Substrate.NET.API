@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using Chaos.NaCl;
 using Schnorrkel;
-//using Schnorrkel;
-using AjunaNetApi.Exceptions;
-using AjunaNetApi.Model.Extrinsics;
-using AjunaNetApi.Model.Meta;
-using AjunaNetApi.Model.Rpc;
-using AjunaNetApi.Model.Types;
-using AjunaNetApi.Model.Types.Base;
+using Ajuna.NetApi.Exceptions;
+using Ajuna.NetApi.Model.Extrinsics;
+using Ajuna.NetApi.Model.Meta;
+using Ajuna.NetApi.Model.Rpc;
+using Ajuna.NetApi.Model.Types;
+using Ajuna.NetApi.Model.Types.Base;
 
-namespace AjunaNetApi
+namespace Ajuna.NetApi
 {
     /// <summary>
     /// Request Generator creates a requests for storage queries or extrinsic calls.

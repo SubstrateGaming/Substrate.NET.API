@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using AjunaNetApi;
-using AjunaNetApi.Model.Extrinsics;
+using Ajuna.NetApi;
+using Ajuna.NetApi.Model.Extrinsics;
 
-namespace AjunaNetApiTest.Extrinsic
+namespace Ajuna.NetApi.Test.Extrinsic
 {
     public class MethodTest
     {

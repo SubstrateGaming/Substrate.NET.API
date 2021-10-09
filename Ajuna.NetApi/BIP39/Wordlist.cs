@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace AjunaNetApi.BIP39
+namespace Ajuna.NetApi.BIP39
 {
     public abstract class Wordlist
     {

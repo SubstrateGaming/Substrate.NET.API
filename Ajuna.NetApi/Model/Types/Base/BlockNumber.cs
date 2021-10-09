@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AjunaNetApi.Model.Types.Base
+namespace Ajuna.NetApi.Model.Types.Base
 {
     public class BlockNumber : BasePrim<uint>
     {

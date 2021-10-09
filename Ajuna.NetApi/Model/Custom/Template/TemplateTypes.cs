@@ -1,6 +1,6 @@
-﻿using AjunaNetApi.Model.Types.Primitive;
+﻿using Ajuna.NetApi.Model.Types.Primitive;
 
-namespace AjunaNetApi.Model.Types.Custom
+namespace Ajuna.NetApi.Model.Types.Custom
 {
     public class CustomU32 : U32
     {

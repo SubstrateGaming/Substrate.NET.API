@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using NLog;
 using StreamJsonRpc;
-using AjunaNetApi.Model.Rpc;
+using Ajuna.NetApi.Model.Rpc;
 
-namespace AjunaNetApi
+namespace Ajuna.NetApi
 {
     public class SubscriptionListener
     {

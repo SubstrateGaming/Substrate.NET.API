@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace AjunaNetApi.Model.Types.Base
+namespace Ajuna.NetApi.Model.Types.Base
 {
     public class Balance : BasePrim<BigInteger>
     {

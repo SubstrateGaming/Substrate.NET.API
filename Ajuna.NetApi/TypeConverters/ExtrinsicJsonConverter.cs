@@ -1,9 +1,9 @@
 ﻿using System;
 using Newtonsoft.Json;
 using NLog;
-using AjunaNetApi.Model.Extrinsics;
+using Ajuna.NetApi.Model.Extrinsics;
 
-namespace AjunaNetApi.TypeConverters
+namespace Ajuna.NetApi.TypeConverters
 {
     /// <summary>
     ///   <br />

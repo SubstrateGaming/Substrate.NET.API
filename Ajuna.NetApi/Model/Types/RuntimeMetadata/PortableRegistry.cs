@@ -1,6 +1,6 @@
-﻿using AjunaNetApi.Model.Types.Base;
+﻿using Ajuna.NetApi.Model.Types.Base;
 
-namespace AjunaNetApi.Model.Types.Metadata.V14
+namespace Ajuna.NetApi.Model.Types.Metadata.V14
 {
     public class PortableRegistry : BaseVec<PortableType>
     {

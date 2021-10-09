@@ -1,6 +1,6 @@
-﻿using AjunaNetApi.Model.Types.Primitive;
+﻿using Ajuna.NetApi.Model.Types.Primitive;
 
-namespace AjunaNetApi.Model.Types.Base
+namespace Ajuna.NetApi.Model.Types.Base
 {
     public class AuthorityId : AccountId
     {

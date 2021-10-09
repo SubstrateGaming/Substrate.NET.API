@@ -1,4 +1,4 @@
-﻿namespace AjunaNetApi.Model.Meta
+﻿namespace Ajuna.NetApi.Model.Meta
 {
     public class Storage
     {

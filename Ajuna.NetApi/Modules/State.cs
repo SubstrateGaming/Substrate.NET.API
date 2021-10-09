@@ -2,9 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using AjunaNetApi.Model.Rpc;
+using Ajuna.NetApi.Model.Rpc;
 
-namespace AjunaNetApi.Modules
+namespace Ajuna.NetApi.Modules
 {
     /// <summary> A state. </summary>
     /// <remarks> 19.09.2020. </remarks>

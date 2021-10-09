@@ -1,10 +1,10 @@
 ﻿using NUnit.Framework;
-using AjunaNetApi;
-using AjunaNetApi.Model.Types.Base;
-using AjunaNetApi.Model.Types.Primitive;
-using AjunaNetApi.TypeConverters;
+using Ajuna.NetApi;
+using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
+using Ajuna.NetApi.TypeConverters;
 
-namespace AjunaNetApiTest
+namespace Ajuna.NetApi.Test
 {
     public class TypeEncodingTest
     {

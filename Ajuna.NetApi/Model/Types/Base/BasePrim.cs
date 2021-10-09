@@ -1,8 +1,8 @@
 ﻿using System;
 using Newtonsoft.Json;
-using AjunaNetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Base;
 
-namespace AjunaNetApi.Model.Types
+namespace Ajuna.NetApi.Model.Types
 {
     public abstract class BasePrim<T> : BaseType
     {

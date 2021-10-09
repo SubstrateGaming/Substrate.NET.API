@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
-using AjunaNetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Base;
 
-namespace AjunaNetApi.Model.Rpc
+namespace Ajuna.NetApi.Model.Rpc
 {
     public enum ExtrinsicState
     {

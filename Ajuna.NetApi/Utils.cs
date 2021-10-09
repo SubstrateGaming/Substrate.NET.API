@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using SimpleBase;
-using AjunaNetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Base;
 
-namespace AjunaNetApi
+namespace Ajuna.NetApi
 {
     /// <summary> An utilities. </summary>
     /// <remarks> 19.09.2020. </remarks>

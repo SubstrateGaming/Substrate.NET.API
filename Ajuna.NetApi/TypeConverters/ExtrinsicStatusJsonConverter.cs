@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using AjunaNetApi.Model.Rpc;
-using AjunaNetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Rpc;
+using Ajuna.NetApi.Model.Types.Base;
 
-namespace AjunaNetApi.TypeConverters
+namespace Ajuna.NetApi.TypeConverters
 {
     public class ExtrinsicStatusJsonConverter : JsonConverter<ExtrinsicStatus>
     {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace AjunaNetApi.Model.Rpc
+namespace Ajuna.NetApi.Model.Rpc
 {
     public class BlockData
     {

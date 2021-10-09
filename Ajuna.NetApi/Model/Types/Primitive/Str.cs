@@ -1,9 +1,9 @@
-﻿using AjunaNetApi.Model.Types.Base;
+﻿using Ajuna.NetApi.Model.Types.Base;
 using System;
 using System.Linq;
 using System.Text;
 
-namespace AjunaNetApi.Model.Types.Primitive
+namespace Ajuna.NetApi.Model.Types.Primitive
 {
     public class Str : BaseType
     {

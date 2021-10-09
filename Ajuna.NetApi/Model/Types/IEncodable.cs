@@ -1,4 +1,4 @@
-﻿namespace AjunaNetApi.Model.Types
+﻿namespace Ajuna.NetApi.Model.Types
 {
     public interface IEncodable
     {

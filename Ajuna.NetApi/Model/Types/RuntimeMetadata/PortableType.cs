@@ -1,8 +1,8 @@
-﻿using AjunaNetApi.Model.Types.Base;
-using AjunaNetApi.Model.Types.Primitive;
+﻿using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
 using System;
 
-namespace AjunaNetApi.Model.Types.Metadata.V14
+namespace Ajuna.NetApi.Model.Types.Metadata.V14
 {
     public class PortableType : BaseType
     {

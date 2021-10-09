@@ -2,10 +2,10 @@ using System;
 using System.Linq;
 using NUnit.Framework;
 using Schnorrkel.Keys;
-using AjunaNetApi;
-using AjunaNetApi.Model.Types.Base;
+using Ajuna.NetApi;
+using Ajuna.NetApi.Model.Types.Base;
 
-namespace AjunaNetApiTest.Keys
+namespace Ajuna.NetApi.Test.Keys
 {
     public class Sr25519Tests
     {

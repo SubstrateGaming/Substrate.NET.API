@@ -10,22 +10,22 @@ using Microsoft.VisualStudio.Threading;
 using Newtonsoft.Json.Linq;
 using NLog;
 using StreamJsonRpc;
-using AjunaNetApi.Exceptions;
-using AjunaNetApi.Model.Calls;
-using AjunaNetApi.Model.Extrinsics;
-using AjunaNetApi.Model.Meta;
-using AjunaNetApi.Model.Rpc;
-using AjunaNetApi.Model.Types;
-using AjunaNetApi.Model.Types.Base;
-using AjunaNetApi.Model.Types.Metadata.V14;
-using AjunaNetApi.Model.Types.Primitive;
-using AjunaNetApi.Model.Types.Struct;
-using AjunaNetApi.Modules;
-using AjunaNetApi.TypeConverters;
+using Ajuna.NetApi.Exceptions;
+using Ajuna.NetApi.Model.Calls;
+using Ajuna.NetApi.Model.Extrinsics;
+using Ajuna.NetApi.Model.Meta;
+using Ajuna.NetApi.Model.Rpc;
+using Ajuna.NetApi.Model.Types;
+using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Metadata.V14;
+using Ajuna.NetApi.Model.Types.Primitive;
+using Ajuna.NetApi.Model.Types.Struct;
+using Ajuna.NetApi.Modules;
+using Ajuna.NetApi.TypeConverters;
 
 [assembly: InternalsVisibleTo("AjunaNetTests")]
 
-namespace AjunaNetApi
+namespace Ajuna.NetApi
 {
     /// <summary> A substrate client. </summary>
     /// <remarks> 19.09.2020. </remarks>
@@ -202,7 +202,7 @@ namespace AjunaNetApi
             {
                 var result = await State.GetMetaDataAsync(token);
 
-                var mdv14 = new AjunaNetApi.Model.Types.Struct.RuntimeMetadata();
+                var mdv14 = new Ajuna.NetApi.Model.Types.Struct.RuntimeMetadata();
                 mdv14.Create(result);
                 MetaData = new MetaData(mdv14, _uri.OriginalString);
                 Logger.Debug("MetaData parsed.");

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace AjunaNetApi.Model.Extrinsics
+namespace Ajuna.NetApi.Model.Extrinsics
 {
     public class Payload
     {

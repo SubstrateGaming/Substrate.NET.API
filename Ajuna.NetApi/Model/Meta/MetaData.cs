@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using AjunaNetApi.Model.Types.Metadata.V14;
-using AjunaNetApi.Model.Types.Struct;
+using Ajuna.NetApi.Model.Types.Metadata.V14;
+using Ajuna.NetApi.Model.Types.Struct;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AjunaNetApi.Model.Meta
+namespace Ajuna.NetApi.Model.Meta
 {
     public class MetaData
     {

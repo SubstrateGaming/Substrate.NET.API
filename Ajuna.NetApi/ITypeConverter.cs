@@ -1,4 +1,4 @@
-﻿namespace AjunaNetApi
+﻿namespace Ajuna.NetApi
 {
     /// <summary> Interface for type converter. </summary>
     /// <remarks> 19.09.2020. </remarks>

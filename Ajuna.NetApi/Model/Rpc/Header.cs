@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
-using AjunaNetApi.Model.Types.Base;
-using AjunaNetApi.Model.Types.Primitive;
-using AjunaNetApi.TypeConverters;
+using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
+using Ajuna.NetApi.TypeConverters;
 
-namespace AjunaNetApi.Model.Rpc
+namespace Ajuna.NetApi.Model.Rpc
 {
     public class Header
     {

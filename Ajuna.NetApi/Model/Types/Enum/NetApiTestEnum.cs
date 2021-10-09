@@ -1,4 +1,4 @@
-﻿namespace AjunaNetApi.Model.Types.Enum
+﻿namespace Ajuna.NetApi.Model.Types.Enum
 {
     public enum NetApiTestEnum
     {

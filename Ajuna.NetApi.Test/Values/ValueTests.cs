@@ -1,12 +1,12 @@
 ﻿using NUnit.Framework;
-using AjunaNetApi;
-using AjunaNetApi.Model.Calls;
-using AjunaNetApi.Model.Types.Base;
-using AjunaNetApi.Model.Types.Struct;
-using AjunaNetApi.Model.Types;
+using Ajuna.NetApi;
+using Ajuna.NetApi.Model.Calls;
+using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Struct;
+using Ajuna.NetApi.Model.Types;
 using System.Collections.Generic;
 
-namespace AjunaNetApiTest
+namespace Ajuna.NetApi.Test
 {
     public class ValueTests
     {

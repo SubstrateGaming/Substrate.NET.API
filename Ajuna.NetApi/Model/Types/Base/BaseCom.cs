@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace AjunaNetApi.Model.Types.Base
+namespace Ajuna.NetApi.Model.Types.Base
 {
     public class BaseCom<T> : BaseType where T : IType, new()
     {

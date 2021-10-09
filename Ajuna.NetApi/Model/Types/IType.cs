@@ -1,4 +1,4 @@
-﻿namespace AjunaNetApi.Model.Types
+﻿namespace Ajuna.NetApi.Model.Types
 {
     /// <summary>
     ///     Reference to the polkadot js types implementation

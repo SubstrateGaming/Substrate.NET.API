@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using AjunaNetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Base;
 
-namespace AjunaNetApi.Model.Extrinsics
+namespace Ajuna.NetApi.Model.Extrinsics
 {
     public class SignedExtensions
     {

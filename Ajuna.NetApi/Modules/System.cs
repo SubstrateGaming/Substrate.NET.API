@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using AjunaNetApi.Model.Rpc;
+using Ajuna.NetApi.Model.Rpc;
 
-namespace AjunaNetApi.Modules
+namespace Ajuna.NetApi.Modules
 {
     /// <summary> A system. </summary>
     /// <remarks> 19.09.2020. </remarks>

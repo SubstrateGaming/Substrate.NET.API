@@ -1,12 +1,12 @@
-﻿using AjunaNetApi.Model.Meta;
-using AjunaNetApi.Model.Types.Base;
-using AjunaNetApi.Model.Types.Primitive;
-using AjunaNetApi.Model.Types.Struct;
+﻿using Ajuna.NetApi.Model.Meta;
+using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
+using Ajuna.NetApi.Model.Types.Struct;
 using System;
 using System.Collections.Generic;
-using static AjunaNetApi.Model.Meta.Storage;
+using static Ajuna.NetApi.Model.Meta.Storage;
 
-namespace AjunaNetApi.Model.Types.Metadata.V13
+namespace Ajuna.NetApi.Model.Types.Metadata.V13
 {
     public class RuntimeMetadataV13 : BaseType
     {

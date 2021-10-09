@@ -1,10 +1,10 @@
 using System;
 using System.Text;
 using NUnit.Framework;
-using AjunaNetApi;
-using AjunaNetApi.Model.Meta;
+using Ajuna.NetApi;
+using Ajuna.NetApi.Model.Meta;
 
-namespace AjunaNetApiTest
+namespace Ajuna.NetApi.Test
 {
     public class HashExtensionTests
     {

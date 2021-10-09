@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Blake2Core;
 using Extensions.Data;
-using AjunaNetApi.Model.Meta;
+using Ajuna.NetApi.Model.Meta;
 
-namespace AjunaNetApi
+namespace Ajuna.NetApi
 {
     public class HashExtension
     {

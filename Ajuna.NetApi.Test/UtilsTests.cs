@@ -1,8 +1,8 @@
 using System;
 using NUnit.Framework;
-using AjunaNetApi;
+using Ajuna.NetApi;
 
-namespace AjunaNetApiTest
+namespace Ajuna.NetApi.Test
 {
     public class UtilsTests
     {

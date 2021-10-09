@@ -1,8 +1,8 @@
 ﻿using System;
 using Newtonsoft.Json;
-using AjunaNetApi.Model.Types;
+using Ajuna.NetApi.Model.Types;
 
-namespace AjunaNetApi.TypeConverters
+namespace Ajuna.NetApi.TypeConverters
 {
     public class GenericTypeConverter<T> : JsonConverter<T>, ITypeConverter where T : IType, new()
     {

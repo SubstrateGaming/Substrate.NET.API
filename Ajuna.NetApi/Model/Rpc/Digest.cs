@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AjunaNetApi.Model.Rpc
+namespace Ajuna.NetApi.Model.Rpc
 {
     public class Digest
     {

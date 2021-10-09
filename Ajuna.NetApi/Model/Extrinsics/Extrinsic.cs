@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
 using NLog;
-using AjunaNetApi.Model.Meta;
-using AjunaNetApi.Model.Types;
-using AjunaNetApi.Model.Types.Base;
-using AjunaNetApi.Model.Types.Primitive;
+using Ajuna.NetApi.Model.Meta;
+using Ajuna.NetApi.Model.Types;
+using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
 using System;
 using System.Linq;
 
-namespace AjunaNetApi.Model.Extrinsics
+namespace Ajuna.NetApi.Model.Extrinsics
 {
     public class Extrinsic
     {

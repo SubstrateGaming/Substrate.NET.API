@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AjunaNetApi.Model.Types.Base
+namespace Ajuna.NetApi.Model.Types.Base
 {
     public class BaseVec<T> : IType where T : IType, new()
     {

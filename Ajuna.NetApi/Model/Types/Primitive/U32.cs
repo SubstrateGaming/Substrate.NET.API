@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AjunaNetApi.Model.Types.Primitive
+namespace Ajuna.NetApi.Model.Types.Primitive
 {
     public class U32 : BasePrim<uint>
     {

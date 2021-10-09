@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
-using AjunaNetApi.Model.Types;
+using Ajuna.NetApi.Model.Types;
 
-namespace AjunaNetApi
+namespace Ajuna.NetApi
 {
     /// <summary> A compact integer. </summary>
     /// <remarks> 19.09.2020. </remarks>

@@ -1,4 +1,4 @@
-﻿namespace AjunaNetApi.Model.Rpc
+﻿namespace Ajuna.NetApi.Model.Rpc
 {
     public class RuntimeVersion
     {
