@@ -1,0 +1,33 @@
+name: .NET
+
+on:
+  push:
+    branches: [ origin ]
+  pull_request:
+    branches: [ origin ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ["3.1.x"]
+        
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core SDK ${{matrix.dotnet-version}}
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{matrix.dotnet-version}}
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --filter Ajuna.NetApi.TestNode\!~Ajuna.NetApi.TestNode --no-build --verbosity normal
+    - name: Publish SubstrateNetApi
+      uses: brandedoutcast/publish-nuget@v2.5.2
+      with:
+          PROJECT_FILE_PATH: AjunaNetApi/Ajuna.NetApi/Ajuna.NetApi.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}

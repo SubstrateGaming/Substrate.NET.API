@@ -1,0 +1,1 @@
+# Ajuna.NetApi (NETStandard2.0)
