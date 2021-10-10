@@ -10,7 +10,7 @@ Ajuna.NetApi which was formerly called [SubstrateNetApi](https://github.com/Jeto
 
 ## Community
 
-![Discord Banner 2](https://discordapp.com/api/guilds/849331368558198803/widget.png?style=banner2)
+[![Discord Banner 2](https://discordapp.com/api/guilds/849331368558198803/widget.png?style=banner2)](https://discord.gg/cE72GYcFgY)
 
-![Discord Banner 2](https://discordapp.com/api/guilds/447132563924844544/widget.png?style=banner2)
+[![Discord Banner 2](https://discordapp.com/api/guilds/447132563924844544/widget.png?style=banner2)](https://discord.gg/GXYmNWtPzQ)
 
