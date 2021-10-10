@@ -9,6 +9,12 @@ namespace Ajuna.NetApi
 {
     public class HashExtension
     {
+        /// <summary>
+        /// Hash some bytes with a storage hasher.
+        /// </summary>
+        /// <param name="hasher">Hasher to use.</param>
+        /// <param name="bytes">bytes to hash.</param>
+        /// <returns>Bytes of the hash.</returns>
         public static byte[] Hash(Storage.Hasher hasher, byte[] bytes)
         {
             switch (hasher)

@@ -1,13 +1,12 @@
 ﻿using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Metadata.V14;
-using Ajuna.NetApi.Model.Types.Primitive;
 using System;
 
-namespace Ajuna.NetApi.Model.Types.Struct
+namespace Ajuna.NetApi.Model.Types.Metadata
 {
     public class RuntimeMetadata : BaseType
     {
-        public override string TypeName() => "unknown";
+        public override string TypeName() => "RuntimeMetadata";
 
         public override byte[] Encode()
         {

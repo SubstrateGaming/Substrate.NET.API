@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Ajuna.NetApi.Model.Meta;
 using System.Collections.Generic;
 
 namespace Ajuna.NetApi.Model.Extrinsics

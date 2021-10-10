@@ -21,6 +21,10 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{matrix.dotnet-version}}
+      
+      # Test
+      - name: run tests
+        run: dotnet test --filter Ajuna.NetApi.Test --no-build --verbosity normal
 
       # Publish
       - name: publish on version change

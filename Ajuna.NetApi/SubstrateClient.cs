@@ -11,17 +11,15 @@ using Newtonsoft.Json.Linq;
 using NLog;
 using StreamJsonRpc;
 using Ajuna.NetApi.Exceptions;
-using Ajuna.NetApi.Model.Calls;
 using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Meta;
 using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.Types;
 using Ajuna.NetApi.Model.Types.Base;
-using Ajuna.NetApi.Model.Types.Metadata.V14;
 using Ajuna.NetApi.Model.Types.Primitive;
-using Ajuna.NetApi.Model.Types.Struct;
 using Ajuna.NetApi.Modules;
 using Ajuna.NetApi.TypeConverters;
+using Ajuna.NetApi.Model.Types.Metadata;
 
 [assembly: InternalsVisibleTo("AjunaNetTests")]
 
@@ -42,9 +40,6 @@ namespace Ajuna.NetApi
 
         /// <summary> The request token sources. </summary>
         private readonly ConcurrentDictionary<CancellationTokenSource, string> _requestTokenSourceDict;
-
-        /// <summary> The type converters. </summary>
-        private readonly Dictionary<string, ITypeConverter> _typeConverters = new Dictionary<string, ITypeConverter>();
 
         /// <summary> _URI of the resource. </summary>
         private readonly Uri _uri;
@@ -69,24 +64,6 @@ namespace Ajuna.NetApi
             Chain = new Chain(this);
             State = new State(this);
             Author = new Author(this);
-
-            // types used by the client need to be registred
-            RegisterTypeConverter(new GenericTypeConverter<Bool>());
-            RegisterTypeConverter(new GenericTypeConverter<U8>());
-            RegisterTypeConverter(new GenericTypeConverter<U16>());
-            RegisterTypeConverter(new GenericTypeConverter<U32>());
-            RegisterTypeConverter(new GenericTypeConverter<U64>());
-            RegisterTypeConverter(new GenericTypeConverter<BlockNumber>());
-            RegisterTypeConverter(new GenericTypeConverter<AccountId>());
-            RegisterTypeConverter(new GenericTypeConverter<AccountInfo>());
-            RegisterTypeConverter(new GenericTypeConverter<AccountData>());
-            RegisterTypeConverter(new GenericTypeConverter<Hash>());
-            RegisterTypeConverter(new GenericTypeConverter<BaseVec<U8>>());
-            RegisterTypeConverter(new GenericTypeConverter<BaseVec<U32>>());
-            RegisterTypeConverter(new GenericTypeConverter<BaseVec<Hash>>());
-            RegisterTypeConverter(new GenericTypeConverter<BaseVec<AccountId>>());
-
-            //RegisterTypeConverter(new AccountInfoTypeConverter());
 
             _requestTokenSourceDict = new ConcurrentDictionary<CancellationTokenSource, string>();
         }
@@ -124,21 +101,6 @@ namespace Ajuna.NetApi
         /// <summary> Gets a value indicating whether this object is connected. </summary>
         /// <value> True if this object is connected, false if not. </value>
         public bool IsConnected => _socket?.State == WebSocketState.Open;
-
-        /// <summary> Registers the type converter described by converter. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <exception cref="ConverterAlreadyRegisteredException">
-        ///     Thrown when a Converter Already
-        ///     Registered error condition occurs.
-        /// </exception>
-        /// <param name="converter"> The converter. </param>
-        public void RegisterTypeConverter(ITypeConverter converter)
-        {
-            if (_typeConverters.ContainsKey(converter.TypeName))
-                throw new ConverterAlreadyRegisteredException("Converter for specified type already registered.");
-
-            _typeConverters.Add(converter.TypeName, converter);
-        }
 
         /// <summary> Connects an asynchronous. </summary>
         /// <remarks> 19.09.2020. </remarks>
@@ -181,7 +143,8 @@ namespace Ajuna.NetApi
             Logger.Debug("Connected to Websocket.");
 
             var formatter = new JsonMessageFormatter();
-            // adding convertersto the formatter
+
+            // adding converters to the formatter
             formatter.JsonSerializer.Converters.Add(new GenericTypeConverter<U8>());
             formatter.JsonSerializer.Converters.Add(new GenericTypeConverter<U16>());
             formatter.JsonSerializer.Converters.Add(new GenericTypeConverter<U32>());
@@ -202,7 +165,7 @@ namespace Ajuna.NetApi
             {
                 var result = await State.GetMetaDataAsync(token);
 
-                var mdv14 = new Ajuna.NetApi.Model.Types.Struct.RuntimeMetadata();
+                var mdv14 = new RuntimeMetadata();
                 mdv14.Create(result);
                 MetaData = new MetaData(mdv14, _uri.OriginalString);
                 Logger.Debug("MetaData parsed.");
