@@ -24,7 +24,7 @@ jobs:
       
       # Test
       - name: run tests
-        run: dotnet test --filter Ajuna.NetApi.Test --no-build --verbosity normal
+        run: dotnet test --filter Ajuna.NetApi.Test --no-build
 
       # Publish
       - name: publish on version change
