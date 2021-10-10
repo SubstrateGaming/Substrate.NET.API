@@ -213,39 +213,6 @@ namespace Ajuna.NetApi
         }
 
         /// <summary>
-        /// Keys the type to bytes.
-        /// </summary>
-        /// <param name="keyType">Type of the key.</param>
-        /// <param name="parameter">The parameter.</param>
-        /// <returns></returns>
-        /// <exception cref="Exception">Unimplemented item function key 'item.Function.Key1'!</exception>
-        internal static byte[] KeyTypeToBytes(string keyType, string parameter)
-        {
-            switch (keyType)
-            {
-                case "u16":
-                    return BitConverter.GetBytes(ushort.Parse(parameter));
-                case "u32":
-                    return BitConverter.GetBytes(uint.Parse(parameter));
-                case "u64":
-                    return BitConverter.GetBytes(ulong.Parse(parameter));
-                case "T::Hash":
-                    var hash = new Hash();
-                    hash.Create(parameter);
-                    return hash.Bytes;
-                case "T::AccountId":
-                    var accountId = new AccountId();
-                    accountId.Create(parameter);
-                    return accountId.Bytes;
-                case "Vec<u8>":
-                    var vecU8 =  Utils.SizePrefixedByteArray(Utils.HexToByteArray(parameter).ToList());
-                    return vecU8;
-                default:
-                    throw new Exception($"Unimplemented item function key 'item.Function.Key1' = {keyType}!");
-            }
-        }
-
-        /// <summary>
         /// Gets the address from.
         /// </summary>
         /// <param name="bytes">The bytes.</param>

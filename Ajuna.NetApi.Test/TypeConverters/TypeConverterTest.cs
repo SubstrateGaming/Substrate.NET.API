@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
-using NUnit.Framework;
-using Ajuna.NetApi;
+﻿using NUnit.Framework;
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
-using Ajuna.NetApi.Model.Types.Struct;
 using Ajuna.NetApi.TypeConverters;
 
 namespace Ajuna.NetApi.Test

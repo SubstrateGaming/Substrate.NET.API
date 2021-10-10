@@ -1,9 +1,6 @@
 using System;
-using System.Linq;
 using NUnit.Framework;
 using Schnorrkel.Keys;
-using Ajuna.NetApi;
-using Ajuna.NetApi.Model.Types.Base;
 
 namespace Ajuna.NetApi.Test.Keys
 {

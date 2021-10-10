@@ -1,6 +1,4 @@
-﻿using Ajuna.NetApi.Model.Types.Base;
-
-namespace Ajuna.NetApi.Model.Types.Base
+﻿namespace Ajuna.NetApi.Model.Types.Base
 {
     public class BaseVoid : BaseType
     {

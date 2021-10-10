@@ -1,7 +1,6 @@
 ﻿using Ajuna.NetApi.Model.Meta;
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
-using Ajuna.NetApi.Model.Types.Struct;
 using System;
 using static Ajuna.NetApi.Model.Meta.Storage;
 

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Schnorrkel;
-using Ajuna.NetApi;
-using Ajuna.NetApi.Model.Calls;
 using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.Types;

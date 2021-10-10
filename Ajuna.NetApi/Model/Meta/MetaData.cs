@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Ajuna.NetApi.Model.Types.Metadata.V14;
-using Ajuna.NetApi.Model.Types.Struct;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ajuna.NetApi.Model.Types.Metadata;
 
 namespace Ajuna.NetApi.Model.Meta
 {

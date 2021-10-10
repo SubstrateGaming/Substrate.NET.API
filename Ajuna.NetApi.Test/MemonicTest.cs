@@ -1,7 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
 using Schnorrkel.Keys;
-using Ajuna.NetApi;
 using System.Collections.Generic;
 using System.Text;
 using static Ajuna.NetApi.Mnemonic;

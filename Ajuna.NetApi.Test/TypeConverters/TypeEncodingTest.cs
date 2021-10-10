@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using Ajuna.NetApi;
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
 using Ajuna.NetApi.TypeConverters;

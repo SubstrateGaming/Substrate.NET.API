@@ -51,35 +51,6 @@ namespace Ajuna.NetApi
             }
         }
 
-
-
-        /// <summary>
-        /// Gets the parameter bytes.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="parameter">The parameter.</param>
-        /// <returns></returns>
-        /// <exception cref="MissingParameterException">Needs {keys.Length} keys, but provided where {parameter.Length} keys!</exception>
-        private static byte[] GetParameterBytes(string key, string[] parameter)
-        {
-            // multi keys support
-            if (key.StartsWith("("))
-            {
-                var keysDelimited = key.Replace("(", "").Replace(")", "");
-                var keys = keysDelimited.Split(',');
-                if (keys.Length != parameter.Length)
-                    throw new MissingParameterException(
-                        $"Needs {keys.Length} keys, but provided where {parameter.Length} keys!");
-                var byteList = new List<byte>();
-                for (var i = 0; i < keys.Length; i++)
-                    byteList.AddRange(Utils.KeyTypeToBytes(keys[i].Trim(), parameter[i]));
-                return byteList.ToArray();
-            }
-            // single key support
-
-            return Utils.KeyTypeToBytes(key, parameter[0]);
-        }
-
         /// <summary>
         /// Gets the storage key bytes hash.
         /// </summary>
@@ -137,6 +108,7 @@ namespace Ajuna.NetApi
             }
 
             uncheckedExtrinsic.AddPayloadSignature(signature);
+
             return uncheckedExtrinsic;
         }
     }

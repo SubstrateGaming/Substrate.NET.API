@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Ajuna.NetApi.Model.Meta;
 using Ajuna.NetApi.Model.Types.Metadata.V14;
 using System.Collections.Generic;
 

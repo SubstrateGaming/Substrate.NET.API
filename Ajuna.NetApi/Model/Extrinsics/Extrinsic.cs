@@ -1,11 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NLog;
-using Ajuna.NetApi.Model.Meta;
 using Ajuna.NetApi.Model.Types;
-using Ajuna.NetApi.Model.Types.Base;
-using Ajuna.NetApi.Model.Types.Primitive;
 using System;
-using System.Linq;
 
 namespace Ajuna.NetApi.Model.Extrinsics
 {

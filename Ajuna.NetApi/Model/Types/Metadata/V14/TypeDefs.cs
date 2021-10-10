@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
-using Ajuna.NetApi.Model.Types.Struct;
 using System;
 
 namespace Ajuna.NetApi.Model.Types.Metadata.V14

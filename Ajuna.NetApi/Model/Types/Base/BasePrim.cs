@@ -1,5 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
 using Ajuna.NetApi.Model.Types.Base;
 
 namespace Ajuna.NetApi.Model.Types
