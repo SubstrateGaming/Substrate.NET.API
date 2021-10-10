@@ -8,3 +8,9 @@
 
 Ajuna.NetApi which was formerly called [SubstrateNetApi](https://github.com/JetonNetwork/SubstrateNetApi) is written in NETStandard2.0 to provide maximum compatibility for [Unity](https://unity.com/). Ajuna Network is a platform dedicated to games, it provides seamless integration of substrate nodes and enables game developers to start creating. Feedback, constructive criticism, and discussions are welcome and will help us to improve the API!
 
+## Community
+
+![Discord Banner 2](https://discordapp.com/api/guilds/849331368558198803/widget.png?style=banner2)
+
+![Discord Banner 2](https://discordapp.com/api/guilds/447132563924844544/widget.png?style=banner2)
+
