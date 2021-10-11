@@ -10,7 +10,7 @@ Ajuna.NetApi which was formerly called [SubstrateNetApi](https://github.com/Jeto
 
 ![ajuna-Header-1080p_with_logo](https://user-images.githubusercontent.com/17710198/136852531-d9eb47cd-efcd-4c88-bdbf-78dfcbffe287.png)
 
-The project behind the Ajuna.NetApi, is [Ajuna Network](https://ajuna.io/) and the flagship game DOTMog, backed by the swiss company [BloGa Tech AG](admin@bloga.tech).
+The project behind the Ajuna.NetApi, is [Ajuna Network](https://ajuna.io/) and the flagship game [DOTMog](https://dotmog.com/), backed by the swiss company [BloGa Tech AG](admin@bloga.tech).
 
 ## Important
 This API targets **only** releases **from substrate monthly-2021-10 and newer**, as it uses the exposed metadata.
