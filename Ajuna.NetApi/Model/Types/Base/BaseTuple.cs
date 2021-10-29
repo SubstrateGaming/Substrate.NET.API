@@ -52,7 +52,7 @@ namespace Ajuna.NetApi.Model.Types.Base
         {
             var start = p;
 
-            Value = new IType[2];
+            Value = new IType[1];
 
             var t1 = new T1();
             t1.Decode(byteArray, ref p);
@@ -137,7 +137,7 @@ namespace Ajuna.NetApi.Model.Types.Base
         {
             var start = p;
 
-            Value = new IType[2];
+            Value = new IType[3];
 
             var t1 = new T1();
             t1.Decode(byteArray, ref p);
@@ -189,7 +189,7 @@ namespace Ajuna.NetApi.Model.Types.Base
         {
             var start = p;
 
-            Value = new IType[2];
+            Value = new IType[4];
 
             var t1 = new T1();
             t1.Decode(byteArray, ref p);
@@ -247,7 +247,7 @@ namespace Ajuna.NetApi.Model.Types.Base
         {
             var start = p;
 
-            Value = new IType[2];
+            Value = new IType[5];
 
             var t1 = new T1();
             t1.Decode(byteArray, ref p);
@@ -311,7 +311,7 @@ namespace Ajuna.NetApi.Model.Types.Base
         {
             var start = p;
 
-            Value = new IType[2];
+            Value = new IType[6];
 
             var t1 = new T1();
             t1.Decode(byteArray, ref p);
@@ -381,7 +381,7 @@ namespace Ajuna.NetApi.Model.Types.Base
         {
             var start = p;
 
-            Value = new IType[2];
+            Value = new IType[7];
 
             var t1 = new T1();
             t1.Decode(byteArray, ref p);
