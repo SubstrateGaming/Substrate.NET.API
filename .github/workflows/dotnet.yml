@@ -16,15 +16,22 @@ jobs:
         
     steps:
       - uses: actions/checkout@v2
-
-      - name: setup dotnet
+      
+      # Setup
+      - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{matrix.dotnet-version}}
       
+      # Dependencies
+      - name: Install dependencies
+        run: dotnet restore
+      
       # Test
-      - name: run tests
-        run: dotnet test --filter Ajuna.NetApi.Test --no-build --verbosity normal
+      - name: Test
+        run: |
+            cd Ajuna.NetApi.Test
+            dotnet test --no-restore --verbosity normal
 
       # Publish
       - name: publish on version change
