@@ -1,7 +1,6 @@
 using System;
 using System.Text;
 using NUnit.Framework;
-using Ajuna.NetApi;
 using Ajuna.NetApi.Model.Meta;
 
 namespace Ajuna.NetApi.Test

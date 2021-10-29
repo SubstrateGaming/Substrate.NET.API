@@ -1,13 +1,102 @@
 ﻿using NUnit.Framework;
-using Ajuna.NetApi;
-using Ajuna.NetApi.Model.Calls;
 using Ajuna.NetApi.Model.Types.Base;
-using Ajuna.NetApi.Model.Types.Struct;
 using Ajuna.NetApi.Model.Types;
 using System.Collections.Generic;
+using Ajuna.NetApi.Model.Types.Primitive;
+using System.Numerics;
 
 namespace Ajuna.NetApi.Test
 {
+    public class Balance : BasePrim<BigInteger>
+    {
+        public override string TypeName() => "T::Balance";
+
+        public override int TypeSize => 16;
+
+        public override byte[] Encode()
+        {
+            return new CompactInteger(Value).Encode();
+        }
+
+        public override void Create(byte[] byteArray)
+        {
+            Bytes = byteArray;
+            Value = new BigInteger(byteArray);
+        }
+
+        public void Create(BigInteger value)
+        {
+            Bytes = value.ToByteArray();
+            Value = value;
+        }
+    }
+
+    public class AccountData : BaseType
+    {
+        public override string TypeName() => "AccountData<T::Balance>";
+
+        public override byte[] Encode() => null;
+
+        public override void Decode(byte[] byteArray, ref int p)
+        {
+            var start = p;
+
+            Free = new Balance();
+            Free.Decode(byteArray, ref p);
+
+            Reserved = new Balance();
+            Reserved.Decode(byteArray, ref p);
+
+            MiscFrozen = new Balance();
+            MiscFrozen.Decode(byteArray, ref p);
+
+            FeeFrozen = new Balance();
+            FeeFrozen.Decode(byteArray, ref p);
+
+            TypeSize = p - start;
+        }
+
+        public Balance Free { get; private set; }
+        public Balance Reserved { get; private set; }
+        public Balance MiscFrozen { get; private set; }
+        public Balance FeeFrozen { get; private set; }
+    }
+
+    public class AccountInfo : BaseType
+    {
+        public override string TypeName() => "AccountInfo<T::Index, T::AccountData>";
+
+        public override byte[] Encode() => null;
+
+        public override void Decode(byte[] byteArray, ref int p)
+        {
+            var start = p;
+
+            Nonce = new U32();
+            Nonce.Decode(byteArray, ref p);
+
+            Consumers = new RefCount();
+            Consumers.Decode(byteArray, ref p);
+
+            Providers = new RefCount();
+            Providers.Decode(byteArray, ref p);
+
+            AccountData = new AccountData();
+            AccountData.Decode(byteArray, ref p);
+
+            TypeSize = p - start;
+        }
+
+        public U32 Nonce { get; private set; }
+        public RefCount Consumers { get; private set; }
+        public RefCount Providers { get; private set; }
+        public AccountData AccountData { get; private set; }
+    }
+    public class RefCount : U32
+    {
+        public override string TypeName() => "RefCount";
+    }
+
     public class ValueTests
     {
         [Test]

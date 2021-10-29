@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
 using NUnit.Framework;
-using Ajuna.NetApi;
 
 namespace Ajuna.NetApi.Test
 {
