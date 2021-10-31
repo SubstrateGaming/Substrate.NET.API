@@ -193,7 +193,10 @@ namespace Ajuna.NetApi
         {
             var str = await InvokeAsync<string>("state_getStorage", new object[] { parameters }, token);
             T t = new T();
-            t.Create(str);
+            if (str != null && str.Length > 0)
+            {
+                t.Create(str);
+            }
             return t;
         }
 

@@ -71,5 +71,6 @@ namespace Ajuna.NetApi.NetApi.TestNode
 
             await _substrateClient.CloseAsync();
         }
+
     }
 }
