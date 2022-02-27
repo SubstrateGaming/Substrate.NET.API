@@ -17,7 +17,7 @@ namespace Ajuna.NetApi.Model.Extrinsics
 
         private CompactInteger _nonce;
 
-        private CompactInteger _chargeTransactionPayment;
+        private ChargeAssetTxPayment _assetTxPayment;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SignedExtensions"/> class.
@@ -29,7 +29,7 @@ namespace Ajuna.NetApi.Model.Extrinsics
         /// <param name="mortality">The mortality.</param>
         /// <param name="nonce">The nonce.</param>
         /// <param name="chargeTransactionPayment">The charge transaction payment.</param>
-        public SignedExtensions(uint specVersion, uint txVersion, Hash genesis, Hash startEra, Era mortality, CompactInteger nonce, CompactInteger chargeTransactionPayment)
+        public SignedExtensions(uint specVersion, uint txVersion, Hash genesis, Hash startEra, Era mortality, CompactInteger nonce, ChargeAssetTxPayment assetTxPayment)
         {
             _specVersion = specVersion;
             _txVersion = txVersion;
@@ -37,7 +37,7 @@ namespace Ajuna.NetApi.Model.Extrinsics
             _startEra = startEra;
             _mortality = mortality;
             _nonce = nonce;
-            _chargeTransactionPayment = chargeTransactionPayment;
+            _assetTxPayment = assetTxPayment;
         }
 
         /// <summary>
@@ -54,8 +54,8 @@ namespace Ajuna.NetApi.Model.Extrinsics
             // CheckNonce
             bytes.AddRange(_nonce.Encode());
 
-            // ChargeTransactionPayment
-            bytes.AddRange(_chargeTransactionPayment.Encode());
+            // ChargeAssetTxPayment
+            bytes.AddRange(_assetTxPayment.Encode());
 
             return bytes.ToArray();
         }

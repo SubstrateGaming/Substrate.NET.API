@@ -1,11 +1,19 @@
 using Ajuna.NetApi;
+using Ajuna.NetApi.Model.Extrinsics;
+using Ajuna.NetApi.Model.Rpc;
+using Ajuna.NetApi.Model.SpCore;
+using Ajuna.NetApi.Model.SpRuntime;
 using Ajuna.NetApi.Model.Types;
+using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
 using NUnit.Framework;
 using Schnorrkel.Keys;
 using System;
+using System.Collections.Generic;
+using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -70,6 +78,90 @@ namespace Ajuna.NetApi.NetApi.TestNode
             Assert.AreEqual("Development", result);
 
             await _substrateClient.CloseAsync();
+        }
+
+        public static Method Transfer(Ajuna.NetApi.Model.SpRuntime.EnumMultiAddress dest, BaseCom<Ajuna.NetApi.Model.Types.Primitive.U128> value)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(dest.Encode());
+            byteArray.AddRange(value.Encode());
+            return new Method(6, "Balances", 0, "transfer", byteArray.ToArray());
+        }
+
+        public static string AccountParams(Ajuna.NetApi.Model.SpCore.AccountId32 key)
+        {
+            return RequestGenerator.GetStorage("System", "Account", Ajuna.NetApi.Model.Meta.Storage.Type.Map, new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
+                        Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, new Ajuna.NetApi.Model.Types.IType[] {
+                        key});
+        }
+
+        public async Task<Ajuna.NetApi.Model.FrameSystem.AccountInfo> SystemStorageAccountAsync(Ajuna.NetApi.Model.SpCore.AccountId32 key, CancellationToken token)
+        {
+            string parameters = AccountParams(key);
+            return await _substrateClient.GetStorageAsync<Ajuna.NetApi.Model.FrameSystem.AccountInfo>(parameters, token);
+        }
+
+        /// <summary>
+        /// Simple extrinsic tester
+        /// </summary>
+        /// <param name="subscriptionId"></param>
+        /// <param name="extrinsicUpdate"></param>
+        static void ActionExtrinsicUpdate(string subscriptionId, ExtrinsicStatus extrinsicUpdate)
+        {
+            switch (extrinsicUpdate.ExtrinsicState)
+            {
+                case ExtrinsicState.None:
+                    Assert.IsTrue(true);
+                    Assert.IsTrue(extrinsicUpdate.InBlock.Value.Length > 0 || extrinsicUpdate.Finalized.Value.Length > 0);
+                    break;
+                case ExtrinsicState.Future:
+                    Assert.IsTrue(false);
+                    break;
+                case ExtrinsicState.Ready:
+                    Assert.IsTrue(true);
+                    break;
+                case ExtrinsicState.Dropped:
+                    Assert.IsTrue(false);
+                    break;
+                case ExtrinsicState.Invalid:
+                    Assert.IsTrue(false);
+                    break;
+            }
+        }
+
+        [Test]
+        public async Task BalanceTransferWatchTestAsync()
+        {
+            var extrinsic_wait = 5000;
+
+            var cts = new CancellationTokenSource();
+            await _substrateClient.ConnectAsync(false, cts.Token);
+
+            var bobAccountId32 = new AccountId32();
+            bobAccountId32.Create("0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48");
+
+            var result = await SystemStorageAccountAsync(bobAccountId32, CancellationToken.None);
+            var startValueBob = result.Data.Free.Value;
+
+            var enumMultiAddress = new EnumMultiAddress();
+            enumMultiAddress.Create(MultiAddress.Id, bobAccountId32);
+
+            var amount = new BaseCom<U128>();
+            amount.Create(new CompactInteger(new BigInteger(100000000000)));
+
+            var extrinsicMethod = Transfer(enumMultiAddress, amount);
+
+            var assetTxPayment = new ChargeAssetTxPayment(0, 0);
+
+            // Alice sends bob some coins ...
+            var subscription = await _substrateClient.Author.SubmitAndWatchExtrinsicAsync(ActionExtrinsicUpdate, extrinsicMethod, Alice, assetTxPayment, 64, cts.Token);
+
+            Thread.Sleep(extrinsic_wait);
+
+            var endValueBob = startValueBob + amount.Value.Value;
+
+            var freeAfter = await SystemStorageAccountAsync(bobAccountId32, CancellationToken.None);
+            Assert.AreEqual(endValueBob, freeAfter.Data.Free.Value);
         }
 
     }
