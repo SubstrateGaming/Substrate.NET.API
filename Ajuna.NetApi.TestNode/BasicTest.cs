@@ -1,4 +1,4 @@
-using Ajuna.NetApi;
+using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.Types;
 using NLog;
 using NLog.Config;
@@ -70,6 +70,34 @@ namespace Ajuna.NetApi.NetApi.TestNode
             Assert.AreEqual("Development", result);
 
             await _substrateClient.CloseAsync();
+        }
+
+        /// <summary>
+        /// Simple extrinsic tester
+        /// </summary>
+        /// <param name="subscriptionId"></param>
+        /// <param name="extrinsicUpdate"></param>
+        static void ActionExtrinsicUpdate(string subscriptionId, ExtrinsicStatus extrinsicUpdate)
+        {
+            switch (extrinsicUpdate.ExtrinsicState)
+            {
+                case ExtrinsicState.None:
+                    Assert.IsTrue(true);
+                    Assert.IsTrue(extrinsicUpdate.InBlock.Value.Length > 0 || extrinsicUpdate.Finalized.Value.Length > 0);
+                    break;
+                case ExtrinsicState.Future:
+                    Assert.IsTrue(false);
+                    break;
+                case ExtrinsicState.Ready:
+                    Assert.IsTrue(true);
+                    break;
+                case ExtrinsicState.Dropped:
+                    Assert.IsTrue(false);
+                    break;
+                case ExtrinsicState.Invalid:
+                    Assert.IsTrue(false);
+                    break;
+            }
         }
 
     }
