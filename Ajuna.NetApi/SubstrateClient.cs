@@ -20,6 +20,9 @@ using Ajuna.NetApi.Model.Types.Primitive;
 using Ajuna.NetApi.Modules;
 using Ajuna.NetApi.TypeConverters;
 using Ajuna.NetApi.Model.Types.Metadata;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using System.Net;
 
 [assembly: InternalsVisibleTo("AjunaNetTests")]
 
@@ -63,6 +66,7 @@ namespace Ajuna.NetApi
             System = new Modules.System(this);
             Chain = new Chain(this);
             State = new State(this);
+            Rpc = new Rpc(this);
             Author = new Author(this);
 
             _requestTokenSourceDict = new ConcurrentDictionary<CancellationTokenSource, string>();
@@ -92,6 +96,10 @@ namespace Ajuna.NetApi
         /// <value> The state. </value>
         public State State { get; }
 
+        /// <summary> Gets the rpc. </summary>
+        /// <value> The rpc. </value>
+        public Rpc Rpc { get; }
+
         /// <summary> Gets the author. </summary>
         /// <value> The author. </value>
         public Author Author { get; }
@@ -107,7 +115,7 @@ namespace Ajuna.NetApi
         /// <returns> An asynchronous result. </returns>
         public async Task ConnectAsync()
         {
-            await ConnectAsync(true, CancellationToken.None);
+            await ConnectAsync(true, true, true, false, CancellationToken.None);
         }
 
         /// <summary> Connects an asynchronous. </summary>
@@ -115,14 +123,25 @@ namespace Ajuna.NetApi
         /// <returns> An asynchronous result. </returns>
         public async Task ConnectAsync(CancellationToken token)
         {
-            await ConnectAsync(true, token);
+            await ConnectAsync(true, true, true, false, token);
+        }
+
+        public static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            if (sslPolicyErrors == SslPolicyErrors.None)
+                return true;
+
+            Console.WriteLine("[NOT_PRODUCTION_READY] Certificate error: {0}", sslPolicyErrors);
+
+            // Do not allow this client to communicate with unauthenticated servers.
+            return true;
         }
 
         /// <summary> Connects an asynchronous. </summary>
         /// <remarks> 19.09.2020. </remarks>
         /// <param name="token"> A token that allows processing to be cancelled. </param>
         /// <returns> An asynchronous result. </returns>
-        public async Task ConnectAsync(bool useMetaData, CancellationToken token)
+        public async Task ConnectAsync(bool useMetaData, bool useGenesis, bool useRunetime, bool wssFlag, CancellationToken token)
         {
             if (_socket != null && _socket.State == WebSocketState.Open)
                 return;
@@ -131,7 +150,16 @@ namespace Ajuna.NetApi
             {
                 _jsonRpc?.Dispose();
                 _socket?.Dispose();
-                _socket = new ClientWebSocket();
+
+                _socket = new System.Net.WebSockets.ClientWebSocket();
+
+                if (wssFlag)
+                {
+                    _socket.Options.RemoteCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
+                    //ServicePoint sp = ServicePointManager.FindServicePoint(_uri);
+                    //ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
+                    //new RemoteCertificateValidationCallback(ValidateServerCertificate);
+                }
             }
 
             _connectTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
@@ -171,13 +199,19 @@ namespace Ajuna.NetApi
                 Logger.Debug("MetaData parsed.");
             }
 
-            var genesis = new BlockNumber();
-            genesis.Create(0);
-            GenesisHash = await Chain.GetBlockHashAsync(genesis, token);
-            Logger.Debug("Genesis hash parsed.");
-
-            RuntimeVersion = await State.GetRuntimeVersionAsync(token);
-            Logger.Debug("Runtime version parsed.");
+            if (useGenesis)
+            {
+                var genesis = new BlockNumber();
+                genesis.Create(0);
+                GenesisHash = await Chain.GetBlockHashAsync(genesis, token);
+                Logger.Debug("Genesis hash parsed.");
+            }
+            
+            if (useRunetime)
+            {
+                RuntimeVersion = await State.GetRuntimeVersionAsync(token);
+                Logger.Debug("Runtime version parsed.");
+            }
 
             _jsonRpc.TraceSource.Switch.Level = SourceLevels.All;
         }
@@ -300,7 +334,7 @@ namespace Ajuna.NetApi
         /// <param name="parameters"> Options for controlling the operation. </param>
         /// <param name="token">      A token that allows processing to be cancelled. </param>
         /// <returns> A T. </returns>
-        internal async Task<T> InvokeAsync<T>(string method, object parameters, CancellationToken token)
+        public async Task<T> InvokeAsync<T>(string method, object parameters, CancellationToken token)
         {
             if (_socket?.State != WebSocketState.Open)
                 throw new ClientNotConnectedException($"WebSocketState is not open! Currently {_socket?.State}!");
@@ -320,6 +354,11 @@ namespace Ajuna.NetApi
             _requestTokenSourceDict.TryRemove(requestTokenSource, out var _);
 
             return resultString;
+        }
+
+        public JsonRpc GetJsonRpc()
+        {
+            return _jsonRpc;
         }
 
         /// <summary> Closes an asynchronous. </summary>
