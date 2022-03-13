@@ -99,11 +99,11 @@ namespace TestTee
 
             await client.ConnectAsync(false, false, false, true, cancellationToken);
 
-            var test = await client.Rpc.GetMethodsAsync(cancellationToken);
-            foreach(var workerMethod in test.Methods)
-            {
-                Console.WriteLine(workerMethod);
-            }
+            var test = await client.InvokeAsync<string>("rpc_methods", null, CancellationToken.None);
+            Console.WriteLine($"-----------> {test}");
+
+
+            await client.CloseAsync();
 
             //var test = await client.InvokeAsync<string>("author_getShieldingKey", null, CancellationToken.None);
             //var x = jsonRpc.InvokeAsync<object>("author_getShieldingKey");
