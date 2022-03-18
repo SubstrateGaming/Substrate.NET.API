@@ -115,7 +115,7 @@ namespace Ajuna.NetApi
         /// <returns> An asynchronous result. </returns>
         public async Task ConnectAsync()
         {
-            await ConnectAsync(true, true, true, false, CancellationToken.None);
+            await ConnectAsync(true, true, true, CancellationToken.None);
         }
 
         /// <summary> Connects an asynchronous. </summary>
@@ -123,25 +123,14 @@ namespace Ajuna.NetApi
         /// <returns> An asynchronous result. </returns>
         public async Task ConnectAsync(CancellationToken token)
         {
-            await ConnectAsync(true, true, true, false, token);
-        }
-
-        public static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-        {
-            if (sslPolicyErrors == SslPolicyErrors.None)
-                return true;
-
-            Console.WriteLine("[NOT_PRODUCTION_READY] Certificate error: {0}", sslPolicyErrors);
-
-            // Do not allow this client to communicate with unauthenticated servers.
-            return true;
+            await ConnectAsync(true, true, true, token);
         }
 
         /// <summary> Connects an asynchronous. </summary>
         /// <remarks> 19.09.2020. </remarks>
         /// <param name="token"> A token that allows processing to be cancelled. </param>
         /// <returns> An asynchronous result. </returns>
-        public async Task ConnectAsync(bool useMetaData, bool useGenesis, bool useRunetime, bool wssFlag, CancellationToken token)
+        public async Task ConnectAsync(bool useMetaData, bool poolGenesisHash, bool poolRuntimeVersion, CancellationToken token)
         {
             if (_socket != null && _socket.State == WebSocketState.Open)
                 return;
@@ -152,14 +141,6 @@ namespace Ajuna.NetApi
                 _socket?.Dispose();
 
                 _socket = new System.Net.WebSockets.ClientWebSocket();
-
-                if (wssFlag)
-                {
-                    _socket.Options.RemoteCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
-                    //ServicePoint sp = ServicePointManager.FindServicePoint(_uri);
-                    //ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
-                    //new RemoteCertificateValidationCallback(ValidateServerCertificate);
-                }
             }
 
             _connectTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
@@ -188,7 +169,6 @@ namespace Ajuna.NetApi
             _jsonRpc.StartListening();
             Logger.Debug("Listening to websocket.");
 
-
             if (useMetaData)
             {
                 var result = await State.GetMetaDataAsync(token);
@@ -199,15 +179,15 @@ namespace Ajuna.NetApi
                 Logger.Debug("MetaData parsed.");
             }
 
-            if (useGenesis)
+            if (poolGenesisHash)
             {
                 var genesis = new BlockNumber();
                 genesis.Create(0);
                 GenesisHash = await Chain.GetBlockHashAsync(genesis, token);
                 Logger.Debug("Genesis hash parsed.");
             }
-            
-            if (useRunetime)
+
+            if (poolRuntimeVersion)
             {
                 RuntimeVersion = await State.GetRuntimeVersionAsync(token);
                 Logger.Debug("Runtime version parsed.");

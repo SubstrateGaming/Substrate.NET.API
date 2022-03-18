@@ -64,7 +64,7 @@ namespace Ajuna.NetApi.NetApi.TestNode
         [Test]
         public async Task GetMethodChainNameTestAsync()
         {
-            await _substrateClient.ConnectAsync(false, true, true, false, CancellationToken.None);
+            await _substrateClient.ConnectAsync(CancellationToken.None);
 
             var result = await _substrateClient.GetMethodAsync<string>("system_chain");
             Assert.AreEqual("Development", result);
