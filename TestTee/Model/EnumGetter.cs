@@ -3,7 +3,6 @@
 
 namespace Ajuna.NetApi.Model.AjunaWorker
 {
-
     public enum Getter
     {
         teePublic,
