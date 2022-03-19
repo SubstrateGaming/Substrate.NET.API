@@ -65,7 +65,7 @@ namespace TestTee
             var logconsole = new ConsoleTarget("logconsole");
 
             // Rules for mapping loggers to targets            
-            config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
+            //config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
 
             // Apply config           
@@ -141,22 +141,33 @@ namespace TestTee
             });
 
             // - Create Request
-            Request request = GetRequest(shardId, cypherText);
+            Request request = new Request
+            {
+                Shard = shardId,
+                CypherText = VecU8FromBytes(cypherText)
+            };
 
             var final = request;
             Console.WriteLine($"REQUEST = {Utils.Bytes2HexString(final.Encode())}");
 
+            BaseVec<U8> finalVecU8 = VecU8FromBytes(final.Encode());
+
             // - Send Request
             using var client = new SubstrateClient(new Uri(Websocketurl));
             await client.ConnectAsync(false, false, false, cancellationToken);
-            var result = await client.InvokeAsync<byte[]>("author_submitExtrinsic", new object[] { Utils.Bytes2HexString(final.Encode()) }, CancellationToken.None);
+            var result = await client.InvokeAsync<byte[]>("author_submitExtrinsic", new object[] { Utils.Bytes2HexString(finalVecU8.Encode()) }, CancellationToken.None);
 
             RpcReturnValue returnValue = new RpcReturnValue();
             returnValue.Create(result);
 
-            var converter = new UTF8Encoding();
-            var str = converter.GetString(returnValue.Value.Bytes);
-            Console.WriteLine($" RETURN = {str}");
+            if (returnValue.DirectRequestStatus.Value == DirectRequestStatus.Error)
+            {
+                PrintBytes(returnValue.Value.Bytes);
+            } 
+            else
+            {
+                Console.WriteLine($"RETURN = {returnValue}");
+            }
             
             await client.CloseAsync();
 
@@ -198,25 +209,28 @@ namespace TestTee
 
         }
 
-        private static Request GetRequest(H256 shardId, byte[] cypherByteArray)
+        private static void PrintBytes(byte[] bytes)
         {
-            List<U8> u8list = new List<U8>();
-            for (int i = 0; i < cypherByteArray.Length; i++)
+            var converter = new UTF8Encoding();
+            var str = converter.GetString(bytes);
+            Console.WriteLine(str);
+        }
+
+        private static BaseVec<U8> VecU8FromBytes(byte[] vs)
+        {
+            var u8list = new List<U8>();
+            for (int i = 0; i < vs.Length; i++)
             {
                 var u8 = new U8();
-                u8.Create(cypherByteArray[i]);
+                u8.Create(vs[i]);
                 u8list.Add(u8);
             }
             var u8Array = u8list.ToArray();
 
-            var cypherText = new BaseVec<U8>();
-            cypherText.Create(u8Array);
+            var result = new BaseVec<U8>();
+            result.Create(u8Array);
 
-            return new Request
-            {
-                Shard = shardId,
-                CypherText = cypherText
-            };
+            return result;
         }
 
         private static TestRSA GetTestRSA(byte[] shieldingKeyReturn)
