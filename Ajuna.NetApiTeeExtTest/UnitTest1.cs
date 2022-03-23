@@ -145,12 +145,16 @@ namespace Ajuna.NetApiTeeExtTest
             //Assert.AreEqual(Utils.Bytes2HexString(bytesExpected), Utils.Bytes2HexString(bytesCyphered));
 
             var csp = new RSACryptoServiceProvider(3072);
-            //var csp = RSA.Create(rSAParameters);
+            
             var encodedBytes = trustedOperation.Encode();
             var encrypted = Utils.RSAEncrypt(trustedOperation.Encode(), csp.ExportParameters(false), false);
             var decrypted = Utils.RSADecrypt(encrypted, csp.ExportParameters(true), false);
 
             Assert.AreEqual(encodedBytes, decrypted);
+
+            var encryptedWithPub = RSA.Create(rSAParameters);
+            var encryptedValue = Utils.RSAEncrypt(trustedOperation.Encode(), encryptedWithPub.ExportParameters(false), false);
+            Assert.AreEqual(encryptedValue.Length, encrypted.Length);
         }
 
         [Test]

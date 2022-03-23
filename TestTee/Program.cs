@@ -8,6 +8,7 @@ using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
 using Chaos.NaCl;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -16,9 +17,11 @@ using SimpleBase;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Security;
 using System.Net.WebSockets;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -65,7 +68,7 @@ namespace TestTee
             var logconsole = new ConsoleTarget("logconsole");
 
             // Rules for mapping loggers to targets            
-            //config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
+            config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
 
             // Apply config           
@@ -109,6 +112,8 @@ namespace TestTee
 
         private static async Task MainAsync(CancellationToken cancellationToken)
         {
+            var client = new SubstrateClient(new Uri(Websocketurl));
+
             // - TrustedOperation
 
             var account = new AccountId32();
@@ -121,7 +126,7 @@ namespace TestTee
 
             // - Get ShieldingKey
 
-            var shieldingKeyReturn = await ShieldingKeyAsync();
+            var shieldingKeyReturn = await ShieldingKeyAsync(client);
 
             // - Create RSAPubKey from ShieldingKey
 
@@ -144,15 +149,12 @@ namespace TestTee
                 CypherText = VecU8FromBytes(cypherText)
             };
 
-            var final = request;
-            Console.WriteLine($"REQUEST = {Utils.Bytes2HexString(final.Encode())}");
-
-            BaseVec<U8> finalVecU8 = VecU8FromBytes(final.Encode());
+            Console.WriteLine($"REQUEST = {Utils.Bytes2HexString(request.Encode())}");
 
             // - Send Request
-            using var client = new SubstrateClient(new Uri(Websocketurl));
+
             await client.ConnectAsync(false, false, false, cancellationToken);
-            var result = await client.InvokeAsync<byte[]>("author_submitExtrinsic", new object[] { Utils.Bytes2HexString(finalVecU8.Encode()) }, CancellationToken.None);
+            var result = await client.InvokeAsync<byte[]>("author_submitAndWatchExtrinsic", request.Encode().Cast<object>().ToArray(), CancellationToken.None);
 
             RpcReturnValue returnValue = new RpcReturnValue();
             returnValue.Create(result);
@@ -192,6 +194,14 @@ namespace TestTee
             result.Create(u8Array);
 
             return result;
+        }
+
+        private static List<T> ToListOf<T>(byte[] array, Func<byte[], int, T> bitConverter)
+        {
+            var size = Marshal.SizeOf(typeof(T));
+            return Enumerable.Range(0, array.Length / size)
+                             .Select(i => bitConverter(array, i * size))
+                             .ToList();
         }
 
         private static RSAPubKey GetTestRSA(byte[] shieldingKeyReturn)
@@ -240,9 +250,9 @@ namespace TestTee
             return trustedOperation;
         }
 
-        private async static Task<RpcReturnValue> ShieldingKeyAsync()
+        private async static Task<RpcReturnValue> ShieldingKeyAsync(SubstrateClient client)
         {
-            using var client = new SubstrateClient(new Uri(Websocketurl));
+            //using var client = new SubstrateClient(new Uri(Websocketurl));
 
             //var rpcMethods = await client.InvokeAsync<string>("rpc_methods", null, CancellationToken.None);
             //Console.WriteLine($"-----------> {rpcMethods}");
