@@ -119,29 +119,26 @@ namespace TestTee
 
             EnumTrustedOperation trustedOperation = GetEnumTrustedOperation(account, trustedGetter);
 
-            // - ShardIdentifier
-
-            var shardId = new H256();
-            shardId.Create(Base58.Bitcoin.Decode("CAG7CwtvDb5AvC3yoxXetYqY97tGSUdywP1U6pgYf1Kh").ToArray());
-
-
             // - Get ShieldingKey
 
             var shieldingKeyReturn = await ShieldingKeyAsync();
 
             // - Create RSAPubKey from ShieldingKey
 
-            TestRSA rsaPubKey = GetTestRSA(shieldingKeyReturn.Value.Bytes);
+            RSAPubKey rsaPubKey = GetTestRSA(shieldingKeyReturn.Value.Bytes);
 
             // - Encrypt Encoded TrustedOperation with RSAPubKey
-            var cypherText = EncryptRSA3072(trustedOperation.Encode(), new RSAParameters
-            {
-                Modulus = rsaPubKey.N.ToArray(),
-                Exponent = rsaPubKey.E.ToArray()
-            });
+
+            var cypherText =  Utils.RSAEncrypt(trustedOperation.Encode(), new RSAParameters{ Modulus = rsaPubKey.N.ToArray(), Exponent = rsaPubKey.E.ToArray() }, false);
+
+            // - ShardIdentifier
+
+            var shardId = new H256();
+            shardId.Create(Base58.Bitcoin.Decode("CAG7CwtvDb5AvC3yoxXetYqY97tGSUdywP1U6pgYf1Kh").ToArray());
 
             // - Create Request
-            Request request = new Request
+
+            var request = new Request
             {
                 Shard = shardId,
                 CypherText = VecU8FromBytes(cypherText)
@@ -163,49 +160,13 @@ namespace TestTee
             if (returnValue.DirectRequestStatus.Value == DirectRequestStatus.Error)
             {
                 PrintBytes(returnValue.Value.Bytes);
-            } 
+            }
             else
             {
                 Console.WriteLine($"RETURN = {returnValue}");
             }
-            
+
             await client.CloseAsync();
-
-            //try
-            //{
-            //    //Create a UnicodeEncoder to convert between byte array and string.
-            //    UnicodeEncoding ByteConverter = new UnicodeEncoding();
-
-            //    //Create byte arrays to hold original, encrypted, and decrypted data.
-            //    byte[] dataToEncrypt = ByteConverter.GetBytes("Data to Encrypt");
-            //    byte[] encryptedData;
-            //    byte[] decryptedData;
-
-            //    //Create a new instance of RSACryptoServiceProvider to generate
-            //    //public and private key data.
-            //    using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
-            //    {
-
-            //        //Pass the data to ENCRYPT, the public key information 
-            //        //(using RSACryptoServiceProvider.ExportParameters(false),
-            //        //and a boolean flag specifying no OAEP padding.
-            //        encryptedData = RSAEncrypt(dataToEncrypt, RSA.ExportParameters(false), false);
-
-            //        //Pass the data to DECRYPT, the private key information 
-            //        //(using RSACryptoServiceProvider.ExportParameters(true),
-            //        //and a boolean flag specifying no OAEP padding.
-            //        decryptedData = RSADecrypt(encryptedData, RSA.ExportParameters(true), false);
-
-            //        //Display the decrypted plaintext to the console. 
-            //        Console.WriteLine("Decrypted plaintext: {0}", ByteConverter.GetString(decryptedData));
-            //    }
-            //}
-            //catch (ArgumentNullException)
-            //{
-            //    //Catch this exception in case the encryption did
-            //    //not succeed.
-            //    Console.WriteLine("Encryption failed.");
-            //}
 
         }
 
@@ -233,7 +194,7 @@ namespace TestTee
             return result;
         }
 
-        private static TestRSA GetTestRSA(byte[] shieldingKeyReturn)
+        private static RSAPubKey GetTestRSA(byte[] shieldingKeyReturn)
         {
             var baseVec1 = new BaseVec<U8>();
             baseVec1.Create(shieldingKeyReturn);
@@ -254,7 +215,7 @@ namespace TestTee
             bytes2.ToArray();
 
             var rsaPubKeyStr = new UTF8Encoding().GetString(bytes2.ToArray());
-            return JsonConvert.DeserializeObject<TestRSA>(rsaPubKeyStr);
+            return JsonConvert.DeserializeObject<RSAPubKey>(rsaPubKeyStr);
         }
 
         private static EnumTrustedOperation GetEnumTrustedOperation(AccountId32 account, EnumTrustedGetter trustedGetter)
@@ -271,21 +232,12 @@ namespace TestTee
             trustedGetterSigned.Signature = enumMultiSignature;
 
             var getter = new EnumGetter();
-            getter.Create(Getter.trusted, trustedGetterSigned);
+            getter.Create(Getter.Trusted, trustedGetterSigned);
 
             var trustedOperation = new EnumTrustedOperation();
             trustedOperation.Create(TrustedOperation.Get, getter);
 
             return trustedOperation;
-        }
-
-        private static byte[] EncryptRSA3072(byte[] encodedTrustedOperation, RSAParameters parameters)
-        {
-            using RSACryptoServiceProvider RSA = new RSACryptoServiceProvider();
-            //Pass the data to ENCRYPT, the public key information 
-            //(using RSACryptoServiceProvider.ExportParameters(false),
-            //and a boolean flag specifying no OAEP padding.
-            return RSAEncrypt(encodedTrustedOperation, parameters, false);
         }
 
         private async static Task<RpcReturnValue> ShieldingKeyAsync()
@@ -311,7 +263,7 @@ namespace TestTee
             //system_version
 
             await client.ConnectAsync(false, false, false, CancellationToken.None);
-            
+
             var method = "author_getShieldingKey";
             var result = await client.InvokeAsync<byte[]>(method, null, CancellationToken.None);
 
@@ -323,64 +275,6 @@ namespace TestTee
             return rpcReturnValue;
         }
 
-        public static byte[] RSAEncrypt(byte[] DataToEncrypt, RSAParameters RSAKeyInfo, bool DoOAEPPadding)
-        {
-            try
-            {
-                byte[] encryptedData;
-                //Create a new instance of RSACryptoServiceProvider.
-                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
-                {
-
-                    //Import the RSA Key information. This only needs
-                    //toinclude the public key information.
-                    RSA.ImportParameters(RSAKeyInfo);
-
-                    //Encrypt the passed byte array and specify OAEP padding.  
-                    //OAEP padding is only available on Microsoft Windows XP or
-                    //later.  
-                    encryptedData = RSA.Encrypt(DataToEncrypt, DoOAEPPadding);
-                }
-                return encryptedData;
-            }
-            //Catch and display a CryptographicException  
-            //to the console.
-            catch (CryptographicException e)
-            {
-                Console.WriteLine(e.Message);
-
-                return null;
-            }
-        }
-
-        public static byte[] RSADecrypt(byte[] DataToDecrypt, RSAParameters RSAKeyInfo, bool DoOAEPPadding)
-        {
-            try
-            {
-                byte[] decryptedData;
-                //Create a new instance of RSACryptoServiceProvider.
-                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
-                {
-                    //Import the RSA Key information. This needs
-                    //to include the private key information.
-                    RSA.ImportParameters(RSAKeyInfo);
-
-                    //Decrypt the passed byte array and specify OAEP padding.  
-                    //OAEP padding is only available on Microsoft Windows XP or
-                    //later.  
-                    decryptedData = RSA.Decrypt(DataToDecrypt, DoOAEPPadding);
-                }
-                return decryptedData;
-            }
-            //Catch and display a CryptographicException  
-            //to the console.
-            catch (CryptographicException e)
-            {
-                Console.WriteLine(e.ToString());
-
-                return null;
-            }
-        }
     }
 
 }

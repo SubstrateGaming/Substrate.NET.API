@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ajuna.NetApi", "Ajuna.NetAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ajuna.NetApi.TestNode", "Ajuna.NetApi.TestNode\Ajuna.NetApi.TestNode.csproj", "{1866CE09-C874-4E65-A443-49DCBFC583A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTee", "TestTee\TestTee.csproj", "{F6FDED00-4A60-4356-8684-8C8A89528C1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestTee", "TestTee\TestTee.csproj", "{F6FDED00-4A60-4356-8684-8C8A89528C1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ajuna.NetApiTeeExtTest", "Ajuna.NetApiTeeExtTest\Ajuna.NetApiTeeExtTest.csproj", "{B6B88A87-3304-4301-AA42-5DC2B0594F26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,14 @@ Global
 		{F6FDED00-4A60-4356-8684-8C8A89528C1E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F6FDED00-4A60-4356-8684-8C8A89528C1E}.Release|x64.ActiveCfg = Release|Any CPU
 		{F6FDED00-4A60-4356-8684-8C8A89528C1E}.Release|x64.Build.0 = Release|Any CPU
+		{B6B88A87-3304-4301-AA42-5DC2B0594F26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6B88A87-3304-4301-AA42-5DC2B0594F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6B88A87-3304-4301-AA42-5DC2B0594F26}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B6B88A87-3304-4301-AA42-5DC2B0594F26}.Debug|x64.Build.0 = Debug|Any CPU
+		{B6B88A87-3304-4301-AA42-5DC2B0594F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6B88A87-3304-4301-AA42-5DC2B0594F26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6B88A87-3304-4301-AA42-5DC2B0594F26}.Release|x64.ActiveCfg = Release|Any CPU
+		{B6B88A87-3304-4301-AA42-5DC2B0594F26}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

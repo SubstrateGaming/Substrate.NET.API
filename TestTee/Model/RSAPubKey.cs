@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TestTee.Model
 {
-    class TestRSA
+    public class RSAPubKey
     {
         public List<byte> N;
         public List<byte> E;

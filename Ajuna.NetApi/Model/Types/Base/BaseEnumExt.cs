@@ -32,6 +32,9 @@ namespace Ajuna.NetApi.Model.Types.Base
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
 
             TypeSize = p - start;
+
+            Bytes = new byte[TypeSize];
+            Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
@@ -92,6 +95,9 @@ namespace Ajuna.NetApi.Model.Types.Base
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
 
             TypeSize = p - start;
+
+            Bytes = new byte[TypeSize];
+            Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
@@ -157,6 +163,9 @@ namespace Ajuna.NetApi.Model.Types.Base
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
 
             TypeSize = p - start;
+
+            Bytes = new byte[TypeSize];
+            Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
@@ -231,6 +240,9 @@ namespace Ajuna.NetApi.Model.Types.Base
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
 
             TypeSize = p - start;
+
+            Bytes = new byte[TypeSize];
+            Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
@@ -312,6 +324,9 @@ namespace Ajuna.NetApi.Model.Types.Base
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
 
             TypeSize = p - start;
+
+            Bytes = new byte[TypeSize];
+            Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
@@ -400,6 +415,9 @@ namespace Ajuna.NetApi.Model.Types.Base
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
 
             TypeSize = p - start;
+
+            Bytes = new byte[TypeSize];
+            Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
@@ -495,6 +513,9 @@ namespace Ajuna.NetApi.Model.Types.Base
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
 
             TypeSize = p - start;
+
+            Bytes = new byte[TypeSize];
+            Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
@@ -597,6 +618,9 @@ namespace Ajuna.NetApi.Model.Types.Base
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
 
             TypeSize = p - start;
+
+            Bytes = new byte[TypeSize];
+            Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
@@ -706,6 +730,9 @@ namespace Ajuna.NetApi.Model.Types.Base
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
 
             TypeSize = p - start;
+
+            Bytes = new byte[TypeSize];
+            Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
@@ -820,6 +847,9 @@ namespace Ajuna.NetApi.Model.Types.Base
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
 
             TypeSize = p - start;
+
+            Bytes = new byte[TypeSize];
+            Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
@@ -941,6 +971,9 @@ namespace Ajuna.NetApi.Model.Types.Base
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
 
             TypeSize = p - start;
+
+            Bytes = new byte[TypeSize];
+            Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)

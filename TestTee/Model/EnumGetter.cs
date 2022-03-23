@@ -5,8 +5,8 @@ namespace Ajuna.NetApi.Model.AjunaWorker
 {
     public enum Getter
     {
-        teePublic,
-        trusted
+        TeePublic,
+        Trusted
     }
 
     public sealed class EnumGetter : BaseEnumExt<Getter, EnumPublicGetter, TrustedGetterSigned>
