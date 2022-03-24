@@ -130,11 +130,14 @@ namespace TestTee
 
             // - Create RSAPubKey from ShieldingKey
 
-            RSAPubKey rsaPubKey = GetTestRSA(shieldingKeyReturn.Value.Bytes);
+            var rsaPubKeyStr = new UTF8Encoding().GetString(UnwrapBytes(shieldingKeyReturn.Value.Bytes));
+            RSAPubKey rsaPubKey =  JsonConvert.DeserializeObject<RSAPubKey>(rsaPubKeyStr);
 
             // - Encrypt Encoded TrustedOperation with RSAPubKey
 
-            var cypherText =  Utils.RSAEncrypt(trustedOperation.Encode(), new RSAParameters{ Modulus = rsaPubKey.N.ToArray(), Exponent = rsaPubKey.E.ToArray() }, false);
+            var encryptedWithPub = RSA.Create(new RSAParameters { Modulus = rsaPubKey.N.ToArray(), Exponent = rsaPubKey.E.ToArray() });
+
+            var cypherText =  Utils.RSAEncrypt(trustedOperation.Encode(), encryptedWithPub.ExportParameters(false), false);
 
             // - ShardIdentifier
 
@@ -156,12 +159,15 @@ namespace TestTee
             await client.ConnectAsync(false, false, false, cancellationToken);
             var result = await client.InvokeAsync<byte[]>("author_submitAndWatchExtrinsic", request.Encode().Cast<object>().ToArray(), CancellationToken.None);
 
-            RpcReturnValue returnValue = new RpcReturnValue();
+            var returnValue = new RpcReturnValue();
             returnValue.Create(result);
 
             if (returnValue.DirectRequestStatus.Value == DirectRequestStatus.Error)
             {
-                PrintBytes(returnValue.Value.Bytes);
+                var byteArray = returnValue.Value.Bytes;
+                
+
+                PrintBytes(UnwrapBytes(byteArray));
             }
             else
             {
@@ -170,6 +176,27 @@ namespace TestTee
 
             await client.CloseAsync();
 
+        }
+
+        private static byte[] UnwrapBytes(byte[] byteArray)
+        {
+            var baseVec1 = new BaseVec<U8>();
+            baseVec1.Create(byteArray);
+
+            var bytes1 = new List<byte>();
+            foreach (var by in baseVec1.Value)
+            {
+                bytes1.Add(by.Value);
+            }
+            var baseVec2 = new BaseVec<U8>();
+            baseVec2.Create(bytes1.ToArray());
+
+            var bytes2 = new List<byte>();
+            foreach (var by in baseVec2.Value)
+            {
+                bytes2.Add(by.Value);
+            }
+            return bytes2.ToArray();
         }
 
         private static void PrintBytes(byte[] bytes)
@@ -194,38 +221,6 @@ namespace TestTee
             result.Create(u8Array);
 
             return result;
-        }
-
-        private static List<T> ToListOf<T>(byte[] array, Func<byte[], int, T> bitConverter)
-        {
-            var size = Marshal.SizeOf(typeof(T));
-            return Enumerable.Range(0, array.Length / size)
-                             .Select(i => bitConverter(array, i * size))
-                             .ToList();
-        }
-
-        private static RSAPubKey GetTestRSA(byte[] shieldingKeyReturn)
-        {
-            var baseVec1 = new BaseVec<U8>();
-            baseVec1.Create(shieldingKeyReturn);
-
-            var bytes1 = new List<byte>();
-            foreach (var by in baseVec1.Value)
-            {
-                bytes1.Add(by.Value);
-            }
-            var baseVec2 = new BaseVec<U8>();
-            baseVec2.Create(bytes1.ToArray());
-
-            var bytes2 = new List<byte>();
-            foreach (var by in baseVec2.Value)
-            {
-                bytes2.Add(by.Value);
-            }
-            bytes2.ToArray();
-
-            var rsaPubKeyStr = new UTF8Encoding().GetString(bytes2.ToArray());
-            return JsonConvert.DeserializeObject<RSAPubKey>(rsaPubKeyStr);
         }
 
         private static EnumTrustedOperation GetEnumTrustedOperation(AccountId32 account, EnumTrustedGetter trustedGetter)
