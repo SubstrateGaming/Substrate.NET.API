@@ -137,7 +137,7 @@ namespace TestTee
 
             var encryptedWithPub = RSA.Create(new RSAParameters { Modulus = rsaPubKey.N.ToArray(), Exponent = rsaPubKey.E.ToArray() });
 
-            var cypherText =  Utils.RSAEncrypt(trustedOperation.Encode(), encryptedWithPub.ExportParameters(false), false);
+            var cypherText =  Utils.RSAEncrypt(trustedOperation.Encode(), encryptedWithPub.ExportParameters(false), null);
 
             // - ShardIdentifier
 

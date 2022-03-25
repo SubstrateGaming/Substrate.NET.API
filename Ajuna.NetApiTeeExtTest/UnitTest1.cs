@@ -147,14 +147,16 @@ namespace Ajuna.NetApiTeeExtTest
             var csp = new RSACryptoServiceProvider(3072);
             
             var encodedBytes = trustedOperation.Encode();
-            var encrypted = Utils.RSAEncrypt(trustedOperation.Encode(), csp.ExportParameters(false), false);
-            var decrypted = Utils.RSADecrypt(encrypted, csp.ExportParameters(true), false);
+            var encrypted = Utils.RSAEncrypt(trustedOperation.Encode(), csp.ExportParameters(false), null);
+            var decrypted = Utils.RSADecrypt(encrypted, csp.ExportParameters(true), null);
 
             Assert.AreEqual(encodedBytes, decrypted);
 
             var encryptedWithPub = RSA.Create(rSAParameters);
-            var encryptedValue = Utils.RSAEncrypt(trustedOperation.Encode(), encryptedWithPub.ExportParameters(false), false);
+            var encryptedValue = Utils.RSAEncrypt(trustedOperation.Encode(), encryptedWithPub.ExportParameters(false), null);
             Assert.AreEqual(encryptedValue.Length, encrypted.Length);
+
+            var encryptedTest = Utils.RSAEncrypt(trustedOperation.Encode(), csp.ExportParameters(false), RSAEncryptionPadding.OaepSHA256);
         }
 
         [Test]
@@ -178,12 +180,12 @@ namespace Ajuna.NetApiTeeExtTest
                     //Pass the data to ENCRYPT, the public key information 
                     //(using RSACryptoServiceProvider.ExportParameters(false),
                     //and a boolean flag specifying no OAEP padding.
-                    encryptedData = Utils.RSAEncrypt(dataToEncrypt, RSA.ExportParameters(false), false);
+                    encryptedData = Utils.RSAEncrypt(dataToEncrypt, RSA.ExportParameters(false), null);
 
                     //Pass the data to DECRYPT, the private key information 
                     //(using RSACryptoServiceProvider.ExportParameters(true),
                     //and a boolean flag specifying no OAEP padding.
-                    decryptedData = Utils.RSADecrypt(encryptedData, RSA.ExportParameters(true), false);
+                    decryptedData = Utils.RSADecrypt(encryptedData, RSA.ExportParameters(true), null);
 
                     Assert.AreEqual(dataToEncrypt, decryptedData);
                 }

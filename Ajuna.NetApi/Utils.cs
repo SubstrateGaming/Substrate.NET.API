@@ -250,7 +250,7 @@ namespace Ajuna.NetApi
         /// <param name="RSAKeyInfo"></param>
         /// <param name="DoOAEPPadding"></param>
         /// <returns></returns>
-        public static byte[] RSAEncrypt(byte[] DataToEncrypt, RSAParameters RSAKeyInfo, bool DoOAEPPadding)
+        public static byte[] RSAEncrypt(byte[] DataToEncrypt, RSAParameters RSAKeyInfo, RSAEncryptionPadding OAEPPadding)
         {
             try
             {
@@ -266,7 +266,13 @@ namespace Ajuna.NetApi
                     //Encrypt the passed byte array and specify OAEP padding.  
                     //OAEP padding is only available on Microsoft Windows XP or
                     //later.  
-                    encryptedData = RSA.Encrypt(DataToEncrypt, RSAEncryptionPadding.);
+                    if (OAEPPadding != null) {
+
+                        encryptedData = RSA.Encrypt(DataToEncrypt, OAEPPadding);
+                    } else
+                    {
+                        encryptedData = RSA.Encrypt(DataToEncrypt, false);
+                    }
                 }
                 return encryptedData;
             }
@@ -288,7 +294,7 @@ namespace Ajuna.NetApi
         /// <param name="DoOAEPPadding"
         /// ></param>
         /// <returns></returns>
-        public static byte[] RSADecrypt(byte[] DataToDecrypt, RSAParameters RSAKeyInfo, bool DoOAEPPadding)
+        public static byte[] RSADecrypt(byte[] DataToDecrypt, RSAParameters RSAKeyInfo, RSAEncryptionPadding OAEPPadding)
         {
             try
             {
@@ -303,7 +309,20 @@ namespace Ajuna.NetApi
                     //Decrypt the passed byte array and specify OAEP padding.  
                     //OAEP padding is only available on Microsoft Windows XP or
                     //later.  
-                    decryptedData = RSA.Decrypt(DataToDecrypt, DoOAEPPadding);
+                    
+                    //Encrypt the passed byte array and specify OAEP padding.  
+                    //OAEP padding is only available on Microsoft Windows XP or
+                    //later.  
+                    if (OAEPPadding != null)
+                    {
+
+                        decryptedData = RSA.Decrypt(DataToDecrypt, OAEPPadding);
+                    }
+                    else
+                    {
+                        decryptedData = RSA.Decrypt(DataToDecrypt, false);
+                    }
+
                 }
                 return decryptedData;
             }
