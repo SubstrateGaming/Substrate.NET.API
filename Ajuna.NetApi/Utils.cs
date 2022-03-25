@@ -266,7 +266,7 @@ namespace Ajuna.NetApi
                     //Encrypt the passed byte array and specify OAEP padding.  
                     //OAEP padding is only available on Microsoft Windows XP or
                     //later.  
-                    encryptedData = RSA.Encrypt(DataToEncrypt, DoOAEPPadding);
+                    encryptedData = RSA.Encrypt(DataToEncrypt, RSAEncryptionPadding.);
                 }
                 return encryptedData;
             }
@@ -285,7 +285,8 @@ namespace Ajuna.NetApi
         /// </summary>
         /// <param name="DataToDecrypt"></param>
         /// <param name="RSAKeyInfo"></param>
-        /// <param name="DoOAEPPadding"></param>
+        /// <param name="DoOAEPPadding"
+        /// ></param>
         /// <returns></returns>
         public static byte[] RSADecrypt(byte[] DataToDecrypt, RSAParameters RSAKeyInfo, bool DoOAEPPadding)
         {
