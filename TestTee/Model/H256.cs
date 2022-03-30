@@ -20,7 +20,7 @@ namespace Ajuna.NetApi.Model.PrimitiveTypes
     /// <summary>
     /// >> 9 - Composite[primitive_types.H256]
     /// </summary>
-    public sealed class H256 : BaseType
+    public class H256 : BaseType
     {
         
         /// <summary>

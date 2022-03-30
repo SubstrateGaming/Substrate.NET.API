@@ -7,20 +7,25 @@ using Ajuna.NetApi.Model.Types;
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
 using Chaos.NaCl;
+using Nerdbank.Streams;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
+using Org.BouncyCastle.Security;
 using Schnorrkel.Keys;
 using SimpleBase;
+using StreamJsonRpc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Security;
 using System.Net.WebSockets;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -68,7 +73,7 @@ namespace TestTee
             var logconsole = new ConsoleTarget("logconsole");
 
             // Rules for mapping loggers to targets            
-            config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
+            //config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
 
             // Apply config           
@@ -112,70 +117,207 @@ namespace TestTee
 
         private static async Task MainAsync(CancellationToken cancellationToken)
         {
+            /**
+             * docker ps
+             * docker exec -it 7aeac2a21f93 /bin/bash
+             * ./integritee-cli trusted transfer //Alice //Bob 1000 --mrenclave 2CMLqGnL56xp4qkVDq4pmKKYJn4btSGF9brgGEsGW3qm --direct
+             */
+
+
+            var shardHex = "2CMLqGnL56xp4qkVDq4pmKKYJn4btSGF9brgGEsGW3qm";
+            var mrenclaveHex = "2CMLqGnL56xp4qkVDq4pmKKYJn4btSGF9brgGEsGW3qm";
+
             var client = new SubstrateClient(new Uri(Websocketurl));
-
-            // - TrustedOperation
-
-            var account = new AccountId32();
-            account.Create("0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d");
-
-            var trustedGetter = new EnumTrustedGetter();
-            trustedGetter.Create(TrustedGetter.Nonce, account);
-
-            EnumTrustedOperation trustedOperation = GetEnumTrustedOperation(account, trustedGetter);
-
-            // - Get ShieldingKey
 
             var shieldingKeyReturn = await ShieldingKeyAsync(client);
 
-            // - Create RSAPubKey from ShieldingKey
+            // - TrustedOperation
 
-            var rsaPubKeyStr = new UTF8Encoding().GetString(UnwrapBytes(shieldingKeyReturn.Value.Bytes));
-            RSAPubKey rsaPubKey =  JsonConvert.DeserializeObject<RSAPubKey>(rsaPubKeyStr);
 
-            // - Encrypt Encoded TrustedOperation with RSAPubKey
+            EnumTrustedOperation tOpPreBalance = CreateGetter(Alice, TrustedGetter.FreeBalance);
+            var balanceValuePre = await ExecuteTrustedOperationAsync(client, tOpPreBalance, shieldingKeyReturn, shardHex);
+            if (Unwrap(Wrapped.Balance, balanceValuePre, out Balance preBalance))
+            {
+                Console.WriteLine($"Pre-balance is {preBalance.Value}");
+            }
 
-            var encryptedWithPub = RSA.Create(new RSAParameters { Modulus = rsaPubKey.N.ToArray(), Exponent = rsaPubKey.E.ToArray() });
+            EnumTrustedOperation tOpNonce = CreateGetter(Alice, TrustedGetter.Nonce);
+            var nonceValue = await ExecuteTrustedOperationAsync(client, tOpNonce, shieldingKeyReturn, shardHex);
+            if (Unwrap(Wrapped.Nonce, nonceValue, out U32 nonce))
+            {
+                uint amount = 3333;
+                Console.WriteLine($"Current nonce is {nonce.Value}");
+                Console.WriteLine($"Doing a balance transfer of {amount}");
+                EnumTrustedOperation tOpTransfer = CreateCallBalanceTransfer(Alice, Bob, amount, nonce.Value, mrenclaveHex, shardHex);
+                var returnValue = await ExecuteTrustedOperationAsync(client, tOpTransfer, shieldingKeyReturn, shardHex);
+                if (Unwrap(Wrapped.Hash, returnValue, out H256 value)) {
+                    Console.WriteLine($"Hash is {Utils.Bytes2HexString(value.Value.Bytes)}");
+                }
+            }
+            Console.WriteLine($"Waiting ... 1 sec");
+            Thread.Sleep(1000);
+            EnumTrustedOperation tOpPostBalance = CreateGetter(Alice, TrustedGetter.FreeBalance);
+            var balanceValuePost = await ExecuteTrustedOperationAsync(client, tOpPostBalance, shieldingKeyReturn, shardHex);
+            if (Unwrap(Wrapped.Balance, balanceValuePost, out Balance postBalance))
+            {
+                Console.WriteLine($"Post-balance is {postBalance.Value}");
+            }
+;
 
-            var cypherText =  Utils.RSAEncrypt(trustedOperation.Encode(), encryptedWithPub.ExportParameters(false), null);
+            //Thread.Sleep(10000);
+
+            await client.CloseAsync();
+
+        }
+
+        private static bool Unwrap<T>(Wrapped wrapped, RpcReturnValue returnValue, out T result) where T : IType, new()
+        {
+            result = new T();
+
+            switch (returnValue.DirectRequestStatus.Value)
+            {
+                case DirectRequestStatus.Ok:
+                    break;
+
+                case DirectRequestStatus.TrustedOperationStatus:
+
+                    var valueBytes = returnValue.Value.Value.Select(p => p.Value).ToArray();
+
+                    switch (wrapped)
+                    {
+                        case Wrapped.Nonce:
+                            var nonceWrapped = new BaseOpt<BaseVec<U8>>();
+                            nonceWrapped.Create(valueBytes);
+                            if (nonceWrapped.OptionFlag)
+                            {
+                                var u32Wrapped = new BaseOpt<BaseVec<U8>>();
+                                var u32Bytes = nonceWrapped.Value.Value.Select(p => p.Value).ToArray();
+                                result.Create(u32Bytes);
+                                return true;
+                            }
+                            break;
+
+                        case Wrapped.Balance:
+                            var balanceWrapped = new BaseOpt<BaseVec<U8>>();
+                            balanceWrapped.Create(valueBytes);
+                            if (balanceWrapped.OptionFlag)
+                            {
+                                var u128Wrapped = new BaseOpt<BaseVec<U8>>();
+                                var u128Bytes = balanceWrapped.Value.Value.Select(p => p.Value).ToArray();
+                                result.Create(u128Bytes);
+                                return true;
+                            }
+                            break;
+
+                        case Wrapped.Hash:
+                            result.Create(valueBytes);
+                            return true;
+
+                        case Wrapped.Board:
+                            break;
+                    }
+
+
+                    break;
+
+                case DirectRequestStatus.Error:
+                    var byteArray = returnValue.Value.Bytes;
+                    PrintBytes(UnwrapBytes(byteArray));
+                    break;
+            }
+
+            return false;
+        }
+
+        private static async Task<RpcReturnValue> ExecuteTrustedOperationAsync(SubstrateClient client, EnumTrustedOperation trustedOperation, RpcReturnValue shieldingKeyReturn, string shardHex)
+        {
+            var cypherText = SignTrustedOperation(shieldingKeyReturn, trustedOperation);
 
             // - ShardIdentifier
-
             var shardId = new H256();
-            shardId.Create(Base58.Bitcoin.Decode("CAG7CwtvDb5AvC3yoxXetYqY97tGSUdywP1U6pgYf1Kh").ToArray());
+            shardId.Create(Base58.Bitcoin.Decode(shardHex).ToArray());
 
-            // - Create Request
-
-            var request = new Request
+            Request request = new Request
             {
                 Shard = shardId,
                 CypherText = VecU8FromBytes(cypherText)
             };
 
-            Console.WriteLine($"REQUEST = {Utils.Bytes2HexString(request.Encode())}");
+            // open connection
+            await client.ConnectAsync(false, false, false, CancellationToken.None);
 
-            // - Send Request
-
-            await client.ConnectAsync(false, false, false, cancellationToken);
             var result = await client.InvokeAsync<byte[]>("author_submitAndWatchExtrinsic", request.Encode().Cast<object>().ToArray(), CancellationToken.None);
 
             var returnValue = new RpcReturnValue();
             returnValue.Create(result);
 
-            if (returnValue.DirectRequestStatus.Value == DirectRequestStatus.Error)
+            return returnValue;
+
+        }
+
+        private static EnumTrustedOperation CreateGetter(Account name, TrustedGetter trustedGetter)
+        {
+            var account = new AccountId32();
+            account.Create(name.Bytes);
+
+            var enumTrustedGetter = new EnumTrustedGetter();
+            enumTrustedGetter.Create(trustedGetter, account);
+
+            return GetEnumTrustedOperation(account, enumTrustedGetter);
+        }
+
+        private static EnumTrustedOperation CreateCallBalanceTransfer(Account alice, Account bob, uint amount, uint nonce, string mrenclaveHex, string shardHex)
+        {
+            var aliceAccount = new AccountId32();
+            aliceAccount.Create(alice.Bytes);
+            
+            var bobAccount = new AccountId32();
+            bobAccount.Create(bob.Bytes);
+            
+            var balance = new Balance();
+            balance.Create(new BigInteger(amount));
+            
+            var balanceTransferTuple = new BaseTuple<AccountId32, AccountId32, Balance>();
+            balanceTransferTuple.Create(aliceAccount, bobAccount, balance);
+            
+            var trustedCall = new EnumTrustedCall();
+            trustedCall.Create(TrustedCall.BalanceTransfer, balanceTransferTuple);
+
+            var index = new Ajuna.NetApi.Model.AjunaWorker.Index();
+            index.Create(nonce);
+
+            var mrenclave = new H256();
+            mrenclave.Create(Base58.Bitcoin.Decode(mrenclaveHex).ToArray());
+
+            var shard = new ShardIdentifier();
+            shard.Create(Base58.Bitcoin.Decode(shardHex).ToArray());
+
+            var trustedCallPayload = new TrustedCallPayload
             {
-                var byteArray = returnValue.Value.Bytes;
-                
+                Call = trustedCall,
+                Nonce = index,
+                Mrenclave = mrenclave,
+                Shard = shard
+            };
 
-                PrintBytes(UnwrapBytes(byteArray));
-            }
-            else
-            {
-                Console.WriteLine($"RETURN = {returnValue}");
-            }
+            return GetEnumTrustedOperation(aliceAccount, trustedCallPayload);
+        }
 
-            await client.CloseAsync();
+        private static byte[] SignTrustedOperation(RpcReturnValue shieldingKeyReturn, EnumTrustedOperation trustedOperation)
+        {
+            // - Create RSAPubKey from ShieldingKey
 
+            var rsaPubKeyStr = new UTF8Encoding().GetString(UnwrapBytes(shieldingKeyReturn.Value.Bytes));
+            RSAPubKey rsaPubKey = JsonConvert.DeserializeObject<RSAPubKey>(rsaPubKeyStr);
+
+            // - Encrypt Encoded TrustedOperation with RSAPubKey
+
+            var rsaParameters = new RSAParameters { Modulus = rsaPubKey.N.ToArray(), Exponent = rsaPubKey.E.ToArray() };
+            Array.Reverse(rsaParameters.Modulus, 0, rsaParameters.Modulus.Length);
+            Array.Reverse(rsaParameters.Exponent, 0, rsaParameters.Exponent.Length);
+
+            var keyPair = DotNetUtilities.GetRsaPublicKey(rsaParameters);
+            return Utils.RSAEncryptBouncy(trustedOperation.Encode(), keyPair);
         }
 
         private static byte[] UnwrapBytes(byte[] byteArray)
@@ -241,6 +383,26 @@ namespace TestTee
 
             var trustedOperation = new EnumTrustedOperation();
             trustedOperation.Create(TrustedOperation.Get, getter);
+
+            return trustedOperation;
+        }
+
+        private static EnumTrustedOperation GetEnumTrustedOperation(AccountId32 aliceAccount, TrustedCallPayload trustedCallPayload)
+        {
+            var signature = new Signature();
+            var signatureArray = Schnorrkel.Sr25519v091.SignSimple(MiniSecretAlice.GetPair(), trustedCallPayload.Encode());
+            signature.Create(signatureArray);
+
+            var enumMultiSignature = new EnumMultiSignature();
+            enumMultiSignature.Create(MultiSignature.Sr25519, signature);
+
+            var trustedCallSigned = new TrustedCallSigned();
+            trustedCallSigned.Call = trustedCallPayload.Call;
+            trustedCallSigned.Nonce = trustedCallPayload.Nonce;
+            trustedCallSigned.Signature = enumMultiSignature;
+
+            var trustedOperation = new EnumTrustedOperation();
+            trustedOperation.Create(TrustedOperation.DirectCall, trustedCallSigned);
 
             return trustedOperation;
         }

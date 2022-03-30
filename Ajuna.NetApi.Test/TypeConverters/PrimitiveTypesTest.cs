@@ -46,11 +46,27 @@ namespace Ajuna.NetApi.Test
         }
 
         [Test]
+        public void PrimU16CreateTest()
+        {
+            var prim = new Ajuna.NetApi.Model.Types.Primitive.U16();
+            prim.Create(33333);
+            Assert.AreEqual("0x3582", Utils.Bytes2HexString(prim.Bytes));
+        }
+
+        [Test]
         public void PrimU32Test()
         {
             var prim = new Ajuna.NetApi.Model.Types.Primitive.U32();
             prim.Create("0xffffff00");
             Assert.AreEqual(16777215, prim.Value);
+        }
+
+        [Test]
+        public void PrimU32CreateTest()
+        {
+            var prim = new Ajuna.NetApi.Model.Types.Primitive.U32();
+            prim.Create(33333);
+            Assert.AreEqual("0x35820000", Utils.Bytes2HexString(prim.Bytes));
         }
 
         [Test]
@@ -62,11 +78,36 @@ namespace Ajuna.NetApi.Test
         }
 
         [Test]
+        public void PrimU64CreateTest()
+        {
+            var prim = new Ajuna.NetApi.Model.Types.Primitive.U64();
+            prim.Create(33333);
+            Assert.AreEqual("0x3582000000000000", Utils.Bytes2HexString(prim.Bytes));
+        }
+
+        [Test]
         public void PrimU128Test()
         {
             var prim = new Ajuna.NetApi.Model.Types.Primitive.U128();
             prim.Create("0xffffff00ffffff00ffffff00ffffff00");
             Assert.AreEqual(BigInteger.Parse("1329227916866238350086128051511361535"), prim.Value);
+        }
+
+        [Test]
+        public void PrimU128CreateTest()
+        {
+            var number = new BigInteger(33333);
+            var prim = new Ajuna.NetApi.Model.Types.Primitive.U128();
+            prim.Create(new BigInteger(33333));
+            Assert.AreEqual("0x35820000000000000000000000000000", Utils.Bytes2HexString(prim.Bytes));
+
+            var prim2 = new Ajuna.NetApi.Model.Types.Primitive.U128();
+            prim2.Create("0x35820000000000000000000000000000");
+            Assert.AreEqual(number, prim2.Value);
+
+            Assert.AreEqual(prim.Bytes, prim2.Bytes);
+
+
         }
 
         [Test]

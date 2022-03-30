@@ -4,6 +4,10 @@ using System.Linq;
 using SimpleBase;
 using Ajuna.NetApi.Model.Types.Base;
 using System.Security.Cryptography;
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Digests;
+using Org.BouncyCastle.Crypto.Encodings;
+using Org.BouncyCastle.Crypto.Parameters;
 
 namespace Ajuna.NetApi
 {
@@ -241,6 +245,14 @@ namespace Ajuna.NetApi
             var addrCh = Base58.Bitcoin.Encode(plainAddr).ToArray();
 
             return new string(addrCh);
+        }
+
+        public static byte[] RSAEncryptBouncy(byte[] dataToEncrypt, RsaKeyParameters rsaKeyParameters)
+        {
+            var encrypter = new OaepEncoding(new RsaEngine(), new Sha256Digest(), new Sha256Digest(), null);
+            encrypter.Init(true, rsaKeyParameters);
+            var cipher = encrypter.ProcessBlock(dataToEncrypt, 0, dataToEncrypt.Length);
+            return cipher;
         }
 
         /// <summary>

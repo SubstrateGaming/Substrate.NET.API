@@ -10,7 +10,7 @@ namespace Ajuna.NetApi.Model.AjunaWorker
         Error,
     }
 
-    public sealed class EnumDirectRequestStatus : BaseEnumExt<DirectRequestStatus, BaseVoid, BaseVoid, BaseVoid>
+    public sealed class EnumDirectRequestStatus : BaseEnumExt<DirectRequestStatus, BaseVoid, EnumTrustedOperationStatus, BaseVoid>
     {
     }
 

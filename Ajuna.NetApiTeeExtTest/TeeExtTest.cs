@@ -8,17 +8,30 @@ using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using Org.BouncyCastle.Asn1.Pkcs;
+using Org.BouncyCastle.Asn1.X509;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Digests;
+using Org.BouncyCastle.Crypto.Encodings;
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Generators;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.Pkcs;
+using Org.BouncyCastle.Security;
+using Org.BouncyCastle.X509;
 using Schnorrkel.Keys;
 using SimpleBase;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
 using TestTee.Model;
 
 namespace Ajuna.NetApiTeeExtTest
 {
-    public class Tests
+    public class TeeExtTest
     {
 
         // Secret Key URI `//Alice` is account:
@@ -107,6 +120,53 @@ namespace Ajuna.NetApiTeeExtTest
             // 748A42168264878EDCAD05299251D118750C033F4C8F19D5905C4C4CB08A7B5164667CA74FB69C78B4B86E2001CCC228BE7D447C2A0624A91C3224E581380D8E - Signature
         }
 
+        [Test]
+        public void TrustedCallTest()
+        {
+            var aliceAccount = new AccountId32();
+            aliceAccount.Create("0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d");
+
+            var bobAccount = new AccountId32();
+            bobAccount.Create("0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48");
+
+            var balance = new Balance();
+            balance.Create(new BigInteger(33333));
+
+            var balanceTransferTuple = new BaseTuple<AccountId32, AccountId32, Balance>();
+            balanceTransferTuple.Create(aliceAccount, bobAccount, balance);
+
+            Assert.AreEqual("0xD43593C715FDD31C61141ABD04A99FD6822C8558854CCDE39A5684E7A56DA27D8EAF04151687736326C9FEA17E25FC5287613693C912909CB226AA4794F26A4835820000000000000000000000000000", Utils.Bytes2HexString(balanceTransferTuple.Encode()));
+
+            var trustedCall = new EnumTrustedCall();
+            trustedCall.Create(TrustedCall.BalanceTransfer, balanceTransferTuple);
+            //                 ----------------------------------------------------------------------------------------------------------------------------------12345678901234567890123456789012
+            //                 0xD43593C715FDD31C61141ABD04A99FD6822C8558854CCDE39A5684E7A56DA27D8EAF04151687736326C9FEA17E25FC5287613693C912909CB226AA4794F26A48358200
+            Assert.AreEqual("0x01D43593C715FDD31C61141ABD04A99FD6822C8558854CCDE39A5684E7A56DA27D8EAF04151687736326C9FEA17E25FC5287613693C912909CB226AA4794F26A4835820000000000000000000000000000", Utils.Bytes2HexString(trustedCall.Encode()));
+
+            var index = new NetApi.Model.AjunaWorker.Index();
+            index.Create(1);
+
+            var mrenclave = new H256();
+            mrenclave.Create("0xA5CFDD7152360A2C78859B5596194642720139FDF5CBF621598D2B7B53A763BC");
+
+            var shard = new ShardIdentifier();
+            shard.Create("0xA5CFDD7152360A2C78859B5596194642720139FDF5CBF621598D2B7B53A763BC");
+
+            var trustedCallPayload = new TrustedCallPayload();
+            //trustedCallPayload.Create("0x01D43593C715FDD31C61141ABD04A99FD6822C8558854CCDE39A5684E7A56DA27D8EAF04151687736326C9FEA17E25FC5287613693C912909CB226AA4794F26A483582000000000000000000000000000001000000A5CFDD7152360A2C78859B5596194642720139FDF5CBF621598D2B7B53A763BCA5CFDD7152360A2C78859B5596194642720139FDF5CBF621598D2B7B53A763BC");
+            trustedCallPayload.Call = trustedCall;
+            trustedCallPayload.Nonce = index;
+            trustedCallPayload.Mrenclave = mrenclave;
+            trustedCallPayload.Shard = shard;
+
+            Assert.AreEqual("0x01D43593C715FDD31C61141ABD04A99FD6822C8558854CCDE39A5684E7A56DA27D8EAF04151687736326C9FEA17E25FC5287613693C912909CB226AA4794F26A483582000000000000000000000000000001000000A5CFDD7152360A2C78859B5596194642720139FDF5CBF621598D2B7B53A763BCA5CFDD7152360A2C78859B5596194642720139FDF5CBF621598D2B7B53A763BC", Utils.Bytes2HexString(trustedCallPayload.Encode()));
+
+            //Assert.AreEqual("0x00000000", Utils.Bytes2HexString(trustedCallPayload.Call.Bytes));
+            Assert.AreEqual("0x01000000", Utils.Bytes2HexString(trustedCallPayload.Nonce.Bytes));
+            Assert.AreEqual("0xA5CFDD7152360A2C78859B5596194642720139FDF5CBF621598D2B7B53A763BC", Utils.Bytes2HexString(trustedCallPayload.Mrenclave.Value.Bytes));
+            Assert.AreEqual("0xA5CFDD7152360A2C78859B5596194642720139FDF5CBF621598D2B7B53A763BC", Utils.Bytes2HexString(trustedCallPayload.Shard.Value.Bytes));
+        }
+
 
         //./integritee-cli -U ws://host.docker.internal trusted get-nonce //Alice --mrenclave CAG7CwtvDb5AvC3yoxXetYqY97tGSUdywP1U6pgYf1Kh
         //send trusted getter nonce from 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
@@ -128,7 +188,8 @@ namespace Ajuna.NetApiTeeExtTest
             
             var mrenclave = "CAG7CwtvDb5AvC3yoxXetYqY97tGSUdywP1U6pgYf1Kh";
 
-            var shieldingKey = "{\"n\":[229,138,133,93,173,243,195,215,194,205,111,49,66,187,95,125,248,141,38,60,1,202,72,211,75,144,125,255,109,54,6,91,220,1,254,161,108,230,118,7,126,16,104,226,243,124,243,187,87,96,47,184,212,10,232,195,174,59,49,214,126,121,78,154,239,245,85,250,147,52,171,70,39,182,150,170,131,156,13,96,96,107,249,253,32,193,253,32,200,157,47,164,69,21,238,121,194,36,63,217,253,253,70,192,193,42,255,80,42,28,91,163,211,18,57,196,150,3,22,230,176,250,37,176,232,209,125,223,194,104,173,156,78,152,181,70,24,143,169,78,149,1,52,157,192,194,195,253,84,46,38,58,21,25,15,230,40,2,120,155,183,227,50,22,4,64,241,227,219,190,106,106,47,204,7,7,3,152,233,239,168,181,11,46,132,27,189,27,27,133,207,91,98,152,9,116,152,19,225,166,146,92,148,249,9,32,196,85,187,115,140,126,91,30,185,226,64,124,82,165,215,160,237,232,252,65,124,221,6,79,58,242,201,211,254,3,137,245,1,222,248,183,246,198,72,61,35,230,225,19,42,50,107,128,154,255,255,178,232,16,219,134,163,66,82,178,169,233,161,73,165,72,199,9,150,173,86,94,196,27,212,15,16,99,161,188,15,212,71,212,21,83,38,222,185,158,19,246,220,255,162,136,2,160,133,32,115,102,218,191,74,214,32,228,54,179,196,197,116,100,111,45,104,71,31,79,131,89,241,246,76,133,205,249,214,145,114,98,50,62,69,116,104,173,24,224,3,103,177,216,217,117,39,7,190,209,114,216,141,185,2,161,90,195,74,21,159,106,206,135,79,30,185,208,194,43,93,70,126,224,231,33,125,169],\"e\":[1,0,0,1]}";
+            var shieldingKey = "{\"n\":[173,153,106,43,165,76,224,123,211,135,2,24,77,235,68,192,137,107,205,14,241,53,4,165,127,253,30,115,1,197,118,120,72,34,20,202,1,150,46,165,5,184,99,160,237,76,158,220,185,67,250,232,24,49,179,155,185,238,199,113,42,26,232,223,116,185,152,41,210,17,74,114,21,129,107,8,179,104,29,136,39,8,212,150,199,244,169,66,6,90,189,220,15,108,38,61,94,25,189,26,123,47,106,86,255,56,25,58,99,97,48,190,178,55,176,247,214,236,241,146,231,76,255,152,35,38,34,243,128,230,1,217,158,177,162,15,40,173,1,60,38,118,44,152,237,118,247,103,229,78,18,113,225,38,225,32,113,233,61,108,46,218,184,79,227,190,229,251,210,91,190,58,245,235,167,213,45,35,158,130,174,188,85,222,177,157,160,84,97,75,169,196,136,192,15,57,88,48,140,141,151,20,105,14,211,10,175,3,215,83,151,176,100,243,245,217,107,60,214,180,170,81,80,159,215,246,196,18,167,42,223,134,225,244,208,113,48,246,52,113,20,159,135,140,136,121,254,24,199,86,172,84,131,72,20,244,99,111,122,48,35,199,92,182,41,59,134,142,235,3,102,134,215,140,109,29,88,23,84,107,144,66,135,52,12,120,62,22,94,146,185,34,221,231,29,0,140,37,129,242,8,109,137,67,4,132,165,177,207,121,187,169,1,243,25,167,98,1,203,12,75,47,146,155,88,71,238,140,13,236,219,10,1,15,21,48,106,207,98,7,187,121,76,142,74,66,77,207,189,205,249,27,79,212,237,255,64,246,131,151,219,86,74,175,2,62,192,76,6,77,29,164,176,208,196,100,56,89,48,161,51,7,19,141],\"e\":[1,0,0,1]}";
+            //var shieldingKey = "{\"n\":[229,138,133,93,173,243,195,215,194,205,111,49,66,187,95,125,248,141,38,60,1,202,72,211,75,144,125,255,109,54,6,91,220,1,254,161,108,230,118,7,126,16,104,226,243,124,243,187,87,96,47,184,212,10,232,195,174,59,49,214,126,121,78,154,239,245,85,250,147,52,171,70,39,182,150,170,131,156,13,96,96,107,249,253,32,193,253,32,200,157,47,164,69,21,238,121,194,36,63,217,253,253,70,192,193,42,255,80,42,28,91,163,211,18,57,196,150,3,22,230,176,250,37,176,232,209,125,223,194,104,173,156,78,152,181,70,24,143,169,78,149,1,52,157,192,194,195,253,84,46,38,58,21,25,15,230,40,2,120,155,183,227,50,22,4,64,241,227,219,190,106,106,47,204,7,7,3,152,233,239,168,181,11,46,132,27,189,27,27,133,207,91,98,152,9,116,152,19,225,166,146,92,148,249,9,32,196,85,187,115,140,126,91,30,185,226,64,124,82,165,215,160,237,232,252,65,124,221,6,79,58,242,201,211,254,3,137,245,1,222,248,183,246,198,72,61,35,230,225,19,42,50,107,128,154,255,255,178,232,16,219,134,163,66,82,178,169,233,161,73,165,72,199,9,150,173,86,94,196,27,212,15,16,99,161,188,15,212,71,212,21,83,38,222,185,158,19,246,220,255,162,136,2,160,133,32,115,102,218,191,74,214,32,228,54,179,196,197,116,100,111,45,104,71,31,79,131,89,241,246,76,133,205,249,214,145,114,98,50,62,69,116,104,173,24,224,3,103,177,216,217,117,39,7,190,209,114,216,141,185,2,161,90,195,74,21,159,106,206,135,79,30,185,208,194,43,93,70,126,224,231,33,125,169],\"e\":[1,0,0,1]}";
             var rSAPublicKey = JsonConvert.DeserializeObject<RSAPubKey>(shieldingKey);
             var rSAParameters = new RSAParameters { Modulus = rSAPublicKey.N.ToArray(), Exponent = rSAPublicKey.E.ToArray() };
 
@@ -156,7 +217,93 @@ namespace Ajuna.NetApiTeeExtTest
             var encryptedValue = Utils.RSAEncrypt(trustedOperation.Encode(), encryptedWithPub.ExportParameters(false), null);
             Assert.AreEqual(encryptedValue.Length, encrypted.Length);
 
-            var encryptedTest = Utils.RSAEncrypt(trustedOperation.Encode(), csp.ExportParameters(false), RSAEncryptionPadding.OaepSHA256);
+            Array.Reverse(rSAParameters.Modulus, 0, rSAParameters.Modulus.Length);
+            Array.Reverse(rSAParameters.Exponent, 0, rSAParameters.Exponent.Length);
+            var keyPair = DotNetUtilities.GetRsaPublicKey(rSAParameters);
+
+            // create encrypter
+            var trustedOperationEncoded = trustedOperation.Encode();
+            var encrypter = new OaepEncoding(new RsaEngine(), new Sha256Digest(), new Sha256Digest(), null);
+            encrypter.Init(true, keyPair);
+            var cipher = encrypter.ProcessBlock(trustedOperationEncoded, 0, trustedOperationEncoded.Length);
+            Assert.AreEqual(384, cipher.Length);
+        }
+
+
+        [Test]
+        public void RpcResponseTestGetter()
+        {
+            var byteArray = JsonConvert.DeserializeObject<byte[]>("[24,1,16,0,0,0,0,0,1,0]");
+            var returnValue = new RpcReturnValue();
+            returnValue.Create(byteArray);
+
+            Assert.AreEqual(DirectRequestStatus.TrustedOperationStatus, returnValue.DirectRequestStatus.Value);
+            Assert.AreEqual(false, returnValue.DoWatch.Value);
+
+            var valueBytes = returnValue.Value.Value.Select(p => p.Value).ToArray();
+
+            var nonceWrapped = new BaseOpt<BaseVec<U8>>();
+            nonceWrapped.Create(valueBytes);
+            Assert.AreEqual(true, nonceWrapped.OptionFlag);
+
+            var u32Wrapped = new BaseOpt<BaseVec<U8>>();
+            var u32Bytes = nonceWrapped.Value.Value.Select(p => p.Value).ToArray();
+
+            var u32 = new U32();
+            u32.Create(u32Bytes);
+
+            Assert.AreEqual(0, u32.Value);
+        }
+
+        [Test]
+        public void RpcResponseTestCallOne()
+        {
+            var returnValue = new RpcReturnValue();
+            returnValue.Create("0x80A11AD839C6C37B6A2A5A504FDD78E7582306A47E6A7BE2AD2CFD2607585A2289010100");
+            //returnValue.Create("0x8029856E2D300F7E09E9AB750FFEE1B22B0E40E3EA94119E4E4F4A78024F9844CD010100");
+            //returnValue.Create("0x80F9548B1BA93A3CCFA51A799A1416BC9029B4537B982844C3B8348AD6E6B3F583010100");
+            Assert.AreEqual(DirectRequestStatus.TrustedOperationStatus, returnValue.DirectRequestStatus.Value);
+            Assert.AreEqual(true, returnValue.DoWatch.Value);
+
+            var valueBytes = returnValue.Value.Value.Select(p => p.Value).ToArray();
+
+            //var hashWrapped = new BaseOpt<BaseVec<U8>>();
+            //hashWrapped.Create(valueBytes);
+            //Assert.AreEqual(true, hashWrapped.OptionFlag);
+
+            //var h256Wrapped = new BaseOpt<BaseVec<U8>>();
+            //var h256Bytes = h256Wrapped.Value.Value.Select(p => p.Value).ToArray();
+
+            var h256 = new H256();
+            h256.Create(valueBytes);
+
+            Assert.AreEqual(32, h256.Value.Value.Count());
+            Assert.AreEqual("0xA11AD839C6C37B6A2A5A504FDD78E7582306A47E6A7BE2AD2CFD2607585A2289", Utils.Bytes2HexString(valueBytes));
+
+            var hexString = "0x80F9548B1BA93A3CCFA51A799A1416BC9029B4537B982844C3B8348AD6E6B3F583000104DAB3B9F038DD4E16F608F46DC29696E4C2EE6D27D07DCE62B03282C2B948ABA4";
+        }
+
+        [Test]
+        public void RpcResponseCallBalanceTransfer()
+        {
+            var returnValue = new RpcReturnValue();
+            returnValue.Create("0x80F9548B1BA93A3CCFA51A799A1416BC9029B4537B982844C3B8348AD6E6B3F583000104DAB3B9F038DD4E16F608F46DC29696E4C2EE6D27D07DCE62B03282C2B948ABA4");
+            Assert.AreEqual(DirectRequestStatus.TrustedOperationStatus, returnValue.DirectRequestStatus.Value);
+            var enumTrustedOperation = ((EnumTrustedOperationStatus)returnValue.DirectRequestStatus.Value2);
+            Assert.AreEqual(TrustedOperationStatus.InSidechainBlock, enumTrustedOperation.Value);
+            Assert.AreEqual("0xDAB3B9F038DD4E16F608F46DC29696E4C2EE6D27D07DCE62B03282C2B948ABA4", Utils.Bytes2HexString(((H256)enumTrustedOperation.Value2).Value.Bytes));
+            Assert.AreEqual(false, returnValue.DoWatch.Value);
+
+            var valueBytes = returnValue.Value.Value.Select(p => p.Value).ToArray();
+
+            var h256 = new H256();
+            h256.Create(valueBytes);
+
+            Assert.AreEqual(32, h256.Value.Value.Count());
+
+            Assert.AreEqual("0xF9548B1BA93A3CCFA51A799A1416BC9029B4537B982844C3B8348AD6E6B3F583", Utils.Bytes2HexString(h256.Value.Bytes));
+
+
         }
 
         [Test]
@@ -195,6 +342,21 @@ namespace Ajuna.NetApiTeeExtTest
                 Assert.Fail();
             }
         }
+
+        [Test]
+        public void ReturnValueTest()
+        {
+            var mockReturn = "0x801F98528531A81703C2A14932AA6442B5F11644968F1C853C7CC1E2F9EFAD12E3010100";
+            
+            var returnValue = new RpcReturnValue();
+            returnValue.Create(mockReturn);
+
+            Assert.AreEqual(DirectRequestStatus.TrustedOperationStatus, returnValue.DirectRequestStatus.Value);
+            Assert.AreEqual(TrustedOperationStatus.Submitted, ((EnumTrustedOperationStatus)returnValue.DirectRequestStatus.Value2).Value);
+            Assert.AreEqual(true, returnValue.DoWatch.Value);
+            Assert.AreEqual("0x801F98528531A81703C2A14932AA6442B5F11644968F1C853C7CC1E2F9EFAD12E3", Utils.Bytes2HexString(returnValue.Value.Bytes));
+        }
+
 
         private static BaseVec<U8> VecU8FromBytes(byte[] vs)
         {

@@ -6,7 +6,6 @@ namespace Ajuna.NetApi.Test
 {
     public class BaseTypesTest
     {
-
         [Test]
         public void BaseTupleTest()
         {
@@ -23,5 +22,25 @@ namespace Ajuna.NetApi.Test
             Assert.AreEqual(3, t3.Value.Length);
         }
 
+        [Test]
+        public void BaseTupleCreateTest()
+        {
+            var u16 = new Ajuna.NetApi.Model.Types.Primitive.U16();
+            u16.Create("0x2a00");
+
+            var u32 = new Ajuna.NetApi.Model.Types.Primitive.U32();
+            u32.Create("0xffffff00");
+
+            var tupleOfTwo_1 = new BaseTuple<Ajuna.NetApi.Model.Types.Primitive.U16, Ajuna.NetApi.Model.Types.Primitive.U32>();
+            tupleOfTwo_1.Create(u16, u32);
+
+            Assert.AreEqual("0x2A00FFFFFF00", Utils.Bytes2HexString(tupleOfTwo_1.Encode()));
+
+            var tupleOfTwo_2 = new BaseTuple<Ajuna.NetApi.Model.Types.Primitive.U16, Ajuna.NetApi.Model.Types.Primitive.U32>();
+            tupleOfTwo_2.Create("0x2A00FFFFFF00");
+
+            Assert.AreEqual(u16.Value, ((Ajuna.NetApi.Model.Types.Primitive.U16)tupleOfTwo_2.Value[0]).Value);
+            Assert.AreEqual(u32.Value, ((Ajuna.NetApi.Model.Types.Primitive.U32)tupleOfTwo_2.Value[1]).Value);
+        }
     }
 }
