@@ -36,9 +36,9 @@ namespace Ajuna.NetApi.Test.Extrinsic
             var startEra = new Hash();
             startEra.Create(blockHash);
 
-            var assetTxPayment = new ChargeAssetTxPayment(0, 0);
+            //var assetTxPayment = new ChargeAssetTxPayment(0, 0);
 
-            var signedExtensions = new SignedExtensions(259, 1, genesis, startEra, era, 0, assetTxPayment);
+            var signedExtensions = new SignedExtensions(259, 1, genesis, startEra, era, 0, 0);
 
             var bytes = Utils.StringValueArrayBytesArray(
                 "58, 6, 0, 0, 0, 3, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0");

@@ -79,10 +79,10 @@ namespace Ajuna.NetApi
         /// <returns></returns>
         /// <exception cref="UnCheckedExtrinsic">signed, account, method, era, nonce, tip, genesis, startEra</exception>
         public static UnCheckedExtrinsic SubmitExtrinsic(bool signed, Account account, Method method, Era era,
-            uint nonce, ChargeAssetTxPayment assetTxPayment, Hash genesis, Hash startEra, RuntimeVersion runtime)
+            uint nonce, uint tip, Hash genesis, Hash startEra, RuntimeVersion runtime)
         {
             var uncheckedExtrinsic =
-                new UnCheckedExtrinsic(signed, account, method, era, nonce, assetTxPayment, genesis, startEra);
+                new UnCheckedExtrinsic(signed, account, method, era, nonce, tip, genesis, startEra);
 
             if (!signed)
             {

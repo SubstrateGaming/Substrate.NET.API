@@ -15,11 +15,15 @@ using System.Collections.Generic;
 
 namespace Ajuna.NetApi.Model.Base
 {
-
-    public sealed class Arr4U8 : BaseType
+    
+    
+    /// <summary>
+    /// >> 169 - Array
+    /// </summary>
+    public sealed class Arr4U32 : BaseType
     {
         
-        private Ajuna.NetApi.Model.Types.Primitive.U8[] _value;
+        private Ajuna.NetApi.Model.Types.Primitive.U32[] _value;
         
         public override int TypeSize
         {
@@ -29,7 +33,7 @@ namespace Ajuna.NetApi.Model.Base
             }
         }
         
-        public Ajuna.NetApi.Model.Types.Primitive.U8[] Value
+        public Ajuna.NetApi.Model.Types.Primitive.U32[] Value
         {
             get
             {
@@ -43,7 +47,7 @@ namespace Ajuna.NetApi.Model.Base
         
         public override string TypeName()
         {
-            return string.Format("[{0}; {1}]", new Ajuna.NetApi.Model.Types.Primitive.U8().TypeName(), this.TypeSize);
+            return string.Format("[{0}; {1}]", new Ajuna.NetApi.Model.Types.Primitive.U32().TypeName(), this.TypeSize);
         }
         
         public override byte[] Encode()
@@ -56,15 +60,15 @@ namespace Ajuna.NetApi.Model.Base
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            var array = new Ajuna.NetApi.Model.Types.Primitive.U8[TypeSize];
-            for (var i = 0; i < array.Length; i++) {var t = new Ajuna.NetApi.Model.Types.Primitive.U8();t.Decode(byteArray, ref p);array[i] = t;};
+            var array = new Ajuna.NetApi.Model.Types.Primitive.U32[TypeSize];
+            for (var i = 0; i < array.Length; i++) {var t = new Ajuna.NetApi.Model.Types.Primitive.U32();t.Decode(byteArray, ref p);array[i] = t;};
             var bytesLength = p - start;
             Bytes = new byte[bytesLength];
             Array.Copy(byteArray, start, Bytes, 0, bytesLength);
             Value = array;
         }
         
-        public void Create(Ajuna.NetApi.Model.Types.Primitive.U8[] array)
+        public void Create(Ajuna.NetApi.Model.Types.Primitive.U32[] array)
         {
             Value = array;
             Bytes = Encode();

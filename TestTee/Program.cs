@@ -1,6 +1,8 @@
 ﻿using Ajuna.NetApi;
 using Ajuna.NetApi.Model.AjunaWorker;
+using Ajuna.NetApi.Model.PalletConnectfour;
 using Ajuna.NetApi.Model.PrimitiveTypes;
+using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.SpCore;
 using Ajuna.NetApi.Model.SpRuntime;
 using Ajuna.NetApi.Model.Types;
@@ -40,7 +42,7 @@ namespace TestTee
     {
         //private const string Websocketurl = "ws://127.0.0.1:9944";
         //private const string Websocketurl = "wss://127.0.0.1:2001";
-        private const string Websocketurl = "ws://127.0.0.1:2000";
+        //private const string Websocketurl = "ws://127.0.0.1:2000";
         // private const string Websocketurl = "wss://demo.piesocket.com/v3/channel_1?api_key=oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm&notify_self";
 
         // Secret Key URI `//Alice` is account:
@@ -117,6 +119,15 @@ namespace TestTee
 
         private static async Task MainAsync(CancellationToken cancellationToken)
         {
+            //await LaunchGameAsync("ws://127.0.0.1:9944");
+
+            await RunGameAsync("ws://127.0.0.1:2000");
+
+
+        }
+
+        private static async Task RunGameAsync(string websocketurl)
+        {
             /**
              * docker ps
              * docker exec -it 7aeac2a21f93 /bin/bash
@@ -127,46 +138,119 @@ namespace TestTee
             var shardHex = "2CMLqGnL56xp4qkVDq4pmKKYJn4btSGF9brgGEsGW3qm";
             var mrenclaveHex = "2CMLqGnL56xp4qkVDq4pmKKYJn4btSGF9brgGEsGW3qm";
 
-            var client = new SubstrateClient(new Uri(Websocketurl));
+            var client = new SubstrateClient(new Uri(websocketurl));
 
             var shieldingKeyReturn = await ShieldingKeyAsync(client);
 
             // - TrustedOperation
 
-
-            EnumTrustedOperation tOpPreBalance = CreateGetter(Alice, TrustedGetter.FreeBalance);
-            var balanceValuePre = await ExecuteTrustedOperationAsync(client, tOpPreBalance, shieldingKeyReturn, shardHex);
-            if (Unwrap(Wrapped.Balance, balanceValuePre, out Balance preBalance))
+            EnumTrustedOperation tOpBoard = CreateGetter(Alice, TrustedGetter.Board);
+            var boardValue = await ExecuteTrustedOperationAsync(client, tOpBoard, shieldingKeyReturn, shardHex);
+            if (Unwrap(Wrapped.Board, boardValue, out BaseOpt<BoardStruct> optBoard))
             {
-                Console.WriteLine($"Pre-balance is {preBalance.Value}");
-            }
-
-            EnumTrustedOperation tOpNonce = CreateGetter(Alice, TrustedGetter.Nonce);
-            var nonceValue = await ExecuteTrustedOperationAsync(client, tOpNonce, shieldingKeyReturn, shardHex);
-            if (Unwrap(Wrapped.Nonce, nonceValue, out U32 nonce))
-            {
-                uint amount = 3333;
-                Console.WriteLine($"Current nonce is {nonce.Value}");
-                Console.WriteLine($"Doing a balance transfer of {amount}");
-                EnumTrustedOperation tOpTransfer = CreateCallBalanceTransfer(Alice, Bob, amount, nonce.Value, mrenclaveHex, shardHex);
-                var returnValue = await ExecuteTrustedOperationAsync(client, tOpTransfer, shieldingKeyReturn, shardHex);
-                if (Unwrap(Wrapped.Hash, returnValue, out H256 value)) {
-                    Console.WriteLine($"Hash is {Utils.Bytes2HexString(value.Value.Bytes)}");
+                if (optBoard != null && optBoard.OptionFlag)
+                {
+                    Console.WriteLine($"Opt. Board is {optBoard?.OptionFlag}");
                 }
+                
             }
-            Console.WriteLine($"Waiting ... 1 sec");
-            Thread.Sleep(1000);
-            EnumTrustedOperation tOpPostBalance = CreateGetter(Alice, TrustedGetter.FreeBalance);
-            var balanceValuePost = await ExecuteTrustedOperationAsync(client, tOpPostBalance, shieldingKeyReturn, shardHex);
-            if (Unwrap(Wrapped.Balance, balanceValuePost, out Balance postBalance))
-            {
-                Console.WriteLine($"Post-balance is {postBalance.Value}");
-            }
-;
+
+            /**
+                EnumTrustedOperation tOpPreBalance = CreateGetter(Alice, TrustedGetter.FreeBalance);
+                var balanceValuePre = await ExecuteTrustedOperationAsync(client, tOpPreBalance, shieldingKeyReturn, shardHex);
+                if (Unwrap(Wrapped.Balance, balanceValuePre, out Balance preBalance))
+                {
+                    Console.WriteLine($"Pre-balance is {preBalance.Value}");
+                }
+
+                EnumTrustedOperation tOpNonce = CreateGetter(Alice, TrustedGetter.Nonce);
+                var nonceValue = await ExecuteTrustedOperationAsync(client, tOpNonce, shieldingKeyReturn, shardHex);
+                if (Unwrap(Wrapped.Nonce, nonceValue, out U32 nonce))
+                {
+                    uint amount = 3333;
+                    Console.WriteLine($"Current nonce is {nonce.Value}");
+                    Console.WriteLine($"Doing a balance transfer of {amount}");
+                    EnumTrustedOperation tOpTransfer = CreateCallBalanceTransfer(Alice, Bob, amount, nonce.Value, mrenclaveHex, shardHex);
+                    var returnValue = await ExecuteTrustedOperationAsync(client, tOpTransfer, shieldingKeyReturn, shardHex);
+                    if (Unwrap(Wrapped.Hash, returnValue, out H256 value)) {
+                        Console.WriteLine($"Hash is {Utils.Bytes2HexString(value.Value.Bytes)}");
+                    }
+                }
+                Console.WriteLine($"Waiting ... 1 sec");
+                Thread.Sleep(1000);
+                EnumTrustedOperation tOpPostBalance = CreateGetter(Alice, TrustedGetter.FreeBalance);
+                var balanceValuePost = await ExecuteTrustedOperationAsync(client, tOpPostBalance, shieldingKeyReturn, shardHex);
+                if (Unwrap(Wrapped.Balance, balanceValuePost, out Balance postBalance))
+                {
+                    Console.WriteLine($"Post-balance is {postBalance.Value}");
+                }
+            */
 
             //Thread.Sleep(10000);
 
             await client.CloseAsync();
+        }
+
+        /// <summary>
+        /// Simple extrinsic tester
+        /// </summary>
+        /// <param name="subscriptionId"></param>
+        /// <param name="extrinsicUpdate"></param>
+        private static void ActionExtrinsicUpdate(string subscriptionId, ExtrinsicStatus extrinsicUpdate)
+        {
+            switch (extrinsicUpdate.ExtrinsicState)
+            {
+                case ExtrinsicState.None:
+                   if (extrinsicUpdate.InBlock.Value?.Length > 0 || extrinsicUpdate.Finalized.Value?.Length > 0) {
+
+                   };
+                   break;
+                case ExtrinsicState.Future:
+                    break;
+                case ExtrinsicState.Ready:
+                    break;
+                case ExtrinsicState.Dropped:
+                    break;
+                case ExtrinsicState.Invalid:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private static async Task LaunchGameAsync(string websocketurl)
+        {
+            var extrinsicWait = 10000;
+
+            var client = new SubstrateClientExt(new Uri(websocketurl));
+
+            var cts = new CancellationTokenSource();
+            await client.ConnectAsync(false, true, true, cts.Token);
+
+            var gameEngine = new Ajuna.NetApi.Model.PalletGameregistry.GameEngine();
+            var id = new U8();
+            id.Create(1);
+            gameEngine.Id = id;
+            var version = new U8();
+            version.Create(1);
+            gameEngine.Version = version;
+
+            var gameQueuePre = await client.GameRegistryStorage.GameQueues(gameEngine, CancellationToken.None);
+
+
+            var extrinsicMethod = Ajuna.NetApi.Model.PalletGameRegistry.GameRegistryCalls.Queue();
+
+            // Alice queues for a game ...
+            var subscription1 = await client.Author.SubmitAndWatchExtrinsicAsync(ActionExtrinsicUpdate, extrinsicMethod, Alice, 0, 64, cts.Token);
+
+            Thread.Sleep(extrinsicWait);
+
+            // Bob queues for a game ...
+            var subscription2 = await client.Author.SubmitAndWatchExtrinsicAsync(ActionExtrinsicUpdate, extrinsicMethod, Bob, 0, 64, cts.Token);
+
+            Thread.Sleep(extrinsicWait);
+
+            var gameQueuePos = await client.GameRegistryStorage.GameQueues(gameEngine, CancellationToken.None);
 
         }
 
@@ -214,7 +298,8 @@ namespace TestTee
                             return true;
 
                         case Wrapped.Board:
-                            break;
+                            result.Create(valueBytes);
+                            return true;
                     }
 
 
@@ -367,7 +452,7 @@ namespace TestTee
 
         private static EnumTrustedOperation GetEnumTrustedOperation(AccountId32 account, EnumTrustedGetter trustedGetter)
         {
-            var signature = new Signature();
+            var signature = new Signature64();
             var signatureArray = Schnorrkel.Sr25519v091.SignSimple(MiniSecretAlice.GetPair(), trustedGetter.Encode());
             signature.Create(signatureArray);
 
@@ -389,7 +474,7 @@ namespace TestTee
 
         private static EnumTrustedOperation GetEnumTrustedOperation(AccountId32 aliceAccount, TrustedCallPayload trustedCallPayload)
         {
-            var signature = new Signature();
+            var signature = new Signature64();
             var signatureArray = Schnorrkel.Sr25519v091.SignSimple(MiniSecretAlice.GetPair(), trustedCallPayload.Encode());
             signature.Create(signatureArray);
 

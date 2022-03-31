@@ -18,9 +18,9 @@ namespace Ajuna.NetApi.Model.Base
     
     
     /// <summary>
-    /// >> 169 - Array
+    /// >> 114 - Array
     /// </summary>
-    public sealed class Arr64U8 : BaseType
+    public sealed class Arr20U8 : BaseType
     {
         
         private Ajuna.NetApi.Model.Types.Primitive.U8[] _value;
@@ -29,7 +29,7 @@ namespace Ajuna.NetApi.Model.Base
         {
             get
             {
-                return 64;
+                return 20;
             }
         }
         

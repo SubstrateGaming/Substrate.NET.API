@@ -13,23 +13,26 @@ using System;
 using System.Collections.Generic;
 
 
-namespace Ajuna.NetApi.Model.SpRuntime
+namespace Ajuna.NetApi.Model.PalletGameregistry
 {
-     
-    public enum MultiSignature
+    
+    
+    public enum GameState
     {
         
-        Ed25519,
+        Waiting,
         
-        Sr25519,
+        Accepted,
         
-        Ecdsa,
+        Running,
+        
+        Finished,
     }
     
     /// <summary>
-    /// >> 166 - Variant[sp_runtime.MultiSignature]
+    /// >> 168 - Variant[pallet_ajuna_gameregistry.game.GameState]
     /// </summary>
-    public sealed class EnumMultiSignature : BaseEnumExt<MultiSignature, Ajuna.NetApi.Model.SpCore.Signature, Ajuna.NetApi.Model.SpCore.Signature, Ajuna.NetApi.Model.SpCore.Signature>
+    public sealed class EnumGameState : BaseEnumExt<GameState, BaseVoid, BaseVoid, BaseVoid, Ajuna.NetApi.Model.SpCore.AccountId32>
     {
     }
 }

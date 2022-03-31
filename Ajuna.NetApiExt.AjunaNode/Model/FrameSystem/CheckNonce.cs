@@ -7,30 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Ajuna.NetApi.Model.AjunaWorker;
-using Ajuna.NetApi.Model.Base;
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
 using System;
 using System.Collections.Generic;
 
 
-namespace Ajuna.NetApi.Model.SpCore
+namespace Ajuna.NetApi.Model.FrameSystem
 {
-
-
+    
+    
     /// <summary>
-    /// >> 0 - Composite[sp_core.crypto.AccountId32]
+    /// >> 183 - Composite[frame_system.extensions.check_nonce.CheckNonce]
     /// </summary>
-    public sealed class AccountId32 : BaseType
+    public sealed class CheckNonce : BaseType
     {
-
+        
         /// <summary>
         /// >> value
         /// </summary>
-        private Ajuna.NetApi.Model.Base.Arr32U8 _value;
-
-        public Ajuna.NetApi.Model.Base.Arr32U8 Value
+        private BaseCom<Ajuna.NetApi.Model.Types.Primitive.U32> _value;
+        
+        public BaseCom<Ajuna.NetApi.Model.Types.Primitive.U32> Value
         {
             get
             {
@@ -41,26 +39,25 @@ namespace Ajuna.NetApi.Model.SpCore
                 this._value = value;
             }
         }
-
+        
         public override string TypeName()
         {
-            return "AccountId32";
+            return "CheckNonce";
         }
-
+        
         public override byte[] Encode()
         {
             var result = new List<byte>();
             result.AddRange(Value.Encode());
             return result.ToArray();
         }
-
+        
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            Value = new Ajuna.NetApi.Model.Base.Arr32U8();
+            Value = new BaseCom<Ajuna.NetApi.Model.Types.Primitive.U32>();
             Value.Decode(byteArray, ref p);
             TypeSize = p - start;
         }
     }
-
 }

@@ -23,8 +23,10 @@ namespace Ajuna.NetApi.Model.Extrinsics
         /// <param name="tip">The tip.</param>
         /// <param name="genesis">The genesis.</param>
         /// <param name="startEra">The start era.</param>
-        public UnCheckedExtrinsic(bool signed, Account account, Method method, Era era, CompactInteger nonce, ChargeAssetTxPayment assetTxPayment, Hash genesis, Hash startEra)
-             : base(signed, account, nonce, method, era, assetTxPayment)
+        //public UnCheckedExtrinsic(bool signed, Account account, Method method, Era era, CompactInteger nonce, ChargeAssetTxPayment assetTxPayment, Hash genesis, Hash startEra)
+        //     : base(signed, account, nonce, method, era, assetTxPayment)
+        public UnCheckedExtrinsic(bool signed, Account account, Method method, Era era, CompactInteger nonce, CompactInteger tip, Hash genesis, Hash startEra)
+             : base(signed, account, nonce, method, era, tip)
         {
             _genesis = genesis;
             _startEra = startEra;
@@ -37,7 +39,8 @@ namespace Ajuna.NetApi.Model.Extrinsics
         /// <returns></returns>
         public Payload GetPayload(RuntimeVersion runtime)
         {
-            return new Payload(Method, new SignedExtensions(runtime.SpecVersion, runtime.TransactionVersion, _genesis, _startEra, Era, Nonce, AssetTxPayment));
+            //return new Payload(Method, new SignedExtensions(runtime.SpecVersion, runtime.TransactionVersion, _genesis, _startEra, Era, Nonce, AssetTxPayment));
+            return new Payload(Method, new SignedExtensions(runtime.SpecVersion, runtime.TransactionVersion, _genesis, _startEra, Era, Nonce, Tip));
         }
 
         /// <summary>
@@ -86,7 +89,8 @@ namespace Ajuna.NetApi.Model.Extrinsics
 
             list.AddRange(Nonce.Encode());
 
-            list.AddRange(AssetTxPayment.Encode());
+            //list.AddRange(AssetTxPayment.Encode());
+            list.AddRange(Tip.Encode());
 
             list.AddRange(Method.Encode());
 

@@ -15,7 +15,12 @@ using System.Collections.Generic;
 
 namespace Ajuna.NetApi.Model.Base
 {
-    public sealed class Arr1387U8 : BaseType
+    
+    
+    /// <summary>
+    /// >> 176 - Array
+    /// </summary>
+    public sealed class Arr65U8 : BaseType
     {
         
         private Ajuna.NetApi.Model.Types.Primitive.U8[] _value;
@@ -24,7 +29,7 @@ namespace Ajuna.NetApi.Model.Base
         {
             get
             {
-                return 1387;
+                return 65;
             }
         }
         
