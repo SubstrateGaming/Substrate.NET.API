@@ -1,14 +1,12 @@
-name: build
+name: publish
 
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
   build:
-    name: build & test
+    name: build & test & publish
     runs-on: ubuntu-latest
         
     steps:
@@ -51,3 +49,17 @@ jobs:
         run: |
             cd Ajuna.NetApi.Test
             dotnet test --no-restore --verbosity normal
+
+      ##
+      # Publish
+      ##
+      - name: publish on version change
+        id: publish_nuget
+        uses: rohith/publish-nuget@v2
+        with:
+          # Filepath of the project to be packaged, relative to root of repository
+          PROJECT_FILE_PATH: Ajuna.NetApi/Ajuna.NetApi.csproj
+          # NuGet package id, used for version detection & defaults to project name
+          PACKAGE_NAME: Ajuna.NetApi
+          # API key to authenticate with NuGet server
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
