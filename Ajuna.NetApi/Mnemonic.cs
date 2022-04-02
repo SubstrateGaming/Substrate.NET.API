@@ -205,7 +205,7 @@ namespace Ajuna.NetApi
             var ent = checksum.Length * 8;
             var cs = (int)ent / 32;
 
-            var sha256Provider = new SHA256CryptoServiceProvider();
+            var sha256Provider = SHA256.Create();
             var hash = sha256Provider.ComputeHash(checksum);
             string result = string.Join(null, hash.Select(h => Convert.ToString(h, 2).PadLeft(8, '0')));
             return result.Substring(0, cs);
