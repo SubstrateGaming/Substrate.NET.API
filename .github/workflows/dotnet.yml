@@ -7,23 +7,42 @@ on:
     branches: [ master ]
 
 jobs:
-  publish:
-    name: build, pack & publish
+  build:
+    name: build & test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: ["3.1.x"]
         
     steps:
       - uses: actions/checkout@v2
-      
+
+      ##
       # Setup
-      - name: Setup .NET Core
+      # Setup multiple .NET versions so we can build against all referenced .NET versions.
+      ##
+      - name: Setup .NET Core 2.1.x
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: ${{matrix.dotnet-version}}
+          dotnet-version: 2.1.x
+     
+      - name: Setup .NET Core 3.1.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.x
+
+      - name: Setup .NET 5.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Setup .NET 6.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+
       
+      ##
       # Dependencies
+      # Restore the project and its dependencies.
+      ##
       - name: Install dependencies
         run: dotnet restore
       
@@ -33,14 +52,18 @@ jobs:
             cd Ajuna.NetApi.Test
             dotnet test --no-restore --verbosity normal
 
+      ##
       # Publish
-      - name: publish on version change
-        id: publish_nuget
-        uses: rohith/publish-nuget@v2
-        with:
-          # Filepath of the project to be packaged, relative to root of repository
-          PROJECT_FILE_PATH: Ajuna.NetApi/Ajuna.NetApi.csproj
-          # NuGet package id, used for version detection & defaults to project name
-          PACKAGE_NAME: Ajuna.NetApi
-          # API key to authenticate with NuGet server
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      ##
+
+      # TODO: Move publishing to a separate pipeline that only runs if the PR was merged.
+      #- name: publish on version change
+      #  id: publish_nuget
+      #  uses: rohith/publish-nuget@v2
+      #  with:
+      #    # Filepath of the project to be packaged, relative to root of repository
+      #    PROJECT_FILE_PATH: Ajuna.NetApi/Ajuna.NetApi.csproj
+      #    # NuGet package id, used for version detection & defaults to project name
+      #    PACKAGE_NAME: Ajuna.NetApi
+      #    # API key to authenticate with NuGet server
+      #    NUGET_KEY: ${{secrets.NUGET_API_KEY}}
