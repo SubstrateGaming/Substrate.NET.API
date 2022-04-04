@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestTee", "TestTee\TestTee.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ajuna.NetApiTeeExtTest", "Ajuna.NetApiTeeExtTest\Ajuna.NetApiTeeExtTest.csproj", "{B6B88A87-3304-4301-AA42-5DC2B0594F26}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ajuna.NetApiExt.AjunaNode", "Ajuna.NetApiExt.AjunaNode\Ajuna.NetApiExt.AjunaNode.csproj", "{2665BDF5-860D-41E0-AC62-8E78AC46F541}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ajuna.NetApiExt", "Ajuna.NetApiExt.AjunaNode\Ajuna.NetApiExt.csproj", "{2665BDF5-860D-41E0-AC62-8E78AC46F541}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

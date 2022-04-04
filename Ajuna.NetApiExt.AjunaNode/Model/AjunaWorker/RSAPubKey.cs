@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestTee.Model
+namespace Ajuna.NetApi.Model.AjunaWorker
 {
     public class RSAPubKey
     {

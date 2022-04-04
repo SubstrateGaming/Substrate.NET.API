@@ -10,12 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ajuna.NetApiExt.AjunaNode\Ajuna.NetApiExt.AjunaNode.csproj" />
+    <ProjectReference Include="..\Ajuna.NetApiExt.AjunaNode\Ajuna.NetApiExt.csproj" />
     <ProjectReference Include="..\Ajuna.NetApi\Ajuna.NetApi.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\" />
   </ItemGroup>
 
 </Project>

@@ -27,7 +27,6 @@ using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
-using TestTee.Model;
 
 namespace Ajuna.NetApiTeeExtTest
 {
