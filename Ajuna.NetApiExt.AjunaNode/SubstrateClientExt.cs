@@ -212,7 +212,7 @@ namespace Ajuna.NetApi
             return false;
         }
 
-        public async Task BalanceTransferAsync(Account fromAccount, Account toAccount, uint amount, RSAParameters shieldingKey, string shardHex, string mrenclaveHex)
+        public async Task<string> BalanceTransferAsync(Account fromAccount, Account toAccount, uint amount, RSAParameters shieldingKey, string shardHex, string mrenclaveHex)
         {
             EnumTrustedOperation tOpNonce = CreateGetter(fromAccount, TrustedGetter.Nonce);
             var nonceValue = await ExecuteTrustedOperationAsync(tOpNonce, shieldingKey, shardHex);
@@ -223,12 +223,15 @@ namespace Ajuna.NetApi
                 var returnValue = await ExecuteTrustedOperationAsync(tOpTransfer, shieldingKey, shardHex);
                 if (Unwrap(Wrapped.Hash, returnValue, out H256 value))
                 {
-                    Console.WriteLine($"Hash is {Utils.Bytes2HexString(value.Value.Bytes)}");
+                    //Console.WriteLine($"Hash is {Utils.Bytes2HexString(value.Value.Bytes)}");
+                    return Utils.Bytes2HexString(value.Value.Bytes);
                 }
             }
+
+            return null;
         }
 
-        public async Task PlayTurnAsync(Account account, byte column, RSAParameters shieldingKey, string shardHex, string mrenclaveHex)
+        public async Task<string> PlayTurnAsync(Account account, byte column, RSAParameters shieldingKey, string shardHex, string mrenclaveHex)
         {
             EnumTrustedOperation tOpNonce = CreateGetter(account, TrustedGetter.Nonce);
             var nonceValue = await ExecuteTrustedOperationAsync(tOpNonce, shieldingKey, shardHex);
@@ -239,9 +242,12 @@ namespace Ajuna.NetApi
                 var returnValue = await ExecuteTrustedOperationAsync(tOpPlayTurn, shieldingKey, shardHex);
                 if (Unwrap(Wrapped.Hash, returnValue, out H256 value))
                 {
-                    Console.WriteLine($"Hash is {Utils.Bytes2HexString(value.Value.Bytes)}");
+                    //Console.WriteLine($"Hash is {Utils.Bytes2HexString(value.Value.Bytes)}");
+                    return Utils.Bytes2HexString(value.Value.Bytes);
                 }
             }
+
+            return null;
         }
 
         public async Task<BoardStruct> GetBoardStructAsync(Account account, RSAParameters shieldingKey, string shardHex)

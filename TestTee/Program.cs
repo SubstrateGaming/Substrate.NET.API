@@ -131,12 +131,12 @@ namespace TestTee
 
             var player = Alice;
 
-            //var boardStruct = await client.GetBoardStructAsync(player, shieldingKey, shardHex);
+            var boardStruct = await client.GetBoardStructAsync(player, shieldingKey, shardHex);
             //if (boardStruct != null) PrintBoard(boardStruct);
 
             //Thread.Sleep(1000);
 
-            //await client.PlayTurnAsync(Alice, 3, shieldingKey, shardHex, mrenclaveHex);
+            var hash = await client.PlayTurnAsync(Alice, 3, shieldingKey, shardHex, mrenclaveHex);
 
             //Thread.Sleep(2000);
 
@@ -144,17 +144,17 @@ namespace TestTee
 
             Stopwatch sw = new Stopwatch();
 
-            //sw.Start();
-            //for (int i = 0; i < 50; i++)
-            //{
-            //    //code to test
-            //    var balance = await client.GetFreeBalanceAsync(player, shieldingKey, shardHex);
-            //}
-            //sw.Stop();
-            //Console.WriteLine("Time elapsed: {0}", sw.Elapsed);
+            sw.Start();
+            for (int i = 0; i < 50; i++)
+            {
+                //code to test
+                var balance = await client.GetFreeBalanceAsync(player, shieldingKey, shardHex);
+            }
+            sw.Stop();
+            Console.WriteLine("Time elapsed: {0}", sw.Elapsed);
 
-            var balance = await client.GetFreeBalanceAsync(player, shieldingKey, shardHex);
-            if (balance != null) Console.WriteLine($"Balance[{player.Value}] = {balance.Value}");
+            //var balance = await client.GetFreeBalanceAsync(player, shieldingKey, shardHex);
+            //if (balance != null) Console.WriteLine($"Balance[{player.Value}] = {balance.Value}");
 
             //Thread.Sleep(2000);
 
