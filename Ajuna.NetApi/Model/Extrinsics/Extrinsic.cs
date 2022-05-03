@@ -21,7 +21,7 @@ namespace Ajuna.NetApi.Model.Extrinsics
 
         public CompactInteger Nonce;
 
-        public CompactInteger Tip;
+        public ChargeAssetTxPayment AssetTxPayment;
 
         public Method Method;
 
@@ -97,8 +97,8 @@ namespace Ajuna.NetApi.Model.Extrinsics
                 // nonce
                 Nonce = CompactInteger.Decode(memory.ToArray(), ref p);
 
-                // tip
-                Tip = CompactInteger.Decode(memory.ToArray(), ref p);
+                // chargeAssetTxPayment
+                AssetTxPayment = ChargeAssetTxPayment.Decode(memory.ToArray(), ref p);
             }
 
             // method
@@ -121,14 +121,14 @@ namespace Ajuna.NetApi.Model.Extrinsics
         /// <param name="method">The method.</param>
         /// <param name="era">The era.</param>
         /// <param name="tip">The tip.</param>
-        public Extrinsic(bool signed, Account account, CompactInteger nonce, Method method, Era era, CompactInteger tip)
+        public Extrinsic(bool signed, Account account, CompactInteger nonce, Method method, Era era, ChargeAssetTxPayment assetTxPayment)
         {
             Signed = signed;
             TransactionVersion = Constants.ExtrinsicVersion;
             Account = account;
             Era = era;
             Nonce = nonce;
-            Tip = tip;
+            AssetTxPayment = assetTxPayment;
             Method = method;
         }
 
