@@ -78,7 +78,7 @@ namespace Ajuna.NetApi
         /// <exception cref="Exception">The binary key cannot have an odd number of digits</exception>
         public static byte[] HexToByteArray(string hex, bool evenLeftZeroPad = false)
         {
-            if (hex.Equals("0x0")) return new byte[] {0x00};
+            if (hex.Equals("0x0")) return new byte[] { 0x00 };
 
             if (hex.Length % 2 == 1 && !evenLeftZeroPad)
                 throw new Exception("The binary key cannot have an odd number of digits");
@@ -90,7 +90,7 @@ namespace Ajuna.NetApi
             var arr = new byte[hex.Length >> 1];
 
             for (var i = 0; i < hex.Length >> 1; ++i)
-                arr[i] = (byte) ((GetHexVal(hex[i << 1]) << 4) + GetHexVal(hex[(i << 1) + 1]));
+                arr[i] = (byte)((GetHexVal(hex[i << 1]) << 4) + GetHexVal(hex[(i << 1) + 1]));
 
             return arr;
         }
@@ -134,8 +134,8 @@ namespace Ajuna.NetApi
         /// <summary> Value 2 bytes. </summary>
         /// <remarks> 19.09.2020. </remarks>
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        /// <param name="value">        The value. </param>
-        /// <param name="littleEndian"> (Optional) True to little endian. </param>
+        /// <param name="value">The value.</param>
+        /// <param name="littleEndian">(Optional) True to little endian. </param>
         /// <returns> A byte[]. </returns>
         public static byte[] Value2Bytes(object value, bool littleEndian = true)
         {
@@ -183,33 +183,68 @@ namespace Ajuna.NetApi
         /// <returns></returns>
         /// <exception cref="ApplicationException">
         /// Address checksum is wrong.
-        /// or
-        /// Address checksum is wrong.
         /// </exception>
         public static byte[] GetPublicKeyFrom(string address)
         {
-            var PUBLIC_KEY_LENGTH = 32;
+            return GetPublicKeyFrom(address, out _);
+        }
 
+        /// <summary>
+        /// Gets the public key and network from.
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="network"></param>
+        /// <returns></returns>
+        public static byte[] GetPublicKeyFrom(string address, out short network)
+        {
+            network = 42;
+            var PUBLIC_KEY_LENGTH = 32;
+            var PREFIX_SIZE = 0;
             var pubkByteList = new List<byte>();
 
             var bs58decoded = Base58.Bitcoin.Decode(address).ToArray();
             var len = bs58decoded.Length;
 
+            byte[] ssPrefixed = { 0x53, 0x53, 0x35, 0x38, 0x50, 0x52, 0x45 };
+
+            // 00000000b..=00111111b (0..=63 inclusive): Simple account/address/network identifier.
             if (len == 35)
             {
-                byte[] ssPrefixed = {0x53, 0x53, 0x35, 0x38, 0x50, 0x52, 0x45};
-                pubkByteList.AddRange(ssPrefixed);
-                pubkByteList.AddRange(bs58decoded.Take(PUBLIC_KEY_LENGTH + 1));
+                PREFIX_SIZE = 1;
+                // set network
+                network = bs58decoded[0];
+            }
+            else
+            // 01000000b..=01111111b (64..=127 inclusive)
+            if (len == 36)
+            {
+                PREFIX_SIZE = 2;
+                // set network
+                byte b2up = (byte) ((bs58decoded[0] << 2) & 0b1111_1100);
+                byte b2lo = (byte) ((bs58decoded[1] >> 6) & 0b0000_0011);
+                byte b2 = (byte) (b2up | b2lo);
+                byte b1 = (byte) (bs58decoded[1] & 0b0011_1111);
+                network = (short)BitConverter.ToInt16(
+                    new byte[] { b2, b1 }, 0); // big endian, for BitConverter
+            } 
 
-                var blake2bHashed = HashExtension.Blake2(pubkByteList.ToArray(), 512);
-                if (bs58decoded[PUBLIC_KEY_LENGTH + 1] != blake2bHashed[0] ||
-                    bs58decoded[PUBLIC_KEY_LENGTH + 2] != blake2bHashed[1])
-                    throw new ApplicationException("Address checksum is wrong.");
-
-                return bs58decoded.Skip(1).Take(PUBLIC_KEY_LENGTH).ToArray();
+            else
+            {
+                throw new ApplicationException("Unsupported address size.");
             }
 
-            throw new ApplicationException("Address checksum is wrong.");
+            pubkByteList.AddRange(ssPrefixed);
+            pubkByteList.AddRange(bs58decoded.Take(PUBLIC_KEY_LENGTH + PREFIX_SIZE));
+
+            var blake2bHashed = HashExtension.Blake2(pubkByteList.ToArray(), 512);
+            if (bs58decoded[PUBLIC_KEY_LENGTH + PREFIX_SIZE] != blake2bHashed[0] ||
+                bs58decoded[PUBLIC_KEY_LENGTH + PREFIX_SIZE + 1] != blake2bHashed[1])
+            {
+                throw new ApplicationException("Address checksum is wrong.");
+            }
+
+            return bs58decoded.Skip(PREFIX_SIZE).Take(PUBLIC_KEY_LENGTH).ToArray();
+
         }
 
         /// <summary>
@@ -217,25 +252,56 @@ namespace Ajuna.NetApi
         /// </summary>
         /// <param name="bytes">The bytes.</param>
         /// <returns></returns>
-        public static string GetAddressFrom(byte[] bytes)
+        public static string GetAddressFrom(byte[] bytes, short ss58Prefix = 42)
         {
+            // https://docs.substrate.io/v3/advanced/ss58/
+
             var SR25519_PUBLIC_SIZE = 32;
             var PUBLIC_KEY_LENGTH = 32;
+            var KEY_SIZE = 0;
 
-            var plainAddr = Enumerable
-                .Repeat((byte) 0x2A, 35)
-                .ToArray();
+            byte[] plainAddr = new byte[0];
+            // 00000000b..=00111111b (0..=63 inclusive): Simple account/address/network identifier.
+            // The byte can be interpreted directly as such an identifier.
+            if (ss58Prefix < 64)
+            {
+                KEY_SIZE = 1;
+                plainAddr = new byte[35];
+                plainAddr[0] = (byte)ss58Prefix;
+                bytes.CopyTo(plainAddr.AsMemory(1));
+            }
+            else
+            // 01000000b..=01111111b (64..=127 inclusive): Full address/address/network identifier.
+            // The lower 6 bits of this byte should be treated as the upper 6 bits of a 14 bit identifier
+            // value, with the lower 8 bits defined by the following byte. This works for all identifiers
+            // up to 2**14 (16,383).
+            if (ss58Prefix < 16384)
+            {
+                KEY_SIZE = 2;
+                plainAddr = new byte[36];
 
-            bytes.CopyTo(plainAddr.AsMemory(1));
+                // parity style
+                var ident = (short) ss58Prefix & 0b00111111_11111111; // clear first two bits
+                var first = (byte) (((ident & 0b0000_0000_1111_1100) >> 2) | 0b0100_0000);
+                var second = (byte) ((ident >> 8) | (ident & 0b0000_0000_0000_0011) << 6);
 
-            var ssPrefixed = new byte[SR25519_PUBLIC_SIZE + 8];
-            var ssPrefixed1 = new byte[] {0x53, 0x53, 0x35, 0x38, 0x50, 0x52, 0x45};
+                plainAddr[0] = first;
+                plainAddr[1] = second;
+
+                bytes.CopyTo(plainAddr.AsMemory(2));
+            } else
+            {
+                throw new Exception("Unsupported prefix used, support only up to 16383!");
+            }
+
+            var ssPrefixed = new byte[SR25519_PUBLIC_SIZE + 7 + KEY_SIZE];
+            var ssPrefixed1 = new byte[] { 0x53, 0x53, 0x35, 0x38, 0x50, 0x52, 0x45 };
             ssPrefixed1.CopyTo(ssPrefixed, 0);
-            plainAddr.AsSpan(0, SR25519_PUBLIC_SIZE + 1).CopyTo(ssPrefixed.AsSpan(7));
+            plainAddr.AsSpan(0, SR25519_PUBLIC_SIZE + KEY_SIZE).CopyTo(ssPrefixed.AsSpan(7));
 
-            var blake2bHashed = HashExtension.Blake2(ssPrefixed, 0, SR25519_PUBLIC_SIZE + 8);
-            plainAddr[1 + PUBLIC_KEY_LENGTH] = blake2bHashed[0];
-            plainAddr[2 + PUBLIC_KEY_LENGTH] = blake2bHashed[1];
+            var blake2bHashed = HashExtension.Blake2(ssPrefixed, 0, SR25519_PUBLIC_SIZE + 7 + KEY_SIZE);
+            plainAddr[0 + KEY_SIZE + PUBLIC_KEY_LENGTH] = blake2bHashed[0];
+            plainAddr[1 + KEY_SIZE + PUBLIC_KEY_LENGTH] = blake2bHashed[1];
 
             var addrCh = Base58.Bitcoin.Encode(plainAddr).ToArray();
 

@@ -11,21 +11,96 @@ namespace Ajuna.NetApi.Test
         }
 
         [Test]
-        public void GetPublicKeyFromTest()
+        public void GetPublicKeyAndNetworkFromTest()
         {
-            var address = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY";
-            var bytes = Utils.GetPublicKeyFrom(address);
-            Assert.AreEqual("D43593C715FDD31C61141ABD04A99FD6822C8558854CCDE39A5684E7A56DA27D",
-                BitConverter.ToString(bytes).Replace("-", ""));
+            var addresses = new string[] {
+                "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F",
+                "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "aUuBHS3LZKnPuxyDJYhteYPwGWg932LjHPtbBQKQBA55F4B1T",
+                "bUNdEKVCnhNAZvnEWFNcL3T82nAWQduR63fgon1qbrba7AKfN" };
+
+            foreach (var address in addresses)
+            {
+                var bytes = Utils.GetPublicKeyFrom(address, out short network);
+                Assert.AreEqual("D43593C715FDD31C61141ABD04A99FD6822C8558854CCDE39A5684E7A56DA27D",
+                    BitConverter.ToString(bytes).Replace("-", ""));
+
+                switch (address)
+                {
+                    case "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F":  // KUSAMA
+                        Assert.AreEqual(2, network);
+                        break;
+
+                    case "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY": // SUBSTRATE
+                        Assert.AreEqual(42, network);
+                        break;
+
+                    case "aUuBHS3LZKnPuxyDJYhteYPwGWg932LjHPtbBQKQBA55F4B1T": // AJUNA NETWORK
+                        Assert.AreEqual(1328, network);
+                        break;
+
+                    case "bUNdEKVCnhNAZvnEWFNcL3T82nAWQduR63fgon1qbrba7AKfN": // BAJUN NETWORK
+                        Assert.AreEqual(1337, network);
+                        break;
+                }
+            }
+        }
+
+        [Test]
+        public void GetPublicKeyFromExeceptionTest()
+        {
+            var addressToBig = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY" + "FFFF";
+
+            var ex1 = Assert.Throws<ApplicationException>(
+                    () => Utils.GetPublicKeyFrom(addressToBig, out short network)
+                );
+            Assert.IsTrue(ex1.Message.Contains("Unsupported address size."));
+
+            var addressToWrong1 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQX";
+
+            var ex2 = Assert.Throws<ApplicationException>(
+                    () => Utils.GetPublicKeyFrom(addressToWrong1, out short network)
+                );
+            Assert.IsTrue(ex2.Message.Contains("Address checksum is wrong."));
+
+            var addressToWrong2 = "bUNdEKVCnhNAZvnEWFNcL3T82nAWQduR63fgon1qbrba7AKfM";
+
+            var ex3 = Assert.Throws<ApplicationException>(
+                    () => Utils.GetPublicKeyFrom(addressToWrong2, out short network)
+                );
+            Assert.IsTrue(ex3.Message.Contains("Address checksum is wrong."));
         }
 
         [Test]
         public void GetAddressFromTest()
         {
+            short[] prefixes = new short[] { 42, 2, 1337, 1328 };
+
             var publicKeyString = "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d";
             var publickey = Utils.HexToByteArray(publicKeyString);
-            var address = Utils.GetAddressFrom(publickey);
-            Assert.AreEqual("5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", address);
+
+            foreach (var prefix in prefixes)
+            {
+                var address = Utils.GetAddressFrom(publickey, prefix);
+                switch (prefix)
+                {
+                    case 2:  // KUSAMA
+                        Assert.AreEqual("HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F", address);
+                        break;
+
+                    case 42: // SUBSTRATE
+                        Assert.AreEqual("5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", address);
+                        break;
+
+                    case 1328: // AJUNA NETWORK
+                        Assert.AreEqual("aUuBHS3LZKnPuxyDJYhteYPwGWg932LjHPtbBQKQBA55F4B1T", address);
+                        break;
+
+                    case 1337: // BAJUN NETWORK
+                        Assert.AreEqual("bUNdEKVCnhNAZvnEWFNcL3T82nAWQduR63fgon1qbrba7AKfN", address);
+                        break;
+                }
+            }
         }
 
         [Test]
