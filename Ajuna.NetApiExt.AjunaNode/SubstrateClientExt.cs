@@ -16,7 +16,9 @@ using Ajuna.NetApi.Model.SpRuntime;
 using Ajuna.NetApi.Model.Types;
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
+using Ajuna.NetApiExt.Model.AjunaWorker.Helper;
 using Newtonsoft.Json;
+using NLog;
 using Org.BouncyCastle.Security;
 using SimpleBase;
 using System;
@@ -34,6 +36,8 @@ namespace Ajuna.NetApi
 
     public sealed class SubstrateClientExt : Ajuna.NetApi.SubstrateClient
     {
+        /// <summary> The logger. </summary>
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// StorageKeyDict for key definition informations.
@@ -205,8 +209,11 @@ namespace Ajuna.NetApi
 
                 case DirectRequestStatus.Error:
                     var byteArray = returnValue.Value.Bytes;
-                    PrintBytes(UnwrapBytes(byteArray));
+                    var converter = new UTF8Encoding();
+                    var str = converter.GetString(UnwrapBytes(byteArray));
+                    Logger.Error($"DirectRequestStatus {returnValue.DirectRequestStatus.Value}: {str}");
                     break;
+                    
             }
 
             return false;
@@ -214,16 +221,16 @@ namespace Ajuna.NetApi
 
         public async Task<string> BalanceTransferAsync(Account fromAccount, Account toAccount, uint amount, RSAParameters shieldingKey, string shardHex, string mrenclaveHex)
         {
-            EnumTrustedOperation tOpNonce = CreateGetter(fromAccount, TrustedGetter.Nonce);
+            EnumTrustedOperation tOpNonce = Wrapper.CreateGetter(fromAccount, TrustedGetter.Nonce);
             var nonceValue = await ExecuteTrustedOperationAsync(tOpNonce, shieldingKey, shardHex);
             if (Unwrap(Wrapped.Nonce, nonceValue, out U32 nonce))
             {
-                Console.WriteLine($"Account[{fromAccount.Value}]({nonce.Value}) transfers {amount} to Account[{toAccount.Value}]");
-                EnumTrustedOperation tOpTransfer = CreateCallBalanceTransfer(fromAccount, toAccount, amount, nonce.Value, mrenclaveHex, shardHex);
+                Logger.Info($"Account[{fromAccount.Value}]({nonce.Value}) transfers {amount} to Account[{toAccount.Value}]");
+                EnumTrustedOperation tOpTransfer = Wrapper.CreateCallBalanceTransfer(fromAccount, toAccount, amount, nonce.Value, mrenclaveHex, shardHex);
                 var returnValue = await ExecuteTrustedOperationAsync(tOpTransfer, shieldingKey, shardHex);
                 if (Unwrap(Wrapped.Hash, returnValue, out H256 value))
                 {
-                    //Console.WriteLine($"Hash is {Utils.Bytes2HexString(value.Value.Bytes)}");
+                    //Logger.Info($"Hash is {Utils.Bytes2HexString(value.Value.Bytes)}");
                     return Utils.Bytes2HexString(value.Value.Bytes);
                 }
             }
@@ -233,16 +240,16 @@ namespace Ajuna.NetApi
 
         public async Task<string> PlayTurnAsync(Account account, byte column, RSAParameters shieldingKey, string shardHex, string mrenclaveHex)
         {
-            EnumTrustedOperation tOpNonce = CreateGetter(account, TrustedGetter.Nonce);
+            EnumTrustedOperation tOpNonce = Wrapper.CreateGetter(account, TrustedGetter.Nonce);
             var nonceValue = await ExecuteTrustedOperationAsync(tOpNonce, shieldingKey, shardHex);
             if (Unwrap(Wrapped.Nonce, nonceValue, out U32 nonce))
             {
-                Console.WriteLine($"Account[{account.Value}]({nonce.Value}) play {column}");
-                EnumTrustedOperation tOpPlayTurn = CreateCallPlayTurn(account, column, nonce.Value, mrenclaveHex, shardHex);
+                Logger.Info($"Account[{account.Value}]({nonce.Value}) play {column}");
+                EnumTrustedOperation tOpPlayTurn = Wrapper.CreateCallPlayTurn(account, column, nonce.Value, mrenclaveHex, shardHex);
                 var returnValue = await ExecuteTrustedOperationAsync(tOpPlayTurn, shieldingKey, shardHex);
                 if (Unwrap(Wrapped.Hash, returnValue, out H256 value))
                 {
-                    //Console.WriteLine($"Hash is {Utils.Bytes2HexString(value.Value.Bytes)}");
+                    //Logger.Info($"Hash is {Utils.Bytes2HexString(value.Value.Bytes)}");
                     return Utils.Bytes2HexString(value.Value.Bytes);
                 }
             }
@@ -250,9 +257,20 @@ namespace Ajuna.NetApi
             return null;
         }
 
+        public async Task<U32> GetNonce(Account account, RSAParameters shieldingKey, string shardHex)
+        {
+            EnumTrustedOperation tOpNonce = Wrapper.CreateGetter(account, TrustedGetter.Nonce);
+            var nonceValue = await ExecuteTrustedOperationAsync(tOpNonce, shieldingKey, shardHex);
+            if (Unwrap(Wrapped.Nonce, nonceValue, out U32 nonce))
+            {
+                return nonce;
+            }
+            return null;
+        }
+
         public async Task<BoardStruct> GetBoardStructAsync(Account account, RSAParameters shieldingKey, string shardHex)
         {
-            EnumTrustedOperation tOpBoard = CreateGetter(account, TrustedGetter.Board);
+            EnumTrustedOperation tOpBoard = Wrapper.CreateGetter(account, TrustedGetter.Board);
             var boardValue = await ExecuteTrustedOperationAsync(tOpBoard, shieldingKey, shardHex);
             if (Unwrap(Wrapped.Board, boardValue, out BoardStruct boardStruct))
             {
@@ -264,7 +282,7 @@ namespace Ajuna.NetApi
 
         public async Task<Balance> GetFreeBalanceAsync(Account account, RSAParameters shieldingKey, string shardHex)
         {
-            EnumTrustedOperation tOpPreBalance = CreateGetter(account, TrustedGetter.FreeBalance);
+            EnumTrustedOperation tOpPreBalance = Wrapper.CreateGetter(account, TrustedGetter.FreeBalance);
             var balanceValuePre = await ExecuteTrustedOperationAsync(tOpPreBalance, shieldingKey, shardHex);
             if (Unwrap(Wrapped.Balance, balanceValuePre, out Balance balance))
             {
@@ -275,7 +293,7 @@ namespace Ajuna.NetApi
 
         public async Task<RpcReturnValue> ExecuteTrustedOperationAsync(EnumTrustedOperation trustedOperation, RSAParameters shieldingKey, string shardHex)
         {
-            var cypherText = SignTrustedOperation(shieldingKey, trustedOperation);
+            var cypherText = Wrapper.SignTrustedOperation(shieldingKey, trustedOperation);
 
             // - ShardIdentifier
             var shardId = new H256();
@@ -284,11 +302,11 @@ namespace Ajuna.NetApi
             Request request = new Request
             {
                 Shard = shardId,
-                CypherText = VecU8FromBytes(cypherText)
+                CypherText = Wrapper.VecU8FromBytes(cypherText)
             };
 
             // open connection
-            await ConnectAsync(false, false, false, CancellationToken.None);
+            //await ConnectAsync(false, false, false, CancellationToken.None);
 
             var parameters = request.Encode().Cast<object>().ToArray();
 
@@ -297,100 +315,12 @@ namespace Ajuna.NetApi
             var returnValue = new RpcReturnValue();
             returnValue.Create(result);
 
-            await CloseAsync();
+            //await CloseAsync();
 
             return returnValue;
 
         }
 
-        public EnumTrustedOperation CreateGetter(Account accountName, TrustedGetter trustedGetter)
-        {
-            var account = new AccountId32();
-            account.Create(accountName.Bytes);
-
-            var enumTrustedGetter = new EnumTrustedGetter();
-            enumTrustedGetter.Create(trustedGetter, account);
-
-            return GetEnumTrustedOperation(accountName, enumTrustedGetter);
-        }
-
-        public EnumTrustedOperation CreateCallPlayTurn(Account account, byte move, uint nonce, string mrenclaveHex, string shardHex)
-        {
-            var accountId32 = new AccountId32();
-            accountId32.Create(account.Bytes);
-
-            var column = new U8();
-            column.Create(move);
-
-            var playTurnTuple = new BaseTuple<AccountId32, U8>();
-            playTurnTuple.Create(accountId32, column);
-
-            var trustedCall = new EnumTrustedCall();
-            trustedCall.Create(TrustedCall.ConnectfourPlayTurn, playTurnTuple);
-
-            var index = new Ajuna.NetApi.Model.AjunaWorker.Index();
-            index.Create(nonce);
-
-            var mrenclave = new H256();
-            mrenclave.Create(Base58.Bitcoin.Decode(mrenclaveHex).ToArray());
-
-            var shard = new ShardIdentifier();
-            shard.Create(Base58.Bitcoin.Decode(shardHex).ToArray());
-
-            var trustedCallPayload = new TrustedCallPayload
-            {
-                Call = trustedCall,
-                Nonce = index,
-                Mrenclave = mrenclave,
-                Shard = shard
-            };
-
-            return GetEnumTrustedOperation(account, trustedCallPayload);
-        }
-
-        public EnumTrustedOperation CreateCallBalanceTransfer(Account fromAccount, Account toAccount, uint amount, uint nonce, string mrenclaveHex, string shardHex)
-        {
-            var aliceAccount = new AccountId32();
-            aliceAccount.Create(fromAccount.Bytes);
-
-            var bobAccount = new AccountId32();
-            bobAccount.Create(toAccount.Bytes);
-
-            var balance = new Balance();
-            balance.Create(new BigInteger(amount));
-
-            var balanceTransferTuple = new BaseTuple<AccountId32, AccountId32, Balance>();
-            balanceTransferTuple.Create(aliceAccount, bobAccount, balance);
-
-            var trustedCall = new EnumTrustedCall();
-            trustedCall.Create(TrustedCall.BalanceTransfer, balanceTransferTuple);
-
-            var index = new Ajuna.NetApi.Model.AjunaWorker.Index();
-            index.Create(nonce);
-
-            var mrenclave = new H256();
-            mrenclave.Create(Base58.Bitcoin.Decode(mrenclaveHex).ToArray());
-
-            var shard = new ShardIdentifier();
-            shard.Create(Base58.Bitcoin.Decode(shardHex).ToArray());
-
-            var trustedCallPayload = new TrustedCallPayload
-            {
-                Call = trustedCall,
-                Nonce = index,
-                Mrenclave = mrenclave,
-                Shard = shard
-            };
-
-            return GetEnumTrustedOperation(fromAccount, trustedCallPayload);
-        }
-
-        public byte[] SignTrustedOperation(RSAParameters shieldingKey, EnumTrustedOperation trustedOperation)
-        {
-            // - Encrypt Encoded TrustedOperation with RSAPubKey
-            var keyPair = DotNetUtilities.GetRsaPublicKey(shieldingKey);
-            return Utils.RSAEncryptBouncy(trustedOperation.Encode(), keyPair);
-        }
 
         public byte[] UnwrapBytes(byte[] byteArray)
         {
@@ -413,106 +343,14 @@ namespace Ajuna.NetApi
             return bytes2.ToArray();
         }
 
-        public void PrintBytes(byte[] bytes)
-        {
-            var converter = new UTF8Encoding();
-            var str = converter.GetString(bytes);
-            Console.WriteLine(str);
-        }
-
-        public BaseVec<U8> VecU8FromBytes(byte[] vs)
-        {
-            var u8list = new List<U8>();
-            for (int i = 0; i < vs.Length; i++)
-            {
-                var u8 = new U8();
-                u8.Create(vs[i]);
-                u8list.Add(u8);
-            }
-            var u8Array = u8list.ToArray();
-
-            var result = new BaseVec<U8>();
-            result.Create(u8Array);
-
-            return result;
-        }
-
-        public EnumTrustedOperation GetEnumTrustedOperation(Account account, EnumTrustedGetter trustedGetter)
-        {
-            var signature = new Signature64();
-            var signatureArray = Schnorrkel.Sr25519v091.SignSimple(Utils.GetPublicKeyFrom(account.Value), account.PrivateKey, trustedGetter.Encode());
-            signature.Create(signatureArray);
-
-            var enumMultiSignature = new EnumMultiSignature();
-            enumMultiSignature.Create(MultiSignature.Sr25519, signature);
-
-            var trustedGetterSigned = new TrustedGetterSigned();
-            trustedGetterSigned.Getter = trustedGetter;
-            trustedGetterSigned.Signature = enumMultiSignature;
-
-            var getter = new EnumGetter();
-            getter.Create(Getter.Trusted, trustedGetterSigned);
-
-            var trustedOperation = new EnumTrustedOperation();
-            trustedOperation.Create(TrustedOperation.Get, getter);
-
-            return trustedOperation;
-        }
-
-        public EnumTrustedOperation GetEnumTrustedOperation(Account account, TrustedCallPayload trustedCallPayload)
-        {
-            var signature = new Signature64();
-            var signatureArray = Schnorrkel.Sr25519v091.SignSimple(Utils.GetPublicKeyFrom(account.Value), account.PrivateKey, trustedCallPayload.Encode());
-            signature.Create(signatureArray);
-
-            var enumMultiSignature = new EnumMultiSignature();
-            enumMultiSignature.Create(MultiSignature.Sr25519, signature);
-
-            var trustedCallSigned = new TrustedCallSigned();
-            trustedCallSigned.Call = trustedCallPayload.Call;
-            trustedCallSigned.Nonce = trustedCallPayload.Nonce;
-            trustedCallSigned.Signature = enumMultiSignature;
-
-            var trustedOperation = new EnumTrustedOperation();
-            trustedOperation.Create(TrustedOperation.DirectCall, trustedCallSigned);
-
-            return trustedOperation;
-        }
-
         public async Task<RSAParameters> ShieldingKeyAsync()
         {
-            //using var client = new SubstrateClient(new Uri(Websocketurl));
-
-            //var rpcMethods = await client.InvokeAsync<string>("rpc_methods", null, CancellationToken.None);
-            //Console.WriteLine($"-----------> {rpcMethods}");
-
-            //rpc_methods
-            //author_getMuRaUrl
-            //author_getShieldingKey byte[]
-            //author_getUntrustedUrl
-            //author_pendingExtrinsics
-            //author_submitAndWatchExtrinsic
-            //author_submitExtrinsic
-            //chain_subscribeAllHeads
-            //state_get
-            //state_getMetadata
-            //state_getRuntimeVersion
-            //system_health
-            //system_name
-            //system_version
-
-            await ConnectAsync(false, false, false, CancellationToken.None);
-
-            var method = "author_getShieldingKey";
-            var result = await InvokeAsync<byte[]>(method, null, CancellationToken.None);
+            var result = await InvokeAsync<byte[]>("author_getShieldingKey", null, CancellationToken.None);
 
             var rpcReturnValue = new RpcReturnValue();
             rpcReturnValue.Create(result);
 
-            await CloseAsync();
-
             // - Create RSAPubKey from ShieldingKey
-
             var rsaParameters = new RSAParameters();
 
             if (rpcReturnValue.DirectRequestStatus.Value == DirectRequestStatus.Ok)

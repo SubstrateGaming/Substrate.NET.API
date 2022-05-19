@@ -74,7 +74,7 @@ namespace TestTee
             var logconsole = new ConsoleTarget("logconsole");
 
             // Rules for mapping loggers to targets            
-            //config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
+            config.AddRule(LogLevel.Info, LogLevel.Fatal, logconsole);
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
 
             // Apply config           
@@ -106,7 +106,8 @@ namespace TestTee
             //await LaunchGameAsync("ws://127.0.0.1:9944");
             //await TestNodeAsync("ws://127.0.0.1:9944");
 
-            await RunGameAsync("ws://127.0.0.1:2000");
+            //await RunGameAsync("ws://127.0.0.1:2000");
+            await RunGameAsync("wss://2080-84-75-48-249.ngrok.io");
 
 
         }
@@ -120,54 +121,45 @@ namespace TestTee
              */
 
 
-            var shardHex = "2CMLqGnL56xp4qkVDq4pmKKYJn4btSGF9brgGEsGW3qm";
-            var mrenclaveHex = "2CMLqGnL56xp4qkVDq4pmKKYJn4btSGF9brgGEsGW3qm";
+            var shardHex = "3JFfg4Ff2SHk7sCsY6nZ59m92vFSCxmWQ1jgh52VzDqT";
+            var mrenclaveHex = "3JFfg4Ff2SHk7sCsY6nZ59m92vFSCxmWQ1jgh52VzDqT";
 
             var client = new SubstrateClientExt(new Uri(websocketurl));
 
+            await client.ConnectAsync(false, false, false, CancellationToken.None);
+
             var shieldingKey = await client.ShieldingKeyAsync();
+
+            //Thread.Sleep(2000);
 
             // - TrustedOperation
 
             var player = Alice;
 
-            var boardStruct = await client.GetBoardStructAsync(player, shieldingKey, shardHex);
-            //if (boardStruct != null) PrintBoard(boardStruct);
+            //var boardStruct1 = await client.GetBoardStructAsync(player, shieldingKey, shardHex);
+            //if (boardStruct1 != null) PrintBoard(boardStruct1);
 
-            //Thread.Sleep(1000);
+            //var hash = await client.PlayTurnAsync(Alice, 3, shieldingKey, shardHex, mrenclaveHex);
 
-            var hash = await client.PlayTurnAsync(Alice, 3, shieldingKey, shardHex, mrenclaveHex);
+            Thread.Sleep(2000);
 
-            //Thread.Sleep(2000);
+            var balance1 = await client.GetFreeBalanceAsync(player, shieldingKey, shardHex);
+            if (balance1 != null) Console.WriteLine($"Balance[{player.Value}] = {balance1.Value}");
 
-            //await PrintBoardAsync(Alice, shieldingKey, shardHex);
+            Thread.Sleep(2000);
 
-            Stopwatch sw = new Stopwatch();
+            await client.BalanceTransferAsync(Alice, Bob, (uint)100000, shieldingKey, shardHex, mrenclaveHex);
 
-            sw.Start();
-            for (int i = 0; i < 50; i++)
-            {
-                //code to test
-                var balance = await client.GetFreeBalanceAsync(player, shieldingKey, shardHex);
-            }
-            sw.Stop();
-            Console.WriteLine("Time elapsed: {0}", sw.Elapsed);
+            Thread.Sleep(2000);
 
-            //var balance = await client.GetFreeBalanceAsync(player, shieldingKey, shardHex);
-            //if (balance != null) Console.WriteLine($"Balance[{player.Value}] = {balance.Value}");
+            var balance2 = await client.GetFreeBalanceAsync(player, shieldingKey, shardHex);
+            if (balance2 != null) Console.WriteLine($"Balance[{player.Value}] = {balance2.Value}");
 
-            //Thread.Sleep(2000);
+            Thread.Sleep(2000);
 
-            //await client.BalanceTransferAsync(Alice, Bob, (uint)100000, shieldingKey, shardHex, mrenclaveHex);
-
-            //Thread.Sleep(2000);
-
-            //await client.FreeBalanceAsync(Alice, shieldingKey, shardHex);
-
+            // close connection
             await client.CloseAsync();
         }
-
- 
 
         /// <summary>
         /// Simple extrinsic tester
@@ -276,9 +268,6 @@ namespace TestTee
             }
 
         }
-
-
-
 
     }
 
