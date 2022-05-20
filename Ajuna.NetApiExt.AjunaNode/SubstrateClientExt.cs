@@ -367,5 +367,16 @@ namespace Ajuna.NetApi
 
             return rsaParameters;
         }
+
+        public async Task<byte[]> RPCMethodsAsync()
+        {
+            var result = await InvokeAsync<string>("rpc_methods", null, CancellationToken.None);
+            Console.WriteLine($"-----------> {result}");
+
+            //var rpcReturnValue = new RpcReturnValue();
+            //rpcReturnValue.Create(result);
+
+            return null;
+        }
     }
 }

@@ -107,22 +107,35 @@ namespace TestTee
             //await TestNodeAsync("ws://127.0.0.1:9944");
 
             //await RunGameAsync("ws://127.0.0.1:2000");
-            await RunGameAsync("wss://2080-84-75-48-249.ngrok.io");
 
+            await RunTransactioTestAsync(
+                websocketurl: "wss://2080-84-75-48-249.ngrok.io",
+                shardHex: "3JFfg4Ff2SHk7sCsY6nZ59m92vFSCxmWQ1jgh52VzDqT",
+                mrenclaveHex: "3JFfg4Ff2SHk7sCsY6nZ59m92vFSCxmWQ1jgh52VzDqT");
 
+            //await RunRPCMethodsTestAsync(
+            //    websocketurl: "wss://2080-84-75-48-249.ngrok.io");
         }
 
-        private static async Task RunGameAsync(string websocketurl)
+        private static async Task RunRPCMethodsTestAsync(string websocketurl)
+        {
+            var client = new SubstrateClientExt(new Uri(websocketurl));
+
+            await client.ConnectAsync(false, false, false, CancellationToken.None);
+
+            await client.RPCMethodsAsync();
+
+            // close connection
+            await client.CloseAsync();
+        }
+
+        private static async Task RunTransactioTestAsync(string websocketurl, string shardHex, string mrenclaveHex)
         {
             /**
              * docker ps
              * docker exec -it 7aeac2a21f93 /bin/bash
              * ./integritee-cli trusted transfer //Alice //Bob 1000 --mrenclave 2CMLqGnL56xp4qkVDq4pmKKYJn4btSGF9brgGEsGW3qm --direct
              */
-
-
-            var shardHex = "3JFfg4Ff2SHk7sCsY6nZ59m92vFSCxmWQ1jgh52VzDqT";
-            var mrenclaveHex = "3JFfg4Ff2SHk7sCsY6nZ59m92vFSCxmWQ1jgh52VzDqT";
 
             var client = new SubstrateClientExt(new Uri(websocketurl));
 
