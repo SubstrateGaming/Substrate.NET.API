@@ -64,10 +64,23 @@ namespace Ajuna.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        public void Create(T1 t1)
+        {
+            var byteList = new List<byte>();
+            byteList.AddRange(t1.Encode());
+            byteList.ToArray();
+
+            Value = new IType[1];
+            Value[0] = t1;
+
+            TypeSize = byteList.Count;
+            Bytes = byteList.ToArray();
+        }
+
         public IType[] Value { get; internal set; }
     }
 
-    public class BaseTuple<T1, T2> : BaseType 
+    public class BaseTuple<T1, T2> : BaseType
                                                 where T1 : IType, new()
                                                 where T2 : IType, new()
     {
@@ -81,7 +94,8 @@ namespace Ajuna.NetApi.Model.Types.Base
         public override byte[] Encode()
         {
             var result = new List<byte>();
-            foreach (var v in Value) {
+            foreach (var v in Value)
+            {
                 result.AddRange(v.Encode());
             }
             return result.ToArray();
@@ -107,10 +121,25 @@ namespace Ajuna.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        public void Create(T1 t1, T2 t2)
+        {
+            var byteList = new List<byte>();
+            byteList.AddRange(t1.Encode());
+            byteList.AddRange(t2.Encode());
+            byteList.ToArray();
+
+            Value = new IType[2];
+            Value[0] = t1;
+            Value[1] = t2;
+
+            TypeSize = byteList.Count;
+            Bytes = byteList.ToArray();
+        }
+
         public IType[] Value { get; internal set; }
     }
 
-    public class BaseTuple<T1, T2, T3> : BaseType 
+    public class BaseTuple<T1, T2, T3> : BaseType
                                             where T1 : IType, new()
                                             where T2 : IType, new()
                                             where T3 : IType, new()
@@ -155,6 +184,23 @@ namespace Ajuna.NetApi.Model.Types.Base
 
             Bytes = new byte[TypeSize];
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
+        }
+
+        public void Create(T1 t1, T2 t2, T3 t3)
+        {
+            var byteList = new List<byte>();
+            byteList.AddRange(t1.Encode());
+            byteList.AddRange(t2.Encode());
+            byteList.AddRange(t3.Encode());
+            byteList.ToArray();
+
+            Value = new IType[3];
+            Value[0] = t1;
+            Value[1] = t2;
+            Value[2] = t3;
+
+            TypeSize = byteList.Count;
+            Bytes = byteList.ToArray();
         }
 
         public IType[] Value { get; internal set; }
@@ -211,6 +257,25 @@ namespace Ajuna.NetApi.Model.Types.Base
 
             Bytes = new byte[TypeSize];
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
+        }
+
+        public void Create(T1 t1, T2 t2, T3 t3, T4 t4)
+        {
+            var byteList = new List<byte>();
+            byteList.AddRange(t1.Encode());
+            byteList.AddRange(t2.Encode());
+            byteList.AddRange(t3.Encode());
+            byteList.AddRange(t4.Encode());
+            byteList.ToArray();
+
+            Value = new IType[4];
+            Value[0] = t1;
+            Value[1] = t2;
+            Value[2] = t3;
+            Value[3] = t4;
+
+            TypeSize = byteList.Count;
+            Bytes = byteList.ToArray();
         }
 
         public IType[] Value { get; internal set; }
@@ -273,6 +338,27 @@ namespace Ajuna.NetApi.Model.Types.Base
 
             Bytes = new byte[TypeSize];
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
+        }
+
+        public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5)
+        {
+            var byteList = new List<byte>();
+            byteList.AddRange(t1.Encode());
+            byteList.AddRange(t2.Encode());
+            byteList.AddRange(t3.Encode());
+            byteList.AddRange(t4.Encode());
+            byteList.AddRange(t5.Encode());
+            byteList.ToArray();
+
+            Value = new IType[5];
+            Value[0] = t1;
+            Value[1] = t2;
+            Value[2] = t3;
+            Value[3] = t4;
+            Value[4] = t5;
+
+            TypeSize = byteList.Count;
+            Bytes = byteList.ToArray();
         }
 
         public IType[] Value { get; internal set; }
@@ -341,6 +427,29 @@ namespace Ajuna.NetApi.Model.Types.Base
 
             Bytes = new byte[TypeSize];
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
+        }
+
+        public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6)
+        {
+            var byteList = new List<byte>();
+            byteList.AddRange(t1.Encode());
+            byteList.AddRange(t2.Encode());
+            byteList.AddRange(t3.Encode());
+            byteList.AddRange(t4.Encode());
+            byteList.AddRange(t5.Encode());
+            byteList.AddRange(t6.Encode());
+            byteList.ToArray();
+
+            Value = new IType[6];
+            Value[0] = t1;
+            Value[1] = t2;
+            Value[2] = t3;
+            Value[3] = t4;
+            Value[4] = t5;
+            Value[5] = t6;
+
+            TypeSize = byteList.Count;
+            Bytes = byteList.ToArray();
         }
 
         public IType[] Value { get; internal set; }
@@ -415,6 +524,31 @@ namespace Ajuna.NetApi.Model.Types.Base
 
             Bytes = new byte[TypeSize];
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
+        }
+
+        public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7)
+        {
+            var byteList = new List<byte>();
+            byteList.AddRange(t1.Encode());
+            byteList.AddRange(t2.Encode());
+            byteList.AddRange(t3.Encode());
+            byteList.AddRange(t4.Encode());
+            byteList.AddRange(t5.Encode());
+            byteList.AddRange(t6.Encode());
+            byteList.AddRange(t7.Encode());
+            byteList.ToArray();
+
+            Value = new IType[7];
+            Value[0] = t1;
+            Value[1] = t2;
+            Value[2] = t3;
+            Value[3] = t4;
+            Value[4] = t5;
+            Value[5] = t6;
+            Value[6] = t7;
+
+            TypeSize = byteList.Count;
+            Bytes = byteList.ToArray();
         }
 
         public IType[] Value { get; internal set; }

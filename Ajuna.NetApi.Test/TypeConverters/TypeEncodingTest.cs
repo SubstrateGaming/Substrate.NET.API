@@ -107,5 +107,20 @@ namespace Ajuna.NetApi.Test
             Assert.AreEqual(1, (extEnumType.Value2 as U8).Value);
 
         }
+
+        [Test]
+        public void ExtEnumDencodingTest()
+        {
+            var extEnumType = new BaseEnumExt<PhaseState, U8, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid>();
+
+            int p = 0;
+            extEnumType.Decode(new byte[] { 0x00, 0x01 }, ref p);
+
+            Assert.AreEqual(PhaseState.None, extEnumType.Value);
+            Assert.AreEqual("U8", extEnumType.Value2.GetType().Name);
+            Assert.AreEqual(1, (extEnumType.Value2 as U8).Value);
+
+            Assert.AreEqual(new byte[] { 0x00, 0x01 }, extEnumType.Bytes);
+        }
     }
 }
