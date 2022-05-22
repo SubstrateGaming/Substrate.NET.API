@@ -11,9 +11,7 @@ namespace Ajuna.NetApi.Model.Types.Primitive
 
         public override byte[] Encode()
         {
-            var reversed = Bytes;
-            Array.Reverse(reversed);
-            return reversed;
+            return Bytes;
         }
 
         public override void CreateFromJson(string str)
@@ -56,7 +54,9 @@ namespace Ajuna.NetApi.Model.Types.Primitive
                 throw new Exception($"Wrong byte array size for {TypeName()}, max. {TypeSize} bytes!");
             }
 
-            Bytes = value.ToByteArray();
+            var bytes = new byte[TypeSize];
+            byteArray.CopyTo(bytes, 0);
+            Bytes = bytes;
             Value = value;
         }
     }

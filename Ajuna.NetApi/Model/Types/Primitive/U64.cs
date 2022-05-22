@@ -10,9 +10,7 @@ namespace Ajuna.NetApi.Model.Types.Primitive
 
         public override byte[] Encode()
         {
-            var reversed = Bytes;
-            Array.Reverse(reversed);
-            return reversed;
+            return Bytes;
         }
 
         public override void CreateFromJson(string str)
@@ -39,7 +37,9 @@ namespace Ajuna.NetApi.Model.Types.Primitive
 
         public void Create(ulong value)
         {
-            Bytes = BitConverter.GetBytes(value);
+            var bytes = new byte[TypeSize];
+            BitConverter.GetBytes(value).CopyTo(bytes, 0);
+            Bytes = bytes;
             Value = value;
         }
     }
