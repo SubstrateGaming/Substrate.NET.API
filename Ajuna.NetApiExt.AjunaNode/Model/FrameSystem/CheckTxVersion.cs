@@ -17,7 +17,7 @@ namespace Ajuna.NetApi.Model.FrameSystem
     
     
     /// <summary>
-    /// >> 179 - Composite[frame_system.extensions.check_tx_version.CheckTxVersion]
+    /// >> 222 - Composite[frame_system.extensions.check_tx_version.CheckTxVersion]
     /// </summary>
     public sealed class CheckTxVersion : BaseType
     {

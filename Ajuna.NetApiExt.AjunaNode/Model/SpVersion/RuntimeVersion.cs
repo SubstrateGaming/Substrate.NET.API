@@ -19,7 +19,7 @@ namespace Ajuna.NetApi.Model.SpVersion
     
     
     /// <summary>
-    /// >> 71 - Composite[sp_version.RuntimeVersion]
+    /// >> 83 - Composite[sp_version.RuntimeVersion]
     /// </summary>
     public sealed class RuntimeVersion : BaseType
     {

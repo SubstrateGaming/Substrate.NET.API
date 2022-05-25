@@ -211,7 +211,7 @@ namespace Ajuna.NetApi.Model.PalletBalances
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(dest.Encode());
             byteArray.AddRange(value.Encode());
-            return new Method(5, "Balances", 0, "transfer", byteArray.ToArray());
+            return new Method(4, "Balances", 0, "transfer", byteArray.ToArray());
         }
         
         /// <summary>
@@ -224,7 +224,7 @@ namespace Ajuna.NetApi.Model.PalletBalances
             byteArray.AddRange(who.Encode());
             byteArray.AddRange(new_free.Encode());
             byteArray.AddRange(new_reserved.Encode());
-            return new Method(5, "Balances", 1, "set_balance", byteArray.ToArray());
+            return new Method(4, "Balances", 1, "set_balance", byteArray.ToArray());
         }
         
         /// <summary>
@@ -237,7 +237,7 @@ namespace Ajuna.NetApi.Model.PalletBalances
             byteArray.AddRange(source.Encode());
             byteArray.AddRange(dest.Encode());
             byteArray.AddRange(value.Encode());
-            return new Method(5, "Balances", 2, "force_transfer", byteArray.ToArray());
+            return new Method(4, "Balances", 2, "force_transfer", byteArray.ToArray());
         }
         
         /// <summary>
@@ -249,7 +249,7 @@ namespace Ajuna.NetApi.Model.PalletBalances
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(dest.Encode());
             byteArray.AddRange(value.Encode());
-            return new Method(5, "Balances", 3, "transfer_keep_alive", byteArray.ToArray());
+            return new Method(4, "Balances", 3, "transfer_keep_alive", byteArray.ToArray());
         }
         
         /// <summary>
@@ -261,7 +261,7 @@ namespace Ajuna.NetApi.Model.PalletBalances
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(dest.Encode());
             byteArray.AddRange(keep_alive.Encode());
-            return new Method(5, "Balances", 4, "transfer_all", byteArray.ToArray());
+            return new Method(4, "Balances", 4, "transfer_all", byteArray.ToArray());
         }
         
         /// <summary>
@@ -273,7 +273,7 @@ namespace Ajuna.NetApi.Model.PalletBalances
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(who.Encode());
             byteArray.AddRange(amount.Encode());
-            return new Method(5, "Balances", 5, "force_unreserve", byteArray.ToArray());
+            return new Method(4, "Balances", 5, "force_unreserve", byteArray.ToArray());
         }
     }
     

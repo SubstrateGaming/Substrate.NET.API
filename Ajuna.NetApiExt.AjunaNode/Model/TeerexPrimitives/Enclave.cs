@@ -21,7 +21,7 @@ namespace Ajuna.NetApi.Model.TeerexPrimitives
     
     
     /// <summary>
-    /// >> 144 - Composite[teerex_primitives.Enclave]
+    /// >> 211 - Composite[teerex_primitives.Enclave]
     /// </summary>
     public sealed class Enclave : BaseType
     {

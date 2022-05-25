@@ -20,7 +20,7 @@ namespace Ajuna.NetApi.Model.FinalityGrandpa
     
     
     /// <summary>
-    /// >> 98 - Composite[finality_grandpa.EquivocationT2]
+    /// >> 110 - Composite[finality_grandpa.EquivocationT2]
     /// </summary>
     public sealed class EquivocationT2 : BaseType
     {

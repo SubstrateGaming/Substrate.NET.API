@@ -7,45 +7,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Ajuna.NetApi.Model.SpCore;
 using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
 using System;
 using System.Collections.Generic;
 
 
-namespace Ajuna.NetApi.Model.AjunaRuntime
+namespace Ajuna.NetApi.Model.PalletCollective
 {
     
     
-    public enum NodeEvent
+    public enum RawOrigin
     {
         
-        System,
+        Members,
         
-        Grandpa,
+        Member,
         
-        Balances,
-        
-        Assets,
-        
-        Sudo,
-        
-        Teerex,
-        
-        ConnectFour,
-        
-        Scheduler,
-        
-        Matchmaker,
-        
-        GameRegistry,
-        
-        Observers,
+        _Phantom,
     }
     
     /// <summary>
-    /// >> 17 - Variant[ajuna_runtime.Event]
+    /// >> 194 - Variant[pallet_collective.RawOrigin]
     /// </summary>
-    public sealed class EnumNodeEvent : BaseEnum<NodeEvent>
+    public sealed class EnumRawOrigin : BaseEnumExt<RawOrigin, BaseTuple<Ajuna.NetApi.Model.Types.Primitive.U32, Ajuna.NetApi.Model.Types.Primitive.U32>, Ajuna.NetApi.Model.SpCore.AccountId32, BaseVoid>
     {
     }
 }

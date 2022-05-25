@@ -27,7 +27,7 @@ namespace Ajuna.NetApi.Model.SpRuntime
     }
     
     /// <summary>
-    /// >> 24 - Variant[sp_runtime.ArithmeticError]
+    /// >> 25 - Variant[sp_runtime.ArithmeticError]
     /// </summary>
     public sealed class EnumArithmeticError : BaseEnum<ArithmeticError>
     {

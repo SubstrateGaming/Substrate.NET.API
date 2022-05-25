@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.PalletAssets
     
     
     /// <summary>
-    /// >> 130 - Composite[pallet_assets.types.DestroyWitness]
+    /// >> 141 - Composite[pallet_assets.types.DestroyWitness]
     /// </summary>
     public sealed class DestroyWitness : BaseType
     {

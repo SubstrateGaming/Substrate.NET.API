@@ -19,7 +19,7 @@ namespace Ajuna.NetApi.Model.PalletGameregistry
     
     
     /// <summary>
-    /// >> 162 - Composite[pallet_ajuna_gameregistry.queue.Queue]
+    /// >> 201 - Composite[pallet_ajuna_gameregistry.queue.Queue]
     /// </summary>
     public sealed class Queue : BaseType
     {

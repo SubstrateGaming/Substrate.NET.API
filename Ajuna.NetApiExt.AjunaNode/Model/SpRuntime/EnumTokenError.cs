@@ -35,7 +35,7 @@ namespace Ajuna.NetApi.Model.SpRuntime
     }
     
     /// <summary>
-    /// >> 23 - Variant[sp_runtime.TokenError]
+    /// >> 24 - Variant[sp_runtime.TokenError]
     /// </summary>
     public sealed class EnumTokenError : BaseEnum<TokenError>
     {

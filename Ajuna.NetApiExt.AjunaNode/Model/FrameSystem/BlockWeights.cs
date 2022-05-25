@@ -19,7 +19,7 @@ namespace Ajuna.NetApi.Model.FrameSystem
     
     
     /// <summary>
-    /// >> 64 - Composite[frame_system.limits.BlockWeights]
+    /// >> 76 - Composite[frame_system.limits.BlockWeights]
     /// </summary>
     public sealed class BlockWeights : BaseType
     {

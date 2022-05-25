@@ -27,7 +27,7 @@ namespace Ajuna.NetApi.Model.PalletBalances
     }
     
     /// <summary>
-    /// >> 105 - Variant[pallet_balances.Reasons]
+    /// >> 117 - Variant[pallet_balances.Reasons]
     /// </summary>
     public sealed class EnumReasons : BaseEnum<Reasons>
     {

@@ -19,7 +19,7 @@ namespace Ajuna.NetApi.Model.PalletGameregistry
     
     
     /// <summary>
-    /// >> 164 - Composite[pallet_ajuna_gameregistry.game.requirement.Requirement]
+    /// >> 203 - Composite[pallet_ajuna_gameregistry.game.requirement.Requirement]
     /// </summary>
     public sealed class Requirement : BaseType
     {

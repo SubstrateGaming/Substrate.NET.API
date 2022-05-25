@@ -25,7 +25,7 @@ namespace Ajuna.NetApi.Model.PalletTransactionPayment
     }
     
     /// <summary>
-    /// >> 118 - Variant[pallet_transaction_payment.Releases]
+    /// >> 129 - Variant[pallet_transaction_payment.Releases]
     /// </summary>
     public sealed class EnumReleases : BaseEnum<Releases>
     {

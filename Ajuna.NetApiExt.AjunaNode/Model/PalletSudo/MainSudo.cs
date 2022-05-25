@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Ajuna.NetApi.Model.AjunaRuntime;
+using Ajuna.NetApi.Model.AjunaSoloRuntime;
 using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Meta;
 using Ajuna.NetApi.Model.SpCore;
@@ -64,23 +64,23 @@ namespace Ajuna.NetApi.Model.PalletSudo
         /// >> sudo
         /// Contains one variant per dispatchable that can be called by an extrinsic.
         /// </summary>
-        public static Method Sudo(Ajuna.NetApi.Model.AjunaRuntime.EnumNodeCall call)
+        public static Method Sudo(Ajuna.NetApi.Model.AjunaSoloRuntime.EnumNodeCall call)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(call.Encode());
-            return new Method(8, "Sudo", 0, "sudo", byteArray.ToArray());
+            return new Method(13, "Sudo", 0, "sudo", byteArray.ToArray());
         }
         
         /// <summary>
         /// >> sudo_unchecked_weight
         /// Contains one variant per dispatchable that can be called by an extrinsic.
         /// </summary>
-        public static Method SudoUncheckedWeight(Ajuna.NetApi.Model.AjunaRuntime.EnumNodeCall call, Ajuna.NetApi.Model.Types.Primitive.U64 weight)
+        public static Method SudoUncheckedWeight(Ajuna.NetApi.Model.AjunaSoloRuntime.EnumNodeCall call, Ajuna.NetApi.Model.Types.Primitive.U64 weight)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(call.Encode());
             byteArray.AddRange(weight.Encode());
-            return new Method(8, "Sudo", 1, "sudo_unchecked_weight", byteArray.ToArray());
+            return new Method(13, "Sudo", 1, "sudo_unchecked_weight", byteArray.ToArray());
         }
         
         /// <summary>
@@ -91,19 +91,19 @@ namespace Ajuna.NetApi.Model.PalletSudo
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(@new.Encode());
-            return new Method(8, "Sudo", 2, "set_key", byteArray.ToArray());
+            return new Method(13, "Sudo", 2, "set_key", byteArray.ToArray());
         }
         
         /// <summary>
         /// >> sudo_as
         /// Contains one variant per dispatchable that can be called by an extrinsic.
         /// </summary>
-        public static Method SudoAs(Ajuna.NetApi.Model.SpRuntime.EnumMultiAddress who, Ajuna.NetApi.Model.AjunaRuntime.EnumNodeCall call)
+        public static Method SudoAs(Ajuna.NetApi.Model.SpRuntime.EnumMultiAddress who, Ajuna.NetApi.Model.AjunaSoloRuntime.EnumNodeCall call)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(who.Encode());
             byteArray.AddRange(call.Encode());
-            return new Method(8, "Sudo", 3, "sudo_as", byteArray.ToArray());
+            return new Method(13, "Sudo", 3, "sudo_as", byteArray.ToArray());
         }
     }
     

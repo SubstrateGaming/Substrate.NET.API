@@ -20,7 +20,7 @@ namespace Ajuna.NetApi.Model.PalletBalances
     
     
     /// <summary>
-    /// >> 104 - Composite[pallet_balances.BalanceLock]
+    /// >> 116 - Composite[pallet_balances.BalanceLock]
     /// </summary>
     public sealed class BalanceLock : BaseType
     {

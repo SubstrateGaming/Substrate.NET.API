@@ -30,7 +30,7 @@ namespace Ajuna.NetApi.Model.PalletGameregistry
     }
     
     /// <summary>
-    /// >> 168 - Variant[pallet_ajuna_gameregistry.game.GameState]
+    /// >> 207 - Variant[pallet_ajuna_gameregistry.game.GameState]
     /// </summary>
     public sealed class EnumGameState : BaseEnumExt<GameState, BaseVoid, BaseVoid, BaseVoid, Ajuna.NetApi.Model.SpCore.AccountId32>
     {

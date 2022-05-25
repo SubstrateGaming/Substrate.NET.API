@@ -24,7 +24,7 @@ namespace Ajuna.NetApi.Model.PalletGameregistry
     }
     
     /// <summary>
-    /// >> 165 - Variant[pallet_ajuna_gameregistry.game.requirement.RequirementType]
+    /// >> 204 - Variant[pallet_ajuna_gameregistry.game.requirement.RequirementType]
     /// </summary>
     public sealed class EnumRequirementType : BaseEnumExt<RequirementType, Ajuna.NetApi.Model.Types.Primitive.U32>
     {

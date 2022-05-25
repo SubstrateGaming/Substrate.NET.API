@@ -21,7 +21,7 @@ namespace Ajuna.NetApi.Model.PalletGameregistry
     
     
     /// <summary>
-    /// >> 167 - Composite[pallet_ajuna_gameregistry.game.GameEntry]
+    /// >> 206 - Composite[pallet_ajuna_gameregistry.game.GameEntry]
     /// </summary>
     public sealed class GameEntry : BaseType
     {

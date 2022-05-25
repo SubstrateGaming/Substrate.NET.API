@@ -195,7 +195,7 @@ namespace Ajuna.NetApi.Model.PalletGameRegistry
         public static Method Queue()
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            return new Method(13, "GameRegistry", 0, "queue", byteArray.ToArray());
+            return new Method(17, "GameRegistry", 0, "queue", byteArray.ToArray());
         }
         
         /// <summary>
@@ -207,7 +207,7 @@ namespace Ajuna.NetApi.Model.PalletGameRegistry
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(game_hash.Encode());
             byteArray.AddRange(game_engine.Encode());
-            return new Method(13, "GameRegistry", 1, "drop_game", byteArray.ToArray());
+            return new Method(17, "GameRegistry", 1, "drop_game", byteArray.ToArray());
         }
         
         /// <summary>
@@ -220,7 +220,7 @@ namespace Ajuna.NetApi.Model.PalletGameRegistry
             byteArray.AddRange(cluster.Encode());
             byteArray.AddRange(games.Encode());
             byteArray.AddRange(shard_id.Encode());
-            return new Method(13, "GameRegistry", 2, "ack_game", byteArray.ToArray());
+            return new Method(17, "GameRegistry", 2, "ack_game", byteArray.ToArray());
         }
         
         /// <summary>
@@ -231,7 +231,7 @@ namespace Ajuna.NetApi.Model.PalletGameRegistry
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(game_hash.Encode());
-            return new Method(13, "GameRegistry", 3, "ready_game", byteArray.ToArray());
+            return new Method(17, "GameRegistry", 3, "ready_game", byteArray.ToArray());
         }
         
         /// <summary>
@@ -243,7 +243,7 @@ namespace Ajuna.NetApi.Model.PalletGameRegistry
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(game_hash.Encode());
             byteArray.AddRange(winner.Encode());
-            return new Method(13, "GameRegistry", 4, "finish_game", byteArray.ToArray());
+            return new Method(17, "GameRegistry", 4, "finish_game", byteArray.ToArray());
         }
     }
     
@@ -254,7 +254,15 @@ namespace Ajuna.NetApi.Model.PalletGameRegistry
     public sealed class EventPlayerQueued : BaseTuple<Ajuna.NetApi.Model.SpCore.AccountId32>
     {
     }
-       
+    
+    ///// <summary>
+    ///// >> Game
+    ///// Game Events
+    ///// </summary>
+    //public sealed class EventGame : BaseTuple<Ajuna.NetApi.PalletGameregistryEvent>
+    //{
+    //}
+    
     public enum GameRegistryErrors
     {
         

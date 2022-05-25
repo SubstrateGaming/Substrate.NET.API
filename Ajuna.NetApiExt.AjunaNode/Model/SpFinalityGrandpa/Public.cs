@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.SpFinalityGrandpa
     
     
     /// <summary>
-    /// >> 28 - Composite[sp_finality_grandpa.app.Public]
+    /// >> 30 - Composite[sp_finality_grandpa.app.Public]
     /// </summary>
     public sealed class Public : BaseType
     {

@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.SpConsensusAura
     
     
     /// <summary>
-    /// >> 81 - Composite[sp_consensus_aura.sr25519.app_sr25519.Public]
+    /// >> 93 - Composite[sp_consensus_aura.sr25519.app_sr25519.Public]
     /// </summary>
     public sealed class Public : BaseType
     {

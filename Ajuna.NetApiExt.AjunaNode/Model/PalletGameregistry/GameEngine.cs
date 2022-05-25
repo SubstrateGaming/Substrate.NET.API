@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.PalletGameregistry
     
     
     /// <summary>
-    /// >> 49 - Composite[pallet_ajuna_gameregistry.game.GameEngine]
+    /// >> 60 - Composite[pallet_ajuna_gameregistry.game.GameEngine]
     /// </summary>
     public sealed class GameEngine : BaseType
     {

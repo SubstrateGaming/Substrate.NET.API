@@ -96,7 +96,7 @@ namespace Ajuna.NetApi.Model.PalletScheduler
             byteArray.AddRange(maybe_periodic.Encode());
             byteArray.AddRange(priority.Encode());
             byteArray.AddRange(call.Encode());
-            return new Method(11, "Scheduler", 0, "schedule", byteArray.ToArray());
+            return new Method(14, "Scheduler", 0, "schedule", byteArray.ToArray());
         }
         
         /// <summary>
@@ -108,7 +108,7 @@ namespace Ajuna.NetApi.Model.PalletScheduler
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(when.Encode());
             byteArray.AddRange(index.Encode());
-            return new Method(11, "Scheduler", 1, "cancel", byteArray.ToArray());
+            return new Method(14, "Scheduler", 1, "cancel", byteArray.ToArray());
         }
         
         /// <summary>
@@ -123,7 +123,7 @@ namespace Ajuna.NetApi.Model.PalletScheduler
             byteArray.AddRange(maybe_periodic.Encode());
             byteArray.AddRange(priority.Encode());
             byteArray.AddRange(call.Encode());
-            return new Method(11, "Scheduler", 2, "schedule_named", byteArray.ToArray());
+            return new Method(14, "Scheduler", 2, "schedule_named", byteArray.ToArray());
         }
         
         /// <summary>
@@ -134,7 +134,7 @@ namespace Ajuna.NetApi.Model.PalletScheduler
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(id.Encode());
-            return new Method(11, "Scheduler", 3, "cancel_named", byteArray.ToArray());
+            return new Method(14, "Scheduler", 3, "cancel_named", byteArray.ToArray());
         }
         
         /// <summary>
@@ -148,7 +148,7 @@ namespace Ajuna.NetApi.Model.PalletScheduler
             byteArray.AddRange(maybe_periodic.Encode());
             byteArray.AddRange(priority.Encode());
             byteArray.AddRange(call.Encode());
-            return new Method(11, "Scheduler", 4, "schedule_after", byteArray.ToArray());
+            return new Method(14, "Scheduler", 4, "schedule_after", byteArray.ToArray());
         }
         
         /// <summary>
@@ -163,7 +163,7 @@ namespace Ajuna.NetApi.Model.PalletScheduler
             byteArray.AddRange(maybe_periodic.Encode());
             byteArray.AddRange(priority.Encode());
             byteArray.AddRange(call.Encode());
-            return new Method(11, "Scheduler", 5, "schedule_named_after", byteArray.ToArray());
+            return new Method(14, "Scheduler", 5, "schedule_named_after", byteArray.ToArray());
         }
     }
     

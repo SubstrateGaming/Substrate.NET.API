@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Ajuna.NetApi.Model.AjunaRuntime;
+using Ajuna.NetApi.Model.AjunaSoloRuntime;
 using Ajuna.NetApi.Model.PrimitiveTypes;
 using Ajuna.NetApi.Model.Types.Base;
 using System;
@@ -27,9 +27,9 @@ namespace Ajuna.NetApi.Model.FrameSupport
     }
     
     /// <summary>
-    /// >> 139 - Variant[frame_support.traits.schedule.MaybeHashed]
+    /// >> 157 - Variant[frame_support.traits.schedule.MaybeHashed]
     /// </summary>
-    public sealed class EnumMaybeHashed : BaseEnumExt<MaybeHashed, Ajuna.NetApi.Model.AjunaRuntime.EnumNodeCall, Ajuna.NetApi.Model.PrimitiveTypes.H256>
+    public sealed class EnumMaybeHashed : BaseEnumExt<MaybeHashed, Ajuna.NetApi.Model.AjunaSoloRuntime.EnumNodeCall, Ajuna.NetApi.Model.PrimitiveTypes.H256>
     {
     }
 }

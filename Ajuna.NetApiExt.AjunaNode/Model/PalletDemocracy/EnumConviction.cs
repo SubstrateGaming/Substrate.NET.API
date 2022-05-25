@@ -7,28 +7,37 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Ajuna.NetApi.Model.FrameSystem;
 using Ajuna.NetApi.Model.Types.Base;
 using System;
 using System.Collections.Generic;
 
 
-namespace Ajuna.NetApi.Model.AjunaRuntime
+namespace Ajuna.NetApi.Model.PalletDemocracy
 {
     
     
-    public enum OriginCaller
+    public enum Conviction
     {
         
-        system,
+        None,
         
-        Void,
+        Locked1x,
+        
+        Locked2x,
+        
+        Locked3x,
+        
+        Locked4x,
+        
+        Locked5x,
+        
+        Locked6x,
     }
     
     /// <summary>
-    /// >> 155 - Variant[ajuna_runtime.OriginCaller]
+    /// >> 153 - Variant[pallet_democracy.conviction.Conviction]
     /// </summary>
-    public sealed class EnumOriginCaller : BaseEnumExt<OriginCaller, Ajuna.NetApi.Model.FrameSystem.EnumRawOrigin, Ajuna.NetApi.Model.Types.Base.BaseVoid>
+    public sealed class EnumConviction : BaseEnum<Conviction>
     {
     }
 }

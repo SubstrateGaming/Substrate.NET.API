@@ -19,7 +19,7 @@ namespace Ajuna.NetApi.Model.TeerexPrimitives
     
     
     /// <summary>
-    /// >> 135 - Composite[teerex_primitives.Request]
+    /// >> 161 - Composite[teerex_primitives.Request]
     /// </summary>
     public sealed class Request : BaseType
     {

@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.SpArithmetic
     
     
     /// <summary>
-    /// >> 117 - Composite[sp_arithmetic.fixed_point.FixedU128]
+    /// >> 128 - Composite[sp_arithmetic.fixed_point.FixedU128]
     /// </summary>
     public sealed class FixedU128 : BaseType
     {

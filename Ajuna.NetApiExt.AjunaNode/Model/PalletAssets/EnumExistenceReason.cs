@@ -30,7 +30,7 @@ namespace Ajuna.NetApi.Model.PalletAssets
     }
     
     /// <summary>
-    /// >> 124 - Variant[pallet_assets.types.ExistenceReason]
+    /// >> 135 - Variant[pallet_assets.types.ExistenceReason]
     /// </summary>
     public sealed class EnumExistenceReason : BaseEnumExt<ExistenceReason, BaseVoid, BaseVoid, Ajuna.NetApi.Model.Types.Primitive.U128, BaseVoid>
     {

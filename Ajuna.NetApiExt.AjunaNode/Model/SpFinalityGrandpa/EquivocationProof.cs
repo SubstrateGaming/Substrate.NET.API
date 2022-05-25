@@ -19,7 +19,7 @@ namespace Ajuna.NetApi.Model.SpFinalityGrandpa
     
     
     /// <summary>
-    /// >> 90 - Composite[sp_finality_grandpa.EquivocationProof]
+    /// >> 102 - Composite[sp_finality_grandpa.EquivocationProof]
     /// </summary>
     public sealed class EquivocationProof : BaseType
     {

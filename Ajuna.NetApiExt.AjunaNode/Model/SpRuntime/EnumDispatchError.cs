@@ -9,7 +9,6 @@
 
 using Ajuna.NetApi.Model.SpRuntime;
 using Ajuna.NetApi.Model.Types.Base;
-using Ajuna.NetApi.Model.Types.Primitive;
 using System;
 using System.Collections.Generic;
 
@@ -38,12 +37,14 @@ namespace Ajuna.NetApi.Model.SpRuntime
         Token,
         
         Arithmetic,
+        
+        Transactional,
     }
     
     /// <summary>
     /// >> 22 - Variant[sp_runtime.DispatchError]
     /// </summary>
-    public sealed class EnumDispatchError : BaseEnumExt<DispatchError, BaseVoid, BaseVoid, BaseVoid, BaseTuple<Ajuna.NetApi.Model.Types.Primitive.U8, Ajuna.NetApi.Model.Types.Primitive.U8>, BaseVoid, BaseVoid, BaseVoid, Ajuna.NetApi.Model.SpRuntime.EnumTokenError, Ajuna.NetApi.Model.SpRuntime.EnumArithmeticError>
+    public sealed class EnumDispatchError : BaseEnumExt<DispatchError, BaseVoid, BaseVoid, BaseVoid, Ajuna.NetApi.Model.SpRuntime.ModuleError, BaseVoid, BaseVoid, BaseVoid, Ajuna.NetApi.Model.SpRuntime.EnumTokenError, Ajuna.NetApi.Model.SpRuntime.EnumArithmeticError, Ajuna.NetApi.Model.SpRuntime.EnumTransactionalError>
     {
     }
 }

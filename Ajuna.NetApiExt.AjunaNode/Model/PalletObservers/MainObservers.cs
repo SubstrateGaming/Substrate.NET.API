@@ -85,7 +85,7 @@ namespace Ajuna.NetApi.Model.PalletObservers
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(who.Encode());
-            return new Method(14, "Observers", 0, "add_member", byteArray.ToArray());
+            return new Method(18, "Observers", 0, "add_member", byteArray.ToArray());
         }
         
         /// <summary>
@@ -96,7 +96,7 @@ namespace Ajuna.NetApi.Model.PalletObservers
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(who.Encode());
-            return new Method(14, "Observers", 1, "remove_member", byteArray.ToArray());
+            return new Method(18, "Observers", 1, "remove_member", byteArray.ToArray());
         }
         
         /// <summary>
@@ -108,7 +108,7 @@ namespace Ajuna.NetApi.Model.PalletObservers
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(remove.Encode());
             byteArray.AddRange(add.Encode());
-            return new Method(14, "Observers", 2, "swap_member", byteArray.ToArray());
+            return new Method(18, "Observers", 2, "swap_member", byteArray.ToArray());
         }
         
         /// <summary>
@@ -119,7 +119,7 @@ namespace Ajuna.NetApi.Model.PalletObservers
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(members.Encode());
-            return new Method(14, "Observers", 3, "reset_members", byteArray.ToArray());
+            return new Method(18, "Observers", 3, "reset_members", byteArray.ToArray());
         }
         
         /// <summary>
@@ -130,7 +130,7 @@ namespace Ajuna.NetApi.Model.PalletObservers
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(@new.Encode());
-            return new Method(14, "Observers", 4, "change_key", byteArray.ToArray());
+            return new Method(18, "Observers", 4, "change_key", byteArray.ToArray());
         }
         
         /// <summary>
@@ -141,7 +141,7 @@ namespace Ajuna.NetApi.Model.PalletObservers
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(who.Encode());
-            return new Method(14, "Observers", 5, "set_prime", byteArray.ToArray());
+            return new Method(18, "Observers", 5, "set_prime", byteArray.ToArray());
         }
         
         /// <summary>
@@ -151,7 +151,7 @@ namespace Ajuna.NetApi.Model.PalletObservers
         public static Method ClearPrime()
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            return new Method(14, "Observers", 6, "clear_prime", byteArray.ToArray());
+            return new Method(18, "Observers", 6, "clear_prime", byteArray.ToArray());
         }
     }
     

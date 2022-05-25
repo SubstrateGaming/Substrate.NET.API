@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.SpArithmetic
     
     
     /// <summary>
-    /// >> 60 - Composite[sp_arithmetic.per_things.Perbill]
+    /// >> 72 - Composite[sp_arithmetic.per_things.Perbill]
     /// </summary>
     public sealed class Perbill : BaseType
     {

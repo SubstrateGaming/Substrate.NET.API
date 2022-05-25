@@ -25,7 +25,7 @@ namespace Ajuna.NetApi.Model.IasVerify
     }
     
     /// <summary>
-    /// >> 145 - Variant[ias_verify.SgxBuildMode]
+    /// >> 212 - Variant[ias_verify.SgxBuildMode]
     /// </summary>
     public sealed class EnumSgxBuildMode : BaseEnum<SgxBuildMode>
     {

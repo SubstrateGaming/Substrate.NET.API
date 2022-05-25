@@ -26,7 +26,7 @@ namespace Ajuna.NetApi.Model.SpFinalityGrandpa
     }
     
     /// <summary>
-    /// >> 91 - Variant[sp_finality_grandpa.Equivocation]
+    /// >> 103 - Variant[sp_finality_grandpa.Equivocation]
     /// </summary>
     public sealed class EnumEquivocation : BaseEnumExt<Equivocation, Ajuna.NetApi.Model.FinalityGrandpa.EquivocationT1, Ajuna.NetApi.Model.FinalityGrandpa.EquivocationT2>
     {

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Ajuna.NetApi.Model.AjunaRuntime;
+using Ajuna.NetApi.Model.AjunaSoloRuntime;
 using Ajuna.NetApi.Model.FrameSystem;
 using Ajuna.NetApi.Model.PrimitiveTypes;
 using Ajuna.NetApi.Model.Types.Base;
@@ -33,7 +33,7 @@ namespace Ajuna.NetApi.Model.FrameSystem
         /// <summary>
         /// >> event
         /// </summary>
-        private Ajuna.NetApi.Model.AjunaRuntime.EnumNodeEvent _event;
+        private Ajuna.NetApi.Model.AjunaSoloRuntime.EnumNodeEvent _event;
         
         /// <summary>
         /// >> topics
@@ -52,7 +52,7 @@ namespace Ajuna.NetApi.Model.FrameSystem
             }
         }
         
-        public Ajuna.NetApi.Model.AjunaRuntime.EnumNodeEvent Event
+        public Ajuna.NetApi.Model.AjunaSoloRuntime.EnumNodeEvent Event
         {
             get
             {
@@ -95,7 +95,7 @@ namespace Ajuna.NetApi.Model.FrameSystem
             var start = p;
             Phase = new Ajuna.NetApi.Model.FrameSystem.EnumPhase();
             Phase.Decode(byteArray, ref p);
-            Event = new Ajuna.NetApi.Model.AjunaRuntime.EnumNodeEvent();
+            Event = new Ajuna.NetApi.Model.AjunaSoloRuntime.EnumNodeEvent();
             Event.Decode(byteArray, ref p);
             Topics = new BaseVec<Ajuna.NetApi.Model.PrimitiveTypes.H256>();
             Topics.Decode(byteArray, ref p);

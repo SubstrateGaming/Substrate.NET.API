@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.PalletMatchmaker
     
     
     /// <summary>
-    /// >> 45 - Composite[pallet_ajuna_matchmaker.Player]
+    /// >> 56 - Composite[pallet_ajuna_matchmaker.Player]
     /// </summary>
     public sealed class Player : BaseType
     {

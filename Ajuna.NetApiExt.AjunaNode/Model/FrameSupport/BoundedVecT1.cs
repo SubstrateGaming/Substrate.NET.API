@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.FrameSupport
     
     
     /// <summary>
-    /// >> 107 - Composite[frame_support.storage.bounded_vec.BoundedVecT1]
+    /// >> 119 - Composite[frame_support.storage.bounded_vec.BoundedVecT1]
     /// </summary>
     public sealed class BoundedVecT1 : BaseType
     {

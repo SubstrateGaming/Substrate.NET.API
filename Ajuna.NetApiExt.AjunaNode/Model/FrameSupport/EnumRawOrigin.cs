@@ -7,45 +7,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Ajuna.NetApi.Model.SpCore;
 using Ajuna.NetApi.Model.Types.Base;
 using System;
 using System.Collections.Generic;
 
 
-namespace Ajuna.NetApi.Model.AjunaRuntime
+namespace Ajuna.NetApi.Model.FrameSupport
 {
     
     
-    public enum NodeCall
+    public enum RawOrigin
     {
         
-        System,
+        Root,
         
-        Timestamp,
+        Signed,
         
-        Grandpa,
-        
-        Balances,
-        
-        Assets,
-        
-        Sudo,
-        
-        Teerex,
-        
-        ConnectFour,
-        
-        Scheduler,
-        
-        GameRegistry,
-        
-        Observers,
+        None,
     }
     
     /// <summary>
-    /// >> 133 - Variant[ajuna_runtime.Call]
+    /// >> 193 - Variant[frame_support.dispatch.RawOrigin]
     /// </summary>
-    public sealed class EnumNodeCall : BaseEnum<NodeCall>
+    public sealed class EnumRawOrigin : BaseEnumExt<RawOrigin, BaseVoid, Ajuna.NetApi.Model.SpCore.AccountId32, BaseVoid>
     {
     }
 }

@@ -8,8 +8,8 @@
 //------------------------------------------------------------------------------
 
 using Ajuna.NetApi.Model.Extrinsics;
+using Ajuna.NetApi.Model.FrameSupport;
 using Ajuna.NetApi.Model.Meta;
-using Ajuna.NetApi.Model.PrimitiveTypes;
 using Ajuna.NetApi.Model.Types;
 using Ajuna.NetApi.Model.Types.Base;
 using System;
@@ -31,7 +31,7 @@ namespace Ajuna.NetApi.Model.PalletRandomnessCollectiveFlip
         public RandomnessCollectiveFlipStorage(SubstrateClientExt client)
         {
             this._client = client;
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("RandomnessCollectiveFlip", "RandomMaterial"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(BaseVec<Ajuna.NetApi.Model.PrimitiveTypes.H256>)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("RandomnessCollectiveFlip", "RandomMaterial"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Ajuna.NetApi.Model.FrameSupport.BoundedVecT6)));
         }
         
         /// <summary>
@@ -51,10 +51,10 @@ namespace Ajuna.NetApi.Model.PalletRandomnessCollectiveFlip
         ///  is arranged as a ring buffer with `block_number % 81` being the index into the `Vec` of
         ///  the oldest hash.
         /// </summary>
-        public async Task<BaseVec<Ajuna.NetApi.Model.PrimitiveTypes.H256>> RandomMaterial(CancellationToken token)
+        public async Task<Ajuna.NetApi.Model.FrameSupport.BoundedVecT6> RandomMaterial(CancellationToken token)
         {
             string parameters = RandomnessCollectiveFlipStorage.RandomMaterialParams();
-            return await _client.GetStorageAsync<BaseVec<Ajuna.NetApi.Model.PrimitiveTypes.H256>>(parameters, token);
+            return await _client.GetStorageAsync<Ajuna.NetApi.Model.FrameSupport.BoundedVecT6>(parameters, token);
         }
     }
     

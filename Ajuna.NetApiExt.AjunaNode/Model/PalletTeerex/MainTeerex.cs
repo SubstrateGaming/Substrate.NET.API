@@ -169,7 +169,7 @@ namespace Ajuna.NetApi.Model.PalletTeerex
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(ra_report.Encode());
             byteArray.AddRange(worker_url.Encode());
-            return new Method(9, "Teerex", 0, "register_enclave", byteArray.ToArray());
+            return new Method(19, "Teerex", 0, "register_enclave", byteArray.ToArray());
         }
         
         /// <summary>
@@ -179,7 +179,7 @@ namespace Ajuna.NetApi.Model.PalletTeerex
         public static Method UnregisterEnclave()
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            return new Method(9, "Teerex", 1, "unregister_enclave", byteArray.ToArray());
+            return new Method(19, "Teerex", 1, "unregister_enclave", byteArray.ToArray());
         }
         
         /// <summary>
@@ -190,7 +190,7 @@ namespace Ajuna.NetApi.Model.PalletTeerex
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(request.Encode());
-            return new Method(9, "Teerex", 2, "call_worker", byteArray.ToArray());
+            return new Method(19, "Teerex", 2, "call_worker", byteArray.ToArray());
         }
         
         /// <summary>
@@ -202,7 +202,7 @@ namespace Ajuna.NetApi.Model.PalletTeerex
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(block_hash.Encode());
             byteArray.AddRange(trusted_calls_merkle_root.Encode());
-            return new Method(9, "Teerex", 3, "confirm_processed_parentchain_block", byteArray.ToArray());
+            return new Method(19, "Teerex", 3, "confirm_processed_parentchain_block", byteArray.ToArray());
         }
         
         /// <summary>
@@ -214,7 +214,7 @@ namespace Ajuna.NetApi.Model.PalletTeerex
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(shard_id.Encode());
             byteArray.AddRange(block_hash.Encode());
-            return new Method(9, "Teerex", 4, "confirm_proposed_sidechain_block", byteArray.ToArray());
+            return new Method(19, "Teerex", 4, "confirm_proposed_sidechain_block", byteArray.ToArray());
         }
         
         /// <summary>
@@ -227,7 +227,7 @@ namespace Ajuna.NetApi.Model.PalletTeerex
             byteArray.AddRange(incognito_account_encrypted.Encode());
             byteArray.AddRange(amount.Encode());
             byteArray.AddRange(bonding_account.Encode());
-            return new Method(9, "Teerex", 5, "shield_funds", byteArray.ToArray());
+            return new Method(19, "Teerex", 5, "shield_funds", byteArray.ToArray());
         }
         
         /// <summary>
@@ -241,7 +241,7 @@ namespace Ajuna.NetApi.Model.PalletTeerex
             byteArray.AddRange(amount.Encode());
             byteArray.AddRange(bonding_account.Encode());
             byteArray.AddRange(call_hash.Encode());
-            return new Method(9, "Teerex", 6, "unshield_funds", byteArray.ToArray());
+            return new Method(19, "Teerex", 6, "unshield_funds", byteArray.ToArray());
         }
     }
     

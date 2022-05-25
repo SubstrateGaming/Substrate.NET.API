@@ -25,7 +25,7 @@ namespace Ajuna.NetApi.Model.FrameSupport
     }
     
     /// <summary>
-    /// >> 31 - Variant[frame_support.traits.tokens.misc.BalanceStatus]
+    /// >> 33 - Variant[frame_support.traits.tokens.misc.BalanceStatus]
     /// </summary>
     public sealed class EnumBalanceStatus : BaseEnum<BalanceStatus>
     {

@@ -19,7 +19,7 @@ namespace Ajuna.NetApi.Model.FinalityGrandpa
     
     
     /// <summary>
-    /// >> 93 - Composite[finality_grandpa.Prevote]
+    /// >> 105 - Composite[finality_grandpa.Prevote]
     /// </summary>
     public sealed class Prevote : BaseType
     {

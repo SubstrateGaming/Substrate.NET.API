@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Ajuna.NetApi.Model.AjunaRuntime;
+using Ajuna.NetApi.Model.AjunaSoloRuntime;
 using Ajuna.NetApi.Model.FrameSupport;
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
@@ -20,7 +20,7 @@ namespace Ajuna.NetApi.Model.PalletScheduler
     
     
     /// <summary>
-    /// >> 154 - Composite[pallet_scheduler.ScheduledV3]
+    /// >> 191 - Composite[pallet_scheduler.ScheduledV3]
     /// </summary>
     public sealed class ScheduledV3 : BaseType
     {
@@ -48,7 +48,7 @@ namespace Ajuna.NetApi.Model.PalletScheduler
         /// <summary>
         /// >> origin
         /// </summary>
-        private Ajuna.NetApi.Model.AjunaRuntime.EnumOriginCaller _origin;
+        private Ajuna.NetApi.Model.AjunaSoloRuntime.EnumOriginCaller _origin;
         
         public BaseOpt<BaseVec<Ajuna.NetApi.Model.Types.Primitive.U8>> MaybeId
         {
@@ -98,7 +98,7 @@ namespace Ajuna.NetApi.Model.PalletScheduler
             }
         }
         
-        public Ajuna.NetApi.Model.AjunaRuntime.EnumOriginCaller Origin
+        public Ajuna.NetApi.Model.AjunaSoloRuntime.EnumOriginCaller Origin
         {
             get
             {
@@ -137,7 +137,7 @@ namespace Ajuna.NetApi.Model.PalletScheduler
             Call.Decode(byteArray, ref p);
             MaybePeriodic = new BaseOpt<BaseTuple<Ajuna.NetApi.Model.Types.Primitive.U32,Ajuna.NetApi.Model.Types.Primitive.U32>>();
             MaybePeriodic.Decode(byteArray, ref p);
-            Origin = new Ajuna.NetApi.Model.AjunaRuntime.EnumOriginCaller();
+            Origin = new Ajuna.NetApi.Model.AjunaSoloRuntime.EnumOriginCaller();
             Origin.Decode(byteArray, ref p);
             TypeSize = p - start;
         }

@@ -8,34 +8,55 @@
 //------------------------------------------------------------------------------
 
 using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
 using System;
 using System.Collections.Generic;
 
 
-namespace Ajuna.NetApi.Model.AjunaRuntime
+namespace Ajuna.NetApi.Model.PalletDemocracy
 {
     
     
     /// <summary>
-    /// >> 48 - Composite[ajuna_runtime.Runtime]
+    /// >> 48 - Composite[pallet_democracy.vote.Vote]
     /// </summary>
-    public sealed class Runtime : BaseType
+    public sealed class Vote : BaseType
     {
+        
+        /// <summary>
+        /// >> value
+        /// </summary>
+        private Ajuna.NetApi.Model.Types.Primitive.U8 _value;
+        
+        public Ajuna.NetApi.Model.Types.Primitive.U8 Value
+        {
+            get
+            {
+                return this._value;
+            }
+            set
+            {
+                this._value = value;
+            }
+        }
         
         public override string TypeName()
         {
-            return "Runtime";
+            return "Vote";
         }
         
         public override byte[] Encode()
         {
             var result = new List<byte>();
+            result.AddRange(Value.Encode());
             return result.ToArray();
         }
         
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
+            Value = new Ajuna.NetApi.Model.Types.Primitive.U8();
+            Value.Decode(byteArray, ref p);
             TypeSize = p - start;
         }
     }

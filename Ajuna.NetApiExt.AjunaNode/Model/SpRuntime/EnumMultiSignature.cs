@@ -28,7 +28,7 @@ namespace Ajuna.NetApi.Model.SpRuntime
     }
     
     /// <summary>
-    /// >> 173 - Variant[sp_runtime.MultiSignature]
+    /// >> 215 - Variant[sp_runtime.MultiSignature]
     /// </summary>
     public sealed class EnumMultiSignature : BaseEnumExt<MultiSignature, Ajuna.NetApi.Model.SpCore.Signature, Ajuna.NetApi.Model.SpCore.Signature, Ajuna.NetApi.Model.SpCore.Signature>
     {
