@@ -103,7 +103,7 @@ namespace TestTee
 
         private static async Task MainAsync(CancellationToken cancellationToken)
         {
-            var ngrok = "wss://79f3-84-75-48-249.ngrok.io";
+            var ngrok = "wss://9ae9-84-75-48-249.ngrok.io";
             var shardHex = "3JFfg4Ff2SHk7sCsY6nZ59m92vFSCxmWQ1jgh52VzDqT";
             var mrenclaveHex = "3JFfg4Ff2SHk7sCsY6nZ59m92vFSCxmWQ1jgh52VzDqT";
 
