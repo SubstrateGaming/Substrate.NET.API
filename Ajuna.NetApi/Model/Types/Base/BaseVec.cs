@@ -15,12 +15,13 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public byte[] Encode()
         {
-            List<byte> result = new List<byte>();
+            var result = new List<byte>();
+            result.AddRange(new CompactInteger(Value.Length).Encode());
             for (int i = 0; i < Value.Length; i++)
             {
                 result.AddRange(Value[i].Encode());
             }
-            return Utils.SizePrefixedByteArray(result);
+            return result.ToArray();
         }
 
         public void Decode(byte[] byteArray, ref int p)
