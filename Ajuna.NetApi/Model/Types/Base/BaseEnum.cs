@@ -32,15 +32,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public void Create(T t)
         {
-            //var byteArray = BitConverter.GetBytes(Convert.ToInt32(t));
-            //if (byteArray.Length < Size())
-            //{
-            //    var newByteArray = new byte[Size()];
-            //    byteArray.CopyTo(newByteArray, 0);
-            //    byteArray = newByteArray;
-            //}
-            //Bytes = byteArray;
-            Bytes = BitConverter.GetBytes(Convert.ToInt32(t));
+            Bytes = new byte[1] { Convert.ToByte(t) };
             Value = t;
         }
 
@@ -48,16 +40,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         {
             Bytes = byteArray;
             Value = (T)System.Enum.Parse(typeof(T), byteArray[0].ToString(), true);
-
-            //if (byteArray.Length < Size())
-            //{
-            //    var newByteArray = new byte[Size()];
-            //    byteArray.CopyTo(newByteArray, 0);
-            //    byteArray = newByteArray;
-            //}
-
-            //Bytes = byteArray;
-            //Value = (T)System.Enum.Parse(typeof(T), BitConverter.ToUInt32(byteArray, 0).ToString(), true);
         }
 
         public IType New() => this;

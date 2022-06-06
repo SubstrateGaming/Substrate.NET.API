@@ -12,12 +12,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public override byte[] Encode()
         {
-            var result = new List<byte>();
-            foreach (var v in Value)
-            {
-                result.AddRange(v.Encode());
-            }
-            return result.ToArray();
+            return new byte[0];
         }
 
         public override void Decode(byte[] byteArray, ref int p)
