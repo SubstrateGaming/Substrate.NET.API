@@ -107,14 +107,14 @@ namespace TestTee
             var shardHex = "GLB1PkA2q9QPudL8jGopTPjgdnnMR3ePU2pn1s3xdBpP";
             var mrenclaveHex = "GLB1PkA2q9QPudL8jGopTPjgdnnMR3ePU2pn1s3xdBpP";
 
-            //await LaunchGameAsync("ws://127.0.0.1:9944");
+            await LaunchGameAsync("ws://127.0.0.1:9944");
             //await TestNodeAsync("ws://127.0.0.1:9944");
 
-            await RunTransactioTestAsync(
-                websocketurl: ngrok,
-                shardHex: shardHex,
-                mrenclaveHex: mrenclaveHex
-            );
+            //await RunTransactioTestAsync(
+            //    websocketurl: ngrok,
+            //    shardHex: shardHex,
+            //    mrenclaveHex: mrenclaveHex
+            //);
 
             //await RunRPCMethodsTestAsync(
             //    websocketurl: ngrok);
@@ -232,15 +232,8 @@ namespace TestTee
             var cts = new CancellationTokenSource();
             await client.ConnectAsync(false, true, true, cts.Token);
 
-            var gameEngine = new Ajuna.NetApi.Model.PalletGameregistry.GameEngine();
-            var id = new U8();
-            id.Create(1);
-            gameEngine.Id = id;
-            var version = new U8();
-            version.Create(1);
-            gameEngine.Version = version;
-
-            var gameQueuePre = await client.GameRegistryStorage.GameQueues(gameEngine, CancellationToken.None);
+            var gameQueuePre = await client.GameRegistryStorage.Queued(CancellationToken.None);
+            Console.WriteLine($"GameRegistry Queue Pre = {gameQueuePre.ToString()}");
 
             var extrinsicMethod = Ajuna.NetApi.Model.PalletGameRegistry.GameRegistryCalls.Queue();
 
@@ -254,37 +247,37 @@ namespace TestTee
             Console.WriteLine($"Queued Bob {subscription2}");
             Thread.Sleep(extrinsicWait);
 
-            var gameQueuePos = await client.GameRegistryStorage.GameQueues(gameEngine, CancellationToken.None);
-
+            var gameQueuePos = await client.GameRegistryStorage.Queued(CancellationToken.None);
+            Console.WriteLine($"GameRegistry Queue Pos = {gameQueuePos.ToString()}");
         }
 
-        public static void PrintBoard(BoardStruct boardStruct)
-        {
-            Console.WriteLine($"Board[{Utils.GetAddressFrom(boardStruct.Id.Value.Bytes)}]: {boardStruct.BoardState.Value}");
-            Console.WriteLine($"Red is {Utils.GetAddressFrom(boardStruct.Red.Value.Bytes)}");
-            Console.WriteLine($"Blue is {Utils.GetAddressFrom(boardStruct.Blue.Value.Bytes)}");
-            Console.WriteLine($"LastTurn is {boardStruct.LastTurn.Value}");
-            Console.WriteLine($"NextPlayer is {boardStruct.NextPlayer.Value}");
-            var board = new int[7, 6];
-            for (int x = 0; x < boardStruct.Board.Value.Length; x++)
-            {
-                Ajuna.NetApi.Model.Base.Arr6U8 column = boardStruct.Board.Value[x];
-                for (int y = 0; y < column.Value.Length; y++)
-                {
-                    board[x, y] = column.Value[y].Value;
-                }
-            }
+        //public static void PrintBoard(BoardStruct boardStruct)
+        //{
+        //    Console.WriteLine($"Board[{Utils.GetAddressFrom(boardStruct.Id.Value.Bytes)}]: {boardStruct.BoardState.Value}");
+        //    Console.WriteLine($"Red is {Utils.GetAddressFrom(boardStruct.Red.Value.Bytes)}");
+        //    Console.WriteLine($"Blue is {Utils.GetAddressFrom(boardStruct.Blue.Value.Bytes)}");
+        //    Console.WriteLine($"LastTurn is {boardStruct.LastTurn.Value}");
+        //    Console.WriteLine($"NextPlayer is {boardStruct.NextPlayer.Value}");
+        //    var board = new int[7, 6];
+        //    for (int x = 0; x < boardStruct.Board.Value.Length; x++)
+        //    {
+        //        Ajuna.NetApi.Model.Base.Arr6U8 column = boardStruct.Board.Value[x];
+        //        for (int y = 0; y < column.Value.Length; y++)
+        //        {
+        //            board[x, y] = column.Value[y].Value;
+        //        }
+        //    }
 
-            for (int y = 0; y < board.GetLength(1); y++)
-            {
-                for (int x = 0; x < board.GetLength(0); x++)
-                {
-                    Console.Write(board[x, y]);
-                }
-                Console.WriteLine();
-            }
+        //    for (int y = 0; y < board.GetLength(1); y++)
+        //    {
+        //        for (int x = 0; x < board.GetLength(0); x++)
+        //        {
+        //            Console.Write(board[x, y]);
+        //        }
+        //        Console.WriteLine();
+        //    }
 
-        }
+        //}
 
     }
 

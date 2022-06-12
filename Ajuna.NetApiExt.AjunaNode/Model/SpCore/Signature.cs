@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.SpCore
     
     
     /// <summary>
-    /// >> 217 - Composite[sp_core.ecdsa.Signature]
+    /// >> 209 - Composite[sp_core.ecdsa.Signature]
     /// </summary>
     public sealed class Signature : BaseType
     {

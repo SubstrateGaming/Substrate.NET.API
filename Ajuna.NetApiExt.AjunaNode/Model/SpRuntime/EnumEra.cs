@@ -536,7 +536,7 @@ namespace Ajuna.NetApi.Model.SpRuntime
     }
     
     /// <summary>
-    /// >> 225 - Variant[sp_runtime.generic.era.Era]
+    /// >> 216 - Variant[sp_runtime.generic.era.Era]
     /// </summary>
     public sealed class EnumEra : BaseEnumExt<Era, BaseVoid>
     {

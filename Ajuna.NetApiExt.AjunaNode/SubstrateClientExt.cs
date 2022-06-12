@@ -29,7 +29,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
 namespace Ajuna.NetApi
 {
 
@@ -48,11 +47,6 @@ namespace Ajuna.NetApi
         /// SystemStorage storage calls.
         /// </summary>
         public Ajuna.NetApi.Model.FrameSystem.SystemStorage SystemStorage;
-
-        /// <summary>
-        /// RandomnessCollectiveFlipStorage storage calls.
-        /// </summary>
-        public Ajuna.NetApi.Model.PalletRandomnessCollectiveFlip.RandomnessCollectiveFlipStorage RandomnessCollectiveFlipStorage;
 
         /// <summary>
         /// TimestampStorage storage calls.
@@ -85,19 +79,34 @@ namespace Ajuna.NetApi
         public Ajuna.NetApi.Model.PalletAssets.AssetsStorage AssetsStorage;
 
         /// <summary>
+        /// VestingStorage storage calls.
+        /// </summary>
+        public Ajuna.NetApi.Model.PalletVesting.VestingStorage VestingStorage;
+
+        /// <summary>
+        /// CouncilStorage storage calls.
+        /// </summary>
+        public Ajuna.NetApi.Model.PalletCouncil.CouncilStorage CouncilStorage;
+
+        /// <summary>
+        /// CouncilMembershipStorage storage calls.
+        /// </summary>
+        public Ajuna.NetApi.Model.PalletCouncilMembership.CouncilMembershipStorage CouncilMembershipStorage;
+
+        /// <summary>
+        /// TreasuryStorage storage calls.
+        /// </summary>
+        public Ajuna.NetApi.Model.PalletTreasury.TreasuryStorage TreasuryStorage;
+
+        /// <summary>
+        /// DemocracyStorage storage calls.
+        /// </summary>
+        public Ajuna.NetApi.Model.PalletDemocracy.DemocracyStorage DemocracyStorage;
+
+        /// <summary>
         /// SudoStorage storage calls.
         /// </summary>
         public Ajuna.NetApi.Model.PalletSudo.SudoStorage SudoStorage;
-
-        /// <summary>
-        /// TeerexStorage storage calls.
-        /// </summary>
-        public Ajuna.NetApi.Model.PalletTeerex.TeerexStorage TeerexStorage;
-
-        /// <summary>
-        /// ConnectFourStorage storage calls.
-        /// </summary>
-        public Ajuna.NetApi.Model.PalletConnectFour.ConnectFourStorage ConnectFourStorage;
 
         /// <summary>
         /// SchedulerStorage storage calls.
@@ -110,6 +119,11 @@ namespace Ajuna.NetApi
         public Ajuna.NetApi.Model.PalletMatchmaker.MatchmakerStorage MatchmakerStorage;
 
         /// <summary>
+        /// RunnerStorage storage calls.
+        /// </summary>
+        public Ajuna.NetApi.Model.PalletRunner.RunnerStorage RunnerStorage;
+
+        /// <summary>
         /// GameRegistryStorage storage calls.
         /// </summary>
         public Ajuna.NetApi.Model.PalletGameRegistry.GameRegistryStorage GameRegistryStorage;
@@ -119,25 +133,40 @@ namespace Ajuna.NetApi
         /// </summary>
         public Ajuna.NetApi.Model.PalletObservers.ObserversStorage ObserversStorage;
 
+        /// <summary>
+        /// TeerexStorage storage calls.
+        /// </summary>
+        public Ajuna.NetApi.Model.PalletTeerex.TeerexStorage TeerexStorage;
+
+        /// <summary>
+        /// SidechainStorage storage calls.
+        /// </summary>
+        public Ajuna.NetApi.Model.PalletSidechain.SidechainStorage SidechainStorage;
+
         public SubstrateClientExt(System.Uri uri) :
                 base(uri)
         {
             StorageKeyDict = new System.Collections.Generic.Dictionary<System.Tuple<string, string>, System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>>();
             this.SystemStorage = new Ajuna.NetApi.Model.FrameSystem.SystemStorage(this);
-            this.RandomnessCollectiveFlipStorage = new Ajuna.NetApi.Model.PalletRandomnessCollectiveFlip.RandomnessCollectiveFlipStorage(this);
             this.TimestampStorage = new Ajuna.NetApi.Model.PalletTimestamp.TimestampStorage(this);
             this.AuraStorage = new Ajuna.NetApi.Model.PalletAura.AuraStorage(this);
             this.GrandpaStorage = new Ajuna.NetApi.Model.PalletGrandpa.GrandpaStorage(this);
             this.BalancesStorage = new Ajuna.NetApi.Model.PalletBalances.BalancesStorage(this);
             this.TransactionPaymentStorage = new Ajuna.NetApi.Model.PalletTransactionPayment.TransactionPaymentStorage(this);
             this.AssetsStorage = new Ajuna.NetApi.Model.PalletAssets.AssetsStorage(this);
+            this.VestingStorage = new Ajuna.NetApi.Model.PalletVesting.VestingStorage(this);
+            this.CouncilStorage = new Ajuna.NetApi.Model.PalletCouncil.CouncilStorage(this);
+            this.CouncilMembershipStorage = new Ajuna.NetApi.Model.PalletCouncilMembership.CouncilMembershipStorage(this);
+            this.TreasuryStorage = new Ajuna.NetApi.Model.PalletTreasury.TreasuryStorage(this);
+            this.DemocracyStorage = new Ajuna.NetApi.Model.PalletDemocracy.DemocracyStorage(this);
             this.SudoStorage = new Ajuna.NetApi.Model.PalletSudo.SudoStorage(this);
-            this.TeerexStorage = new Ajuna.NetApi.Model.PalletTeerex.TeerexStorage(this);
-            this.ConnectFourStorage = new Ajuna.NetApi.Model.PalletConnectFour.ConnectFourStorage(this);
             this.SchedulerStorage = new Ajuna.NetApi.Model.PalletScheduler.SchedulerStorage(this);
             this.MatchmakerStorage = new Ajuna.NetApi.Model.PalletMatchmaker.MatchmakerStorage(this);
+            this.RunnerStorage = new Ajuna.NetApi.Model.PalletRunner.RunnerStorage(this);
             this.GameRegistryStorage = new Ajuna.NetApi.Model.PalletGameRegistry.GameRegistryStorage(this);
             this.ObserversStorage = new Ajuna.NetApi.Model.PalletObservers.ObserversStorage(this);
+            this.TeerexStorage = new Ajuna.NetApi.Model.PalletTeerex.TeerexStorage(this);
+            this.SidechainStorage = new Ajuna.NetApi.Model.PalletSidechain.SidechainStorage(this);
         }
 
         public enum Wrapped
@@ -213,7 +242,7 @@ namespace Ajuna.NetApi
                     var str = converter.GetString(UnwrapBytes(byteArray));
                     Logger.Error($"DirectRequestStatus {returnValue.DirectRequestStatus.Value}: {str}");
                     break;
-                    
+
             }
 
             return false;

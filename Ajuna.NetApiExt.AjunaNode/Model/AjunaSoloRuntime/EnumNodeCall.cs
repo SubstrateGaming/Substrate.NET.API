@@ -48,10 +48,12 @@ namespace Ajuna.NetApi.Model.AjunaSoloRuntime
         Observers,
         
         Teerex,
+        
+        Sidechain,
     }
     
     /// <summary>
-    /// >> 148 - Variant[ajuna_solo_runtime.Call]
+    /// >> 144 - Variant[ajuna_solo_runtime.Call]
     /// </summary>
     public sealed class EnumNodeCall : BaseEnum<NodeCall>
     {

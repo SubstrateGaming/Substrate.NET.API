@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.SpRuntime
     
     
     /// <summary>
-    /// >> 214 - Composite[sp_runtime.generic.unchecked_extrinsic.UncheckedExtrinsic]
+    /// >> 206 - Composite[sp_runtime.generic.unchecked_extrinsic.UncheckedExtrinsic]
     /// </summary>
     public sealed class UncheckedExtrinsic : BaseType
     {

@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.FrameSystem
     
     
     /// <summary>
-    /// >> 224 - Composite[frame_system.extensions.check_mortality.CheckMortality]
+    /// >> 215 - Composite[frame_system.extensions.check_mortality.CheckMortality]
     /// </summary>
     public sealed class CheckMortality : BaseType
     {

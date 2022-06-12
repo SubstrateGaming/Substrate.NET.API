@@ -17,7 +17,7 @@ namespace Ajuna.NetApi.Model.FrameSystem
     
     
     /// <summary>
-    /// >> 221 - Composite[frame_system.extensions.check_spec_version.CheckSpecVersion]
+    /// >> 212 - Composite[frame_system.extensions.check_spec_version.CheckSpecVersion]
     /// </summary>
     public sealed class CheckSpecVersion : BaseType
     {

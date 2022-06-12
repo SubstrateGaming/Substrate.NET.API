@@ -29,7 +29,7 @@ namespace Ajuna.NetApi.Model.PalletCollective
     }
     
     /// <summary>
-    /// >> 194 - Variant[pallet_collective.RawOrigin]
+    /// >> 192 - Variant[pallet_collective.RawOrigin]
     /// </summary>
     public sealed class EnumRawOrigin : BaseEnumExt<RawOrigin, BaseTuple<Ajuna.NetApi.Model.Types.Primitive.U32, Ajuna.NetApi.Model.Types.Primitive.U32>, Ajuna.NetApi.Model.SpCore.AccountId32, BaseVoid>
     {

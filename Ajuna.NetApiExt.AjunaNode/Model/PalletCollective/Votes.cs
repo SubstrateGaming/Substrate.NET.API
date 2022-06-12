@@ -19,7 +19,7 @@ namespace Ajuna.NetApi.Model.PalletCollective
     
     
     /// <summary>
-    /// >> 162 - Composite[pallet_collective.Votes]
+    /// >> 161 - Composite[pallet_collective.Votes]
     /// </summary>
     public sealed class Votes : BaseType
     {

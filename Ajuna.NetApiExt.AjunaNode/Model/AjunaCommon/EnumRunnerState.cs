@@ -7,32 +7,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Ajuna.NetApi.Model.SpCore;
+using Ajuna.NetApi.Model.AjunaCommon;
 using Ajuna.NetApi.Model.Types.Base;
 using System;
 using System.Collections.Generic;
 
 
-namespace Ajuna.NetApi.Model.PalletGameregistry
+namespace Ajuna.NetApi.Model.AjunaCommon
 {
     
     
-    public enum GameState
+    public enum RunnerState
     {
         
-        Waiting,
+        Queued,
         
         Accepted,
-        
-        Running,
         
         Finished,
     }
     
     /// <summary>
-    /// >> 207 - Variant[pallet_ajuna_gameregistry.game.GameState]
+    /// >> 195 - Variant[ajuna_common.RunnerState]
     /// </summary>
-    public sealed class EnumGameState : BaseEnumExt<GameState, BaseVoid, BaseVoid, BaseVoid, Ajuna.NetApi.Model.SpCore.AccountId32>
+    public sealed class EnumRunnerState : BaseEnumExt<RunnerState, Ajuna.NetApi.Model.AjunaCommon.State, Ajuna.NetApi.Model.AjunaCommon.State, Ajuna.NetApi.Model.AjunaCommon.State>
     {
     }
 }

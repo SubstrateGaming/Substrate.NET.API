@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.FrameSupport
     
     
     /// <summary>
-    /// >> 81 - Composite[frame_support.weights.PerDispatchClassT3]
+    /// >> 77 - Composite[frame_support.weights.PerDispatchClassT3]
     /// </summary>
     public sealed class PerDispatchClassT3 : BaseType
     {

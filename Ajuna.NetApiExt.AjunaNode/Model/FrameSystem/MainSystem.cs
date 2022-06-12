@@ -240,8 +240,11 @@ namespace Ajuna.NetApi.Model.FrameSystem
         /// >> EventsParams
         ///  Events deposited for the current block.
         /// 
-        ///  NOTE: This storage item is explicitly unbounded since it is never intended to be read
-        ///  from within the runtime.
+        ///  NOTE: The item is unbound and should therefore never be read on chain.
+        ///  It could otherwise inflate the PoV size of a block.
+        /// 
+        ///  Events have a large in-memory size. Box the events to not go out-of-memory
+        ///  just in case someone still reads them from within the runtime.
         /// </summary>
         public static string EventsParams()
         {
@@ -252,8 +255,11 @@ namespace Ajuna.NetApi.Model.FrameSystem
         /// >> Events
         ///  Events deposited for the current block.
         /// 
-        ///  NOTE: This storage item is explicitly unbounded since it is never intended to be read
-        ///  from within the runtime.
+        ///  NOTE: The item is unbound and should therefore never be read on chain.
+        ///  It could otherwise inflate the PoV size of a block.
+        /// 
+        ///  Events have a large in-memory size. Box the events to not go out-of-memory
+        ///  just in case someone still reads them from within the runtime.
         /// </summary>
         public async Task<BaseVec<Ajuna.NetApi.Model.FrameSystem.EventRecord>> Events(CancellationToken token)
         {

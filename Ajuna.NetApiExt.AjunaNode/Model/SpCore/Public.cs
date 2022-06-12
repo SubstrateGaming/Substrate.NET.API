@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.SpCore
     
     
     /// <summary>
-    /// >> 94 - Composite[sp_core.sr25519.Public]
+    /// >> 90 - Composite[sp_core.sr25519.Public]
     /// </summary>
     public sealed class Public : BaseType
     {

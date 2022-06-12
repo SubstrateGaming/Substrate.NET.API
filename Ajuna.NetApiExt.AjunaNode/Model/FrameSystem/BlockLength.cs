@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.FrameSystem
     
     
     /// <summary>
-    /// >> 80 - Composite[frame_system.limits.BlockLength]
+    /// >> 76 - Composite[frame_system.limits.BlockLength]
     /// </summary>
     public sealed class BlockLength : BaseType
     {

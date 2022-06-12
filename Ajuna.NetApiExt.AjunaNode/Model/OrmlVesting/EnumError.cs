@@ -33,7 +33,7 @@ namespace Ajuna.NetApi.Model.OrmlVesting
     }
     
     /// <summary>
-    /// >> 146 - Variant[orml_vesting.module.Error]
+    /// >> 142 - Variant[orml_vesting.module.Error]
     /// 
     ///			Custom [dispatch errors](https://docs.substrate.io/v3/runtime/events-and-errors)
     ///			of this pallet.

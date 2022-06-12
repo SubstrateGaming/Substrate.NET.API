@@ -17,7 +17,7 @@ namespace Ajuna.NetApi.Model.FrameSystem
     
     
     /// <summary>
-    /// >> 223 - Composite[frame_system.extensions.check_genesis.CheckGenesis]
+    /// >> 214 - Composite[frame_system.extensions.check_genesis.CheckGenesis]
     /// </summary>
     public sealed class CheckGenesis : BaseType
     {

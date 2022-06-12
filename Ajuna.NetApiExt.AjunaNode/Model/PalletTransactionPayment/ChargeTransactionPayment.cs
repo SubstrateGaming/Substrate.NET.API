@@ -8,34 +8,55 @@
 //------------------------------------------------------------------------------
 
 using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
 using System;
 using System.Collections.Generic;
 
 
-namespace Ajuna.NetApi.Model.AjunaSoloRuntime
+namespace Ajuna.NetApi.Model.PalletTransactionPayment
 {
     
     
     /// <summary>
-    /// >> 59 - Composite[ajuna_solo_runtime.Runtime]
+    /// >> 219 - Composite[pallet_transaction_payment.ChargeTransactionPayment]
     /// </summary>
-    public sealed class Runtime : BaseType
+    public sealed class ChargeTransactionPayment : BaseType
     {
+        
+        /// <summary>
+        /// >> value
+        /// </summary>
+        private BaseCom<Ajuna.NetApi.Model.Types.Primitive.U128> _value;
+        
+        public BaseCom<Ajuna.NetApi.Model.Types.Primitive.U128> Value
+        {
+            get
+            {
+                return this._value;
+            }
+            set
+            {
+                this._value = value;
+            }
+        }
         
         public override string TypeName()
         {
-            return "Runtime";
+            return "ChargeTransactionPayment";
         }
         
         public override byte[] Encode()
         {
             var result = new List<byte>();
+            result.AddRange(Value.Encode());
             return result.ToArray();
         }
         
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
+            Value = new BaseCom<Ajuna.NetApi.Model.Types.Primitive.U128>();
+            Value.Decode(byteArray, ref p);
             TypeSize = p - start;
         }
     }

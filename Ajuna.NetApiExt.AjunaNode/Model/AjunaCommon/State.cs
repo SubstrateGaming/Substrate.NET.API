@@ -7,28 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Ajuna.NetApi.Model.PrimitiveTypes;
 using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
 using System;
 using System.Collections.Generic;
 
 
-namespace Ajuna.NetApi.Model.FrameSupport
+namespace Ajuna.NetApi.Model.AjunaCommon
 {
     
     
     /// <summary>
-    /// >> 200 - Composite[frame_support.storage.bounded_vec.BoundedVecT6]
+    /// >> 196 - Composite[ajuna_common.State]
     /// </summary>
-    public sealed class BoundedVecT6 : BaseType
+    public sealed class State : BaseType
     {
         
         /// <summary>
         /// >> value
         /// </summary>
-        private BaseVec<Ajuna.NetApi.Model.PrimitiveTypes.H256> _value;
+        private BaseVec<Ajuna.NetApi.Model.Types.Primitive.U8> _value;
         
-        public BaseVec<Ajuna.NetApi.Model.PrimitiveTypes.H256> Value
+        public BaseVec<Ajuna.NetApi.Model.Types.Primitive.U8> Value
         {
             get
             {
@@ -42,7 +42,7 @@ namespace Ajuna.NetApi.Model.FrameSupport
         
         public override string TypeName()
         {
-            return "BoundedVecT6";
+            return "State";
         }
         
         public override byte[] Encode()
@@ -55,7 +55,7 @@ namespace Ajuna.NetApi.Model.FrameSupport
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            Value = new BaseVec<Ajuna.NetApi.Model.PrimitiveTypes.H256>();
+            Value = new BaseVec<Ajuna.NetApi.Model.Types.Primitive.U8>();
             Value.Decode(byteArray, ref p);
             TypeSize = p - start;
         }

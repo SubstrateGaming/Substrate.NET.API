@@ -39,8 +39,6 @@ namespace Ajuna.NetApi.Model.PalletTeerex
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Teerex", "EnclaveCount"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Ajuna.NetApi.Model.Types.Primitive.U64)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Teerex", "EnclaveIndex"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
                             Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Ajuna.NetApi.Model.SpCore.AccountId32), typeof(Ajuna.NetApi.Model.Types.Primitive.U64)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Teerex", "WorkerForShard"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
-                            Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Ajuna.NetApi.Model.PrimitiveTypes.H256), typeof(Ajuna.NetApi.Model.Types.Primitive.U64)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Teerex", "ExecutedCalls"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
                             Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Ajuna.NetApi.Model.PrimitiveTypes.H256), typeof(Ajuna.NetApi.Model.Types.Primitive.U64)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Teerex", "AllowSGXDebugMode"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Ajuna.NetApi.Model.Types.Primitive.Bool)));
@@ -98,25 +96,6 @@ namespace Ajuna.NetApi.Model.PalletTeerex
         public async Task<Ajuna.NetApi.Model.Types.Primitive.U64> EnclaveIndex(Ajuna.NetApi.Model.SpCore.AccountId32 key, CancellationToken token)
         {
             string parameters = TeerexStorage.EnclaveIndexParams(key);
-            return await _client.GetStorageAsync<Ajuna.NetApi.Model.Types.Primitive.U64>(parameters, token);
-        }
-        
-        /// <summary>
-        /// >> WorkerForShardParams
-        /// </summary>
-        public static string WorkerForShardParams(Ajuna.NetApi.Model.PrimitiveTypes.H256 key)
-        {
-            return RequestGenerator.GetStorage("Teerex", "WorkerForShard", Ajuna.NetApi.Model.Meta.Storage.Type.Map, new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
-                        Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, new Ajuna.NetApi.Model.Types.IType[] {
-                        key});
-        }
-        
-        /// <summary>
-        /// >> WorkerForShard
-        /// </summary>
-        public async Task<Ajuna.NetApi.Model.Types.Primitive.U64> WorkerForShard(Ajuna.NetApi.Model.PrimitiveTypes.H256 key, CancellationToken token)
-        {
-            string parameters = TeerexStorage.WorkerForShardParams(key);
             return await _client.GetStorageAsync<Ajuna.NetApi.Model.Types.Primitive.U64>(parameters, token);
         }
         
@@ -206,18 +185,6 @@ namespace Ajuna.NetApi.Model.PalletTeerex
         }
         
         /// <summary>
-        /// >> confirm_proposed_sidechain_block
-        /// Contains one variant per dispatchable that can be called by an extrinsic.
-        /// </summary>
-        public static Method ConfirmProposedSidechainBlock(Ajuna.NetApi.Model.PrimitiveTypes.H256 shard_id, Ajuna.NetApi.Model.PrimitiveTypes.H256 block_hash)
-        {
-            System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(shard_id.Encode());
-            byteArray.AddRange(block_hash.Encode());
-            return new Method(19, "Teerex", 4, "confirm_proposed_sidechain_block", byteArray.ToArray());
-        }
-        
-        /// <summary>
         /// >> shield_funds
         /// Contains one variant per dispatchable that can be called by an extrinsic.
         /// </summary>
@@ -227,7 +194,7 @@ namespace Ajuna.NetApi.Model.PalletTeerex
             byteArray.AddRange(incognito_account_encrypted.Encode());
             byteArray.AddRange(amount.Encode());
             byteArray.AddRange(bonding_account.Encode());
-            return new Method(19, "Teerex", 5, "shield_funds", byteArray.ToArray());
+            return new Method(19, "Teerex", 4, "shield_funds", byteArray.ToArray());
         }
         
         /// <summary>
@@ -241,7 +208,7 @@ namespace Ajuna.NetApi.Model.PalletTeerex
             byteArray.AddRange(amount.Encode());
             byteArray.AddRange(bonding_account.Encode());
             byteArray.AddRange(call_hash.Encode());
-            return new Method(19, "Teerex", 6, "unshield_funds", byteArray.ToArray());
+            return new Method(19, "Teerex", 5, "unshield_funds", byteArray.ToArray());
         }
     }
     
@@ -284,13 +251,6 @@ namespace Ajuna.NetApi.Model.PalletTeerex
     /// >> ProcessedParentchainBlock
     /// </summary>
     public sealed class EventProcessedParentchainBlock : BaseTuple<Ajuna.NetApi.Model.SpCore.AccountId32, Ajuna.NetApi.Model.PrimitiveTypes.H256, Ajuna.NetApi.Model.PrimitiveTypes.H256>
-    {
-    }
-    
-    /// <summary>
-    /// >> ProposedSidechainBlock
-    /// </summary>
-    public sealed class EventProposedSidechainBlock : BaseTuple<Ajuna.NetApi.Model.SpCore.AccountId32, Ajuna.NetApi.Model.PrimitiveTypes.H256>
     {
     }
     

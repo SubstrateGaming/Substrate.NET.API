@@ -19,7 +19,7 @@ namespace Ajuna.NetApi.Model.PalletGrandpa
     
     
     /// <summary>
-    /// >> 98 - Composite[pallet_grandpa.StoredPendingChange]
+    /// >> 94 - Composite[pallet_grandpa.StoredPendingChange]
     /// </summary>
     public sealed class StoredPendingChange : BaseType
     {

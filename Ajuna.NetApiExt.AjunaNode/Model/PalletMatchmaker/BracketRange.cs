@@ -13,70 +13,70 @@ using System;
 using System.Collections.Generic;
 
 
-namespace Ajuna.NetApi.Model.PalletGameregistry
+namespace Ajuna.NetApi.Model.PalletMatchmaker
 {
     
     
     /// <summary>
-    /// >> 60 - Composite[pallet_ajuna_gameregistry.game.GameEngine]
+    /// >> 194 - Composite[pallet_ajuna_matchmaker.pallet.BracketRange]
     /// </summary>
-    public sealed class GameEngine : BaseType
+    public sealed class BracketRange : BaseType
     {
         
         /// <summary>
-        /// >> id
+        /// >> start
         /// </summary>
-        private Ajuna.NetApi.Model.Types.Primitive.U8 _id;
+        private Ajuna.NetApi.Model.Types.Primitive.U32 _start;
         
         /// <summary>
-        /// >> version
+        /// >> end
         /// </summary>
-        private Ajuna.NetApi.Model.Types.Primitive.U8 _version;
+        private Ajuna.NetApi.Model.Types.Primitive.U32 _end;
         
-        public Ajuna.NetApi.Model.Types.Primitive.U8 Id
+        public Ajuna.NetApi.Model.Types.Primitive.U32 Start
         {
             get
             {
-                return this._id;
+                return this._start;
             }
             set
             {
-                this._id = value;
+                this._start = value;
             }
         }
         
-        public Ajuna.NetApi.Model.Types.Primitive.U8 Version
+        public Ajuna.NetApi.Model.Types.Primitive.U32 End
         {
             get
             {
-                return this._version;
+                return this._end;
             }
             set
             {
-                this._version = value;
+                this._end = value;
             }
         }
         
         public override string TypeName()
         {
-            return "GameEngine";
+            return "BracketRange";
         }
         
         public override byte[] Encode()
         {
             var result = new List<byte>();
-            result.AddRange(Id.Encode());
-            result.AddRange(Version.Encode());
+            result.AddRange(Start.Encode());
+            result.AddRange(End.Encode());
             return result.ToArray();
         }
         
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            Id = new Ajuna.NetApi.Model.Types.Primitive.U8();
-            Id.Decode(byteArray, ref p);
-            Version = new Ajuna.NetApi.Model.Types.Primitive.U8();
-            Version.Decode(byteArray, ref p);
+            Start = new Ajuna.NetApi.Model.Types.Primitive.U32();
+            Start.Decode(byteArray, ref p);
+            End = new Ajuna.NetApi.Model.Types.Primitive.U32();
+            End.Decode(byteArray, ref p);
             TypeSize = p - start;
         }
     }

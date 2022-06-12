@@ -20,7 +20,7 @@ namespace Ajuna.NetApi.Model.PalletDemocracy
     
     
     /// <summary>
-    /// >> 177 - Composite[pallet_democracy.types.ReferendumStatus]
+    /// >> 175 - Composite[pallet_democracy.types.ReferendumStatus]
     /// </summary>
     public sealed class ReferendumStatus : BaseType
     {

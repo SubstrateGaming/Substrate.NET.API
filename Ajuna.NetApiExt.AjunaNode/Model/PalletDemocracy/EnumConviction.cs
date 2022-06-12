@@ -35,7 +35,7 @@ namespace Ajuna.NetApi.Model.PalletDemocracy
     }
     
     /// <summary>
-    /// >> 153 - Variant[pallet_democracy.conviction.Conviction]
+    /// >> 149 - Variant[pallet_democracy.conviction.Conviction]
     /// </summary>
     public sealed class EnumConviction : BaseEnum<Conviction>
     {

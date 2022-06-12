@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.PalletDemocracy
     
     
     /// <summary>
-    /// >> 182 - Composite[pallet_democracy.types.Delegations]
+    /// >> 180 - Composite[pallet_democracy.types.Delegations]
     /// </summary>
     public sealed class Delegations : BaseType
     {

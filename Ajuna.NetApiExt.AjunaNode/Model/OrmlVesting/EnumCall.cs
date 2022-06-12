@@ -31,7 +31,7 @@ namespace Ajuna.NetApi.Model.OrmlVesting
     }
     
     /// <summary>
-    /// >> 145 - Variant[orml_vesting.module.Call]
+    /// >> 141 - Variant[orml_vesting.module.Call]
     /// Contains one variant per dispatchable that can be called by an extrinsic.
     /// </summary>
     public sealed class EnumCall : BaseEnumExt<Call, BaseVoid, BaseTuple<Ajuna.NetApi.Model.SpRuntime.EnumMultiAddress, Ajuna.NetApi.Model.OrmlVesting.VestingSchedule>, BaseTuple<Ajuna.NetApi.Model.SpRuntime.EnumMultiAddress, BaseVec<Ajuna.NetApi.Model.OrmlVesting.VestingSchedule>>, Ajuna.NetApi.Model.SpRuntime.EnumMultiAddress>

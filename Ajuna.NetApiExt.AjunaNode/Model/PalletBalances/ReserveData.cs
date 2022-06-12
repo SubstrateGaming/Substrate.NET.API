@@ -19,7 +19,7 @@ namespace Ajuna.NetApi.Model.PalletBalances
     
     
     /// <summary>
-    /// >> 120 - Composite[pallet_balances.ReserveData]
+    /// >> 116 - Composite[pallet_balances.ReserveData]
     /// </summary>
     public sealed class ReserveData : BaseType
     {

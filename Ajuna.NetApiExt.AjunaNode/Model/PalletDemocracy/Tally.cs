@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.PalletDemocracy
     
     
     /// <summary>
-    /// >> 178 - Composite[pallet_democracy.types.Tally]
+    /// >> 176 - Composite[pallet_democracy.types.Tally]
     /// </summary>
     public sealed class Tally : BaseType
     {

@@ -7,10 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Ajuna.NetApi;
 using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Meta;
-using Ajuna.NetApi.Model.PalletGameregistry;
 using Ajuna.NetApi.Model.PrimitiveTypes;
 using Ajuna.NetApi.Model.SpCore;
 using Ajuna.NetApi.Model.Types;
@@ -35,153 +33,24 @@ namespace Ajuna.NetApi.Model.PalletGameRegistry
         public GameRegistryStorage(SubstrateClientExt client)
         {
             this._client = client;
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("GameRegistry", "MaxAcknowledgeBatch"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Ajuna.NetApi.Model.Types.Primitive.U32)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("GameRegistry", "MaxQueueSize"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Ajuna.NetApi.Model.Types.Primitive.U8)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("GameRegistry", "MaxGamesPerBlock"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Ajuna.NetApi.Model.Types.Primitive.U8)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("GameRegistry", "GameQueues"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
-                            Ajuna.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Ajuna.NetApi.Model.PalletGameregistry.GameEngine), typeof(Ajuna.NetApi.Model.PalletGameregistry.Queue)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("GameRegistry", "GameRequirements"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
-                            Ajuna.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Ajuna.NetApi.Model.PalletGameregistry.GameEngine), typeof(BaseVec<Ajuna.NetApi.Model.PalletGameregistry.Requirement>)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("GameRegistry", "GameRegistry"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
-                            Ajuna.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Ajuna.NetApi.Model.PrimitiveTypes.H256), typeof(Ajuna.NetApi.Model.PalletGameregistry.GameEntry)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("GameRegistry", "Nonce"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Ajuna.NetApi.Model.Types.Primitive.U64)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("GameRegistry", "Queued"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(BaseVec<Ajuna.NetApi.Model.Types.Primitive.U32>)));
         }
         
         /// <summary>
-        /// >> MaxAcknowledgeBatchParams
-        ///  The maximum number of games that can be acknowledged in one batch
+        /// >> QueuedParams
         /// </summary>
-        public static string MaxAcknowledgeBatchParams()
+        public static string QueuedParams()
         {
-            return RequestGenerator.GetStorage("GameRegistry", "MaxAcknowledgeBatch", Ajuna.NetApi.Model.Meta.Storage.Type.Plain);
+            return RequestGenerator.GetStorage("GameRegistry", "Queued", Ajuna.NetApi.Model.Meta.Storage.Type.Plain);
         }
         
         /// <summary>
-        /// >> MaxAcknowledgeBatch
-        ///  The maximum number of games that can be acknowledged in one batch
+        /// >> Queued
         /// </summary>
-        public async Task<Ajuna.NetApi.Model.Types.Primitive.U32> MaxAcknowledgeBatch(CancellationToken token)
+        public async Task<BaseVec<Ajuna.NetApi.Model.Types.Primitive.U32>> Queued(CancellationToken token)
         {
-            string parameters = GameRegistryStorage.MaxAcknowledgeBatchParams();
-            return await _client.GetStorageAsync<Ajuna.NetApi.Model.Types.Primitive.U32>(parameters, token);
-        }
-        
-        /// <summary>
-        /// >> MaxQueueSizeParams
-        ///  The maximum queue size for a game engine
-        /// </summary>
-        public static string MaxQueueSizeParams()
-        {
-            return RequestGenerator.GetStorage("GameRegistry", "MaxQueueSize", Ajuna.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> MaxQueueSize
-        ///  The maximum queue size for a game engine
-        /// </summary>
-        public async Task<Ajuna.NetApi.Model.Types.Primitive.U8> MaxQueueSize(CancellationToken token)
-        {
-            string parameters = GameRegistryStorage.MaxQueueSizeParams();
-            return await _client.GetStorageAsync<Ajuna.NetApi.Model.Types.Primitive.U8>(parameters, token);
-        }
-        
-        /// <summary>
-        /// >> MaxGamesPerBlockParams
-        ///  The maximum amount of games per block
-        /// </summary>
-        public static string MaxGamesPerBlockParams()
-        {
-            return RequestGenerator.GetStorage("GameRegistry", "MaxGamesPerBlock", Ajuna.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> MaxGamesPerBlock
-        ///  The maximum amount of games per block
-        /// </summary>
-        public async Task<Ajuna.NetApi.Model.Types.Primitive.U8> MaxGamesPerBlock(CancellationToken token)
-        {
-            string parameters = GameRegistryStorage.MaxGamesPerBlockParams();
-            return await _client.GetStorageAsync<Ajuna.NetApi.Model.Types.Primitive.U8>(parameters, token);
-        }
-        
-        /// <summary>
-        /// >> GameQueuesParams
-        ///  Store all queues for the games.
-        /// </summary>
-        public static string GameQueuesParams(Ajuna.NetApi.Model.PalletGameregistry.GameEngine key)
-        {
-            return RequestGenerator.GetStorage("GameRegistry", "GameQueues", Ajuna.NetApi.Model.Meta.Storage.Type.Map, new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
-                        Ajuna.NetApi.Model.Meta.Storage.Hasher.Identity}, new Ajuna.NetApi.Model.Types.IType[] {
-                        key});
-        }
-        
-        /// <summary>
-        /// >> GameQueues
-        ///  Store all queues for the games.
-        /// </summary>
-        public async Task<Ajuna.NetApi.Model.PalletGameregistry.Queue> GameQueues(Ajuna.NetApi.Model.PalletGameregistry.GameEngine key, CancellationToken token)
-        {
-            string parameters = GameRegistryStorage.GameQueuesParams(key);
-            return await _client.GetStorageAsync<Ajuna.NetApi.Model.PalletGameregistry.Queue>(parameters, token);
-        }
-        
-        /// <summary>
-        /// >> GameRequirementsParams
-        ///  Store all requirements for a sepecific game engine and its version.
-        /// </summary>
-        public static string GameRequirementsParams(Ajuna.NetApi.Model.PalletGameregistry.GameEngine key)
-        {
-            return RequestGenerator.GetStorage("GameRegistry", "GameRequirements", Ajuna.NetApi.Model.Meta.Storage.Type.Map, new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
-                        Ajuna.NetApi.Model.Meta.Storage.Hasher.Identity}, new Ajuna.NetApi.Model.Types.IType[] {
-                        key});
-        }
-        
-        /// <summary>
-        /// >> GameRequirements
-        ///  Store all requirements for a sepecific game engine and its version.
-        /// </summary>
-        public async Task<BaseVec<Ajuna.NetApi.Model.PalletGameregistry.Requirement>> GameRequirements(Ajuna.NetApi.Model.PalletGameregistry.GameEngine key, CancellationToken token)
-        {
-            string parameters = GameRegistryStorage.GameRequirementsParams(key);
-            return await _client.GetStorageAsync<BaseVec<Ajuna.NetApi.Model.PalletGameregistry.Requirement>>(parameters, token);
-        }
-        
-        /// <summary>
-        /// >> GameRegistryParams
-        ///  Store all entries for the games.
-        /// </summary>
-        public static string GameRegistryParams(Ajuna.NetApi.Model.PrimitiveTypes.H256 key)
-        {
-            return RequestGenerator.GetStorage("GameRegistry", "GameRegistry", Ajuna.NetApi.Model.Meta.Storage.Type.Map, new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
-                        Ajuna.NetApi.Model.Meta.Storage.Hasher.Identity}, new Ajuna.NetApi.Model.Types.IType[] {
-                        key});
-        }
-        
-        /// <summary>
-        /// >> GameRegistry
-        ///  Store all entries for the games.
-        /// </summary>
-        public async Task<Ajuna.NetApi.Model.PalletGameregistry.GameEntry> GameRegistry(Ajuna.NetApi.Model.PrimitiveTypes.H256 key, CancellationToken token)
-        {
-            string parameters = GameRegistryStorage.GameRegistryParams(key);
-            return await _client.GetStorageAsync<Ajuna.NetApi.Model.PalletGameregistry.GameEntry>(parameters, token);
-        }
-        
-        /// <summary>
-        /// >> NonceParams
-        /// </summary>
-        public static string NonceParams()
-        {
-            return RequestGenerator.GetStorage("GameRegistry", "Nonce", Ajuna.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> Nonce
-        /// </summary>
-        public async Task<Ajuna.NetApi.Model.Types.Primitive.U64> Nonce(CancellationToken token)
-        {
-            string parameters = GameRegistryStorage.NonceParams();
-            return await _client.GetStorageAsync<Ajuna.NetApi.Model.Types.Primitive.U64>(parameters, token);
+            string parameters = GameRegistryStorage.QueuedParams();
+            return await _client.GetStorageAsync<BaseVec<Ajuna.NetApi.Model.Types.Primitive.U32>>(parameters, token);
         }
     }
     
@@ -202,11 +71,10 @@ namespace Ajuna.NetApi.Model.PalletGameRegistry
         /// >> drop_game
         /// Contains one variant per dispatchable that can be called by an extrinsic.
         /// </summary>
-        public static Method DropGame(Ajuna.NetApi.Model.PrimitiveTypes.H256 game_hash, Ajuna.NetApi.Model.PalletGameregistry.GameEngine game_engine)
+        public static Method DropGame(Ajuna.NetApi.Model.Types.Primitive.U32 game_id)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(game_hash.Encode());
-            byteArray.AddRange(game_engine.Encode());
+            byteArray.AddRange(game_id.Encode());
             return new Method(17, "GameRegistry", 1, "drop_game", byteArray.ToArray());
         }
         
@@ -214,87 +82,36 @@ namespace Ajuna.NetApi.Model.PalletGameRegistry
         /// >> ack_game
         /// Contains one variant per dispatchable that can be called by an extrinsic.
         /// </summary>
-        public static Method AckGame(Ajuna.NetApi.Model.PalletGameregistry.GameEngine cluster, BaseVec<Ajuna.NetApi.Model.PrimitiveTypes.H256> games, Ajuna.NetApi.Model.PrimitiveTypes.H256 shard_id)
+        public static Method AckGame(BaseVec<Ajuna.NetApi.Model.Types.Primitive.U32> game_ids, Ajuna.NetApi.Model.PrimitiveTypes.H256 shard_id)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(cluster.Encode());
-            byteArray.AddRange(games.Encode());
+            byteArray.AddRange(game_ids.Encode());
             byteArray.AddRange(shard_id.Encode());
             return new Method(17, "GameRegistry", 2, "ack_game", byteArray.ToArray());
-        }
-        
-        /// <summary>
-        /// >> ready_game
-        /// Contains one variant per dispatchable that can be called by an extrinsic.
-        /// </summary>
-        public static Method ReadyGame(Ajuna.NetApi.Model.PrimitiveTypes.H256 game_hash)
-        {
-            System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(game_hash.Encode());
-            return new Method(17, "GameRegistry", 3, "ready_game", byteArray.ToArray());
         }
         
         /// <summary>
         /// >> finish_game
         /// Contains one variant per dispatchable that can be called by an extrinsic.
         /// </summary>
-        public static Method FinishGame(Ajuna.NetApi.Model.PrimitiveTypes.H256 game_hash, Ajuna.NetApi.Model.SpCore.AccountId32 winner)
+        public static Method FinishGame(Ajuna.NetApi.Model.Types.Primitive.U32 game_id, Ajuna.NetApi.Model.SpCore.AccountId32 winner, Ajuna.NetApi.Model.PrimitiveTypes.H256 shard_id)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(game_hash.Encode());
+            byteArray.AddRange(game_id.Encode());
             byteArray.AddRange(winner.Encode());
-            return new Method(17, "GameRegistry", 4, "finish_game", byteArray.ToArray());
+            byteArray.AddRange(shard_id.Encode());
+            return new Method(17, "GameRegistry", 3, "finish_game", byteArray.ToArray());
         }
     }
-    
-    /// <summary>
-    /// >> PlayerQueued
-    /// Player has queued to play [player].
-    /// </summary>
-    public sealed class EventPlayerQueued : BaseTuple<Ajuna.NetApi.Model.SpCore.AccountId32>
-    {
-    }
-    
-    ///// <summary>
-    ///// >> Game
-    ///// Game Events
-    ///// </summary>
-    //public sealed class EventGame : BaseTuple<Ajuna.NetApi.PalletGameregistryEvent>
-    //{
-    //}
     
     public enum GameRegistryErrors
     {
         
         /// <summary>
-        /// >> NoneValue
-        /// An optional value returned nothing.
+        /// >> AcknowledgeBatchTooLarge
+        /// Too many games trying to be acknowledged in batch.
         /// </summary>
-        NoneValue,
-        
-        /// <summary>
-        /// >> StorageOverflow
-        /// Storage overflowed.
-        /// </summary>
-        StorageOverflow,
-        
-        /// <summary>
-        /// >> AckTooMany
-        /// Too many games trying to acknowledge at once.
-        /// </summary>
-        AckTooMany,
-        
-        /// <summary>
-        /// >> AckFail
-        /// During Acknowledge of a waiting games there was an error.
-        /// </summary>
-        AckFail,
-        
-        /// <summary>
-        /// >> NoGameQueue
-        /// There is no game queue for the game engine version.
-        /// </summary>
-        NoGameQueue,
+        AcknowledgeBatchTooLarge,
         
         /// <summary>
         /// >> NoGameEntry
@@ -309,18 +126,6 @@ namespace Ajuna.NetApi.Model.PalletGameRegistry
         AlreadyQueued,
         
         /// <summary>
-        /// >> GameQueueFull
-        /// The game queue is full.
-        /// </summary>
-        GameQueueFull,
-        
-        /// <summary>
-        /// >> GameRequirementsNotMet
-        /// The game could not be queued due to failed requirements.
-        /// </summary>
-        GameRequirementsNotMet,
-        
-        /// <summary>
         /// >> InvalidWinner
         /// Invalid winner
         /// </summary>
@@ -331,5 +136,23 @@ namespace Ajuna.NetApi.Model.PalletGameRegistry
         /// Not Signed by an Observer
         /// </summary>
         NotSignedByObserver,
+        
+        /// <summary>
+        /// >> InvalidPayload
+        /// Invalid payload
+        /// </summary>
+        InvalidPayload,
+        
+        /// <summary>
+        /// >> InvalidGameState
+        /// Invalid game state
+        /// </summary>
+        InvalidGameState,
+        
+        /// <summary>
+        /// >> FailedToQueue
+        /// Failed to queue
+        /// </summary>
+        FailedToQueue,
     }
 }

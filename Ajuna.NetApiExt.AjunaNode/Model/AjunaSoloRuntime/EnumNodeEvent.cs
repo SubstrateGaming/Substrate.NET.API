@@ -43,11 +43,15 @@ namespace Ajuna.NetApi.Model.AjunaSoloRuntime
         
         Matchmaker,
         
+        Runner,
+        
         GameRegistry,
         
         Observers,
         
         Teerex,
+        
+        Sidechain,
     }
     
     /// <summary>

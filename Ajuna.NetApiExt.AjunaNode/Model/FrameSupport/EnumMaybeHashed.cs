@@ -27,7 +27,7 @@ namespace Ajuna.NetApi.Model.FrameSupport
     }
     
     /// <summary>
-    /// >> 157 - Variant[frame_support.traits.schedule.MaybeHashed]
+    /// >> 153 - Variant[frame_support.traits.schedule.MaybeHashed]
     /// </summary>
     public sealed class EnumMaybeHashed : BaseEnumExt<MaybeHashed, Ajuna.NetApi.Model.AjunaSoloRuntime.EnumNodeCall, Ajuna.NetApi.Model.PrimitiveTypes.H256>
     {

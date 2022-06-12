@@ -18,7 +18,7 @@ namespace Ajuna.NetApi.Model.FrameSupport
     
     
     /// <summary>
-    /// >> 170 - Composite[frame_support.PalletId]
+    /// >> 168 - Composite[frame_support.PalletId]
     /// </summary>
     public sealed class PalletId : BaseType
     {
