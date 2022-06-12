@@ -305,20 +305,14 @@ namespace Ajuna.NetApi
                 CypherText = Wrapper.VecU8FromBytes(cypherText)
             };
 
-            // open connection
-            //await ConnectAsync(false, false, false, CancellationToken.None);
+            var parameters = Utils.Bytes2HexString(request.Encode());
 
-            var parameters = request.Encode().Cast<object>().ToArray();
-
-            var result = await InvokeAsync<byte[]>("author_submitAndWatchExtrinsic", parameters, CancellationToken.None);
+            var result = await InvokeAsync<string>("author_submitAndWatchExtrinsic", new object[] { parameters }, CancellationToken.None);
 
             var returnValue = new RpcReturnValue();
             returnValue.Create(result);
 
-            //await CloseAsync();
-
             return returnValue;
-
         }
 
 
@@ -345,7 +339,7 @@ namespace Ajuna.NetApi
 
         public async Task<RSAParameters> ShieldingKeyAsync()
         {
-            var result = await InvokeAsync<byte[]>("author_getShieldingKey", null, CancellationToken.None);
+            var result = await InvokeAsync<string>("author_getShieldingKey", null, CancellationToken.None);
 
             var rpcReturnValue = new RpcReturnValue();
             rpcReturnValue.Create(result);

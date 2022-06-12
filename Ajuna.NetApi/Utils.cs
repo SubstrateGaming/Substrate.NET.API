@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using SimpleBase;
 using Ajuna.NetApi.Model.Types.Base;
+using Org.BouncyCastle.Crypto.Digests;
+using Org.BouncyCastle.Crypto.Encodings;
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Parameters;
 
 namespace Ajuna.NetApi
 {
@@ -220,13 +225,13 @@ namespace Ajuna.NetApi
             {
                 PREFIX_SIZE = 2;
                 // set network
-                byte b2up = (byte) ((bs58decoded[0] << 2) & 0b1111_1100);
-                byte b2lo = (byte) ((bs58decoded[1] >> 6) & 0b0000_0011);
-                byte b2 = (byte) (b2up | b2lo);
-                byte b1 = (byte) (bs58decoded[1] & 0b0011_1111);
+                byte b2up = (byte)((bs58decoded[0] << 2) & 0b1111_1100);
+                byte b2lo = (byte)((bs58decoded[1] >> 6) & 0b0000_0011);
+                byte b2 = (byte)(b2up | b2lo);
+                byte b1 = (byte)(bs58decoded[1] & 0b0011_1111);
                 network = (short)BitConverter.ToInt16(
                     new byte[] { b2, b1 }, 0); // big endian, for BitConverter
-            } 
+            }
 
             else
             {
@@ -246,6 +251,62 @@ namespace Ajuna.NetApi
             return bs58decoded.Skip(PREFIX_SIZE).Take(PUBLIC_KEY_LENGTH).ToArray();
 
         }
+
+
+
+        public static byte[] RSAEncryptBouncy(byte[] dataToEncrypt, RsaKeyParameters rsaKeyParameters)
+        {
+            var encrypter = new OaepEncoding(new RsaEngine(), new Sha256Digest(), new Sha256Digest(), null);
+            encrypter.Init(true, rsaKeyParameters);
+            var cipher = encrypter.ProcessBlock(dataToEncrypt, 0, dataToEncrypt.Length);
+            return cipher;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="DataToEncrypt"></param>
+        /// <param name="RSAKeyInfo"></param>
+        /// <param name="DoOAEPPadding"></param>
+        /// <returns></returns>
+        public static byte[] RSAEncrypt(byte[] DataToEncrypt, RSAParameters RSAKeyInfo, RSAEncryptionPadding OAEPPadding)
+        {
+            try
+            {
+                byte[] encryptedData;
+                //Create a new instance of RSACryptoServiceProvider.
+                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
+                {
+
+                    //Import the RSA Key information. This only needs
+                    //toinclude the public key information.
+                    RSA.ImportParameters(RSAKeyInfo);
+
+                    //Encrypt the passed byte array and specify OAEP padding.  
+                    //OAEP padding is only available on Microsoft Windows XP or
+                    //later.  
+                    if (OAEPPadding != null)
+                    {
+
+                        encryptedData = RSA.Encrypt(DataToEncrypt, OAEPPadding);
+                    }
+                    else
+                    {
+                        encryptedData = RSA.Encrypt(DataToEncrypt, false);
+                    }
+                }
+                return encryptedData;
+            }
+            //Catch and display a CryptographicException  
+            //to the console.
+            catch (CryptographicException e)
+            {
+                Console.WriteLine(e.Message);
+
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// Gets the address from.
@@ -281,15 +342,16 @@ namespace Ajuna.NetApi
                 plainAddr = new byte[36];
 
                 // parity style
-                var ident = (short) ss58Prefix & 0b00111111_11111111; // clear first two bits
-                var first = (byte) (((ident & 0b0000_0000_1111_1100) >> 2) | 0b0100_0000);
-                var second = (byte) ((ident >> 8) | (ident & 0b0000_0000_0000_0011) << 6);
+                var ident = (short)ss58Prefix & 0b00111111_11111111; // clear first two bits
+                var first = (byte)(((ident & 0b0000_0000_1111_1100) >> 2) | 0b0100_0000);
+                var second = (byte)((ident >> 8) | (ident & 0b0000_0000_0000_0011) << 6);
 
                 plainAddr[0] = first;
                 plainAddr[1] = second;
 
                 bytes.CopyTo(plainAddr.AsMemory(2));
-            } else
+            }
+            else
             {
                 throw new Exception("Unsupported prefix used, support only up to 16383!");
             }
@@ -307,5 +369,55 @@ namespace Ajuna.NetApi
 
             return new string(addrCh);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="DataToDecrypt"></param>
+        /// <param name="RSAKeyInfo"></param>
+        /// <param name="DoOAEPPadding"
+        /// ></param>
+        /// <returns></returns>
+        public static byte[] RSADecrypt(byte[] DataToDecrypt, RSAParameters RSAKeyInfo, RSAEncryptionPadding OAEPPadding)
+        {
+            try
+            {
+                byte[] decryptedData;
+                //Create a new instance of RSACryptoServiceProvider.
+                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
+                {
+                    //Import the RSA Key information. This needs
+                    //to include the private key information.
+                    RSA.ImportParameters(RSAKeyInfo);
+
+                    //Decrypt the passed byte array and specify OAEP padding.  
+                    //OAEP padding is only available on Microsoft Windows XP or
+                    //later.  
+
+                    //Encrypt the passed byte array and specify OAEP padding.  
+                    //OAEP padding is only available on Microsoft Windows XP or
+                    //later.  
+                    if (OAEPPadding != null)
+                    {
+
+                        decryptedData = RSA.Decrypt(DataToDecrypt, OAEPPadding);
+                    }
+                    else
+                    {
+                        decryptedData = RSA.Decrypt(DataToDecrypt, false);
+                    }
+
+                }
+                return decryptedData;
+            }
+            //Catch and display a CryptographicException  
+            //to the console.
+            catch (CryptographicException e)
+            {
+                Console.WriteLine(e.ToString());
+
+                return null;
+            }
+        }
     }
+
 }

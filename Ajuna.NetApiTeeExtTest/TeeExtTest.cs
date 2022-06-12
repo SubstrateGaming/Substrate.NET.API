@@ -255,6 +255,75 @@ namespace Ajuna.NetApiTeeExtTest
         }
 
         [Test]
+        public void RpcResponseNonce()
+        {
+            var hexStr = "0x18011000000000000100";
+            var returnValue = new RpcReturnValue();
+            returnValue.Create(hexStr);
+
+            Assert.AreEqual(DirectRequestStatus.TrustedOperationStatus, returnValue.DirectRequestStatus.Value);
+            Assert.AreEqual(TrustedOperationStatus.Submitted, ((EnumTrustedOperationStatus)returnValue.DirectRequestStatus.Value2).Value);
+            Assert.AreEqual(false, returnValue.DoWatch.Value);
+
+            var valueBytes = returnValue.Value.Value.Select(p => p.Value).ToArray();
+
+            var nonceWrapped = new BaseOpt<BaseVec<U8>>();
+            nonceWrapped.Create(valueBytes);
+            Assert.AreEqual(true, nonceWrapped.OptionFlag);
+
+            var u32Wrapped = new BaseOpt<BaseVec<U8>>();
+            var u32Bytes = nonceWrapped.Value.Value.Select(p => p.Value).ToArray();
+
+            var u32 = new U32();
+            u32.Create(u32Bytes);
+
+            Assert.AreEqual(0, u32.Value);
+        }
+
+        [Test]
+        public void RpcResponseBalance()
+        {
+            var hexStr = "0x4801400080c6a47e8d03000000000000000000000100";
+            var returnValue = new RpcReturnValue();
+            returnValue.Create(hexStr);
+
+            Assert.AreEqual(DirectRequestStatus.TrustedOperationStatus, returnValue.DirectRequestStatus.Value);
+            Assert.AreEqual(TrustedOperationStatus.Submitted, ((EnumTrustedOperationStatus)returnValue.DirectRequestStatus.Value2).Value);
+            Assert.AreEqual(false, returnValue.DoWatch.Value);
+
+            var valueBytes = returnValue.Value.Value.Select(p => p.Value).ToArray();
+
+            var balanceWrapped = new BaseOpt<BaseVec<U8>>();
+            balanceWrapped.Create(valueBytes);
+            Assert.AreEqual(true, balanceWrapped.OptionFlag);
+           
+            var bytes = balanceWrapped.Value.Value.Select(p => p.Value).ToArray();
+            var balance = new Balance();
+            balance.Create(bytes);
+
+            Assert.AreEqual("1000000000000000", balance.Value.ToString());
+        }
+
+        [Test]
+        public void RpcResponseSubmitted()
+        {
+            var hexStr = "0x80bd09aa810a4f8161238e20f18b4a1a810a307021005841e3c65cb69c25edfa43010100";
+            var returnValue = new RpcReturnValue();
+            returnValue.Create(hexStr);
+
+            Assert.AreEqual(DirectRequestStatus.TrustedOperationStatus, returnValue.DirectRequestStatus.Value);
+            Assert.AreEqual(TrustedOperationStatus.Submitted, ((EnumTrustedOperationStatus)returnValue.DirectRequestStatus.Value2).Value);
+            Assert.AreEqual(true, returnValue.DoWatch.Value);
+
+            var valueBytes = returnValue.Value.Value.Select(p => p.Value).ToArray();
+
+            var hash = new Hash();
+            hash.Create(valueBytes);
+
+            Assert.AreEqual("0xBD09AA810A4F8161238E20F18B4A1A810A307021005841E3C65CB69C25EDFA43", hash.Value);
+        }
+
+        [Test]
         public void RpcResponseTestCallOne()
         {
             var returnValue = new RpcReturnValue();

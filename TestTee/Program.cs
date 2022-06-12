@@ -103,14 +103,12 @@ namespace TestTee
 
         private static async Task MainAsync(CancellationToken cancellationToken)
         {
-            var ngrok = "wss://9ae9-84-75-48-249.ngrok.io";
-            var shardHex = "3JFfg4Ff2SHk7sCsY6nZ59m92vFSCxmWQ1jgh52VzDqT";
-            var mrenclaveHex = "3JFfg4Ff2SHk7sCsY6nZ59m92vFSCxmWQ1jgh52VzDqT";
+            var ngrok = "wss://d351-84-75-48-249.ngrok.io";
+            var shardHex = "GLB1PkA2q9QPudL8jGopTPjgdnnMR3ePU2pn1s3xdBpP";
+            var mrenclaveHex = "GLB1PkA2q9QPudL8jGopTPjgdnnMR3ePU2pn1s3xdBpP";
 
             //await LaunchGameAsync("ws://127.0.0.1:9944");
             //await TestNodeAsync("ws://127.0.0.1:9944");
-
-            //await RunGameAsync("ws://127.0.0.1:2000");
 
             await RunTransactioTestAsync(
                 websocketurl: ngrok,
@@ -153,6 +151,9 @@ namespace TestTee
             // - TrustedOperation
 
             var player = Alice;
+
+            var nonce = await client.GetNonce(player, shieldingKey, shardHex);
+            if (nonce != null) Console.WriteLine($"Nonce[{player.Value}] = {nonce.Value}");
 
             //var boardStruct1 = await client.GetBoardStructAsync(player, shieldingKey, shardHex);
             //if (boardStruct1 != null) PrintBoard(boardStruct1);
@@ -210,8 +211,6 @@ namespace TestTee
 
         private static async Task TestNodeAsync(string websocketurl)
         {
-            var extrinsicWait = 10000;
-
             var client = new SubstrateClientExt(new Uri(websocketurl));
 
             var cts = new CancellationTokenSource();
