@@ -34,6 +34,8 @@ namespace Ajuna.NetApi.Model.PalletGameRegistry
         {
             this._client = client;
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("GameRegistry", "Queued"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(BaseVec<Ajuna.NetApi.Model.Types.Primitive.U32>)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("GameRegistry", "Players"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
+                            Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128}, typeof(Ajuna.NetApi.Model.SpCore.AccountId32), typeof(Ajuna.NetApi.Model.Types.Primitive.U32)));
         }
         
         /// <summary>
@@ -51,6 +53,25 @@ namespace Ajuna.NetApi.Model.PalletGameRegistry
         {
             string parameters = GameRegistryStorage.QueuedParams();
             return await _client.GetStorageAsync<BaseVec<Ajuna.NetApi.Model.Types.Primitive.U32>>(parameters, token);
+        }
+        
+        /// <summary>
+        /// >> PlayersParams
+        /// </summary>
+        public static string PlayersParams(Ajuna.NetApi.Model.SpCore.AccountId32 key)
+        {
+            return RequestGenerator.GetStorage("GameRegistry", "Players", Ajuna.NetApi.Model.Meta.Storage.Type.Map, new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
+                        Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128}, new Ajuna.NetApi.Model.Types.IType[] {
+                        key});
+        }
+        
+        /// <summary>
+        /// >> Players
+        /// </summary>
+        public async Task<Ajuna.NetApi.Model.Types.Primitive.U32> Players(Ajuna.NetApi.Model.SpCore.AccountId32 key, CancellationToken token)
+        {
+            string parameters = GameRegistryStorage.PlayersParams(key);
+            return await _client.GetStorageAsync<Ajuna.NetApi.Model.Types.Primitive.U32>(parameters, token);
         }
     }
     
@@ -154,5 +175,11 @@ namespace Ajuna.NetApi.Model.PalletGameRegistry
         /// Failed to queue
         /// </summary>
         FailedToQueue,
+        
+        /// <summary>
+        /// >> AlreadyPlaying
+        /// Already playing
+        /// </summary>
+        AlreadyPlaying,
     }
 }

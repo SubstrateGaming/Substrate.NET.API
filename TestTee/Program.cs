@@ -103,18 +103,18 @@ namespace TestTee
 
         private static async Task MainAsync(CancellationToken cancellationToken)
         {
-            var ngrok = "wss://d351-84-75-48-249.ngrok.io";
-            var shardHex = "GLB1PkA2q9QPudL8jGopTPjgdnnMR3ePU2pn1s3xdBpP";
-            var mrenclaveHex = "GLB1PkA2q9QPudL8jGopTPjgdnnMR3ePU2pn1s3xdBpP";
+            var ngrok = "wss://fc84-84-75-48-249.ngrok.io";
+            var shardHex = "A1z6JooZ9HkZ4eGecDzDUjek7Yhw4PxzYeUaveGymFqU";
+            var mrenclaveHex = "A1z6JooZ9HkZ4eGecDzDUjek7Yhw4PxzYeUaveGymFqU";
 
-            await LaunchGameAsync("ws://127.0.0.1:9944");
+            //await LaunchGameAsync("ws://127.0.0.1:9944");
             //await TestNodeAsync("ws://127.0.0.1:9944");
 
-            //await RunTransactioTestAsync(
-            //    websocketurl: ngrok,
-            //    shardHex: shardHex,
-            //    mrenclaveHex: mrenclaveHex
-            //);
+            await RunTransactioTestAsync(
+                websocketurl: ngrok,
+                shardHex: shardHex,
+                mrenclaveHex: mrenclaveHex
+            );
 
             //await RunRPCMethodsTestAsync(
             //    websocketurl: ngrok);
