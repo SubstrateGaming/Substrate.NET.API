@@ -9,6 +9,7 @@
 
 using Ajuna.NetApi.Model.AjunaWorker;
 using Ajuna.NetApi.Model.Meta;
+using Ajuna.NetApi.Model.PalletBoard;
 using Ajuna.NetApi.Model.PalletConnectfour;
 using Ajuna.NetApi.Model.PrimitiveTypes;
 using Ajuna.NetApi.Model.SpCore;
@@ -143,6 +144,11 @@ namespace Ajuna.NetApi
         /// </summary>
         public Ajuna.NetApi.Model.PalletSidechain.SidechainStorage SidechainStorage;
 
+        /// <summary>
+        /// BoardStorage storage calls.
+        /// </summary>
+        public Ajuna.NetApi.Model.PalletBoard.BoardStorage BoardStorage;
+
         public SubstrateClientExt(System.Uri uri) :
                 base(uri)
         {
@@ -167,6 +173,7 @@ namespace Ajuna.NetApi
             this.ObserversStorage = new Ajuna.NetApi.Model.PalletObservers.ObserversStorage(this);
             this.TeerexStorage = new Ajuna.NetApi.Model.PalletTeerex.TeerexStorage(this);
             this.SidechainStorage = new Ajuna.NetApi.Model.PalletSidechain.SidechainStorage(this);
+            this.BoardStorage = new Ajuna.NetApi.Model.PalletBoard.BoardStorage(this);
         }
 
         public enum Wrapped
@@ -267,14 +274,14 @@ namespace Ajuna.NetApi
             return null;
         }
 
-        public async Task<string> PlayTurnAsync(Account account, byte column, RSAParameters shieldingKey, string shardHex, string mrenclaveHex)
+        public async Task<string> PlayTurnAsync(Account account, byte play, RSAParameters shieldingKey, string shardHex, string mrenclaveHex)
         {
             EnumTrustedOperation tOpNonce = Wrapper.CreateGetter(account, TrustedGetter.Nonce);
             var nonceValue = await ExecuteTrustedOperationAsync(tOpNonce, shieldingKey, shardHex);
             if (Unwrap(Wrapped.Nonce, nonceValue, out U32 nonce))
             {
-                Logger.Info($"Account[{account.Value}]({nonce.Value}) play {column}");
-                EnumTrustedOperation tOpPlayTurn = Wrapper.CreateCallPlayTurn(account, column, nonce.Value, mrenclaveHex, shardHex);
+                Logger.Info($"Account[{account.Value}]({nonce.Value}) play {play}");
+                EnumTrustedOperation tOpPlayTurn = Wrapper.CreateCallPlayTurn(account, play, nonce.Value, mrenclaveHex, shardHex);
                 var returnValue = await ExecuteTrustedOperationAsync(tOpPlayTurn, shieldingKey, shardHex);
                 if (Unwrap(Wrapped.Hash, returnValue, out H256 value))
                 {
@@ -297,13 +304,13 @@ namespace Ajuna.NetApi
             return null;
         }
 
-        public async Task<BoardStruct> GetBoardStructAsync(Account account, RSAParameters shieldingKey, string shardHex)
+        public async Task<BoardGame> GetBoardGameAsync(Account account, RSAParameters shieldingKey, string shardHex)
         {
             EnumTrustedOperation tOpBoard = Wrapper.CreateGetter(account, TrustedGetter.Board);
             var boardValue = await ExecuteTrustedOperationAsync(tOpBoard, shieldingKey, shardHex);
-            if (Unwrap(Wrapped.Board, boardValue, out BoardStruct boardStruct))
+            if (Unwrap(Wrapped.Board, boardValue, out BoardGame boardGame))
             {
-                return boardStruct;
+                return boardGame;
             }
 
             return null;

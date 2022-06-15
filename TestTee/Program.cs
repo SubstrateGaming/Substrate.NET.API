@@ -74,7 +74,7 @@ namespace TestTee
             var logconsole = new ConsoleTarget("logconsole");
 
             // Rules for mapping loggers to targets            
-            config.AddRule(LogLevel.Info, LogLevel.Fatal, logconsole);
+            //config.AddRule(LogLevel.Info, LogLevel.Fatal, logconsole);
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
 
             // Apply config           
@@ -103,21 +103,26 @@ namespace TestTee
 
         private static async Task MainAsync(CancellationToken cancellationToken)
         {
-            var ngrok = "wss://fc84-84-75-48-249.ngrok.io";
-            var shardHex = "A1z6JooZ9HkZ4eGecDzDUjek7Yhw4PxzYeUaveGymFqU";
-            var mrenclaveHex = "A1z6JooZ9HkZ4eGecDzDUjek7Yhw4PxzYeUaveGymFqU";
+            var ngrok = "wss://ce55-84-75-48-249.ngrok.io";
+            var shardHex = "7KnyLzTiAT6TGu9feo2A9iCAgzU7f99nhjBjRjRcdkQr";
+            var mrenclaveHex = "7KnyLzTiAT6TGu9feo2A9iCAgzU7f99nhjBjRjRcdkQr";
+
+            //await TransactionNodeTestAsync("ws://127.0.0.1:9944");
+
+            //await TransactionWorkerTestAsync(
+            //    websocketurl: ngrok,
+            //    shardHex: shardHex,
+            //    mrenclaveHex: mrenclaveHex
+            //);
 
             //await LaunchGameAsync("ws://127.0.0.1:9944");
-            //await TestNodeAsync("ws://127.0.0.1:9944");
 
-            await RunTransactioTestAsync(
+            await PlayGameAsync(
                 websocketurl: ngrok,
                 shardHex: shardHex,
                 mrenclaveHex: mrenclaveHex
             );
 
-            //await RunRPCMethodsTestAsync(
-            //    websocketurl: ngrok);
         }
 
         private static async Task RunRPCMethodsTestAsync(string websocketurl)
@@ -132,7 +137,48 @@ namespace TestTee
             await client.CloseAsync();
         }
 
-        private static async Task RunTransactioTestAsync(string websocketurl, string shardHex, string mrenclaveHex)
+        private static async Task TransactionNodeTestAsync(string websocketurl)
+        {
+            var extrinsicWait = 10000;
+
+            var client = new SubstrateClientExt(new Uri(websocketurl));
+
+            var cts = new CancellationTokenSource();
+            await client.ConnectAsync(false, true, true, cts.Token);
+
+            var accountAlice = new AccountId32();
+            accountAlice.Create(Utils.GetPublicKeyFrom(Alice.Value));
+
+            var accountBob = new AccountId32();
+            accountBob.Create(Utils.GetPublicKeyFrom(Bob.Value));
+
+            var accountInfoAlice = await client.SystemStorage.Account(accountAlice, CancellationToken.None);
+            Console.WriteLine($"Alice Free Balance = {accountInfoAlice.Data.Free.Value.ToString()}");
+
+            var accountInfoBob = await client.SystemStorage.Account(accountBob, CancellationToken.None);
+            Console.WriteLine($"Bob Free Balance = {accountInfoBob.Data.Free.Value.ToString()}");
+
+            var multiAddressBob = new EnumMultiAddress();
+            multiAddressBob.Create(MultiAddress.Id, accountBob);
+
+            var amount = new BaseCom<U128>();
+            amount.Create(100000);
+
+            var extrinsicMethod = Ajuna.NetApi.Model.PalletBalances.BalancesCalls.Transfer(multiAddressBob, amount);
+
+            // transaction from alice to bob for a certain amount of tokens
+            var subscription1 = await client.Author.SubmitAndWatchExtrinsicAsync(ActionExtrinsicUpdate, extrinsicMethod, Alice, 0, 64, cts.Token);
+            Console.WriteLine($"Subscription ID for Transfer {subscription1}");
+            Thread.Sleep(extrinsicWait);
+
+            accountInfoAlice = await client.SystemStorage.Account(accountAlice, CancellationToken.None);
+            Console.WriteLine($"Alice Free Balance = {accountInfoAlice.Data.Free.Value.ToString()}");
+
+            accountInfoBob = await client.SystemStorage.Account(accountBob, CancellationToken.None);
+            Console.WriteLine($"Bob Free Balance = {accountInfoBob.Data.Free.Value.ToString()}");
+        }
+
+        private static async Task TransactionWorkerTestAsync(string websocketurl, string shardHex, string mrenclaveHex)
         {
             /**
              * docker ps
@@ -190,12 +236,15 @@ namespace TestTee
             switch (extrinsicUpdate.ExtrinsicState)
             {
                 case ExtrinsicState.None:
-                    if (extrinsicUpdate.InBlock?.Value.Length > 0) {
+                    if (extrinsicUpdate.InBlock?.Value.Length > 0)
+                    {
                         Console.WriteLine($"{subscriptionId}: InBlock {extrinsicUpdate.InBlock.Value}");
-                    } else if (extrinsicUpdate.Finalized?.Value.Length > 0) {
+                    }
+                    else if (extrinsicUpdate.Finalized?.Value.Length > 0)
+                    {
                         Console.WriteLine($"{subscriptionId}: Finalized {extrinsicUpdate.Finalized.Value}");
                     }
-                   break;
+                    break;
                 case ExtrinsicState.Future:
                     break;
                 case ExtrinsicState.Ready:
@@ -209,23 +258,15 @@ namespace TestTee
             }
         }
 
-        private static async Task TestNodeAsync(string websocketurl)
-        {
-            var client = new SubstrateClientExt(new Uri(websocketurl));
-
-            var cts = new CancellationTokenSource();
-            await client.ConnectAsync(false, true, true, cts.Token);
-
-            var account = new AccountId32();
-            account.Create(Utils.GetPublicKeyFrom(Alice.Value));
-
-            var gameQueuePos = await client.SystemStorage.Account(account, CancellationToken.None);
-
-        }
-
         private static async Task LaunchGameAsync(string websocketurl)
         {
             var extrinsicWait = 10000;
+
+            var accountAlice = new AccountId32();
+            accountAlice.Create(Utils.GetPublicKeyFrom(Alice.Value));
+
+            var accountBob = new AccountId32();
+            accountBob.Create(Utils.GetPublicKeyFrom(Bob.Value));
 
             var client = new SubstrateClientExt(new Uri(websocketurl));
 
@@ -242,43 +283,157 @@ namespace TestTee
             Console.WriteLine($"Queued Alice {subscription1}");
             Thread.Sleep(extrinsicWait);
 
+            // find game reference
+            var gameIdAlice1 = await client.GameRegistryStorage.Players(accountAlice, cts.Token);
+            Console.WriteLine($"GameReference for Alice {gameIdAlice1}");
+
+            Thread.Sleep(2000);
+
             // Bob queues for a game ...
             var subscription2 = await client.Author.SubmitAndWatchExtrinsicAsync(ActionExtrinsicUpdate, extrinsicMethod, Bob, 0, 64, cts.Token);
             Console.WriteLine($"Queued Bob {subscription2}");
             Thread.Sleep(extrinsicWait);
 
-            var gameQueuePos = await client.GameRegistryStorage.Queued(CancellationToken.None);
-            Console.WriteLine($"GameRegistry Queue Pos = {gameQueuePos.ToString()}");
+            // find game reference
+            var gameId = await client.GameRegistryStorage.Players(accountAlice, cts.Token);
+            Console.WriteLine($"GameReference for Alice {gameId}");
+
+            var gameIdBob = await client.GameRegistryStorage.Players(accountBob, cts.Token);
+            Console.WriteLine($"GameReference for Bob {gameIdBob}");
+
+            if (gameId.Value == gameIdBob.Value && gameIdBob.Value > 0)
+            {
+                var gameRunnerInfo1 = await client.RunnerStorage.Runners(gameId, cts.Token);
+                Console.WriteLine($"Game Runner Info for Alice & Bob {gameRunnerInfo1.Value}");
+
+                Thread.Sleep(extrinsicWait);
+
+                var gameRunnerInfo2 = await client.RunnerStorage.Runners(gameId, cts.Token);
+                Console.WriteLine($"Game Runner Info for Alice & Bob {gameRunnerInfo2.Value}");
+            }
         }
 
-        //public static void PrintBoard(BoardStruct boardStruct)
-        //{
-        //    Console.WriteLine($"Board[{Utils.GetAddressFrom(boardStruct.Id.Value.Bytes)}]: {boardStruct.BoardState.Value}");
-        //    Console.WriteLine($"Red is {Utils.GetAddressFrom(boardStruct.Red.Value.Bytes)}");
-        //    Console.WriteLine($"Blue is {Utils.GetAddressFrom(boardStruct.Blue.Value.Bytes)}");
-        //    Console.WriteLine($"LastTurn is {boardStruct.LastTurn.Value}");
-        //    Console.WriteLine($"NextPlayer is {boardStruct.NextPlayer.Value}");
-        //    var board = new int[7, 6];
-        //    for (int x = 0; x < boardStruct.Board.Value.Length; x++)
-        //    {
-        //        Ajuna.NetApi.Model.Base.Arr6U8 column = boardStruct.Board.Value[x];
-        //        for (int y = 0; y < column.Value.Length; y++)
-        //        {
-        //            board[x, y] = column.Value[y].Value;
-        //        }
-        //    }
+        private static async Task PlayGameAsync(string websocketurl, string shardHex, string mrenclaveHex)
+        {
+            /**
+             * docker ps
+             * docker exec -it 7aeac2a21f93 /bin/bash
+             * ./integritee-cli trusted transfer //Alice //Bob 1000 --mrenclave 2CMLqGnL56xp4qkVDq4pmKKYJn4btSGF9brgGEsGW3qm --direct
+             */
 
-        //    for (int y = 0; y < board.GetLength(1); y++)
-        //    {
-        //        for (int x = 0; x < board.GetLength(0); x++)
-        //        {
-        //            Console.Write(board[x, y]);
-        //        }
-        //        Console.WriteLine();
-        //    }
+            var sleep = 1000;
 
-        //}
+            var client = new SubstrateClientExt(new Uri(websocketurl));
 
+            Console.WriteLine("*** - ConnectAsync      - ***************************************************************");
+            await client.ConnectAsync(false, false, false, CancellationToken.None);
+
+            Console.WriteLine("*** - ShieldingKeyAsync - ***************************************************************");
+            var shieldingKey = await client.ShieldingKeyAsync();
+
+            // - TrustedOperation
+
+            var player = Alice;
+
+            Thread.Sleep(sleep);
+
+            var boardGame = await client.GetBoardGameAsync(player, shieldingKey, shardHex);
+            Console.WriteLine("*** - GetBoardGameAsync - ***************************************************************");
+            if (boardGame != null) 
+            {
+                Console.WriteLine($"BoardId[{boardGame.BoardId.Value}] {String.Join(" vs. ", boardGame.Players.Value.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())))}");
+                Console.WriteLine($"- State.NextPlayer = {boardGame.State.NextPlayer.Value}");
+                Console.WriteLine($"- State.Players = {String.Join(" vs. ", boardGame.State.Players.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())))}");
+                Console.WriteLine($"- State.Solution = {boardGame.State.Solution.Value}");
+
+                var players = boardGame.Players.Value.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())).ToArray();
+                var nextPlayer = players[boardGame.State.NextPlayer.Value];
+                if (nextPlayer == Alice.Value)
+                {
+                    player = Alice;
+                }
+                else if (nextPlayer == Bob.Value)
+                {
+                    player = Bob;
+                }
+            }
+            else
+            {
+                Console.WriteLine($"No board Game, please check!");
+            }
+
+            Thread.Sleep(sleep);
+
+            Console.WriteLine("*** - PlayTurnAsync     - ***************************************************************");
+            byte play = 1;
+            Console.WriteLine($"PlayTurnAsync {player.Value} play {play}");
+            var hash = await client.PlayTurnAsync(player, play, shieldingKey, shardHex, mrenclaveHex);
+            Console.WriteLine($"Player Turn Transaction hash = {hash}");
+
+            Thread.Sleep(sleep);
+
+            boardGame = await client.GetBoardGameAsync(player, shieldingKey, shardHex);
+            Console.WriteLine("*** - GetBoardGameAsync - ***************************************************************");
+            if (boardGame != null)
+            {
+                Console.WriteLine($"BoardId[{boardGame.BoardId.Value}] {String.Join(" vs. ", boardGame.Players.Value.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())))}");
+                Console.WriteLine($"- State.NextPlayer = {boardGame.State.NextPlayer.Value}");
+                Console.WriteLine($"- State.Players = {String.Join(" vs. ", boardGame.State.Players.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())))}");
+                Console.WriteLine($"- State.Solution = {boardGame.State.Solution.Value}");
+
+                var players = boardGame.Players.Value.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())).ToArray();
+                var nextPlayer = players[boardGame.State.NextPlayer.Value];
+                if (nextPlayer == Alice.Value)
+                {
+                    player = Alice;
+                }
+                else if (nextPlayer == Bob.Value)
+                {
+                    player = Bob;
+                }
+            }
+            else
+            {
+                Console.WriteLine($"No board Game, please check!");
+            }
+
+            Console.WriteLine("*** - PlayTurnAsync     - ***************************************************************");
+            play = 42;
+            Console.WriteLine($"PlayTurnAsync {player.Value} play {play}");
+            hash = await client.PlayTurnAsync(player, play, shieldingKey, shardHex, mrenclaveHex);
+            Console.WriteLine($"Player Turn Transaction hash = {hash}");
+
+            Thread.Sleep(sleep);
+
+            boardGame = await client.GetBoardGameAsync(player, shieldingKey, shardHex);
+            Console.WriteLine("*** - GetBoardGameAsync - ***************************************************************");
+            if (boardGame != null)
+            {
+                Console.WriteLine($"BoardId[{boardGame.BoardId.Value}] {String.Join(" vs. ", boardGame.Players.Value.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())))}");
+                Console.WriteLine($"- State.NextPlayer = {boardGame.State.NextPlayer.Value}");
+                Console.WriteLine($"- State.Players = {String.Join(" vs. ", boardGame.State.Players.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())))}");
+                Console.WriteLine($"- State.Solution = {boardGame.State.Solution.Value}");
+
+                var players = boardGame.Players.Value.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())).ToArray();
+                var nextPlayer = players[boardGame.State.NextPlayer.Value];
+                if (nextPlayer == Alice.Value)
+                {
+                    player = Alice;
+                }
+                else if (nextPlayer == Bob.Value)
+                {
+                    player = Bob;
+                }
+            }
+            else
+            {
+                Console.WriteLine($"No board Game, please check!");
+            }
+
+            // close connection
+            Console.WriteLine("*** - CloseAsync         - ***************************************************************");
+            await client.CloseAsync();
+        }
     }
 
 }

@@ -71,19 +71,19 @@ namespace Ajuna.NetApiExt.Model.AjunaWorker.Helper
             return GetEnumTrustedOperation(accountName, enumTrustedGetter);
         }
 
-        public static EnumTrustedOperation CreateCallPlayTurn(Account account, byte move, uint nonce, string mrenclaveHex, string shardHex)
+        public static EnumTrustedOperation CreateCallPlayTurn(Account account, byte play, uint nonce, string mrenclaveHex, string shardHex)
         {
             var accountId32 = new AccountId32();
             accountId32.Create(account.Bytes);
 
-            var column = new U8();
-            column.Create(move);
+            var column = new SgxGuessingTurn();
+            column.Create(play);
 
-            var playTurnTuple = new BaseTuple<AccountId32, U8>();
+            var playTurnTuple = new BaseTuple<AccountId32, SgxGuessingTurn>();
             playTurnTuple.Create(accountId32, column);
 
             var trustedCall = new EnumTrustedCall();
-            trustedCall.Create(TrustedCall.ConnectfourPlayTurn, playTurnTuple);
+            trustedCall.Create(TrustedCall.BoardPlayTurn, playTurnTuple);
 
             var index = new Ajuna.NetApi.Model.AjunaWorker.Index();
             index.Create(nonce);

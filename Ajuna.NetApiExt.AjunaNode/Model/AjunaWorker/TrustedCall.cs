@@ -1,7 +1,7 @@
 ﻿
+using Ajuna.NetApi.Model.Base;
 using Ajuna.NetApi.Model.SpCore;
 using Ajuna.NetApi.Model.Types.Base;
-using Ajuna.NetApi.Model.Types.Primitive;
 
 namespace Ajuna.NetApi.Model.AjunaWorker
 {
@@ -16,9 +16,11 @@ namespace Ajuna.NetApi.Model.AjunaWorker
 
         BalanceShield,
 
-        NewGame,
+        BoardNewGame,
 
-        ConnectfourPlayTurn
+        BoardPlayTurn,
+
+        BoardFinishGame
     }
 
     public sealed class EnumTrustedCall : BaseEnumExt<
@@ -27,10 +29,11 @@ namespace Ajuna.NetApi.Model.AjunaWorker
         BaseTuple<AccountId32, AccountId32, Balance>,
         BaseTuple<AccountId32, AccountId32, Balance, ShardIdentifier>,
         BaseTuple<AccountId32, AccountId32, Balance>,
-        BaseTuple<AccountId32, AccountId32, AccountId32>,
-        BaseTuple<AccountId32, U8>,
-        EnumGetter
+        BaseTuple<AccountId32, SgxBoardId, BTreeSet>,
+        BaseTuple<AccountId32, SgxGuessingTurn>,
+        BaseTuple<AccountId32, SgxBoardId>
         >
     {
     }
 }
+
