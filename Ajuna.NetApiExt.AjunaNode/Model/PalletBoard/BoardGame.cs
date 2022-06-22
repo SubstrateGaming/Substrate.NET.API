@@ -7,8 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Ajuna.NetApi.Model.Base;
 using Ajuna.NetApi.Model.FrameSupport;
-using Ajuna.NetApi.Model.PalletBoard;
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
 using System;
@@ -38,7 +38,7 @@ namespace Ajuna.NetApi.Model.PalletBoard
         /// <summary>
         /// >> state
         /// </summary>
-        private Ajuna.NetApi.Model.PalletBoard.GameState _state;
+        private Ajuna.NetApi.Model.Base.GameState _state;
         
         public Ajuna.NetApi.Model.Types.Primitive.U32 BoardId
         {
@@ -64,7 +64,7 @@ namespace Ajuna.NetApi.Model.PalletBoard
             }
         }
         
-        public Ajuna.NetApi.Model.PalletBoard.GameState State
+        public Ajuna.NetApi.Model.Base.GameState State
         {
             get
             {
@@ -97,7 +97,7 @@ namespace Ajuna.NetApi.Model.PalletBoard
             BoardId.Decode(byteArray, ref p);
             Players = new Ajuna.NetApi.Model.FrameSupport.BoundedVecT6();
             Players.Decode(byteArray, ref p);
-            State = new Ajuna.NetApi.Model.PalletBoard.GameState();
+            State = new Ajuna.NetApi.Model.Base.GameState();
             State.Decode(byteArray, ref p);
             TypeSize = p - start;
         }

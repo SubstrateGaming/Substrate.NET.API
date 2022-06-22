@@ -1,5 +1,6 @@
 ﻿using Ajuna.NetApi;
 using Ajuna.NetApi.Model.AjunaWorker;
+using Ajuna.NetApi.Model.Base;
 using Ajuna.NetApi.Model.PalletConnectfour;
 using Ajuna.NetApi.Model.PrimitiveTypes;
 using Ajuna.NetApi.Model.Rpc;
@@ -103,9 +104,9 @@ namespace TestTee
 
         private static async Task MainAsync(CancellationToken cancellationToken)
         {
-            var ngrok = "wss://ce55-84-75-48-249.ngrok.io";
-            var shardHex = "7KnyLzTiAT6TGu9feo2A9iCAgzU7f99nhjBjRjRcdkQr";
-            var mrenclaveHex = "7KnyLzTiAT6TGu9feo2A9iCAgzU7f99nhjBjRjRcdkQr";
+            var ngrok = "wss://8e08-84-75-48-249.ngrok.io";
+            var shardHex = "BPXRTc9ezadMmw4dCdtUjBBTmR8vY1BQW8RZXw3z8Gc7";
+            var mrenclaveHex = "BPXRTc9ezadMmw4dCdtUjBBTmR8vY1BQW8RZXw3z8Gc7";
 
             //await TransactionNodeTestAsync("ws://127.0.0.1:9944");
 
@@ -213,7 +214,8 @@ namespace TestTee
 
             Thread.Sleep(2000);
 
-            await client.BalanceTransferAsync(Alice, Bob, (uint)100000, shieldingKey, shardHex, mrenclaveHex);
+            var hash = await client.BalanceTransferAsync(Alice, Bob, (uint)100000, shieldingKey, shardHex, mrenclaveHex);
+            Console.WriteLine($"BalanceTransfer[{hash}] Alice -[100000]-> Bob");
 
             Thread.Sleep(2000);
 
@@ -274,7 +276,7 @@ namespace TestTee
             await client.ConnectAsync(false, true, true, cts.Token);
 
             var gameQueuePre = await client.GameRegistryStorage.Queued(CancellationToken.None);
-            Console.WriteLine($"GameRegistry Queue Pre = {gameQueuePre.ToString()}");
+            Console.WriteLine($"GameRegistry Queue Pre = {gameQueuePre}");
 
             var extrinsicMethod = Ajuna.NetApi.Model.PalletGameRegistry.GameRegistryCalls.Queue();
 
@@ -306,7 +308,7 @@ namespace TestTee
                 var gameRunnerInfo1 = await client.RunnerStorage.Runners(gameId, cts.Token);
                 Console.WriteLine($"Game Runner Info for Alice & Bob {gameRunnerInfo1.Value}");
 
-                Thread.Sleep(extrinsicWait);
+                Thread.Sleep(20000);
 
                 var gameRunnerInfo2 = await client.RunnerStorage.Runners(gameId, cts.Token);
                 Console.WriteLine($"Game Runner Info for Alice & Bob {gameRunnerInfo2.Value}");
@@ -344,7 +346,37 @@ namespace TestTee
                 Console.WriteLine($"BoardId[{boardGame.BoardId.Value}] {String.Join(" vs. ", boardGame.Players.Value.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())))}");
                 Console.WriteLine($"- State.NextPlayer = {boardGame.State.NextPlayer.Value}");
                 Console.WriteLine($"- State.Players = {String.Join(" vs. ", boardGame.State.Players.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())))}");
-                Console.WriteLine($"- State.Solution = {boardGame.State.Solution.Value}");
+                // Guessing: Console.WriteLine($"- State.Solution = {boardGame.State.Solution.Value}");
+
+                Console.WriteLine($"- boardGame.State.Board.Cells = {boardGame.State.Board.Cells.Value.Select(p => p.Value).ToArray().Count()}");
+
+                foreach(var enumCellArray in boardGame.State.Board.Cells.Value.Select(p => p.Value).ToArray())
+                {
+                    Console.WriteLine("+-+-+-+-+-+-+-+-+-+-+");
+                    Console.Write($"|");
+                    foreach (var enumCell in enumCellArray) 
+                    {
+                        string cell = " ";
+                        switch (enumCell.Value)
+                        {
+                            case Cell.Empty:
+                                cell = " ";
+                                break;
+                            case Cell.Bomb:
+                                cell = "B";
+                                break;
+                            case Cell.Block:
+                                cell = "#";
+                                break;
+                            case Cell.Stone:
+                                cell = "S";
+                                break;
+                        }
+                        Console.Write($"{cell}|");
+                   }
+                    Console.WriteLine("");
+                }
+                Console.WriteLine("+-+-+-+-+-+-+-+-+-+-+");
 
                 var players = boardGame.Players.Value.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())).ToArray();
                 var nextPlayer = players[boardGame.State.NextPlayer.Value];
@@ -364,7 +396,7 @@ namespace TestTee
 
             Thread.Sleep(sleep);
 
-            Console.WriteLine("*** - PlayTurnAsync     - ***************************************************************");
+/*            Console.WriteLine("*** - PlayTurnAsync     - ***************************************************************");
             byte play = 1;
             Console.WriteLine($"PlayTurnAsync {player.Value} play {play}");
             var hash = await client.PlayTurnAsync(player, play, shieldingKey, shardHex, mrenclaveHex);
@@ -379,7 +411,7 @@ namespace TestTee
                 Console.WriteLine($"BoardId[{boardGame.BoardId.Value}] {String.Join(" vs. ", boardGame.Players.Value.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())))}");
                 Console.WriteLine($"- State.NextPlayer = {boardGame.State.NextPlayer.Value}");
                 Console.WriteLine($"- State.Players = {String.Join(" vs. ", boardGame.State.Players.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())))}");
-                Console.WriteLine($"- State.Solution = {boardGame.State.Solution.Value}");
+                // Guessing: Console.WriteLine($"- State.Solution = {boardGame.State.Solution.Value}");
 
                 var players = boardGame.Players.Value.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())).ToArray();
                 var nextPlayer = players[boardGame.State.NextPlayer.Value];
@@ -412,7 +444,7 @@ namespace TestTee
                 Console.WriteLine($"BoardId[{boardGame.BoardId.Value}] {String.Join(" vs. ", boardGame.Players.Value.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())))}");
                 Console.WriteLine($"- State.NextPlayer = {boardGame.State.NextPlayer.Value}");
                 Console.WriteLine($"- State.Players = {String.Join(" vs. ", boardGame.State.Players.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())))}");
-                Console.WriteLine($"- State.Solution = {boardGame.State.Solution.Value}");
+                // Guessing: Console.WriteLine($"- State.Solution = {boardGame.State.Solution.Value}");
 
                 var players = boardGame.Players.Value.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())).ToArray();
                 var nextPlayer = players[boardGame.State.NextPlayer.Value];
@@ -428,7 +460,7 @@ namespace TestTee
             else
             {
                 Console.WriteLine($"No board Game, please check!");
-            }
+            }*/
 
             // close connection
             Console.WriteLine("*** - CloseAsync         - ***************************************************************");

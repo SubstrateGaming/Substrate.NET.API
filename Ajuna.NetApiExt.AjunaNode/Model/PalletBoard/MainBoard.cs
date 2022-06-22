@@ -40,6 +40,7 @@ namespace Ajuna.NetApi.Model.PalletBoard
                             Ajuna.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Ajuna.NetApi.Model.Types.Primitive.U32), typeof(Ajuna.NetApi.Model.SpCore.AccountId32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Board", "PlayerBoards"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
                             Ajuna.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Ajuna.NetApi.Model.SpCore.AccountId32), typeof(Ajuna.NetApi.Model.Types.Primitive.U32)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Board", "Seed"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Ajuna.NetApi.Model.Types.Primitive.U32)));
         }
         
         /// <summary>
@@ -104,6 +105,25 @@ namespace Ajuna.NetApi.Model.PalletBoard
             string parameters = BoardStorage.PlayerBoardsParams(key);
             return await _client.GetStorageAsync<Ajuna.NetApi.Model.Types.Primitive.U32>(parameters, token);
         }
+        
+        /// <summary>
+        /// >> SeedParams
+        ///  Random seed
+        /// </summary>
+        public static string SeedParams()
+        {
+            return RequestGenerator.GetStorage("Board", "Seed", Ajuna.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> Seed
+        ///  Random seed
+        /// </summary>
+        public async Task<Ajuna.NetApi.Model.Types.Primitive.U32> Seed(CancellationToken token)
+        {
+            string parameters = BoardStorage.SeedParams();
+            return await _client.GetStorageAsync<Ajuna.NetApi.Model.Types.Primitive.U32>(parameters, token);
+        }
     }
     
     public sealed class BoardCalls
@@ -125,7 +145,7 @@ namespace Ajuna.NetApi.Model.PalletBoard
         /// >> play_turn
         /// Contains one variant per dispatchable that can be called by an extrinsic.
         /// </summary>
-        public static Method PlayTurn(Ajuna.NetApi.Model.Types.Primitive.U32 turn)
+        public static Method PlayTurn(Ajuna.NetApi.Model.PalletBoard.EnumTurn turn)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(turn.Encode());
@@ -133,14 +153,14 @@ namespace Ajuna.NetApi.Model.PalletBoard
         }
         
         /// <summary>
-        /// >> flush_winner
+        /// >> finish_game
         /// Contains one variant per dispatchable that can be called by an extrinsic.
         /// </summary>
-        public static Method FlushWinner(Ajuna.NetApi.Model.Types.Primitive.U32 board_id)
+        public static Method FinishGame(Ajuna.NetApi.Model.Types.Primitive.U32 board_id)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(board_id.Encode());
-            return new Method(21, "Board", 2, "flush_winner", byteArray.ToArray());
+            return new Method(21, "Board", 2, "finish_game", byteArray.ToArray());
         }
     }
     

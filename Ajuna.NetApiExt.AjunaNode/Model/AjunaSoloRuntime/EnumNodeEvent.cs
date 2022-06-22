@@ -52,6 +52,8 @@ namespace Ajuna.NetApi.Model.AjunaSoloRuntime
         Teerex,
         
         Sidechain,
+        
+        Board,
     }
     
     /// <summary>
