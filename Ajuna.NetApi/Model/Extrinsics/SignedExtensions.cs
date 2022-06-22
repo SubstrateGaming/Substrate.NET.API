@@ -91,7 +91,7 @@ namespace Ajuna.NetApi.Model.Extrinsics
         {
             var bytes = new List<byte>();
 
-            // Extra: Era, Nonce & Tip
+            // Extra: Era, Nonce & ChargeAssetTxPayment
             bytes.AddRange(GetExtra());
 
             // Additional Signed: SpecVersion, TxVersion, Genesis, Blockhash

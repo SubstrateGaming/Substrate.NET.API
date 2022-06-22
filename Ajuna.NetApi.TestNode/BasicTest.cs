@@ -1,5 +1,7 @@
 using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.Types;
+using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -67,7 +69,7 @@ namespace Ajuna.NetApi.NetApi.TestNode
             await _substrateClient.ConnectAsync(false, CancellationToken.None);
 
             var result = await _substrateClient.GetMethodAsync<string>("system_chain");
-            Assert.AreEqual("Development", result);
+            Assert.IsTrue(result.Length > 0);
 
             await _substrateClient.CloseAsync();
         }
