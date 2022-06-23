@@ -1,5 +1,7 @@
 ﻿using Ajuna.NetApi;
 using Ajuna.NetApi.Model.AjunaWorker;
+using Ajuna.NetApi.Model.Base;
+using Ajuna.NetApi.Model.PalletBoard;
 using Ajuna.NetApi.Model.PrimitiveTypes;
 using Ajuna.NetApi.Model.SpCore;
 using Ajuna.NetApi.Model.SpRuntime;
@@ -71,16 +73,13 @@ namespace Ajuna.NetApiExt.Model.AjunaWorker.Helper
             return GetEnumTrustedOperation(accountName, enumTrustedGetter);
         }
 
-        public static EnumTrustedOperation CreateCallPlayTurn(Account account, byte play, uint nonce, string mrenclaveHex, string shardHex)
+        public static EnumTrustedOperation CreateCallPlayTurn(Account account, SgxGameTurn turn, uint nonce, string mrenclaveHex, string shardHex)
         {
             var accountId32 = new AccountId32();
             accountId32.Create(account.Bytes);
 
-            var column = new SgxGuessingTurn();
-            column.Create(play);
-
-            var playTurnTuple = new BaseTuple<AccountId32, SgxGuessingTurn>();
-            playTurnTuple.Create(accountId32, column);
+            var playTurnTuple = new BaseTuple<AccountId32, SgxGameTurn>();
+            playTurnTuple.Create(accountId32, turn);
 
             var trustedCall = new EnumTrustedCall();
             trustedCall.Create(TrustedCall.BoardPlayTurn, playTurnTuple);
@@ -107,17 +106,17 @@ namespace Ajuna.NetApiExt.Model.AjunaWorker.Helper
 
         public static EnumTrustedOperation CreateCallBalanceTransfer(Account fromAccount, Account toAccount, uint amount, uint nonce, string mrenclaveHex, string shardHex)
         {
-            var aliceAccount = new AccountId32();
-            aliceAccount.Create(fromAccount.Bytes);
+            var sendAccount = new AccountId32();
+            sendAccount.Create(fromAccount.Bytes);
 
-            var bobAccount = new AccountId32();
-            bobAccount.Create(toAccount.Bytes);
+            var receiveAccount = new AccountId32();
+            receiveAccount.Create(toAccount.Bytes);
 
             var balance = new Balance();
             balance.Create(new BigInteger(amount));
 
             var balanceTransferTuple = new BaseTuple<AccountId32, AccountId32, Balance>();
-            balanceTransferTuple.Create(aliceAccount, bobAccount, balance);
+            balanceTransferTuple.Create(sendAccount, receiveAccount, balance);
 
             var trustedCall = new EnumTrustedCall();
             trustedCall.Create(TrustedCall.BalanceTransfer, balanceTransferTuple);

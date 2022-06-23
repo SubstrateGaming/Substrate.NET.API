@@ -274,14 +274,14 @@ namespace Ajuna.NetApi
             return null;
         }
 
-        public async Task<string> PlayTurnAsync(Account account, byte play, RSAParameters shieldingKey, string shardHex, string mrenclaveHex)
+        public async Task<string> PlayTurnAsync(Account account, SgxGameTurn turn, RSAParameters shieldingKey, string shardHex, string mrenclaveHex)
         {
             EnumTrustedOperation tOpNonce = Wrapper.CreateGetter(account, TrustedGetter.Nonce);
             var nonceValue = await ExecuteTrustedOperationAsync(tOpNonce, shieldingKey, shardHex);
             if (Unwrap(Wrapped.Nonce, nonceValue, out U32 nonce))
             {
-                Logger.Info($"Account[{account.Value}]({nonce.Value}) play {play}");
-                EnumTrustedOperation tOpPlayTurn = Wrapper.CreateCallPlayTurn(account, play, nonce.Value, mrenclaveHex, shardHex);
+                Logger.Info($"Account[{account.Value}]({nonce.Value}) play {turn.GetType().Name}");
+                EnumTrustedOperation tOpPlayTurn = Wrapper.CreateCallPlayTurn(account, turn, nonce.Value, mrenclaveHex, shardHex);
                 var returnValue = await ExecuteTrustedOperationAsync(tOpPlayTurn, shieldingKey, shardHex);
                 if (Unwrap(Wrapped.Hash, returnValue, out H256 value))
                 {

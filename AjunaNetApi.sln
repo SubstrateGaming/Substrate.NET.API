@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.32421.90
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32413.511
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ajuna.NetApi.Test", "Ajuna.NetApi.Test\Ajuna.NetApi.Test.csproj", "{44F3AE7C-8392-4CE4-9EA6-3F3E3EF647FC}"
 EndProject
@@ -14,6 +14,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ajuna.NetApiTeeExtTest", "Ajuna.NetApiTeeExtTest\Ajuna.NetApiTeeExtTest.csproj", "{B6B88A87-3304-4301-AA42-5DC2B0594F26}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ajuna.NetApiExt", "Ajuna.NetApiExt.AjunaNode\Ajuna.NetApiExt.csproj", "{2665BDF5-860D-41E0-AC62-8E78AC46F541}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ajuna.NetWallet", "Ajuna.NetWallet\Ajuna.NetWallet.csproj", "{12958FDF-8ACC-407E-BA3D-99CF0768F14E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ajuna.NetWalletTests", "Ajuna.NetWalletTest\Ajuna.NetWalletTests.csproj", "{0BBE570F-18B7-4FC5-AF09-2684BEDA9D3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ajuna.UnityInterface", "Ajuna.UnityInterface\Ajuna.UnityInterface.csproj", "{68019F7D-85DA-4510-B784-BAEF1D1EE177}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +77,30 @@ Global
 		{2665BDF5-860D-41E0-AC62-8E78AC46F541}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2665BDF5-860D-41E0-AC62-8E78AC46F541}.Release|x64.ActiveCfg = Release|Any CPU
 		{2665BDF5-860D-41E0-AC62-8E78AC46F541}.Release|x64.Build.0 = Release|Any CPU
+		{12958FDF-8ACC-407E-BA3D-99CF0768F14E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12958FDF-8ACC-407E-BA3D-99CF0768F14E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12958FDF-8ACC-407E-BA3D-99CF0768F14E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{12958FDF-8ACC-407E-BA3D-99CF0768F14E}.Debug|x64.Build.0 = Debug|Any CPU
+		{12958FDF-8ACC-407E-BA3D-99CF0768F14E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12958FDF-8ACC-407E-BA3D-99CF0768F14E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12958FDF-8ACC-407E-BA3D-99CF0768F14E}.Release|x64.ActiveCfg = Release|Any CPU
+		{12958FDF-8ACC-407E-BA3D-99CF0768F14E}.Release|x64.Build.0 = Release|Any CPU
+		{0BBE570F-18B7-4FC5-AF09-2684BEDA9D3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BBE570F-18B7-4FC5-AF09-2684BEDA9D3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BBE570F-18B7-4FC5-AF09-2684BEDA9D3C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0BBE570F-18B7-4FC5-AF09-2684BEDA9D3C}.Debug|x64.Build.0 = Debug|Any CPU
+		{0BBE570F-18B7-4FC5-AF09-2684BEDA9D3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BBE570F-18B7-4FC5-AF09-2684BEDA9D3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BBE570F-18B7-4FC5-AF09-2684BEDA9D3C}.Release|x64.ActiveCfg = Release|Any CPU
+		{0BBE570F-18B7-4FC5-AF09-2684BEDA9D3C}.Release|x64.Build.0 = Release|Any CPU
+		{68019F7D-85DA-4510-B784-BAEF1D1EE177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68019F7D-85DA-4510-B784-BAEF1D1EE177}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68019F7D-85DA-4510-B784-BAEF1D1EE177}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{68019F7D-85DA-4510-B784-BAEF1D1EE177}.Debug|x64.Build.0 = Debug|Any CPU
+		{68019F7D-85DA-4510-B784-BAEF1D1EE177}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68019F7D-85DA-4510-B784-BAEF1D1EE177}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68019F7D-85DA-4510-B784-BAEF1D1EE177}.Release|x64.ActiveCfg = Release|Any CPU
+		{68019F7D-85DA-4510-B784-BAEF1D1EE177}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

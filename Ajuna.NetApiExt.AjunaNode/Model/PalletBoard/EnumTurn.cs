@@ -29,7 +29,7 @@ namespace Ajuna.NetApi.Model.PalletBoard
     /// <summary>
     /// >> 164 - Variant[pallet_ajuna_board.dot4gravity.Turn]
     /// </summary>
-    public sealed class EnumTurn : BaseEnumExt<Turn, Ajuna.NetApi.Model.Base.Coordinates, BaseTuple<Ajuna.NetApi.Model.Base.EnumSide,Ajuna.NetApi.Model.Types.Primitive.U8>>
+    public class EnumTurn : BaseEnumExt<Turn, Ajuna.NetApi.Model.Base.Coordinates, BaseTuple<Ajuna.NetApi.Model.Base.EnumSide,Ajuna.NetApi.Model.Types.Primitive.U8>>
     {
     }
 }

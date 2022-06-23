@@ -30,7 +30,7 @@ namespace Ajuna.NetApi.Model.AjunaWorker
         BaseTuple<AccountId32, AccountId32, Balance, ShardIdentifier>,
         BaseTuple<AccountId32, AccountId32, Balance>,
         BaseTuple<AccountId32, SgxBoardId, BTreeSet>,
-        BaseTuple<AccountId32, SgxGuessingTurn>,
+        BaseTuple<AccountId32, SgxGameTurn>,
         BaseTuple<AccountId32, SgxBoardId>
         >
     {
