@@ -7,7 +7,6 @@ using NUnit.Framework;
 using Ajuna.NetApi;
 using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.Types.Base;
-using SubstrateNetWallet;
 using Ajuna.NetWallet;
 using Ajuna.NetApi.Model.FrameSystem;
 using Ajuna.NetApi.Model.Types.Primitive;
@@ -238,7 +237,7 @@ namespace SubstrateNetWalletTest
 
             wallet.ChainInfoUpdated += OnChainInfoUpdated;
 
-            Thread.Sleep(5000);
+            Thread.Sleep(10000);
 
             Assert.IsNotNull(test);
 

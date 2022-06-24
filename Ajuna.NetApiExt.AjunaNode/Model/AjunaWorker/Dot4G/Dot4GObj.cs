@@ -3,11 +3,12 @@ using Ajuna.NetApi.Model.Base;
 using Ajuna.NetApi.Model.PalletBoard;
 using Ajuna.NetApi.Model.SpCore;
 using Ajuna.NetApi.Model.Types.Primitive;
+using Ajuna.NetApiExt.Model.AjunaWorker.Dot4G;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TestTee
+namespace Ajuna.NetApiExt.Model.AjunaWorker.Dot4G
 {
 
     public class Dot4GObj
@@ -39,7 +40,8 @@ namespace TestTee
             GamePhase = boardGame.State.Phase.Value;
             Id = (int) boardGame.BoardId.Value;
             Seed = (int)boardGame.State.Seed.Value;
-            Winner = boardGame.State.Winner.OptionFlag ? boardGame.State.Winner.Value.Value : null;
+            Winner = boardGame.State.Winner.OptionFlag ? boardGame.State.Winner.Value.Value : (int?)null;
+
             foreach (var bomb in boardGame.State.Bombs.Value.ToList())
             {
                 var player = Players.Where(p => p.Address == Utils.GetAddressFrom(((AccountId32)bomb.Value[0]).Value.Value.Select(q => q.Value).ToArray())).FirstOrDefault();

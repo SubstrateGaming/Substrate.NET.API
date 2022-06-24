@@ -11,13 +11,12 @@ using Ajuna.NetApi.Model.FrameSystem;
 using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.SpCore;
 using Ajuna.NetApi.Model.Types;
-using Ajuna.NetWallet;
 using Chaos.NaCl;
 using NLog;
 using Schnorrkel;
 using Schnorrkel.Keys;
 
-namespace SubstrateNetWallet
+namespace Ajuna.NetWallet
 {
     /// <summary>
     /// Basic Wallet implementation
@@ -71,7 +70,7 @@ namespace SubstrateNetWallet
 
         public ChainInfo ChainInfo { get; private set; }
 
-        public SubstrateClient Client { get; private set; }
+        public SubstrateClientExt Client { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance is connected.
@@ -403,7 +402,7 @@ namespace SubstrateNetWallet
         {
             Logger.Info($"Connecting to {webSocketUrl}");
 
-            Client = new SubstrateClient(new Uri(webSocketUrl));
+            Client = new SubstrateClientExt(new Uri(webSocketUrl));
 
             await Client.ConnectAsync(_connectTokenSource.Token);
 

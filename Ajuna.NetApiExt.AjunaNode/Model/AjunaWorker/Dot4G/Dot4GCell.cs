@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TestTee
+namespace Ajuna.NetApiExt.Model.AjunaWorker.Dot4G
 {
     public class Dot4GCell
     {
@@ -26,12 +26,13 @@ namespace TestTee
         public Dot4GCell(Cell cell, byte player) : this(cell)
         {
             PlayerIds = new List<int>() {
-                (int)player
+                player
             };
         }
 
         override
-        public string ToString() {
+        public string ToString()
+        {
 
             switch (Cell)
             {
@@ -42,11 +43,11 @@ namespace TestTee
                     if (PlayerIds.Count > 1)
                     {
                         return PlayerIds[0] + "B" + PlayerIds[1];
-                    } 
-                    else if (PlayerIds.Count > 0) 
+                    }
+                    else if (PlayerIds.Count > 0)
                     {
                         return " B" + PlayerIds[0];
-                    } 
+                    }
                     return "   ";
 
                 case Cell.Block:

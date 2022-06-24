@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ajuna.NetWalletTests", "Aju
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ajuna.UnityInterface", "Ajuna.UnityInterface\Ajuna.UnityInterface.csproj", "{68019F7D-85DA-4510-B784-BAEF1D1EE177}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dot4GBot", "Dot4GBot\Dot4GBot.csproj", "{9E577EE2-FEC1-48BA-B53D-A94438A6B243}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,14 @@ Global
 		{68019F7D-85DA-4510-B784-BAEF1D1EE177}.Release|Any CPU.Build.0 = Release|Any CPU
 		{68019F7D-85DA-4510-B784-BAEF1D1EE177}.Release|x64.ActiveCfg = Release|Any CPU
 		{68019F7D-85DA-4510-B784-BAEF1D1EE177}.Release|x64.Build.0 = Release|Any CPU
+		{9E577EE2-FEC1-48BA-B53D-A94438A6B243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E577EE2-FEC1-48BA-B53D-A94438A6B243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E577EE2-FEC1-48BA-B53D-A94438A6B243}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9E577EE2-FEC1-48BA-B53D-A94438A6B243}.Debug|x64.Build.0 = Debug|Any CPU
+		{9E577EE2-FEC1-48BA-B53D-A94438A6B243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E577EE2-FEC1-48BA-B53D-A94438A6B243}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E577EE2-FEC1-48BA-B53D-A94438A6B243}.Release|x64.ActiveCfg = Release|Any CPU
+		{9E577EE2-FEC1-48BA-B53D-A94438A6B243}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ajuna.NetApiExt.AjunaNode\Ajuna.NetApiExt.csproj" />
+    <ProjectReference Include="..\Ajuna.NetWallet\Ajuna.NetWallet.csproj" />
   </ItemGroup>
 
 </Project>

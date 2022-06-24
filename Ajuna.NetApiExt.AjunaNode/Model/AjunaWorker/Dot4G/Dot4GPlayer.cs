@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TestTee
+namespace Ajuna.NetApiExt.Model.AjunaWorker.Dot4G
 {
     public class Dot4GPlayer
     {

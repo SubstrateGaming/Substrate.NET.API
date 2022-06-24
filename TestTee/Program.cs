@@ -10,6 +10,7 @@ using Ajuna.NetApi.Model.SpRuntime;
 using Ajuna.NetApi.Model.Types;
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
+using Ajuna.NetApiExt.Model.AjunaWorker.Dot4G;
 using Chaos.NaCl;
 using Nerdbank.Streams;
 using Newtonsoft.Json;
@@ -104,42 +105,42 @@ namespace TestTee
 
         private static async Task MainAsync(CancellationToken cancellationToken)
         {
-            var ngrok = "wss://b1fb-84-75-48-249.ngrok.io";
+            var ngrok = "wss://6a4b-84-75-48-249.ngrok.io";
             var shardHex = "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi";
             var mrenclaveHex = "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi";
 
             await TransactionNodeTestAsync("ws://127.0.0.1:9944");
 
-            await LaunchGameAsync("ws://127.0.0.1:9944");
+            //await LaunchGameAsync("ws://127.0.0.1:9944");
 
-            await TransactionWorkerTestAsync(
-                websocketurl: ngrok,
-                shardHex: shardHex,
-                mrenclaveHex: mrenclaveHex
-            );
+            //await TransactionWorkerTestAsync(
+            //    websocketurl: ngrok,
+            //    shardHex: shardHex,
+            //    mrenclaveHex: mrenclaveHex
+            //);
 
-            Thread.Sleep(10000);
+            //Thread.Sleep(10000);
 
-            await PlayGameAsync(
-                websocketurl: ngrok,
-                shardHex: shardHex,
-                mrenclaveHex: mrenclaveHex
-            );
+            //await PlayGameAsync(
+            //    websocketurl: ngrok,
+            //    shardHex: shardHex,
+            //    mrenclaveHex: mrenclaveHex
+            //);
 
-            while (true)
-            {
-                Thread.Sleep(10000);
+            //while (true)
+            //{
+            //    Thread.Sleep(10000);
 
-                await LaunchGameAsync("ws://127.0.0.1:9944");
+            //    await LaunchGameAsync("ws://127.0.0.1:9944");
 
-                Thread.Sleep(10000);
+            //    Thread.Sleep(10000);
 
-                await PlayGameAsync(
-                     websocketurl: ngrok,
-                     shardHex: shardHex,
-                     mrenclaveHex: mrenclaveHex
-                 );
-            }
+            //    await PlayGameAsync(
+            //         websocketurl: ngrok,
+            //         shardHex: shardHex,
+            //         mrenclaveHex: mrenclaveHex
+            //     );
+            //}
 
 
             //await BenchmarkNodeAsync("ws://127.0.0.1:9944");
