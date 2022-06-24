@@ -74,6 +74,8 @@ namespace Dot4GBot
             SystemInteraction.PersistentExists = f => File.Exists(Path.Combine(Environment.CurrentDirectory, f));
             SystemInteraction.Persist = (f, c) => File.WriteAllText(Path.Combine(Environment.CurrentDirectory, f), c);
 
+            var random = new Random(0);
+
             Wallet wallet = new Wallet();
             await wallet.CreateAsync("aA1234dd");
             await wallet.StartAsync("ws://127.0.0.1:9944");
@@ -159,6 +161,83 @@ namespace Dot4GBot
                 if (nodeState == NodeState.Play)
                 {
                     Console.WriteLine($"ready to play!");
+                    var d4GObj = await dot4gClient.GameBoardAsync();
+                    
+                    if (d4GObj == null) throw new Exception($"No board Game, please check!");
+
+                    d4GObj.Print();
+
+                    if (d4GObj.Winner != null)
+                    {
+                        Console.WriteLine($"We have winner!");
+                        break;
+                    }
+
+                    // Check if our bot should play, otherwise break.
+                    var nextPlayer = d4GObj.Players[d4GObj.Next];
+                    if (nextPlayer.Address != wallet.Account.Value)
+                    {
+                        break;
+                    }
+                    
+                    // Bomb Game Phase                    
+                    if (d4GObj.GamePhase == Ajuna.NetApi.Model.Base.GamePhase.Bomb)
+                    {
+                        
+                        // Only continue if our bot has enough bombs
+                        if (d4GObj.Players.FirstOrDefault(x => x.Address == wallet.Account.Value)?.Bombs > 0)
+                        {
+                            //TODO: Restart?
+                            break;
+                        }
+                        
+                        var coord = d4GObj.EmptySlots[random.Next(d4GObj.EmptySlots.Count)];
+
+                        Console.WriteLine($"PlayTurnAsync {wallet.Account.Value} play bomb [{coord[0]}/{coord[1]}]");
+                        var hash1 = await dot4gClient.BombAsync(
+                            coord[0],
+                            coord[1]);
+                        Console.WriteLine($"Player Turn Transaction hash = {hash1}");
+                        
+                    }
+
+                    // Play Game Phase                    
+                    if (d4GObj.GamePhase == Ajuna.NetApi.Model.Base.GamePhase.Play)
+                    {
+                        if (d4GObj.PossibleMoves.Count == 0)
+                        {
+                            //TODO: Restart?
+                            throw new Exception("No more moves possible!");
+                        }
+                        
+                        var move = d4GObj.PossibleMoves[random.Next(d4GObj.PossibleMoves.Count())];
+
+                        Console.WriteLine($"PlayTurnAsync {wallet.Account.Value} play stone [{move.Item1}/{move.Item2}]");
+                        var hash2 = await dot4gClient.PlayTurnAsync(
+                            move);
+                        Console.WriteLine($"Player Turn Transaction hash = {hash2}");
+                    }
+
+
+
+
+
+
+
+
+
+
+                    // Check if if our bot has enough bombs
+                    if (d4GObj.Players.FirstOrDefault(x=>x.Address == wallet.Account.Value)?.Bombs>0)
+                    {
+                        var coord = d4GObj.EmptySlots[random.Next(d4GObj.EmptySlots.Count)];
+                        Console.WriteLine($"PlayTurnAsync {wallet.Account.Value} play bomb [{coord[0]}/{coord[1]}]");
+                        var hash1 = await dot4gClient.BombAsync(
+                            coord[0],
+                            coord[1]);
+                        Console.WriteLine($"Player Turn Transaction hash = {hash1}");
+                    }
+                    break;
                 }
 
                 // wait on extrinsic

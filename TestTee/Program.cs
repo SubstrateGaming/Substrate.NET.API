@@ -624,6 +624,100 @@ namespace TestTee
             await client.CloseAsync();
         }
 
+        
+        
+          private static async Task PlayGameAsync2(string websocketurl, string shardHex, string mrenclaveHex)
+        {
+            /**
+             * docker ps
+             * docker exec -it 7aeac2a21f93 /bin/bash
+             * ./integritee-cli trusted transfer //Alice //Bob 1000 --mrenclave 2CMLqGnL56xp4qkVDq4pmKKYJn4btSGF9brgGEsGW3qm --direct
+             */
+            var random = new Random(0);
+            var sleep = 500;
+            var client = new SubstrateClientExt(new Uri(websocketurl));
+
+            Console.WriteLine("*** - ConnectAsync      - ***************************************************************");
+            await client.ConnectAsync(false, false, false, CancellationToken.None);
+
+            Console.WriteLine("*** - ShieldingKeyAsync - ***************************************************************");
+            var shieldingKey = await client.ShieldingKeyAsync();
+            var player = Bob;
+
+            Console.WriteLine("*** - GetBoardGameAsync - ***************************************************************");
+            var boardGame = await client.GetBoardGameAsync(player, shieldingKey, shardHex);
+            if (boardGame == null) throw new Exception($"No board Game, please check!");
+            var d4gObj = new Dot4GObj(boardGame);
+            d4gObj.Print();
+
+            while (d4gObj.GamePhase == Ajuna.NetApi.Model.Base.GamePhase.Bomb && d4gObj.Players.Where(p => p.Bombs > 0).Select(p => p).ToList().Any())
+            {
+                var bombPlayers = d4gObj.Players.Where(p => p.Bombs > 0).Select(p => p).ToList();
+                if (bombPlayers.First().Address == Alice.Value)
+                {
+                    player = Alice;
+                }
+                else if (bombPlayers.First().Address == Bob.Value)
+                {
+                    player = Bob;
+                }
+
+                Console.WriteLine("*** - PlayTurnAsync     - ***************************************************************");
+                var coord = d4gObj.EmptySlots[random.Next(d4gObj.EmptySlots.Count)];
+                Console.WriteLine($"PlayTurnAsync {player.Value} play bomb [{coord[0]}/{coord[0]}]");
+                var hash1 = await client.PlayTurnAsync(
+                    player,
+                    SgxGameTurn.DropBomb(coord),
+                    shieldingKey, shardHex, mrenclaveHex);
+                Console.WriteLine($"Player Turn Transaction hash = {hash1}");
+                Thread.Sleep(sleep);
+
+                Console.WriteLine("*** - GetBoardGameAsync - ***************************************************************");
+                boardGame = await client.GetBoardGameAsync(player, shieldingKey, shardHex);
+                if (boardGame == null) throw new Exception($"No board Game, please check!");
+                d4gObj = new Dot4GObj(boardGame);
+                d4gObj.Print();
+            }
+
+            while (d4gObj.GamePhase == Ajuna.NetApi.Model.Base.GamePhase.Play && d4gObj.Winner is null)
+            {
+                var nextPlayer = d4gObj.Players[d4gObj.Next];
+                if (nextPlayer.Address == Alice.Value)
+                {
+                    player = Alice;
+                }
+                else if (nextPlayer.Address == Bob.Value)
+                {
+                    player = Bob;
+                }
+
+                Console.WriteLine("*** - PlayTurnAsync     - ***************************************************************");
+                if (d4gObj.PossibleMoves.Count == 0)
+                {
+                    throw new Exception("No more moves possible!");
+                }
+                var move = d4gObj.PossibleMoves[random.Next(d4gObj.PossibleMoves.Count())];
+
+                Console.WriteLine($"PlayTurnAsync {player.Value} play stone [{move.Item1}/{move.Item2}]");
+                var hash2 = await client.PlayTurnAsync(
+                    player,
+                    SgxGameTurn.DropStone(move.Item1, (byte)move.Item2),
+                    shieldingKey, shardHex, mrenclaveHex);
+                Console.WriteLine($"Player Turn Transaction hash = {hash2}");
+                Thread.Sleep(sleep);
+
+                Console.WriteLine("*** - GetBoardGameAsync - ***************************************************************");
+                boardGame = await client.GetBoardGameAsync(player, shieldingKey, shardHex);
+                if (boardGame == null) throw new Exception($"No board Game, please check!");
+                d4gObj = new Dot4GObj(boardGame);
+                d4gObj.Print();
+            }
+
+            // close connection
+            Console.WriteLine("*** - CloseAsync         - ***************************************************************");
+            await client.CloseAsync();
+        }
+
         private static Account GetNextPlayer(BoardGame boardGame)
         {
             var players = boardGame.Players.Value.Value.Select(p => Utils.GetAddressFrom(p.Value.Value.Select(q => q.Value).ToArray())).ToArray();

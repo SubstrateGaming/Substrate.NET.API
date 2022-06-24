@@ -269,6 +269,27 @@ namespace Ajuna.UnityInterface
 
             return true;
         }
+        
+        public async Task<bool> PlayTurnAsync((Side, int) move )
+        {
+            if (!IsTeeConnected)
+            {
+                return false;
+            }
+
+            var hash = await _workerClient.PlayTurnAsync(
+                _wallet.Account, 
+                SgxGameTurn.DropStone(move.Item1, (byte)move.Item2),
+                _shieldingKey, 
+                _shardHex, 
+                _mrenclaveHex);
+            if (hash == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
 
         public async Task<bool> StoneAsync(Side side, int column)
         {
