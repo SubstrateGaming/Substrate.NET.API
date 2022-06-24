@@ -90,6 +90,16 @@ namespace Ajuna.NetApiExt.Model.AjunaWorker.Dot4G
             EmptySlots = GetCoords(Cell.Empty);
         }
 
+        public bool ValidateBomb(int posX, int posY)
+        {
+            return EmptySlots.Where(p => p[0] == posX && p[1] == posY).Any();
+        }
+
+        public bool ValidateStone(Side side, int col)
+        {
+            return PossibleMoves.Where(p => p.Item1 == side && p.Item2 == col).Any();
+        }
+
         private List<(Side, int)> DropStoneList()
         {
             var list = GetCoords(Cell.Empty);
@@ -105,6 +115,69 @@ namespace Ajuna.NetApiExt.Model.AjunaWorker.Dot4G
                 .ForEach(p => moves.Add((Side.West, p)));
 
             return moves;
+        }
+
+        public List<int[]> GetRay(Side side, int column)
+        {
+            List<int[]> result = new List<int[]>();
+
+            if (!ValidateStone(side, column))
+            {
+                return result;
+            }
+
+            switch (side)
+            {
+                case Side.North:
+                    for (int x = 0; x < Board.GetLength(0); x++)
+                    {
+                        result.Add(new int[] { x, column });
+                        if (x < Board.GetLength(0) - 1 && Board[x + 1, column].Cell == Cell.Empty)
+                        {
+                            continue;
+                        }
+                        break;
+                    }
+                    break;
+
+                case Side.East:
+                    for (int y = Board.GetLength(1) - 1; y >= 0; y--)
+                    {
+                        result.Add(new int[] { column, y });
+                        if (y > 0 && Board[column, y - 1].Cell == Cell.Empty)
+                        {
+                            continue;
+                        }
+                        break;
+                    }
+                    break;
+
+                case Side.South:
+                    for (int x = Board.GetLength(0) - 1; x >= 0; x--)
+                    {
+                        result.Add(new int[] { x, column });
+                        if (x > 0 && Board[x - 1, column].Cell == Cell.Empty)
+                        {
+                            continue;
+                        }
+                        break;
+                    }
+                    break;
+
+                case Side.West:
+                    for (int y = 0; y < Board.GetLength(1); y++)
+                    {
+                        result.Add(new int[] { column, y });
+                        if (y < Board.GetLength(1) - 1 && Board[column, y + 1].Cell == Cell.Empty)
+                        {
+                            continue;
+                        }
+                        break;
+                    }
+                    break;
+            }
+
+            return result;
         }
 
         private string GetPlayername(string address)

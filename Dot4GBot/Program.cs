@@ -237,14 +237,14 @@ namespace Dot4GBot
                 {
                     while (dot4gClient.HasExtrinsics > 0)
                     {
-                        Print(name, nodeState, workerState, PrintType.Extrinsic);
+                        Print(name, nodeState, workerState, true);
                         Console.WriteLine("+---------------------------------------+");
                         Thread.Sleep(500);
                     }
                     continue;
                 }
 
-                Print(name, nodeState, workerState, PrintType.None);
+                Print(name, nodeState, workerState);
                 // print board here ...
                 if (gameBoard != null)
                 {
@@ -259,12 +259,7 @@ namespace Dot4GBot
             }
         }
 
-        public enum PrintType {
-            Extrinsic,
-            None
-        }
-
-        private static void Print(string name, NodeState nodeState, WorkerState workerState, PrintType printType)
+        private static void Print(string name, NodeState nodeState, WorkerState workerState, bool flag = false)
         {
             Console.Clear();
             Console.WriteLine("+---------------------------------------+");
@@ -294,14 +289,13 @@ namespace Dot4GBot
                     break;
             }
 
-            switch (printType)
+            if (flag)
             {
-                case PrintType.Extrinsic:
-                    Console.WriteLine("| " + $" Waiting on In-Block".PadRight(38) + "|");
-                    break;
-                case PrintType.None:
-                    Console.WriteLine("| " + $" ".PadRight(38) + "|");
-                    break;
+                Console.WriteLine("| " + $" Waiting on In-Block".PadRight(38) + "|");
+            } 
+            else 
+            { 
+                Console.WriteLine("| " + $" ".PadRight(38) + "|");
             }
 
 
