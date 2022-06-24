@@ -1,8 +1,10 @@
 ﻿using Ajuna.NetApi;
 using Ajuna.NetApi.Model.AjunaCommon;
+using Ajuna.NetApi.Model.Base;
 using Ajuna.NetApiExt.Model.AjunaWorker.Dot4G;
 using Ajuna.NetWallet;
 using Ajuna.UnityInterface;
+using Dot4GBot.AI;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -14,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Dot4GBot
 {
-    class Program
+    partial class Program
     {
         private static async Task Main(string[] args)
         {
@@ -57,23 +59,6 @@ namespace Dot4GBot
             }
         }
 
-        public enum NodeState
-        {
-            None,
-            Faucet,
-            Queue,
-            Players,
-            Play,
-            Worker,
-        }
-
-        public enum WorkerState
-        {
-            None,
-            Faucet,
-            Wait,
-        }
-
         private static async Task MainAsync(CancellationToken token)
         {
             SystemInteraction.ReadData = f => File.ReadAllText(Path.Combine(Environment.CurrentDirectory, f));
@@ -83,25 +68,28 @@ namespace Dot4GBot
             SystemInteraction.Persist = (f, c) => File.WriteAllText(Path.Combine(Environment.CurrentDirectory, f), c);
 
             Wallet wallet = new Wallet();
-            wallet.Load("dev_walletA");
+            wallet.Load("dev_walletB");
             await wallet.UnlockAsync("aA1234dd");
             //var mnemonic = "monster noodle hotel method frost edit guard female river sibling blade soul";
             //await wallet.CreateAsync("aA1234dd", mnemonic, "mnemonic_wallet");
+            var name = wallet.Account.Value.Substring(0, 7);
             await wallet.StartAsync("ws://127.0.0.1:9944");
-
 
             var dot4gClient = new Dot4GClient(wallet,
                 "ws://183c-84-75-48-249.ngrok.io",
                 "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi",
                 "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi");
 
-            Console.WriteLine($"My Address => {wallet.Account.Value}");
+            IBotAI logic = new RandomAI();
 
             NodeState nodeState = NodeState.None;
             WorkerState workerState = WorkerState.None;
 
             while (!token.IsCancellationRequested)
             {
+                var SleepTime = 1000;
+                Dot4GObj gameBoard = null;
+
                 if (wallet.AccountInfo == null || wallet.AccountInfo.Data.Free.Value < 1000000000000)
                 {
                     nodeState = NodeState.Faucet;
@@ -137,12 +125,12 @@ namespace Dot4GBot
                                 case RunnerState.Accepted:
                                     nodeState = NodeState.Play;
                                     await dot4gClient.ConnectTeeAsync();
-                                    //var faucet = await dot4gClient.FaucetWorkerAsync();
                                     break;
 
                                 case RunnerState.Finished:
                                     nodeState = NodeState.Queue;
                                     workerState = WorkerState.None;
+                                    gameBoard = null;
                                     await dot4gClient.DisconnectTeeAsync();
                                     break;
                             }
@@ -152,34 +140,24 @@ namespace Dot4GBot
 
                 switch (nodeState)
                 {
-                    case NodeState.None:
-                        break;
-
                     case NodeState.Faucet:
-                        Console.WriteLine($"action: {nodeState}");
                         var faucet = await dot4gClient.FaucetAsync();
                         break;
-
                     case NodeState.Queue:
-                        Console.WriteLine($"action: {nodeState}");
                         var queued = await dot4gClient.QueueAsync();
                         break;
-
-                    case NodeState.Players:
-                        Console.WriteLine("Players...");
+                    case NodeState.None:
                         break;
-
+                    case NodeState.Players:
+                        break;
                     case NodeState.Worker:
-                        Console.WriteLine("Worker...");
+                        break;
+                    case NodeState.Play:
                         break;
                 }
 
                 if (nodeState == NodeState.Play)
                 {
-                    var trustedCallWait = 0;
-
-                    Dot4GObj gameBoard = null;
-
                     var balanceWorker = await dot4gClient.GetBalanceWorkerAsync();
                     if (balanceWorker is null || balanceWorker.Value < 100)
                     {
@@ -192,9 +170,28 @@ namespace Dot4GBot
                         {
                             workerState = WorkerState.Wait;
                         } 
-                        else if (gameBoard.GamePhase == Ajuna.NetApi.Model.Base.GamePhase.Bomb)
+                        else if (gameBoard.GamePhase == GamePhase.Bomb)
                         {
-                            //if (gameBoard.Players.Where())
+                            var player = gameBoard.Players.Where(p => p.Address == wallet.Account.Value).ToList();
+                            if (player.Count == 1 && player[0].Bombs > 0)
+                            {
+                                workerState = WorkerState.Bomb;
+                            } 
+                            else
+                            {
+                                workerState = WorkerState.Wait;
+                            }
+                        }
+                        else if (gameBoard.GamePhase == GamePhase.Play)
+                        {
+                            if (gameBoard.Players[gameBoard.Next].Address == wallet.Account.Value)
+                            {
+                                workerState = WorkerState.Play;
+                            }
+                            else
+                            {
+                                workerState = WorkerState.Wait;
+                            }
                         }
                     }
 
@@ -207,35 +204,107 @@ namespace Dot4GBot
                             var faucet = await dot4gClient.FaucetWorkerAsync();
                             if (faucet)
                             {
-                                trustedCallWait = 500;
+                                SleepTime = 500;
                             }
                             break;
 
                         case WorkerState.Wait:
-                            trustedCallWait = 100;
+                            SleepTime = 100;
+                            break;
+
+                        case WorkerState.Bomb:
+                            int[] bombPos = logic.Bombs(gameBoard);
+                            var bomb = await dot4gClient.BombAsync(bombPos[0], bombPos[1]);
+                            if (bomb)
+                            {
+                                SleepTime = 500;
+                            }
+                            break;
+
+                        case WorkerState.Play:
+                            (Side, int) move = logic.Play(gameBoard);
+                            var stone = await dot4gClient.StoneAsync(move.Item1, move.Item2);
+                            if (stone)
+                            {
+                                SleepTime = 500;
+                            }
                             break;
                     }
-
-                    Thread.Sleep(trustedCallWait);
-                    continue;
                 }
 
                 // wait on extrinsic
                 if (dot4gClient.HasExtrinsics > 0)
                 {
-                    Console.Write("extrinics");
                     while (dot4gClient.HasExtrinsics > 0)
                     {
-                        Console.Write(".");
-                        Thread.Sleep(1000);
+                        Print(name, nodeState, workerState, PrintType.Extrinsic);
+                        Console.WriteLine("+---------------------------------------+");
+                        Thread.Sleep(500);
                     }
-                    Console.WriteLine("ok");
                     continue;
                 }
 
-                Thread.Sleep(1000);
+                Print(name, nodeState, workerState, PrintType.None);
+                // print board here ...
+                if (gameBoard != null)
+                {
+                    gameBoard.Print();
+                } 
+                else
+                {
+                    Console.WriteLine("+---------------------------------------+");
+                }
+
+                Thread.Sleep(SleepTime);
             }
         }
 
+        public enum PrintType {
+            Extrinsic,
+            None
+        }
+
+        private static void Print(string name, NodeState nodeState, WorkerState workerState, PrintType printType)
+        {
+            Console.Clear();
+            Console.WriteLine("+---------------------------------------+");
+            Console.WriteLine("| " + $"Name: {name}       Node: {nodeState}".PadRight(38) + "|");
+            Console.WriteLine("| " + $"                  Worker: {workerState}".PadRight(38) + "|");
+            switch (nodeState)
+            {
+                case NodeState.None:
+                    break;
+                case NodeState.Faucet:
+                    Console.WriteLine("| " + $"Let's robe Alice faucet! ".PadRight(38) + "|");
+                    break;
+                case NodeState.Queue:
+                    Console.WriteLine("| " + $"Queuing up, now.".PadRight(38) + "|");
+                    break;
+                case NodeState.Players:
+                    Console.WriteLine("| " + $"Waiting for Player.".PadRight(38) + "|");
+                    break;
+                case NodeState.Play:
+                    Console.WriteLine("| " + $"Playtime!".PadRight(38) + "|");
+                    break;
+                case NodeState.Worker:
+                    Console.WriteLine("| " + $"Waiting on TEE.".PadRight(38) + "|");
+                    break;
+                default:
+                    Console.WriteLine("| " + $" ".PadRight(38) + "|");
+                    break;
+            }
+
+            switch (printType)
+            {
+                case PrintType.Extrinsic:
+                    Console.WriteLine("| " + $" Waiting on In-Block".PadRight(38) + "|");
+                    break;
+                case PrintType.None:
+                    Console.WriteLine("| " + $" ".PadRight(38) + "|");
+                    break;
+            }
+
+
+        }
     }
 }

@@ -116,7 +116,7 @@ namespace Ajuna.NetApiExt.Model.AjunaWorker.Dot4G
                 case "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty":
                     return "Bob";
                 default:
-                    return address.Substring(0, 10);
+                    return address.Substring(0, 7);
             }
         }
 
