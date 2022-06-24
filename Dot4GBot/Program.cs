@@ -56,12 +56,14 @@ namespace Dot4GBot
             }
         }
 
-        public enum NodeState {
+        public enum NodeState
+        {
             None,
+            Faucet,
             Queue,
-            Runner,
+            Players,
             Play,
-            Faucet
+            Worker,
         }
 
         private static async Task MainAsync(CancellationToken token)
@@ -77,8 +79,8 @@ namespace Dot4GBot
             await wallet.StartAsync("ws://127.0.0.1:9944");
 
             var dot4gClient = new Dot4GClient(wallet,
-                "ws://9c2b-84-75-48-249.ngrok.io", 
-                "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi", 
+                "ws://183c-84-75-48-249.ngrok.io",
+                "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi",
                 "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi");
 
             Console.WriteLine($"My Address => {wallet.Account.Value}");
@@ -92,29 +94,40 @@ namespace Dot4GBot
                 }
                 else
                 {
-                    var registerId = await dot4gClient.GetRegisterIdAsync();
-                    if (registerId is null || registerId.Value == 0)
+                    var playerQueued = await dot4gClient.GetPlayerQueueAsync();
+                    var runnerId = await dot4gClient.GetRunnerIdAsync();
+
+                    if (playerQueued.Value == 0 && runnerId.Value == 0)
                     {
                         nodeState = NodeState.Queue;
                     }
+                    else if (playerQueued.Value == 1 && runnerId.Value == 0)
+                    {
+                        nodeState = NodeState.Players;
+                    }
                     else
                     {
-                        var runnerState = await dot4gClient.GetRunnerStateAsync(registerId);
-                        if (runnerState is null || runnerState.Value == RunnerState.Queued)
+                        var runnerState = await dot4gClient.GetRunnerStateAsync(runnerId);
+                        if (runnerState is null)
                         {
-                            nodeState = NodeState.Runner;
+                            throw new Exception($"Got a runner id {runnerId.Value}, but no state!");
                         }
-                        else if (runnerState.Value == RunnerState.Accepted)
-                        {
-                            nodeState = NodeState.Play;
-                        }
-                        else if (runnerState.Value == RunnerState.Finished)
-                        {
-                            nodeState = NodeState.Queue;
-                        } 
                         else
                         {
-                            nodeState = NodeState.Runner;
+                            switch (runnerState.Value)
+                            {
+                                case RunnerState.Queued:
+                                    nodeState = NodeState.Worker;
+                                    break;
+
+                                case RunnerState.Accepted:
+                                    nodeState = NodeState.Play;
+                                    break;
+
+                                case RunnerState.Finished:
+                                    nodeState = NodeState.Queue;
+                                    break;
+                            }
                         }
                     }
                 }
@@ -134,9 +147,18 @@ namespace Dot4GBot
                         var queued = await dot4gClient.QueueAsync();
                         break;
 
-                    case NodeState.Runner:
-                        Console.WriteLine("wait for players ...");
+                    case NodeState.Players:
+                        Console.WriteLine("Players...");
                         break;
+
+                    case NodeState.Worker:
+                        Console.WriteLine("Worker...");
+                        break;
+                }
+
+                if (nodeState == NodeState.Play)
+                {
+                    Console.WriteLine($"ready to play!");
                 }
 
                 // wait on extrinsic
@@ -155,5 +177,6 @@ namespace Dot4GBot
                 Thread.Sleep(1000);
             }
         }
+
     }
 }

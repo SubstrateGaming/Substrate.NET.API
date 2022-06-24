@@ -138,7 +138,7 @@ namespace Ajuna.UnityInterface
             }
         }
 
-        public async Task<U32> GetRegisterIdAsync()
+        public async Task<U32> GetRunnerIdAsync()
         {
 
             if (!_wallet.IsConnected || !_wallet.IsUnlocked)
@@ -186,6 +186,20 @@ namespace Ajuna.UnityInterface
             }
 
             return true;
+        }
+
+        public async Task<U8> GetPlayerQueueAsync()
+        {
+            if (!_wallet.IsConnected || !_wallet.IsUnlocked)
+            {
+                return null;
+            }
+
+            var account = new AccountId32();
+            account.Create(Utils.GetPublicKeyFrom(_wallet.Account.Value));
+
+            var cts = new CancellationTokenSource();
+            return await _wallet.Client.MatchmakerStorage.PlayerQueue(account, cts.Token);
         }
 
         public async Task<bool> FaucetAsync()

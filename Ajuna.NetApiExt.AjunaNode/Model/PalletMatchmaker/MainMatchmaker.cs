@@ -22,14 +22,14 @@ using System.Threading.Tasks;
 
 namespace Ajuna.NetApi.Model.PalletMatchmaker
 {
-    
-    
+
+
     public sealed class MatchmakerStorage
     {
-        
+
         // Substrate client for the storage calls.
         private SubstrateClientExt _client;
-        
+
         public MatchmakerStorage(SubstrateClientExt client)
         {
             this._client = client;
@@ -37,11 +37,11 @@ namespace Ajuna.NetApi.Model.PalletMatchmaker
                             Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Ajuna.NetApi.Model.Types.Primitive.U32), typeof(Ajuna.NetApi.Model.PalletMatchmaker.BracketRange)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Matchmaker", "Players"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
                             Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat,
-                            Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(BaseTuple<Ajuna.NetApi.Model.Types.Primitive.U32,Ajuna.NetApi.Model.Types.Primitive.U32>), typeof(Ajuna.NetApi.Model.SpCore.AccountId32)));
+                            Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(BaseTuple<Ajuna.NetApi.Model.Types.Primitive.U32, Ajuna.NetApi.Model.Types.Primitive.U32>), typeof(Ajuna.NetApi.Model.SpCore.AccountId32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Matchmaker", "PlayerQueue"), new System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
-                            Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Ajuna.NetApi.Model.SpCore.AccountId32), typeof(BaseTuple)));
+                            Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Ajuna.NetApi.Model.SpCore.AccountId32), typeof(Ajuna.NetApi.Model.Types.Primitive.U8)));
         }
-        
+
         /// <summary>
         /// >> BracketsParams
         ///  Map of brackets with their index
@@ -52,7 +52,7 @@ namespace Ajuna.NetApi.Model.PalletMatchmaker
                         Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, new Ajuna.NetApi.Model.Types.IType[] {
                         key});
         }
-        
+
         /// <summary>
         /// >> Brackets
         ///  Map of brackets with their index
@@ -62,29 +62,29 @@ namespace Ajuna.NetApi.Model.PalletMatchmaker
             string parameters = MatchmakerStorage.BracketsParams(key);
             return await _client.GetStorageAsync<Ajuna.NetApi.Model.PalletMatchmaker.BracketRange>(parameters, token);
         }
-        
+
         /// <summary>
         /// >> PlayersParams
         ///  A double map indexed by bracket and account
         /// </summary>
-        public static string PlayersParams(BaseTuple<Ajuna.NetApi.Model.Types.Primitive.U32,Ajuna.NetApi.Model.Types.Primitive.U32> key)
+        public static string PlayersParams(BaseTuple<Ajuna.NetApi.Model.Types.Primitive.U32, Ajuna.NetApi.Model.Types.Primitive.U32> key)
         {
             return RequestGenerator.GetStorage("Matchmaker", "Players", Ajuna.NetApi.Model.Meta.Storage.Type.Map, new Ajuna.NetApi.Model.Meta.Storage.Hasher[] {
                         Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat,
                         Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, new Ajuna.NetApi.Model.Types.IType[] {
                         key});
         }
-        
+
         /// <summary>
         /// >> Players
         ///  A double map indexed by bracket and account
         /// </summary>
-        public async Task<Ajuna.NetApi.Model.SpCore.AccountId32> Players(BaseTuple<Ajuna.NetApi.Model.Types.Primitive.U32,Ajuna.NetApi.Model.Types.Primitive.U32> key, CancellationToken token)
+        public async Task<Ajuna.NetApi.Model.SpCore.AccountId32> Players(BaseTuple<Ajuna.NetApi.Model.Types.Primitive.U32, Ajuna.NetApi.Model.Types.Primitive.U32> key, CancellationToken token)
         {
             string parameters = MatchmakerStorage.PlayersParams(key);
             return await _client.GetStorageAsync<Ajuna.NetApi.Model.SpCore.AccountId32>(parameters, token);
         }
-        
+
         /// <summary>
         /// >> PlayerQueueParams
         ///  A map tracking which accounts are queued
@@ -95,22 +95,22 @@ namespace Ajuna.NetApi.Model.PalletMatchmaker
                         Ajuna.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, new Ajuna.NetApi.Model.Types.IType[] {
                         key});
         }
-        
+
         /// <summary>
         /// >> PlayerQueue
         ///  A map tracking which accounts are queued
         /// </summary>
-        public async Task<BaseTuple> PlayerQueue(Ajuna.NetApi.Model.SpCore.AccountId32 key, CancellationToken token)
+        public async Task<Ajuna.NetApi.Model.Types.Primitive.U8> PlayerQueue(Ajuna.NetApi.Model.SpCore.AccountId32 key, CancellationToken token)
         {
             string parameters = MatchmakerStorage.PlayerQueueParams(key);
-            return await _client.GetStorageAsync<BaseTuple>(parameters, token);
+            return await _client.GetStorageAsync<Ajuna.NetApi.Model.Types.Primitive.U8>(parameters, token);
         }
     }
-    
+
     public sealed class MatchmakerCalls
     {
     }
-    
+
     /// <summary>
     /// >> Queued
     /// Player is queued for a match.
@@ -118,7 +118,7 @@ namespace Ajuna.NetApi.Model.PalletMatchmaker
     public sealed class EventQueued : BaseTuple<Ajuna.NetApi.Model.SpCore.AccountId32>
     {
     }
-    
+
     /// <summary>
     /// >> Matched
     /// Players are now matched and have been removed from the queue
