@@ -270,7 +270,7 @@ namespace Ajuna.UnityInterface
             return true;
         }
         
-        public async Task<bool> PlayTurnAsync((Side, int) move )
+        public async Task<bool> DropStoneAsync((Side, int) move )
         {
             if (!IsTeeConnected)
             {
