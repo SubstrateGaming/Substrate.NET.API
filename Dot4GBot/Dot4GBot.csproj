@@ -13,4 +13,16 @@
     <ProjectReference Include="..\Ajuna.UnityInterface\Ajuna.UnityInterface.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="dev_wallet.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="dev_walletA.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="dev_walletB.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

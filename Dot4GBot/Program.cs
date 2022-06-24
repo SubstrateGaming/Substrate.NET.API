@@ -1,5 +1,6 @@
 ﻿using Ajuna.NetApi;
 using Ajuna.NetApi.Model.AjunaCommon;
+using Ajuna.NetApiExt.Model.AjunaWorker.Dot4G;
 using Ajuna.NetWallet;
 using Ajuna.UnityInterface;
 using NLog;
@@ -66,6 +67,13 @@ namespace Dot4GBot
             Worker,
         }
 
+        public enum WorkerState
+        {
+            None,
+            Faucet,
+            Wait,
+        }
+
         private static async Task MainAsync(CancellationToken token)
         {
             SystemInteraction.ReadData = f => File.ReadAllText(Path.Combine(Environment.CurrentDirectory, f));
@@ -75,8 +83,12 @@ namespace Dot4GBot
             SystemInteraction.Persist = (f, c) => File.WriteAllText(Path.Combine(Environment.CurrentDirectory, f), c);
 
             Wallet wallet = new Wallet();
-            await wallet.CreateAsync("aA1234dd");
+            wallet.Load("dev_walletA");
+            await wallet.UnlockAsync("aA1234dd");
+            //var mnemonic = "monster noodle hotel method frost edit guard female river sibling blade soul";
+            //await wallet.CreateAsync("aA1234dd", mnemonic, "mnemonic_wallet");
             await wallet.StartAsync("ws://127.0.0.1:9944");
+
 
             var dot4gClient = new Dot4GClient(wallet,
                 "ws://183c-84-75-48-249.ngrok.io",
@@ -84,7 +96,9 @@ namespace Dot4GBot
                 "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi");
 
             Console.WriteLine($"My Address => {wallet.Account.Value}");
+
             NodeState nodeState = NodeState.None;
+            WorkerState workerState = WorkerState.None;
 
             while (!token.IsCancellationRequested)
             {
@@ -122,10 +136,14 @@ namespace Dot4GBot
 
                                 case RunnerState.Accepted:
                                     nodeState = NodeState.Play;
+                                    await dot4gClient.ConnectTeeAsync();
+                                    //var faucet = await dot4gClient.FaucetWorkerAsync();
                                     break;
 
                                 case RunnerState.Finished:
                                     nodeState = NodeState.Queue;
+                                    workerState = WorkerState.None;
+                                    await dot4gClient.DisconnectTeeAsync();
                                     break;
                             }
                         }
@@ -158,7 +176,48 @@ namespace Dot4GBot
 
                 if (nodeState == NodeState.Play)
                 {
-                    Console.WriteLine($"ready to play!");
+                    var trustedCallWait = 0;
+
+                    Dot4GObj gameBoard = null;
+
+                    var balanceWorker = await dot4gClient.GetBalanceWorkerAsync();
+                    if (balanceWorker is null || balanceWorker.Value < 100)
+                    {
+                        workerState = WorkerState.Faucet;
+                    } 
+                    else
+                    {
+                        gameBoard = await dot4gClient.GetGameBoardAsync();
+                        if (gameBoard is null)
+                        {
+                            workerState = WorkerState.Wait;
+                        } 
+                        else if (gameBoard.GamePhase == Ajuna.NetApi.Model.Base.GamePhase.Bomb)
+                        {
+                            //if (gameBoard.Players.Where())
+                        }
+                    }
+
+                    switch (workerState)
+                    {
+                        case WorkerState.None:
+                            break;
+
+                        case WorkerState.Faucet:
+                            var faucet = await dot4gClient.FaucetWorkerAsync();
+                            if (faucet)
+                            {
+                                trustedCallWait = 500;
+                            }
+                            break;
+
+                        case WorkerState.Wait:
+                            trustedCallWait = 100;
+                            break;
+                    }
+
+                    Thread.Sleep(trustedCallWait);
+                    continue;
                 }
 
                 // wait on extrinsic

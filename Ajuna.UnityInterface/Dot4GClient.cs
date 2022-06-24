@@ -233,6 +233,16 @@ namespace Ajuna.UnityInterface
             return true;
         }
 
+        public async Task<Balance> GetBalanceWorkerAsync()
+        {
+            if (!IsTeeConnected)
+            {
+                return null;
+            }
+
+            return await _workerClient.GetFreeBalanceAsync(_wallet.Account, _shieldingKey, _shardHex);
+        }
+
         public async Task<bool> FaucetWorkerAsync()
         {
             if (!IsTeeConnected)
@@ -291,7 +301,7 @@ namespace Ajuna.UnityInterface
             return true;
         }
 
-        public async Task<Dot4GObj> GameBoardAsync()
+        public async Task<Dot4GObj> GetGameBoardAsync()
         {
             if (!IsTeeConnected)
             {

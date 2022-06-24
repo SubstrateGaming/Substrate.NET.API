@@ -106,7 +106,7 @@ namespace TestTee
         private static async Task MainAsync(CancellationToken cancellationToken)
         {
             var nodeUrl = "ws://127.0.0.1:9944";
-            var ngrok = "wss://477d-84-75-48-249.ngrok.io";
+            var ngrok = "wss://183c-84-75-48-249.ngrok.io";
             var shardHex = "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi";
             var mrenclaveHex = "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi";
 
