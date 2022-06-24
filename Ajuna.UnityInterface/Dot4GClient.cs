@@ -159,7 +159,7 @@ namespace Ajuna.UnityInterface
         }
 
 
-        public async Task<EnumRunnerState> RunnerStateAsync(U32 registerId)
+        public async Task<EnumRunnerState> GetRunnerStateAsync(U32 registerId)
         {
             if (!_wallet.IsConnected || !_wallet.IsUnlocked)
             {
@@ -205,7 +205,7 @@ namespace Ajuna.UnityInterface
             multiAddressBob.Create(MultiAddress.Id, account);
 
             var amount = new BaseCom<U128>();
-            amount.Create(1000000000000);
+            amount.Create(1100000000000);
 
             var extrinsicMethod = Ajuna.NetApi.Model.PalletBalances.BalancesCalls.Transfer(multiAddressBob, amount);
 

@@ -1,4 +1,5 @@
 ﻿using Ajuna.NetApi;
+using Ajuna.NetApi.Model.AjunaCommon;
 using Ajuna.NetWallet;
 using Ajuna.UnityInterface;
 using NLog;
@@ -55,6 +56,14 @@ namespace Dot4GBot
             }
         }
 
+        public enum NodeState {
+            None,
+            Queue,
+            Runner,
+            Play,
+            Faucet
+        }
+
         private static async Task MainAsync(CancellationToken token)
         {
             SystemInteraction.ReadData = f => File.ReadAllText(Path.Combine(Environment.CurrentDirectory, f));
@@ -67,85 +76,84 @@ namespace Dot4GBot
             await wallet.CreateAsync("aA1234dd");
             await wallet.StartAsync("ws://127.0.0.1:9944");
 
-            var dot4gClient = new Dot4GClient(wallet, 
-                "ws://87e8-84-75-48-249.ngrok.io", 
+            var dot4gClient = new Dot4GClient(wallet,
+                "ws://9c2b-84-75-48-249.ngrok.io", 
                 "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi", 
                 "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi");
 
             Console.WriteLine($"My Address => {wallet.Account.Value}");
+            NodeState nodeState = NodeState.None;
 
-            if (await dot4gClient.FaucetAsync())
+            while (!token.IsCancellationRequested)
             {
-                Console.Write($"faucet");
-                while (dot4gClient.HasExtrinsics > 0)
+                if (wallet.AccountInfo == null || wallet.AccountInfo.Data.Free.Value < 1000000000000)
                 {
-                    Thread.Sleep(1000);
-                    Console.Write($".");
-
+                    nodeState = NodeState.Faucet;
                 }
-                Console.WriteLine($"ok");
+                else
+                {
+                    var registerId = await dot4gClient.GetRegisterIdAsync();
+                    if (registerId is null || registerId.Value == 0)
+                    {
+                        nodeState = NodeState.Queue;
+                    }
+                    else
+                    {
+                        var runnerState = await dot4gClient.GetRunnerStateAsync(registerId);
+                        if (runnerState is null || runnerState.Value == RunnerState.Queued)
+                        {
+                            nodeState = NodeState.Runner;
+                        }
+                        else if (runnerState.Value == RunnerState.Accepted)
+                        {
+                            nodeState = NodeState.Play;
+                        }
+                        else if (runnerState.Value == RunnerState.Finished)
+                        {
+                            nodeState = NodeState.Queue;
+                        } 
+                        else
+                        {
+                            nodeState = NodeState.Runner;
+                        }
+                    }
+                }
+
+                switch (nodeState)
+                {
+                    case NodeState.None:
+                        break;
+
+                    case NodeState.Faucet:
+                        Console.WriteLine($"action: {nodeState}");
+                        var faucet = await dot4gClient.FaucetAsync();
+                        break;
+
+                    case NodeState.Queue:
+                        Console.WriteLine($"action: {nodeState}");
+                        var queued = await dot4gClient.QueueAsync();
+                        break;
+
+                    case NodeState.Runner:
+                        Console.WriteLine("wait for players ...");
+                        break;
+                }
+
+                // wait on extrinsic
+                if (dot4gClient.HasExtrinsics > 0)
+                {
+                    Console.Write("extrinics");
+                    while (dot4gClient.HasExtrinsics > 0)
+                    {
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                    }
+                    Console.WriteLine("ok");
+                    continue;
+                }
+
+                Thread.Sleep(1000);
             }
-
-            if (await dot4gClient.ConnectTeeAsync())
-            {
-                Console.WriteLine($"worker connected!");
-            }
-
-            if (await dot4gClient.FaucetWorkerAsync())
-            {
-                Console.WriteLine($"worker faucet!");
-            }
-
-            var registerId = await dot4gClient.GetRegisterIdAsync();
- 
-                //if (await dot4gClient.GetRegisterIdAsync())
-                //{
-                //    var state = Utils.Bytes2HexString(dot4gClient.RunnerState2.Value.Value.Select(p => p.Value).ToArray());
-                //    Console.WriteLine($"GameId - {dot4gClient.GameId.Value} / {dot4gClient.RunnerState1}[{state}]");
-                //}
-
-                //if (dot4gClient.GameId == null && await dot4gClient.QueueAsync())
-                //{
-                //    Console.Write($"queue");
-                //    while (dot4gClient.HasExtrinsics > 0)
-                //    {
-                //        Thread.Sleep(1000);
-                //        Console.Write($".");
-
-                //    }
-                //    Console.WriteLine($"ok");
-                //}
-
-                //if (await dot4gClient.QueueStateAsync())
-                //{
-                //    var state = Utils.Bytes2HexString(dot4gClient.RunnerState2.Value.Value.Select(p => p.Value).ToArray());
-                //    Console.WriteLine($"GameId - {dot4gClient.GameId.Value} / {dot4gClient.RunnerState1}[{state}]");
-                //}
-
-                //Console.Write($"waiting in queue");
-                //while (dot4gClient.GameId == null || dot4gClient.RunnerState1 == Ajuna.NetApi.Model.AjunaCommon.RunnerState.Queued)
-                //{
-                //    if (await dot4gClient.QueueStateAsync())
-                //    {
-                //        Thread.Sleep(1000);
-                //        Console.Write($".");
-                //    }
-                //}
-                //Console.WriteLine($"{dot4gClient.RunnerState1.ToString().ToLower()}");
-
-
-                //Console.Write($"gameboard");
-                //while (dot4gClient.Dot4GObj == null)
-                //{
-                //    if (await dot4gClient.GameBoardAsync())
-                //    {
-                //        Console.Write($".");
-                //    }
-                //}
-                //Console.WriteLine($"ok");
-
-                //dot4gClient.Dot4GObj.Print();
-
         }
     }
 }
