@@ -68,9 +68,9 @@ namespace Dot4GBot
             SystemInteraction.Persist = (f, c) => File.WriteAllText(Path.Combine(Environment.CurrentDirectory, f), c);
 
             Wallet wallet = new Wallet();
-            wallet.Load("dev_walletB");
+            wallet.Load("dev_walletA");
             await wallet.UnlockAsync("aA1234dd");
-            //var mnemonic = "monster noodle hotel method frost edit guard female river sibling blade soul";
+            //var mnemonic = "thing release visual carpet nation rebuild recipe trim tissue chair lumber buzz";
             //await wallet.CreateAsync("aA1234dd", mnemonic, "mnemonic_wallet");
             var name = wallet.Account.Value.Substring(0, 7);
             await wallet.StartAsync("ws://127.0.0.1:9944");
