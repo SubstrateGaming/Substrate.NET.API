@@ -25,6 +25,8 @@ namespace Ajuna.NetApiExt.Model.AjunaWorker.Dot4G
 
         public int Next { get; }
 
+        public Dot4GPlayer NextPlayer => Players[Next];
+
         public int? Winner { get; }
 
         public List<(Side, int)> PossibleMoves { get; }
@@ -66,21 +68,21 @@ namespace Ajuna.NetApiExt.Model.AjunaWorker.Dot4G
                     switch (enumCell.Value)
                     {
                         case Cell.Empty:
-                            Board[i, j] = new Dot4GCell(enumCell.Value);
+                            Board[i, j] = new Dot4GCell(new int[] { i, j }, enumCell.Value);
                             break;
 
                         case Cell.Bomb:
                             var playerBombs = ((Arr2Special1)enumCell.Value2).Value.Where(p => p.OptionFlag).Select(p => p.Value.Value).ToArray();
-                            Board[i, j] = new Dot4GCell(enumCell.Value, playerBombs);
+                            Board[i, j] = new Dot4GCell(new int[] { i, j }, enumCell.Value, playerBombs);
                             break;
 
                         case Cell.Block:
-                            Board[i, j] = new Dot4GCell(enumCell.Value);
+                            Board[i, j] = new Dot4GCell(new int[] { i, j }, enumCell.Value);
                             break;
 
                         case Cell.Stone:
                             var playerId = ((U8)enumCell.Value2).Value;
-                            Board[i, j] = new Dot4GCell(enumCell.Value, playerId);
+                            Board[i, j] = new Dot4GCell(new int[] { i, j }, enumCell.Value, playerId);
                             break;
                     }
                 }

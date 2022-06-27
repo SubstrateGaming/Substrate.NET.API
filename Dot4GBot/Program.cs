@@ -68,15 +68,15 @@ namespace Dot4GBot
             SystemInteraction.Persist = (f, c) => File.WriteAllText(Path.Combine(Environment.CurrentDirectory, f), c);
 
             Wallet wallet = new Wallet();
-            wallet.Load("dev_walletA");
+            wallet.Load("dev_wallet");
             await wallet.UnlockAsync("aA1234dd");
-            //var mnemonic = "thing release visual carpet nation rebuild recipe trim tissue chair lumber buzz";
+            //var mnemonic = "adult foster code famous extend museum attend trade stomach fresh love dwarf";
             //await wallet.CreateAsync("aA1234dd", mnemonic, "mnemonic_wallet");
             var name = wallet.Account.Value.Substring(0, 7);
-            await wallet.StartAsync("ws://127.0.0.1:9944");
+            await wallet.StartAsync("ws://ajuna-node.ngrok.io");
 
             var dot4gClient = new Dot4GClient(wallet,
-                "ws://183c-84-75-48-249.ngrok.io",
+                "ws://ajuna-worker.ngrok.io",
                 "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi",
                 "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi");
 

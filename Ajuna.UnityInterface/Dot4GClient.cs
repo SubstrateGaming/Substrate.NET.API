@@ -43,6 +43,7 @@ namespace Ajuna.UnityInterface
         public Dictionary<string, string> _extrinsicStates;
 
         public bool IsTeeConnected => _workerClient.IsConnected;
+
         public int HasExtrinsics => _extrinsicStates.Count;
 
         public Dot4GClient(Wallet wallet, string workerUrl, string shardHex, string mrenclaveHex)
@@ -50,6 +51,7 @@ namespace Ajuna.UnityInterface
             _wallet = wallet;
             _workerClient = new SubstrateClientExt(new Uri(workerUrl));
             _extrinsicStates = new Dictionary<string, string>();
+            _shieldingKey = new RSAParameters();
 
             _shardHex = shardHex;
             _mrenclaveHex = mrenclaveHex;
@@ -61,20 +63,17 @@ namespace Ajuna.UnityInterface
         /// <returns></returns>
         public async Task<bool> ConnectTeeAsync()
         {
-            if (IsTeeConnected)
+            if (!IsTeeConnected)
             {
-                return false;
+                await _workerClient.ConnectAsync(false, false, false, CancellationToken.None);
             }
 
-            await _workerClient.ConnectAsync(false, false, false, CancellationToken.None);
-
-            _shieldingKey = await _workerClient.ShieldingKeyAsync();
             if(_shieldingKey.Modulus == null)
             {
-                return false;
+                _shieldingKey = await _workerClient.ShieldingKeyAsync();
             }
 
-            return true;
+            return IsTeeConnected && _shieldingKey.Modulus != null;
         }
 
         public async Task<bool> DisconnectTeeAsync()
@@ -307,6 +306,7 @@ namespace Ajuna.UnityInterface
 
             return new Dot4GObj(boardGame);
         }
+
 
     }
 }
