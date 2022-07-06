@@ -18,6 +18,10 @@ namespace Dot4GBot
 {
     partial class Program
     {
+        private static string _ngrokUrl = "a00f-84-75-48-249.ngrok.io";
+        private static string _mrenclave = "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi";
+        private static string _devWallet = "dev_walletA";
+
         private static async Task Main(string[] args)
         {
             var config = new LoggingConfiguration();
@@ -37,6 +41,41 @@ namespace Dot4GBot
 
             // Apply config           
             LogManager.Configuration = config;
+
+
+            Console.Write("\r\nMRENCLAVE[" + _mrenclave + "]=: ");
+            var mrenclave = Console.ReadLine();
+            if (mrenclave.Count() > 0)
+            {
+                _mrenclave = mrenclave;
+            }
+            Console.Write("\r\nNGROK URL[" + _ngrokUrl + "]=: ");
+            var ngrokUrl = Console.ReadLine();
+            if (ngrokUrl.Count() > 0)
+            {
+                _ngrokUrl = ngrokUrl;
+            }
+
+            Console.WriteLine("Choose wallet to load:");
+            Console.WriteLine("A) dev_walletA");
+            Console.WriteLine("B) dev_walletB");
+            Console.WriteLine("C) dev_walletC");
+            Console.Write("\r\nSelect a wallet [A,B,C]: ");
+            switch (Console.ReadLine())
+            {
+                case "A":
+                    _devWallet = "dev_walletA";
+                    break;
+                case "B":
+                    _devWallet = "dev_walletB";
+                    break;
+                case "C":
+                    _devWallet = "dev_walletC";
+                    break;
+                default:
+                    _devWallet = "dev_walletA";
+                    break;
+            }
 
             // Add this to your C# console app's Main method to give yourself
             // a CancellationToken that is canceled when the user hits Ctrl+C.
@@ -68,17 +107,17 @@ namespace Dot4GBot
             SystemInteraction.Persist = (f, c) => File.WriteAllText(Path.Combine(Environment.CurrentDirectory, f), c);
 
             Wallet wallet = new Wallet();
-            wallet.Load("dev_wallet");
+            wallet.Load(_devWallet);
             await wallet.UnlockAsync("aA1234dd");
             //var mnemonic = "adult foster code famous extend museum attend trade stomach fresh love dwarf";
             //await wallet.CreateAsync("aA1234dd", mnemonic, "mnemonic_wallet");
             var name = wallet.Account.Value.Substring(0, 7);
-            await wallet.StartAsync("ws://ajuna-node.ngrok.io");
+            await wallet.StartAsync("ws://127.0.0.1:9944");
 
             var dot4gClient = new Dot4GClient(wallet,
-                "ws://ajuna-worker.ngrok.io",
-                "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi",
-                "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi");
+                "ws://" + _ngrokUrl,
+                _mrenclave,
+                _mrenclave);
 
             IBotAI logic = new RandomAI();
 
@@ -103,7 +142,7 @@ namespace Dot4GBot
                     {
                         nodeState = NodeState.Queue;
                     }
-                    else if (playerQueued.Value == 1 && runnerId.Value == 0)
+                    else if (playerQueued.Value > 0 && runnerId.Value == 0)
                     {
                         nodeState = NodeState.Players;
                     }
