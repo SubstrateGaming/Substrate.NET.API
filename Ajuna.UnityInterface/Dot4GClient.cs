@@ -30,7 +30,7 @@ namespace Ajuna.UnityInterface
         public static MiniSecret MiniSecretAlice => new MiniSecret(Utils.HexToByteArray("0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a"), ExpandMode.Ed25519);
         public static Account Alice => Account.Build(KeyType.Sr25519, MiniSecretAlice.ExpandToSecret().ToBytes(), MiniSecretAlice.GetPair().Public.Key);
 
-        private Wallet _wallet;
+        public Wallet Wallet { get; private set; }
 
         private SubstrateClientExt _workerClient;
 
@@ -48,7 +48,7 @@ namespace Ajuna.UnityInterface
 
         public Dot4GClient(Wallet wallet, string workerUrl, string shardHex, string mrenclaveHex)
         {
-            _wallet = wallet;
+            Wallet = wallet;
             _workerClient = new SubstrateClientExt(new Uri(workerUrl));
             _extrinsicStates = new Dictionary<string, string>();
             _shieldingKey = new RSAParameters();
@@ -132,7 +132,7 @@ namespace Ajuna.UnityInterface
         public async Task<U32> GetRunnerIdAsync()
         {
 
-            if (!_wallet.IsConnected || !_wallet.IsUnlocked)
+            if (!Wallet.IsConnected || !Wallet.IsUnlocked)
             {
                 return null;
             }
@@ -143,33 +143,33 @@ namespace Ajuna.UnityInterface
             }
 
             var account = new AccountId32();
-            account.Create(Utils.GetPublicKeyFrom(_wallet.Account.Value));
+            account.Create(Utils.GetPublicKeyFrom(Wallet.Account.Value));
 
             var cts = new CancellationTokenSource();
-            return await _wallet.Client.GameRegistryStorage.Players(account, cts.Token);
+            return await Wallet.Client.GameRegistryStorage.Players(account, cts.Token);
         }
 
         public async Task<EnumRunnerState> GetRunnerStateAsync(U32 registerId)
         {
-            if (!_wallet.IsConnected || !_wallet.IsUnlocked)
+            if (!Wallet.IsConnected || !Wallet.IsUnlocked)
             {
                 return null;
             }
 
             var cts = new CancellationTokenSource();
-            return await _wallet.Client.RunnerStorage.Runners(registerId, cts.Token);
+            return await Wallet.Client.RunnerStorage.Runners(registerId, cts.Token);
         }
 
         public async Task<bool> QueueAsync()
         {
-            if (!_wallet.IsConnected || !_wallet.IsUnlocked || _extrinsicStates.ContainsValue("Queue"))
+            if (!Wallet.IsConnected || !Wallet.IsUnlocked || _extrinsicStates.ContainsValue("Queue"))
             {
                 return false;
             }
 
             var cts = new CancellationTokenSource();
             var extrinsicMethod = Ajuna.NetApi.Model.PalletGameRegistry.GameRegistryCalls.Queue();
-            var subscription = await _wallet.Client.Author.SubmitAndWatchExtrinsicAsync(ActionExtrinsicUpdate, extrinsicMethod, _wallet.Account, 0, 64, cts.Token);
+            var subscription = await Wallet.Client.Author.SubmitAndWatchExtrinsicAsync(ActionExtrinsicUpdate, extrinsicMethod, Wallet.Account, 0, 64, cts.Token);
             if (subscription != null)
             {
                 _extrinsicStates.Add(subscription, "Queue");
@@ -180,21 +180,21 @@ namespace Ajuna.UnityInterface
 
         public async Task<U8> GetPlayerQueueAsync()
         {
-            if (!_wallet.IsConnected || !_wallet.IsUnlocked)
+            if (!Wallet.IsConnected || !Wallet.IsUnlocked)
             {
                 return null;
             }
 
             var account = new AccountId32();
-            account.Create(Utils.GetPublicKeyFrom(_wallet.Account.Value));
+            account.Create(Utils.GetPublicKeyFrom(Wallet.Account.Value));
 
             var cts = new CancellationTokenSource();
-            return await _wallet.Client.MatchmakerStorage.PlayerQueue(account, cts.Token);
+            return await Wallet.Client.MatchmakerStorage.PlayerQueue(account, cts.Token);
         }
 
         public async Task<bool> FaucetAsync()
         {
-            if (!_wallet.IsConnected || !_wallet.IsUnlocked || _extrinsicStates.ContainsValue("Faucet"))
+            if (!Wallet.IsConnected || !Wallet.IsUnlocked || _extrinsicStates.ContainsValue("Faucet"))
             {
                 return false;
             }
@@ -203,7 +203,7 @@ namespace Ajuna.UnityInterface
             accountAlice.Create(Utils.GetPublicKeyFrom(Alice.Value));
 
             var account = new AccountId32();
-            account.Create(Utils.GetPublicKeyFrom(_wallet.Account.Value));
+            account.Create(Utils.GetPublicKeyFrom(Wallet.Account.Value));
 
             var multiAddressBob = new EnumMultiAddress();
             multiAddressBob.Create(MultiAddress.Id, account);
@@ -214,7 +214,7 @@ namespace Ajuna.UnityInterface
             var extrinsicMethod = Ajuna.NetApi.Model.PalletBalances.BalancesCalls.Transfer(multiAddressBob, amount);
 
             var cts = new CancellationTokenSource();
-            var subscription = await _wallet.Client.Author.SubmitAndWatchExtrinsicAsync(ActionExtrinsicUpdate, extrinsicMethod, Alice, 0, 64, cts.Token);
+            var subscription = await Wallet.Client.Author.SubmitAndWatchExtrinsicAsync(ActionExtrinsicUpdate, extrinsicMethod, Alice, 0, 64, cts.Token);
             if (subscription != null)
             {
                 _extrinsicStates.Add(subscription, "Faucet");
@@ -230,7 +230,7 @@ namespace Ajuna.UnityInterface
                 return null;
             }
 
-            return await _workerClient.GetFreeBalanceAsync(_wallet.Account, _shieldingKey, _shardHex);
+            return await _workerClient.GetFreeBalanceAsync(Wallet.Account, _shieldingKey, _shardHex);
         }
 
         public async Task<bool> FaucetWorkerAsync()
@@ -240,7 +240,7 @@ namespace Ajuna.UnityInterface
                 return false;
             }
 
-            var hash = await _workerClient.BalanceTransferAsync(Alice, _wallet.Account, (uint)100000, _shieldingKey, _shardHex, _mrenclaveHex);
+            var hash = await _workerClient.BalanceTransferAsync(Alice, Wallet.Account, (uint)100000, _shieldingKey, _shardHex, _mrenclaveHex);
             if (hash == null)
             {
                 return false;
@@ -257,7 +257,7 @@ namespace Ajuna.UnityInterface
             }
 
             var hash = await _workerClient.PlayTurnAsync(
-                _wallet.Account, 
+                Wallet.Account, 
                 SgxGameTurn.DropBomb(new int[] { posX , posY}),          
                 _shieldingKey, 
                 _shardHex, 
@@ -278,7 +278,7 @@ namespace Ajuna.UnityInterface
             }
 
             var hash = await _workerClient.PlayTurnAsync(
-                _wallet.Account,
+                Wallet.Account,
                 SgxGameTurn.DropStone(side, (byte)column),
                 _shieldingKey,
                 _shardHex,
@@ -298,7 +298,7 @@ namespace Ajuna.UnityInterface
                 return null;
             }
 
-            var boardGame = await _workerClient.GetBoardGameAsync(_wallet.Account, _shieldingKey, _shardHex);
+            var boardGame = await _workerClient.GetBoardGameAsync(Wallet.Account, _shieldingKey, _shardHex);
             if (boardGame == null)
             {
                 return null;
