@@ -9,6 +9,8 @@
             Wait,
             Play,
             Bomb,
+            OpTurn,
+            OpBomb,
         }
 
     }

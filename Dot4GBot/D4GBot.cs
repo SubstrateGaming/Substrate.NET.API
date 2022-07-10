@@ -50,9 +50,13 @@ namespace Dot4GBot
             WorkerState workerState = WorkerState.None;
 
             stopwatch.Start();
+            
+            int count = 0;
 
             while (!token.IsCancellationRequested)
             {
+                count++;
+
                 var SleepTime = 1000;
                 Dot4GObj gameBoard = null;
 
@@ -146,7 +150,7 @@ namespace Dot4GBot
                             }
                             else
                             {
-                                workerState = ChangeWorkerState(workerState, WorkerState.Wait);
+                                workerState = ChangeWorkerState(workerState, WorkerState.OpBomb);
                             }
                         }
                         else if (gameBoard.GamePhase == GamePhase.Play)
@@ -157,7 +161,7 @@ namespace Dot4GBot
                             }
                             else
                             {
-                                workerState = ChangeWorkerState(workerState, WorkerState.Wait);
+                                workerState = ChangeWorkerState(workerState, WorkerState.OpTurn);
                             }
                         }
                     }
@@ -171,11 +175,13 @@ namespace Dot4GBot
                             var faucet = await _uClient.FaucetWorkerAsync();
                             if (faucet)
                             {
-                                SleepTime = 500;
+                                SleepTime = 600;
                             }
                             break;
 
                         case WorkerState.Wait:
+                        case WorkerState.OpBomb:
+                        case WorkerState.OpTurn:
                             SleepTime = 100;
                             break;
 
@@ -184,7 +190,7 @@ namespace Dot4GBot
                             var bomb = await _uClient.BombAsync(bombPos[0], bombPos[1]);
                             if (bomb)
                             {
-                                SleepTime = 500;
+                                SleepTime = 100;
                             }
                             break;
 
@@ -193,7 +199,7 @@ namespace Dot4GBot
                             var stone = await _uClient.StoneAsync(move.Item1, move.Item2);
                             if (stone)
                             {
-                                SleepTime = 500;
+                                SleepTime = 100;
                             }
                             break;
                     }
@@ -205,7 +211,7 @@ namespace Dot4GBot
                     while (_uClient.HasExtrinsics > 0)
                     {
                         Print(Name, nodeState, workerState, true);
-                        Console.WriteLine("+---------------------------------------+");
+                        Console.WriteLine($"+-------------------------------------{_uClient.HasExtrinsics}-+");
                         Thread.Sleep(500);
                     }
                     continue;
@@ -218,8 +224,13 @@ namespace Dot4GBot
                     gameBoard.Print();
                 }
                 else
+                {   
+                    Console.WriteLine("+--------------------" + (count % 3 == 0 ? workerState.ToString().PadRight(17, ' ').PadLeft(18, ' ') + "-+" : "-------------------+"));
+                }
+
+                if (count == int.MaxValue)
                 {
-                    Console.WriteLine("+---------------------------------------+");
+                    count = 0;
                 }
 
                 Thread.Sleep(SleepTime);

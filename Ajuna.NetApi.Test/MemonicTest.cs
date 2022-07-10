@@ -4,6 +4,7 @@ using Schnorrkel.Keys;
 using System.Collections.Generic;
 using System.Text;
 using static Ajuna.NetApi.Mnemonic;
+using Ajuna.NetApi.Model.Types;
 
 namespace Ajuna.NetApi.Test
 {
@@ -172,18 +173,18 @@ namespace Ajuna.NetApi.Test
         public void FailWhenMnemonicIsToShortTest()
         {
             Assert.Throws<FormatException>(delegate
-                {
-                    Mnemonic.SeedFromEntropy(Utils.HexToByteArray("7f7f7f7f7f"), "Substrate");
-                });
+            {
+                Mnemonic.SeedFromEntropy(Utils.HexToByteArray("7f7f7f7f7f"), "Substrate");
+            });
         }
 
         [Test]
         public void PBKDF2Sha512GetBytesFailWithInvalidDklen()
         {
             Assert.Throws<ArgumentOutOfRangeException>(delegate
-                {
-                    Mnemonic.PBKDF2Sha512GetBytes(-1, new byte[] { 1, 2, 3, 4, 5, }, new byte[] { }, 0);
-                });
+            {
+                Mnemonic.PBKDF2Sha512GetBytes(-1, new byte[] { 1, 2, 3, 4, 5, }, new byte[] { }, 0);
+            });
         }
 
         [Test]
@@ -214,7 +215,68 @@ namespace Ajuna.NetApi.Test
             Assert.AreEqual(keyPair2.Public.Key, keyPair3.Public.Key);
             Assert.AreEqual(keyPair2.Secret.ToBytes(), keyPair3.Secret.ToBytes());
 
+        }
 
+        [Test]
+        public void MnemonicFromEntropyTest()
+        {
+            var random = new Random(1234);
+
+            byte[] entropyBytes;
+            string[] mnemonicArray;
+            string mnemonic;
+            Account account;
+
+            entropyBytes = new byte[16];
+            random.NextBytes(entropyBytes);
+            mnemonicArray = Mnemonic.MnemonicFromEntropy(entropyBytes, BIP39Wordlist.English);
+            mnemonic = string.Join(" ", mnemonicArray);
+            Assert.AreEqual("tornado glad segment lift squirrel top ball soldier joy sudden edit advice", mnemonic);
+            account = GetAccountFromMnemonic(mnemonic, "", KeyType.Sr25519);
+            Assert.AreEqual("5Fe24e21Ff5vRtuWa4ZNPv1EGQz1zBq1VtT8ojqfmzo9k11P", account.Value);
+            account = GetAccountFromMnemonic(mnemonic, "", KeyType.Ed25519);
+            Assert.AreEqual("5CcaF7yE6YU67TyPHjSwd9DKiVBTAS2AktdxNG3DeLYs63gF", account.Value);
+
+
+            entropyBytes = new byte[20];
+            random.NextBytes(entropyBytes);
+            mnemonicArray = Mnemonic.MnemonicFromEntropy(entropyBytes, BIP39Wordlist.English);
+            mnemonic = string.Join(" ", mnemonicArray);
+            Assert.AreEqual("clown stool nothing poem reopen cream hungry donkey test always market special tomorrow session detail", mnemonic);
+            account = GetAccountFromMnemonic(mnemonic, "", KeyType.Sr25519);
+            Assert.AreEqual("5EjXrVNGukEPqVDwV1h854h4jhmxso6ifJMH2JB9LGHxCtyw", account.Value);
+            account = GetAccountFromMnemonic(mnemonic, "", KeyType.Ed25519);
+            Assert.AreEqual("5GqEMUKZBJvBDr6Jh2iJ3E3nQ5zAoMVvex7UQdsT7ZB61Tx7", account.Value);
+
+            entropyBytes = new byte[24];
+            random.NextBytes(entropyBytes);
+            mnemonicArray = Mnemonic.MnemonicFromEntropy(entropyBytes, BIP39Wordlist.English);
+            mnemonic = string.Join(" ", mnemonicArray);
+            Assert.AreEqual("oak flip stage father strong earn change winner ancient old document series void cook goat tape cradle indoor", mnemonic);
+            account = GetAccountFromMnemonic(mnemonic, "", KeyType.Sr25519);
+            Assert.AreEqual("5FBrLjUNtrjiN73szsVs3cCWS1ZsMAv3qgj1CW7EFztaf2Ud", account.Value);
+            account = GetAccountFromMnemonic(mnemonic, "", KeyType.Ed25519);
+            Assert.AreEqual("5CmMEY9nfxd74NtTGeZkDXTG7s2v9ZHYnUfPws8KpqLuS6vB", account.Value);
+
+            entropyBytes = new byte[28];
+            random.NextBytes(entropyBytes);
+            mnemonicArray = Mnemonic.MnemonicFromEntropy(entropyBytes, BIP39Wordlist.English);
+            mnemonic = string.Join(" ", mnemonicArray);
+            Assert.AreEqual("reform time inmate roast sausage clump captain frost giggle recycle hobby umbrella oval unit critic gasp enroll zebra exhaust rather fun", mnemonic);
+            account = GetAccountFromMnemonic(mnemonic, "", KeyType.Sr25519);
+            Assert.AreEqual("5Fh4M4vdfEskyo2zch9dYhwoPeyzhK2L1bC5EVtRrWneN7t4", account.Value);
+            account = GetAccountFromMnemonic(mnemonic, "", KeyType.Ed25519);
+            Assert.AreEqual("5Hpe8G5eQanbCYpBnZAzTwzjG5XukfWgC6T9oQgSV6i29XUL", account.Value);
+
+            entropyBytes = new byte[32];
+            random.NextBytes(entropyBytes);
+            mnemonicArray = Mnemonic.MnemonicFromEntropy(entropyBytes, BIP39Wordlist.English);
+            mnemonic = string.Join(" ", mnemonicArray);
+            Assert.AreEqual("tomorrow inmate clerk crucial flush chat family aisle work promote thank bargain foam iron educate wood dizzy explain ride wash canal air lesson wish", mnemonic);
+            account = GetAccountFromMnemonic(mnemonic, "", KeyType.Sr25519);
+            Assert.AreEqual("5FnynfuwAwGCsBxzNHQ5KfW2gTaJGXjQ6bdKrryDuaD7zodK", account.Value);
+            account = GetAccountFromMnemonic(mnemonic, "", KeyType.Ed25519);
+            Assert.AreEqual("5GtoaENzjxPwxRTmA4dnn79AL4qZtZWq7CtcWh54hEe2B4XC", account.Value);
         }
     }
 }
