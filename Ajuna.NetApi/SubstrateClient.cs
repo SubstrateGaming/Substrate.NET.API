@@ -100,7 +100,7 @@ namespace Ajuna.NetApi
 
         /// <summary> Gets a value indicating whether this object is connected. </summary>
         /// <value> True if this object is connected, false if not. </value>
-        public bool IsConnected => _socket?.State == WebSocketState.Open;
+        public bool IsConnected => _socket?.State == WebSocketState.Open && _jsonRpc != null;
 
         /// <summary> Connects an asynchronous. </summary>
         /// <remarks> 19.09.2020. </remarks>
