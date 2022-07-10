@@ -18,7 +18,7 @@ namespace Dot4GBot
 {
     partial class Program
     {
-        private static string _ngrokUrl = "2934-178-197-216-190.ngrok.io";
+        private static string _ngrokUrl = "4f63-84-75-48-249.ngrok.io";
         private static string _mrenclave = "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi";
         private static string _devWallet = "dev_walletA";
 
@@ -96,6 +96,8 @@ namespace Dot4GBot
             {
                 // This is the normal way we close.
             }
+
+            Console.ReadLine();
         }
 
         private static async Task MainAsync(CancellationToken token)
@@ -121,9 +123,13 @@ namespace Dot4GBot
 
             IBotAI logic = new RandomAI();
 
-            var bot = new D4GBot(dot4gClient, logic);
+            var bot = new D4GBot(dot4gClient, logic, DisplayType.UI);
             await bot.RunAsync(token);
 
+            foreach(var track in bot.Tracker)
+            {
+                Console.WriteLine($"track {track.Key} = {track.Value[0]} @ {track.Value[1]/1000}s => avg. {track.Value[1]/track.Value[0]}ms");
+            }
         }
 
 

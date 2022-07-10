@@ -6,6 +6,7 @@ using Ajuna.UnityInterface;
 using Dot4GBot.AI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,19 +30,26 @@ namespace Dot4GBot
         private Wallet Wallet => _uClient.Wallet;
         private string Name => Wallet.Account.Value.Substring(0, 7);
 
-        private Dictionary<string, int[]> Tracker;
+        public Dictionary<string, long[]> Tracker;
+
+        private Stopwatch stopwatch;
 
         public D4GBot(Dot4GClient dot4gClient, IBotAI logic, DisplayType displayType)
         {
             _uClient = dot4gClient;
             _logic = logic;
             _displayType = displayType;
+
+            Tracker = new Dictionary<string, long[]>();
+            stopwatch = new Stopwatch();
         }
 
         internal async Task RunAsync(CancellationToken token)
         {
             NodeState nodeState = NodeState.None;
             WorkerState workerState = WorkerState.None;
+
+            stopwatch.Start();
 
             while (!token.IsCancellationRequested)
             {
@@ -50,7 +58,7 @@ namespace Dot4GBot
 
                 if (Wallet.AccountInfo == null || Wallet.AccountInfo.Data.Free.Value < 1000000000000)
                 {
-                    nodeState = NodeState.Faucet;
+                    nodeState = ChangeNodeState(nodeState, NodeState.Faucet);
                 }
                 else
                 {
@@ -59,11 +67,12 @@ namespace Dot4GBot
 
                     if (playerQueued.Value == 0 && runnerId.Value == 0)
                     {
-                        nodeState = NodeState.Queue;
+                        nodeState = ChangeNodeState(nodeState, NodeState.Queue);
+                        
                     }
                     else if (playerQueued.Value > 0 && runnerId.Value == 0)
                     {
-                        nodeState = NodeState.Players;
+                        nodeState = ChangeNodeState(nodeState, NodeState.Players);
                     }
                     else
                     {
@@ -77,17 +86,17 @@ namespace Dot4GBot
                             switch (runnerState.Value)
                             {
                                 case RunnerState.Queued:
-                                    nodeState = NodeState.Worker;
+                                    nodeState = ChangeNodeState(nodeState, NodeState.Worker);
                                     break;
 
                                 case RunnerState.Accepted:
-                                    nodeState = NodeState.Play;
+                                    nodeState = ChangeNodeState(nodeState, NodeState.Play);
                                     await _uClient.ConnectTeeAsync();
                                     break;
 
                                 case RunnerState.Finished:
-                                    nodeState = NodeState.Queue;
-                                    workerState = WorkerState.None;
+                                    nodeState = ChangeNodeState(nodeState, NodeState.Queue);
+                                    workerState = ChangeWorkerState(workerState, WorkerState.None);
                                     gameBoard = null;
                                     await _uClient.DisconnectTeeAsync();
                                     break;
@@ -119,36 +128,36 @@ namespace Dot4GBot
                     var balanceWorker = await _uClient.GetBalanceWorkerAsync();
                     if (balanceWorker is null || balanceWorker.Value < 100)
                     {
-                        workerState = WorkerState.Faucet;
+                        workerState = ChangeWorkerState(workerState, WorkerState.Faucet);
                     }
                     else
                     {
                         gameBoard = await _uClient.GetGameBoardAsync();
                         if (gameBoard is null)
                         {
-                            workerState = WorkerState.Wait;
+                            workerState = ChangeWorkerState(workerState, WorkerState.Wait);
                         }
                         else if (gameBoard.GamePhase == GamePhase.Bomb)
                         {
                             var player = gameBoard.Players.Where(p => p.Address == Wallet.Account.Value).ToList();
                             if (player.Count == 1 && player[0].Bombs > 0)
                             {
-                                workerState = WorkerState.Bomb;
+                                workerState = ChangeWorkerState(workerState, WorkerState.Bomb);
                             }
                             else
                             {
-                                workerState = WorkerState.Wait;
+                                workerState = ChangeWorkerState(workerState, WorkerState.Wait);
                             }
                         }
                         else if (gameBoard.GamePhase == GamePhase.Play)
                         {
                             if (gameBoard.Players[gameBoard.Next].Address == Wallet.Account.Value)
                             {
-                                workerState = WorkerState.Play;
+                                workerState = ChangeWorkerState(workerState, WorkerState.Play);
                             }
                             else
                             {
-                                workerState = WorkerState.Wait;
+                                workerState = ChangeWorkerState(workerState, WorkerState.Wait);
                             }
                         }
                     }
@@ -215,6 +224,52 @@ namespace Dot4GBot
 
                 Thread.Sleep(SleepTime);
             }
+        }
+
+        private NodeState ChangeNodeState(NodeState oldState, NodeState newState)
+        {
+            if (oldState == newState)
+            {
+                return oldState;
+            }
+
+            var key = "Node" + oldState.ToString();
+            if (Tracker.TryGetValue(key, out long[] values)) 
+            {
+                values[0] = values[0] + 1;
+                values[1] = values[1] + stopwatch.ElapsedMilliseconds;
+                Tracker[key] = values;
+            } 
+            else
+            {
+                Tracker.Add(key, new long[] { 1, stopwatch.ElapsedMilliseconds });
+            }
+            stopwatch.Restart();
+
+            return newState;
+        }
+
+        private WorkerState ChangeWorkerState(WorkerState oldState, WorkerState newState)
+        {
+            if (oldState == newState)
+            {
+                return oldState;
+            }
+
+            var key = "Worker" + oldState.ToString();
+            if (Tracker.TryGetValue(key, out long[] values))
+            {
+                values[0] = values[0] + 1;
+                values[1] = values[1] + stopwatch.ElapsedMilliseconds;
+                Tracker[key] = values;
+            }
+            else
+            {
+                Tracker.Add(key, new long[] { 1, stopwatch.ElapsedMilliseconds });
+            }
+            stopwatch.Restart();
+
+            return newState;
         }
 
         private void Print(string name, NodeState nodeState, WorkerState workerState, bool flag = false)
