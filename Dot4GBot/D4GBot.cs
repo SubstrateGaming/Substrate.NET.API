@@ -5,6 +5,7 @@ using Ajuna.NetWallet;
 using Ajuna.UnityInterface;
 using Dot4GBot.AI;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,19 +13,29 @@ using static Dot4GBot.Program;
 
 namespace Dot4GBot
 {
+    public enum DisplayType
+    {
+        Mute,
+        Load,
+        UI
+    }
+
     internal class D4GBot
     {
-        private Dot4GClient _uClient;
-        private IBotAI _logic;
+        private readonly Dot4GClient _uClient;
+        private readonly IBotAI _logic;
+        private readonly DisplayType _displayType;
 
         private Wallet Wallet => _uClient.Wallet;
-
         private string Name => Wallet.Account.Value.Substring(0, 7);
 
-        public D4GBot(Dot4GClient dot4gClient, IBotAI logic)
+        private Dictionary<string, int[]> Tracker;
+
+        public D4GBot(Dot4GClient dot4gClient, IBotAI logic, DisplayType displayType)
         {
             _uClient = dot4gClient;
             _logic = logic;
+            _displayType = displayType;
         }
 
         internal async Task RunAsync(CancellationToken token)
