@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using Ajuna.NetApi.Model.Types;
+using Ajuna.NetApi.Model.Types.Primitive;
 
 namespace Ajuna.NetApi
 {
@@ -11,10 +12,19 @@ namespace Ajuna.NetApi
         /// <summary> Constructor. </summary>
         /// <remarks> 19.09.2020. </remarks>
         /// <param name="value"> The value. </param>
-        public CompactInteger(BigInteger value)
-        {
-            Value = value;
-        }
+        public CompactInteger(BigInteger value) => Value = value;
+        public CompactInteger(I8 value) => Value = value.Value;
+        public CompactInteger(I16 value) => Value = value.Value;
+        public CompactInteger(I32 value) => Value = value.Value;
+        public CompactInteger(I64 value) => Value = value.Value;
+        public CompactInteger(I128 value) => Value = value.Value;
+        public CompactInteger(I256 value) => Value = value.Value;
+        public CompactInteger(U8 value) => Value = value.Value;
+        public CompactInteger(U16 value) => Value = value.Value;
+        public CompactInteger(U32 value) => Value = value.Value;
+        public CompactInteger(U64 value) => Value = value.Value;
+        public CompactInteger(U128 value) => Value = value.Value;
+        public CompactInteger(U256 value) => Value = value.Value;
 
         /// <summary> Indicates whether this instance and a specified object are equal. </summary>
         /// <remarks> 19.09.2020. </remarks>
