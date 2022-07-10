@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Ajuna.NetApi.BIP39;
+using System.Collections;
+using Ajuna.NetApi.Model.Types;
 
 namespace Ajuna.NetApi
 {
@@ -111,6 +113,33 @@ namespace Ajuna.NetApi
         }
 
         /// <summary>
+        /// Generate a mnemonic seed phrase from a given entropy.
+        /// 16, 20, 24, 28, 32 Bytes Entropy supported.
+        /// </summary>
+        /// <param name="entropyBytes"></param>
+        /// <returns></returns>
+        public static string[] MnemonicFromEntropy(byte[] entropyBytes, BIP39Wordlist wordlistType)
+        {
+            if (entropyBytes.Length != 16
+             && entropyBytes.Length != 20
+             && entropyBytes.Length != 24
+             && entropyBytes.Length != 28
+             && entropyBytes.Length != 32)
+            {
+                return null;
+            }
+
+            var bitString = string.Concat(entropyBytes.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')))
+                + DeriveChecksumBits(entropyBytes);
+
+            var wordlist = GetWordlist(wordlistType);
+
+            // split in 11bit strings, convert to decimal, get word at index
+            return Enumerable.Range(0, bitString.Length / 11)
+                .Select(i => wordlist.GetWordAtIndex(Convert.ToInt32(bitString.Substring(i * 11, 11), 2))).ToArray();
+        }
+
+        /// <summary>
         /// Get secret key from mnemonic
         /// </summary>
         /// <param name="mnemonic"></param>
@@ -137,6 +166,33 @@ namespace Ajuna.NetApi
             var secretBytes = GetSecretKeyFromMnemonic(mnemonic, password, bIP39Wordlist);
             var miniSecret = new MiniSecret(secretBytes, expandMode);
             return new KeyPair(miniSecret.ExpandToPublic(), miniSecret.ExpandToSecret());
+        }
+
+        /// <summary>
+        /// Get account from mnemonic
+        /// </summary>
+        /// <param name="mnemonic"></param>
+        /// <param name="password"></param>
+        /// <param name="bIP39Wordlist"></param>
+        /// <param name="expandMode"></param>
+        /// <returns></returns>
+        public static Account GetAccountFromMnemonic(string mnemonic, string password, KeyType keyType, BIP39Wordlist bIP39Wordlist = BIP39Wordlist.English, ExpandMode expandMode = ExpandMode.Ed25519)
+        {
+            var secretBytes = GetSecretKeyFromMnemonic(mnemonic, password, bIP39Wordlist);
+
+            switch (keyType)
+            {
+                case KeyType.Ed25519:
+                    Chaos.NaCl.Ed25519.KeyPairFromSeed(out byte[] pubKey, out byte[] priKey, secretBytes.Take(32).ToArray());
+                    return Account.Build(KeyType.Ed25519, priKey, pubKey);
+                
+                case KeyType.Sr25519:
+                    var miniSecret = new MiniSecret(secretBytes, expandMode);
+                    return Account.Build(KeyType.Sr25519, miniSecret.ExpandToSecret().ToBytes(), miniSecret.GetPair().Public.Key);
+
+                default:
+                    throw new NotImplementedException($"KeyType {keyType} isn't implemented!");
+            }
         }
 
         public static string MnemonicToEntropy(string mnemonic, BIP39Wordlist wordlistType)
@@ -200,13 +256,13 @@ namespace Ajuna.NetApi
                 throw new FormatException("InvalidEntropy");
         }
 
-        private static string DeriveChecksumBits(byte[] checksum)
+        private static string DeriveChecksumBits(byte[] entropyBytes)
         {
-            var ent = checksum.Length * 8;
+            var ent = entropyBytes.Length * 8;
             var cs = (int)ent / 32;
 
             var sha256Provider = SHA256.Create();
-            var hash = sha256Provider.ComputeHash(checksum);
+            var hash = sha256Provider.ComputeHash(entropyBytes);
             string result = string.Join(null, hash.Select(h => Convert.ToString(h, 2).PadLeft(8, '0')));
             return result.Substring(0, cs);
         }
