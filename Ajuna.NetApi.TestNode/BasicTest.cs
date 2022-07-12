@@ -1,15 +1,12 @@
 using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.Types;
-using NLog;
-using NLog.Config;
-using NLog.Targets;
 using NUnit.Framework;
 using Schnorrkel.Keys;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Ajuna.NetApi.NetApi.TestNode
+namespace Ajuna.NetApi.TestNode
 {
     public class BasicTest
     {
@@ -37,21 +34,7 @@ namespace Ajuna.NetApi.NetApi.TestNode
         [SetUp]
         public void Setup()
         {
-            var config = new LoggingConfiguration();
-
-            // Targets where to log to: File and Console
-            var console = new ConsoleTarget("logconsole");
-
-            // Rules for mapping loggers to targets            
-            config.AddRule(LogLevel.Debug, LogLevel.Fatal, console);
-
-            // Apply config           
-            LogManager.Configuration = config;
-
             _substrateClient = new SubstrateClient(new Uri(WebSocketUrl));
-
-            // add your generic type converters here
-            //_substrateClient.RegisterTypeConverter(new GenericTypeConverter<EnumType<BoardState>>());
 
         }
 

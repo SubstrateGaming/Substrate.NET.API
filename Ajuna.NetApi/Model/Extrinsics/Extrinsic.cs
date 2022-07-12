@@ -1,14 +1,14 @@
 ﻿using Newtonsoft.Json;
-using NLog;
 using Ajuna.NetApi.Model.Types;
 using System;
+using Serilog;
 
 namespace Ajuna.NetApi.Model.Extrinsics
 {
     public class Extrinsic
     {
         /// <summary> The logger. </summary>
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger Logger = new LoggerConfiguration().CreateLogger();
 
         public bool Signed;
 

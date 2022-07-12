@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.Threading;
 using Newtonsoft.Json.Linq;
-using NLog;
+using Serilog;
 using StreamJsonRpc;
 using Ajuna.NetApi.Exceptions;
 using Ajuna.NetApi.Model.Extrinsics;
@@ -31,7 +31,7 @@ namespace Ajuna.NetApi
     public class SubstrateClient : IDisposable
     {
         /// <summary> The logger. </summary>
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger Logger = new LoggerConfiguration().CreateLogger();
 
         private readonly ExtrinsicJsonConverter _extrinsicJsonConverter = new ExtrinsicJsonConverter();
 
@@ -154,7 +154,7 @@ namespace Ajuna.NetApi
             formatter.JsonSerializer.Converters.Add(_extrinsicStatusJsonConverter);
 
             _jsonRpc = new JsonRpc(new WebSocketMessageHandler(_socket, formatter));
-            _jsonRpc.TraceSource.Listeners.Add(new NLogTraceListener());
+            _jsonRpc.TraceSource.Listeners.Add(new SerilogTraceListener.SerilogTraceListener());
             _jsonRpc.TraceSource.Switch.Level = SourceLevels.Warning;
             _jsonRpc.AddLocalRpcTarget(Listener, new JsonRpcTargetOptions {AllowNonPublicInvocation = false});
             _jsonRpc.StartListening();
