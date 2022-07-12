@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using NLog;
 using StreamJsonRpc;
 using Ajuna.NetApi.Model.Rpc;
+using Serilog;
 
 namespace Ajuna.NetApi
 {
     public class SubscriptionListener
     {
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        /// <summary> The logger. </summary>
+        private static readonly ILogger Logger = new LoggerConfiguration().CreateLogger();
 
         private readonly Dictionary<string, object> _headerCallbacks = new Dictionary<string, object>();
 
