@@ -18,7 +18,7 @@ namespace Dot4GBot
 {
     partial class Program
     {
-        private static string _ngrokUrl = "f6b3-84-75-48-249.ngrok.io";
+        private static string _ngrokUrl = "030a-84-75-48-249.ngrok.io";
         private static string _mrenclave = "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi";
         private static Random _random = new Random();
 

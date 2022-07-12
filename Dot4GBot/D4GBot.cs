@@ -175,14 +175,14 @@ namespace Dot4GBot
                             var faucet = await _uClient.FaucetWorkerAsync();
                             if (faucet)
                             {
-                                SleepTime = 600;
+                                SleepTime = 1000;
                             }
                             break;
 
                         case WorkerState.Wait:
                         case WorkerState.OpBomb:
                         case WorkerState.OpTurn:
-                            SleepTime = 100;
+                            SleepTime = 300;
                             break;
 
                         case WorkerState.Bomb:
@@ -190,7 +190,7 @@ namespace Dot4GBot
                             var bomb = await _uClient.BombAsync(bombPos[0], bombPos[1]);
                             if (bomb)
                             {
-                                SleepTime = 100;
+                                SleepTime = 300;
                             }
                             break;
 
@@ -199,7 +199,7 @@ namespace Dot4GBot
                             var stone = await _uClient.StoneAsync(move.Item1, move.Item2);
                             if (stone)
                             {
-                                SleepTime = 100;
+                                SleepTime = 300;
                             }
                             break;
                     }
@@ -232,6 +232,8 @@ namespace Dot4GBot
                 {
                     count = 0;
                 }
+
+                Console.WriteLine((count % 2 == 0 ? "-" : "|").PadLeft(41));
 
                 Thread.Sleep(SleepTime);
             }
