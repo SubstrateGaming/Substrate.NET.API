@@ -18,7 +18,8 @@ namespace Dot4GBot
 {
     partial class Program
     {
-        private static string _ngrokUrl = "030a-84-75-48-249.ngrok.io";
+        private static string _nodeUrl = "ws://127.0.0.1:9944";
+        private static string _ngrokUrl = "ws://030a-84-75-48-249.ngrok.io";
         private static string _mrenclave = "Fdb2TM3owt4unpvESoSMTpVWPvCiXMzYyb42LzSsmFLi";
         private static Random _random = new Random();
 
@@ -42,6 +43,21 @@ namespace Dot4GBot
             // Apply config           
             LogManager.Configuration = config;
 
+            Console.Write("\r\nNODE URL[" + _nodeUrl + "]=: ");
+            var nodeUrl = Console.ReadLine();
+            if (nodeUrl.Count() > 0)
+            {
+                _nodeUrl = nodeUrl;
+            }
+            Console.WriteLine($"=> '{_nodeUrl}'");
+
+            Console.Write("\r\nNGROK URL[" + _ngrokUrl + "]=: ");
+            var ngrokUrl = Console.ReadLine();
+            if (ngrokUrl.Count() > 0)
+            {
+                _ngrokUrl = ngrokUrl;
+            }
+            Console.WriteLine($"=> '{_ngrokUrl}'");
 
             Console.Write("\r\nMRENCLAVE[" + _mrenclave + "]=: ");
             var mrenclave = Console.ReadLine();
@@ -49,12 +65,7 @@ namespace Dot4GBot
             {
                 _mrenclave = mrenclave;
             }
-            Console.Write("\r\nNGROK URL[" + _ngrokUrl + "]=: ");
-            var ngrokUrl = Console.ReadLine();
-            if (ngrokUrl.Count() > 0)
-            {
-                _ngrokUrl = ngrokUrl;
-            }
+            Console.WriteLine($"=> '{_mrenclave}'");
 
             // Add this to your C# console app's Main method to give yourself
             // a CancellationToken that is canceled when the user hits Ctrl+C.
@@ -94,10 +105,10 @@ namespace Dot4GBot
             var mnemonic = string.Join(' ', Mnemonic.MnemonicFromEntropy(randomBytes, Mnemonic.BIP39Wordlist.English));
 
             await wallet.CreateAsync("aA1234dd", mnemonic, "mnemonic_wallet");
-            await wallet.StartAsync("ws://127.0.0.1:9944");
+            await wallet.StartAsync(_nodeUrl);
 
             var dot4gClient = new Dot4GClient(wallet,
-                "ws://" + _ngrokUrl,
+                _ngrokUrl,
                 _mrenclave,
                 _mrenclave);
 
