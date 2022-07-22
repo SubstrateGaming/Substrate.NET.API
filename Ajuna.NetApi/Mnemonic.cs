@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Ajuna.NetApi.BIP39;
-using System.Collections;
 using Ajuna.NetApi.Model.Types;
 
 namespace Ajuna.NetApi

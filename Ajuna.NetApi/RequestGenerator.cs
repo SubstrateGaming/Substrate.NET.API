@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Chaos.NaCl;
 using Schnorrkel;
-using Ajuna.NetApi.Exceptions;
 using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Meta;
 using Ajuna.NetApi.Model.Rpc;

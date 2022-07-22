@@ -1,7 +1,6 @@
 ﻿using Ajuna.NetApi.Model.Types;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Ajuna.NetApi.Model.Extrinsics
 {

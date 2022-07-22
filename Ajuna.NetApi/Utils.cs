@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using SimpleBase;
-using Ajuna.NetApi.Model.Types.Base;
 
 namespace Ajuna.NetApi
 {

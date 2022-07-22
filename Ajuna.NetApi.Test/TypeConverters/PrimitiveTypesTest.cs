@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
 using NUnit.Framework;
-using Ajuna.NetApi.Model.Types.Base;
 
 namespace Ajuna.NetApi.Test
 {
@@ -164,19 +163,6 @@ namespace Ajuna.NetApi.Test
             var prim = new Ajuna.NetApi.Model.Types.Primitive.I256();
             prim.Create("0xf5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5");
             Assert.AreEqual(BigInteger.Parse("-4540866244600635114649842549360310111892940575123159374096375843447573711371"), prim.Value);
-        }
-
-        [Test]
-        public void PrimVecTest()
-        {
-            // vec u16 test
-            var vecUInt16 = new uint[] { 4, 8, 15, 16, 23, 42 };
-            var primVec = new BaseVec<Ajuna.NetApi.Model.Types.Primitive.U16>();
-            primVec.Create("0x18040008000f00100017002a00");
-            for (int i = 0; i < vecUInt16.Length; i++)
-            {
-                Assert.AreEqual(vecUInt16[i], primVec.Value[i].Value);
-            }
         }
 
         [Test]
