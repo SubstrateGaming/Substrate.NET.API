@@ -53,21 +53,21 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
     public enum TypeDefEnum
     {
         /// A composite type (e.g. a struct or a tuple)
-        Composite,
+        Composite = 0,
         /// A variant type (e.g. an enum)
-        Variant,
+        Variant = 1,
         /// A sequence type with runtime known length.
-        Sequence,
+        Sequence = 2,
         /// An array type with compile-time known length.
-        Array,
+        Array = 3,
         /// A tuple type.
-        Tuple,
+        Tuple = 4,
         /// A Rust primitive type.
-        Primitive,
+        Primitive = 5,
         /// A type using the [`Compact`] encoding
-        Compact,
+        Compact = 6,
         /// A type representing a sequence of bits.
-        BitSequence
+        BitSequence = 7
     }
 
     public class TypeDefComposite : BaseType
