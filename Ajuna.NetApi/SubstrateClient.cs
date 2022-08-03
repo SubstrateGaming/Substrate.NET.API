@@ -117,11 +117,16 @@ namespace Ajuna.NetApi
             await ConnectAsync(true, token);
         }
 
+        public async Task ConnectAsync(bool useMetaData, CancellationToken token)
+        {
+            await ConnectAsync(useMetaData, true, token);
+        }
+
         /// <summary> Connects an asynchronous. </summary>
         /// <remarks> 19.09.2020. </remarks>
         /// <param name="token"> A token that allows processing to be cancelled. </param>
         /// <returns> An asynchronous result. </returns>
-        public async Task ConnectAsync(bool useMetaData, CancellationToken token)
+        public async Task ConnectAsync(bool useMetaData, bool standardSubstrate, CancellationToken token)
         {
             if (_socket != null && _socket.State == WebSocketState.Open)
                 return;
@@ -170,13 +175,16 @@ namespace Ajuna.NetApi
                 Logger.Debug("MetaData parsed.");
             }
 
-            var genesis = new BlockNumber();
-            genesis.Create(0);
-            GenesisHash = await Chain.GetBlockHashAsync(genesis, token);
-            Logger.Debug("Genesis hash parsed.");
+            if (standardSubstrate)
+            {
+                var genesis = new BlockNumber();
+                genesis.Create(0);
+                GenesisHash = await Chain.GetBlockHashAsync(genesis, token);
+                Logger.Debug("Genesis hash parsed.");
 
-            RuntimeVersion = await State.GetRuntimeVersionAsync(token);
-            Logger.Debug("Runtime version parsed.");
+                RuntimeVersion = await State.GetRuntimeVersionAsync(token);
+                Logger.Debug("Runtime version parsed.");
+            }
 
             _jsonRpc.TraceSource.Switch.Level = SourceLevels.All;
         }
