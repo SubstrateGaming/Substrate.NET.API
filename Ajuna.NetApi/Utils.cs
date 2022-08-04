@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using Org.BouncyCastle.Crypto.Digests;
+using Org.BouncyCastle.Crypto.Encodings;
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Parameters;
 using SimpleBase;
 
 namespace Ajuna.NetApi
@@ -305,6 +310,109 @@ namespace Ajuna.NetApi
             var addrCh = Base58.Bitcoin.Encode(plainAddr).ToArray();
 
             return new string(addrCh);
+        }
+
+        public static byte[] RSAEncryptBouncy(byte[] dataToEncrypt, RsaKeyParameters rsaKeyParameters)
+        {
+            var encrypter = new OaepEncoding(new RsaEngine(), new Sha256Digest(), new Sha256Digest(), null);
+            encrypter.Init(true, rsaKeyParameters);
+            var cipher = encrypter.ProcessBlock(dataToEncrypt, 0, dataToEncrypt.Length);
+            return cipher;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="DataToEncrypt"></param>
+        /// <param name="RSAKeyInfo"></param>
+        /// <param name="DoOAEPPadding"></param>
+        /// <returns></returns>
+        public static byte[] RSAEncrypt(byte[] DataToEncrypt, RSAParameters RSAKeyInfo, RSAEncryptionPadding OAEPPadding)
+        {
+            try
+            {
+                byte[] encryptedData;
+                //Create a new instance of RSACryptoServiceProvider.
+                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
+                {
+
+                    //Import the RSA Key information. This only needs
+                    //toinclude the public key information.
+                    RSA.ImportParameters(RSAKeyInfo);
+
+                    //Encrypt the passed byte array and specify OAEP padding.  
+                    //OAEP padding is only available on Microsoft Windows XP or
+                    //later.  
+                    if (OAEPPadding != null)
+                    {
+
+                        encryptedData = RSA.Encrypt(DataToEncrypt, OAEPPadding);
+                    }
+                    else
+                    {
+                        encryptedData = RSA.Encrypt(DataToEncrypt, false);
+                    }
+                }
+                return encryptedData;
+            }
+            //Catch and display a CryptographicException  
+            //to the console.
+            catch (CryptographicException e)
+            {
+                Console.WriteLine(e.Message);
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="DataToDecrypt"></param>
+        /// <param name="RSAKeyInfo"></param>
+        /// <param name="DoOAEPPadding"
+        /// ></param>
+        /// <returns></returns>
+        public static byte[] RSADecrypt(byte[] DataToDecrypt, RSAParameters RSAKeyInfo, RSAEncryptionPadding OAEPPadding)
+        {
+            try
+            {
+                byte[] decryptedData;
+                //Create a new instance of RSACryptoServiceProvider.
+                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
+                {
+                    //Import the RSA Key information. This needs
+                    //to include the private key information.
+                    RSA.ImportParameters(RSAKeyInfo);
+
+                    //Decrypt the passed byte array and specify OAEP padding.  
+                    //OAEP padding is only available on Microsoft Windows XP or
+                    //later.  
+
+                    //Encrypt the passed byte array and specify OAEP padding.  
+                    //OAEP padding is only available on Microsoft Windows XP or
+                    //later.  
+                    if (OAEPPadding != null)
+                    {
+
+                        decryptedData = RSA.Decrypt(DataToDecrypt, OAEPPadding);
+                    }
+                    else
+                    {
+                        decryptedData = RSA.Decrypt(DataToDecrypt, false);
+                    }
+
+                }
+                return decryptedData;
+            }
+            //Catch and display a CryptographicException  
+            //to the console.
+            catch (CryptographicException e)
+            {
+                Console.WriteLine(e.ToString());
+
+                return null;
+            }
         }
     }
 }
