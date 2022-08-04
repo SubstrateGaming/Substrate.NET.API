@@ -101,6 +101,20 @@ namespace Ajuna.NetApi
         /// <value> True if this object is connected, false if not. </value>
         public bool IsConnected => _socket?.State == WebSocketState.Open && _jsonRpc != null;
 
+        /// <summary>
+        /// Sets the JSON-RPC logging level. 
+        /// </summary>
+        /// <param name="sourceLevels"></param>
+        /// <returns></returns>
+        public bool SetJsonRPCTraceLevel(SourceLevels sourceLevels) {
+            if (_jsonRpc == null)
+            {
+                return false;
+            }
+            _jsonRpc.TraceSource.Switch.Level = sourceLevels;
+            return true;
+        }
+
         /// <summary> Connects an asynchronous. </summary>
         /// <remarks> 19.09.2020. </remarks>
         /// <returns> An asynchronous result. </returns>
@@ -186,7 +200,7 @@ namespace Ajuna.NetApi
                 Logger.Debug("Runtime version parsed.");
             }
 
-            _jsonRpc.TraceSource.Switch.Level = SourceLevels.All;
+            //_jsonRpc.TraceSource.Switch.Level = SourceLevels.All;
         }
 
         /// <summary>
@@ -307,7 +321,7 @@ namespace Ajuna.NetApi
         /// <param name="parameters"> Options for controlling the operation. </param>
         /// <param name="token">      A token that allows processing to be cancelled. </param>
         /// <returns> A T. </returns>
-        internal async Task<T> InvokeAsync<T>(string method, object parameters, CancellationToken token)
+        public async Task<T> InvokeAsync<T>(string method, object parameters, CancellationToken token)
         {
             if (_socket?.State != WebSocketState.Open)
                 throw new ClientNotConnectedException($"WebSocketState is not open! Currently {_socket?.State}!");
