@@ -10,7 +10,7 @@ namespace Ajuna.NetApi.TestNode
 {
     public class BasicTest
     {
-        private const string WebSocketUrl = "ws://127.0.0.1:9944";
+        private const string WebSocketUrl = "ws://rpc-parachain.bajun.network";
 
         private SubstrateClient _substrateClient;
 
@@ -45,12 +45,27 @@ namespace Ajuna.NetApi.TestNode
         }
 
         [Test]
-        public async Task GetMethodChainNameTestAsync()
+        public async Task GetSystemChainTestAsync()
         {
             await _substrateClient.ConnectAsync(false, CancellationToken.None);
 
-            var result = await _substrateClient.GetMethodAsync<string>("system_chain");
-            Assert.AreEqual("Development", result);
+            var result = await _substrateClient.System.ChainAsync(CancellationToken.None);
+
+            Assert.AreEqual("Bajun Kusama", result);
+
+            await _substrateClient.CloseAsync();
+        }
+
+        [Test]
+        public async Task GetSystemPropertiesTestAsync()
+        {
+            await _substrateClient.ConnectAsync(false, CancellationToken.None);
+
+            var result = await _substrateClient.System.PropertiesAsync(CancellationToken.None);
+
+            Assert.AreEqual(1337, result.Ss58Format);
+            Assert.AreEqual(12, result.TokenDecimals);
+            Assert.AreEqual("BAJU", result.TokenSymbol);
 
             await _substrateClient.CloseAsync();
         }

@@ -84,5 +84,16 @@ namespace Ajuna.NetApi.Modules
         {
             return await _client.InvokeAsync<Health>("system_health", null, token);
         }
+
+        public async Task<Properties> PropertiesAsync()
+        {
+            return await PropertiesAsync(CancellationToken.None);
+        }
+
+        public async Task<Properties> PropertiesAsync(CancellationToken token)
+        {
+            return await _client.InvokeAsync<Properties>("system_properties", null, token);
+        }
+
     }
 }
