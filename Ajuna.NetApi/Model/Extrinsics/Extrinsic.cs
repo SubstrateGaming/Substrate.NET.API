@@ -21,7 +21,7 @@ namespace Ajuna.NetApi.Model.Extrinsics
 
         public CompactInteger Nonce;
 
-        public ChargeAssetTxPayment AssetTxPayment;
+        public ChargePaymentShell ChargePaymentShell;
 
         public Method Method;
 
@@ -98,7 +98,8 @@ namespace Ajuna.NetApi.Model.Extrinsics
                 Nonce = CompactInteger.Decode(memory.ToArray(), ref p);
 
                 // chargeAssetTxPayment
-                AssetTxPayment = ChargeAssetTxPayment.Decode(memory.ToArray(), ref p);
+                ChargePaymentShell = new ChargePaymentShell();
+                ChargePaymentShell.Decode(memory.ToArray(), ref p);
             }
 
             // method
@@ -121,14 +122,14 @@ namespace Ajuna.NetApi.Model.Extrinsics
         /// <param name="method">The method.</param>
         /// <param name="era">The era.</param>
         /// <param name="tip">The tip.</param>
-        public Extrinsic(bool signed, Account account, CompactInteger nonce, Method method, Era era, ChargeAssetTxPayment assetTxPayment)
+        public Extrinsic(bool signed, Account account, CompactInteger nonce, Method method, Era era, ChargePaymentShell chargePaymentShell)
         {
             Signed = signed;
             TransactionVersion = Constants.ExtrinsicVersion;
             Account = account;
             Era = era;
             Nonce = nonce;
-            AssetTxPayment = assetTxPayment;
+            ChargePaymentShell = chargePaymentShell;
             Method = method;
         }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Types.Base;
+using static Ajuna.NetApi.Test.Extrinsic.SignedExtensionsTest;
+using Ajuna.NetApi.Model.Types.Primitive;
 
 namespace Ajuna.NetApi.Test.Extrinsic
 {
@@ -52,9 +54,17 @@ namespace Ajuna.NetApi.Test.Extrinsic
             var startEra = new Hash();
             startEra.Create(blockHash);
 
-            var assetTxPayment = new ChargeAssetTxPayment(0, 0);
+            var tip = new BaseCom<U128>();
+            tip.Create(0);
+            //var assetId = new U32();
+            //assetId.Create(0);
+            var assetIdOpt = new BaseOpt<U32>();
+            //assetIdOpt.Create(assetId);
+            var chargePayment = new ChargeAssetTxPayment();
+            chargePayment.Tip = tip;
+            chargePayment.AssetId = assetIdOpt;
 
-            var signedExtensions = new SignedExtensions(259, 1, genesis, startEra, era, 0, assetTxPayment);
+            var signedExtensions = new SignedExtensions(259, 1, genesis, startEra, era, 0, chargePayment);
 
             var payload = new Payload(method, signedExtensions);
 
@@ -62,6 +72,66 @@ namespace Ajuna.NetApi.Test.Extrinsic
                 "6, 0, 255, 212, 53, 147, 199, 21, 253, 211, 28, 97, 20, 26, 189, 4, 169, 159, 214, 130, 44, 133, 88, 133, 76, 205, 227, 154, 86, 132, 231, 165, 109, 162, 125, 145, 1, 58, 6, 0, 0, 0, 3, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0");
 
             Assert.AreEqual(payloadBytes, payload.Encode());
+        }
+        public sealed class ChargeAssetTxPayment : ChargePaymentShell
+        {
+
+            /// <summary>
+            /// >> tip
+            /// </summary>
+            private Ajuna.NetApi.Model.Types.Base.BaseCom<Ajuna.NetApi.Model.Types.Primitive.U128> _tip;
+
+            /// <summary>
+            /// >> asset_id
+            /// </summary>
+            private Ajuna.NetApi.Model.Types.Base.BaseOpt<Ajuna.NetApi.Model.Types.Primitive.U32> _assetId;
+
+            public Ajuna.NetApi.Model.Types.Base.BaseCom<Ajuna.NetApi.Model.Types.Primitive.U128> Tip
+            {
+                get
+                {
+                    return this._tip;
+                }
+                set
+                {
+                    this._tip = value;
+                }
+            }
+
+            public Ajuna.NetApi.Model.Types.Base.BaseOpt<Ajuna.NetApi.Model.Types.Primitive.U32> AssetId
+            {
+                get
+                {
+                    return this._assetId;
+                }
+                set
+                {
+                    this._assetId = value;
+                }
+            }
+
+            public override string TypeName()
+            {
+                return "ChargeAssetTxPayment";
+            }
+
+            public override byte[] Encode()
+            {
+                var result = new List<byte>();
+                result.AddRange(Tip.Encode());
+                result.AddRange(AssetId.Encode());
+                return result.ToArray();
+            }
+
+            public override void Decode(byte[] byteArray, ref int p)
+            {
+                var start = p;
+                Tip = new Ajuna.NetApi.Model.Types.Base.BaseCom<Ajuna.NetApi.Model.Types.Primitive.U128>();
+                Tip.Decode(byteArray, ref p);
+                AssetId = new Ajuna.NetApi.Model.Types.Base.BaseOpt<Ajuna.NetApi.Model.Types.Primitive.U32>();
+                AssetId.Decode(byteArray, ref p);
+                TypeSize = p - start;
+            }
         }
     }
 }
