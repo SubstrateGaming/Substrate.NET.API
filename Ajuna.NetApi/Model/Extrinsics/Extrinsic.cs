@@ -97,7 +97,7 @@ namespace Ajuna.NetApi.Model.Extrinsics
                 // nonce
                 Nonce = CompactInteger.Decode(memory.ToArray(), ref p);
 
-                // chargeAssetTxPayment
+                // chargePaymentShell
                 ChargePaymentShell = new ChargePaymentShell();
                 ChargePaymentShell.Decode(memory.ToArray(), ref p);
             }

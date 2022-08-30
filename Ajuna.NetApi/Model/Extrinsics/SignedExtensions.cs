@@ -54,7 +54,7 @@ namespace Ajuna.NetApi.Model.Extrinsics
             // CheckNonce
             bytes.AddRange(_nonce.Encode());
 
-            // ChargeAssetTxPayment
+            // ChargePaymentShell
             bytes.AddRange(_chargePaymentShell.Encode());
 
             return bytes.ToArray();
