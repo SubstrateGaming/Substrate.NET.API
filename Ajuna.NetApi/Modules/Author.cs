@@ -11,7 +11,7 @@ namespace Ajuna.NetApi.Modules
     /// <summary>
     ///   <br />
     /// </summary>
-    public class Author
+    public partial class Author
     {
         /// <summary>The client</summary>
         private readonly SubstrateClient _client;
