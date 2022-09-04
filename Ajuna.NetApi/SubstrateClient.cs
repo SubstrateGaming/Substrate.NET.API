@@ -19,6 +19,8 @@ using Ajuna.NetApi.Model.Types.Primitive;
 using Ajuna.NetApi.Modules;
 using Ajuna.NetApi.TypeConverters;
 using Ajuna.NetApi.Model.Types.Metadata;
+using Schnorrkel;
+using Chaos.NaCl;
 
 [assembly: InternalsVisibleTo("AjunaNetTests")]
 
@@ -295,17 +297,38 @@ namespace Ajuna.NetApi
 
             if (lifeTime == 0)
             {
-                era = Era.Create(0, 0);
+                era = Era.Mortal(0, 0);
                 startEra = GenesisHash;
             }
             else
             {
                 startEra = await Chain.GetFinalizedHeadAsync(token);
-                var finalizedHeader = await Chain.GetHeaderAsync(startEra, token);
-                era = Era.Create(lifeTime, finalizedHeader.Number.Value);
+                var currentBlock = await Chain.GetHeaderAsync(startEra, token);
+                era = Era.Mortal(lifeTime, currentBlock.Number.Value);
             }
 
-            return RequestGenerator.SubmitExtrinsic(signed, account, method, era, nonce, chargePaymentShell, GenesisHash, startEra, RuntimeVersion);
+            var uncheckedExtrinsic = new UnCheckedExtrinsic(signed, account, method, era, nonce, chargePaymentShell);
+            
+            ISignedExtension signedExtension = new SignedExtensions(RuntimeVersion.SpecVersion, RuntimeVersion.TransactionVersion, GenesisHash, startEra, era, nonce, chargePaymentShell);
+
+            if (!signed)
+            {
+                return uncheckedExtrinsic;
+            }
+
+            var payload = new Payload(method.Encode(), signedExtension.GetExtra(), signedExtension.GetAdditionalSigned());
+            var payloadEncoded = payload.Encode();
+
+            // Payloads longer than 256 bytes are going to be `blake2_256`-hashed.
+            if (payloadEncoded.Length > 256)
+            {
+                payloadEncoded = HashExtension.Blake2(payloadEncoded, 256);
+            }
+
+            // sign payload and get signature
+            uncheckedExtrinsic.Signature = account.Sign(payloadEncoded);
+
+            return uncheckedExtrinsic;
         }
 
         /// <summary>

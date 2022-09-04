@@ -55,7 +55,6 @@ namespace Ajuna.NetApi.Test.Extrinsic
 
             Assert.AreEqual(bytes.AsMemory().Slice(0, 5).ToArray(), signedExtensions.GetExtra());
             Assert.AreEqual(bytes.AsMemory().Slice(5, 72).ToArray(), signedExtensions.GetAdditionalSigned());
-            Assert.AreEqual(bytes, signedExtensions.Encode());
         }
 
         /// <summary>

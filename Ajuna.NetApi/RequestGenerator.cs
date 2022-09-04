@@ -62,52 +62,5 @@ namespace Ajuna.NetApi
             return HashExtension.Twox128(mBytes).Concat(HashExtension.Twox128(iBytes)).ToArray();
         }
 
-        /// <summary>
-        /// Submits the extrinsic.
-        /// </summary>
-        /// <param name="signed">if set to <c>true</c> [signed].</param>
-        /// <param name="account">The account.</param>
-        /// <param name="method">The method.</param>
-        /// <param name="era">The era.</param>
-        /// <param name="nonce">The nonce.</param>
-        /// <param name="tip">The tip.</param>
-        /// <param name="genesis">The genesis.</param>
-        /// <param name="startEra">The start era.</param>
-        /// <param name="runtime">The runtime.</param>
-        /// <returns></returns>
-        /// <exception cref="UnCheckedExtrinsic">signed, account, method, era, nonce, tip, genesis, startEra</exception>
-        public static UnCheckedExtrinsic SubmitExtrinsic(bool signed, Account account, Method method, Era era,
-            uint nonce, ChargePaymentShell chargePaymentShell, Hash genesis, Hash startEra, RuntimeVersion runtime)
-        {
-            var uncheckedExtrinsic =
-                new UnCheckedExtrinsic(signed, account, method, era, nonce, chargePaymentShell, genesis, startEra);
-
-            if (!signed)
-            {
-                return uncheckedExtrinsic;
-            }
-
-            var payload = uncheckedExtrinsic.GetPayload(runtime).Encode();
-
-            /// Payloads longer than 256 bytes are going to be `blake2_256`-hashed.
-            if (payload.Length > 256) payload = HashExtension.Blake2(payload, 256);
-
-            byte[] signature;
-            switch (account.KeyType)
-            {
-                case KeyType.Ed25519:
-                    signature = Ed25519.Sign(payload, account.PrivateKey);
-                    break;
-                case KeyType.Sr25519:
-                    signature = Sr25519v091.SignSimple(account.Bytes, account.PrivateKey, payload);
-                    break;
-                default:
-                    throw new Exception($"Unknown key type found '{account.KeyType}'.");
-            }
-
-            uncheckedExtrinsic.AddPayloadSignature(signature);
-
-            return uncheckedExtrinsic;
-        }
     }
 }

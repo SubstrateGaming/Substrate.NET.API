@@ -1,23 +1,31 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Ajuna.NetApi.Model.Types.Base;
 
 namespace Ajuna.NetApi.Model.Extrinsics
 {
-    public class SignedExtensions
+    public interface ISignedExtension
     {
-        private uint _specVersion;
+        byte[] GetExtra();
 
-        private uint _txVersion;
+        byte[] GetAdditionalSigned();
+    }
 
-        private Hash _genesis;
+    public class SignedExtensions : ISignedExtension
+    {
+        public uint SpecVersion { get; }
 
-        private Hash _startEra;
+        public uint TxVersion { get; }
 
-        private Era _mortality;
+        public Hash Genesis { get; }
 
-        private CompactInteger _nonce;
+        public Hash StartEra { get; }
 
-        private ChargePaymentShell _chargePaymentShell;
+        public Era Mortality { get; }
+
+        public CompactInteger Nonce { get; }
+
+        public ChargePaymentShell ChargePaymentShell { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SignedExtensions"/> class.
@@ -31,13 +39,13 @@ namespace Ajuna.NetApi.Model.Extrinsics
         /// <param name="chargeTransactionPayment">The charge transaction payment.</param>
         public SignedExtensions(uint specVersion, uint txVersion, Hash genesis, Hash startEra, Era mortality, CompactInteger nonce, ChargePaymentShell chargePaymentShell)
         {
-            _specVersion = specVersion;
-            _txVersion = txVersion;
-            _genesis = genesis;
-            _startEra = startEra;
-            _mortality = mortality;
-            _nonce = nonce;
-            _chargePaymentShell = chargePaymentShell;
+            SpecVersion = specVersion;
+            TxVersion = txVersion;
+            Genesis = genesis;
+            StartEra = startEra;
+            Mortality = mortality;
+            Nonce = nonce;
+            ChargePaymentShell = chargePaymentShell;
         }
 
         /// <summary>
@@ -46,18 +54,10 @@ namespace Ajuna.NetApi.Model.Extrinsics
         /// <returns></returns>
         public byte[] GetExtra()
         {
-            var bytes = new List<byte>();
-
-            // CheckMortality
-            bytes.AddRange(_mortality.Encode());
-
-            // CheckNonce
-            bytes.AddRange(_nonce.Encode());
-
-            // ChargePaymentShell
-            bytes.AddRange(_chargePaymentShell.Encode());
-
-            return bytes.ToArray();
+            return Mortality.Encode() // CheckMortality
+                    .Concat(Nonce.Encode() // CheckNonce
+                    .Concat(ChargePaymentShell.Encode())) // ChargePaymentShell
+                    .ToArray();
         }
 
         /// <summary>
@@ -66,39 +66,11 @@ namespace Ajuna.NetApi.Model.Extrinsics
         /// <returns></returns>
         public byte[] GetAdditionalSigned()
         {
-            var bytes = new List<byte>();
-
-            // CheckSpecVersion
-            bytes.AddRange(Utils.Value2Bytes(_specVersion));
-
-            // CheckTxVersion
-            bytes.AddRange(Utils.Value2Bytes(_txVersion));
-
-            // CheckGenesis
-            bytes.AddRange(_genesis.Bytes);
-
-            // CheckMortality, Additional Blockhash check. Immortal = genesis_hash, Mortal = logic
-            bytes.AddRange(_startEra.Bytes);
-
-            return bytes.ToArray();
+            return Utils.Value2Bytes(SpecVersion) // CheckSpecVersion
+                    .Concat(Utils.Value2Bytes(TxVersion) // CheckTxVersion
+                    .Concat(Genesis.Bytes // CheckGenesis
+                    .Concat(StartEra.Bytes))) // CheckMortality, Additional Blockhash check. Immortal = genesis_hash, Mortal = logic
+                    .ToArray();
         }
-
-        /// <summary>
-        /// Encodes this instance.
-        /// </summary>
-        /// <returns></returns>
-        public byte[] Encode()
-        {
-            var bytes = new List<byte>();
-
-            // Extra: Era, Nonce & Tip
-            bytes.AddRange(GetExtra());
-
-            // Additional Signed: SpecVersion, TxVersion, Genesis, Blockhash
-            bytes.AddRange(GetAdditionalSigned());
-
-            return bytes.ToArray();
-        }
-
     }
 }

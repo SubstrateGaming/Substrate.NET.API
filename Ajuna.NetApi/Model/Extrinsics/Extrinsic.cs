@@ -7,9 +7,6 @@ namespace Ajuna.NetApi.Model.Extrinsics
 {
     public class Extrinsic
     {
-        /// <summary> The logger. </summary>
-        private static readonly ILogger Logger = new LoggerConfiguration().CreateLogger();
-
         public bool Signed;
 
         public byte TransactionVersion;
