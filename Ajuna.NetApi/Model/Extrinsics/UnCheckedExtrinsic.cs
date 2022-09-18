@@ -8,10 +8,6 @@ namespace Ajuna.NetApi.Model.Extrinsics
 {
     public class UnCheckedExtrinsic : Extrinsic
     {
-        private readonly Hash _genesis;
-
-        private readonly Hash _startEra;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="UnCheckedExtrinsic"/> class.
         /// </summary>
@@ -23,30 +19,10 @@ namespace Ajuna.NetApi.Model.Extrinsics
         /// <param name="tip">The tip.</param>
         /// <param name="genesis">The genesis.</param>
         /// <param name="startEra">The start era.</param>
-        public UnCheckedExtrinsic(bool signed, Account account, Method method, Era era, CompactInteger nonce, ChargeAssetTxPayment assetTxPayment, Hash genesis, Hash startEra)
-             : base(signed, account, nonce, method, era, assetTxPayment)
+        public UnCheckedExtrinsic(bool signed, Account account, Method method, Era era, CompactInteger nonce, ChargePaymentShell chargePaymentShell)
+             : base(signed, account, nonce, method, era, chargePaymentShell)
         {
-            _genesis = genesis;
-            _startEra = startEra;
-        }
 
-        /// <summary>
-        /// Gets the payload.
-        /// </summary>
-        /// <param name="runtime">The runtime.</param>
-        /// <returns></returns>
-        public Payload GetPayload(RuntimeVersion runtime)
-        {
-            return new Payload(Method, new SignedExtensions(runtime.SpecVersion, runtime.TransactionVersion, _genesis, _startEra, Era, Nonce, AssetTxPayment));
-        }
-
-        /// <summary>
-        /// Adds the payload signature.
-        /// </summary>
-        /// <param name="signature">The signature.</param>
-        public void AddPayloadSignature(byte[] signature)
-        {
-            Signature = signature;
         }
 
         /// <summary>
@@ -86,7 +62,7 @@ namespace Ajuna.NetApi.Model.Extrinsics
 
             list.AddRange(Nonce.Encode());
 
-            list.AddRange(AssetTxPayment.Encode());
+            list.AddRange(ChargePaymentShell.Encode());
 
             list.AddRange(Method.Encode());
 

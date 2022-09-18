@@ -37,12 +37,12 @@ namespace Ajuna.NetApi.Model.Extrinsics
         /// <summary>
         /// Creates the specified life time.
         /// </summary>
-        /// <param name="lifeTime">The life time.</param>
-        /// <param name="finalizedHeaderBlockNumber">The finalized header block number.</param>
+        /// <param name="period">The life time period.</param>
+        /// <param name="current">The current block number.</param>
         /// <returns></returns>
-        public static Era Create(uint lifeTime, ulong finalizedHeaderBlockNumber)
+        public static Era Mortal(ulong period, ulong current)
         {
-            if (lifeTime == 0)
+            if (period == 0)
             {
                 return new Era(0, 0, true);
             }
@@ -60,10 +60,10 @@ namespace Ajuna.NetApi.Model.Extrinsics
             //let quantized_phase = phase / quantize_factor * quantize_factor;
             //Era::Mortal(period, quantized_phase)
 
-            ulong period = (ulong)Math.Pow(2, Math.Round(Math.Log(lifeTime, 2)));
+            period = (ulong)Math.Pow(2, Math.Round(Math.Log(period, 2)));
             period = Math.Max(period, 4);
             period = Math.Min(period, 65536);
-            ulong phase = finalizedHeaderBlockNumber % period;
+            ulong phase = current % period;
             var quantize_factor = Math.Max(period >> 12, 1);
             var quantized_phase = phase / quantize_factor * quantize_factor;
 

@@ -48,7 +48,7 @@ namespace Ajuna.NetApi.Test.Extrinsic
         [Test]
         public void EraCreateTest()
         {
-            var era = Era.Create(12, 15686);
+            var era = Era.Mortal(12, 15686);
             Assert.AreEqual(16, era.Period);
             Assert.AreEqual(6, era.Phase);
         }

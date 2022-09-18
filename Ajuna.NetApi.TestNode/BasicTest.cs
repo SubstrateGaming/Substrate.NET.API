@@ -70,6 +70,18 @@ namespace Ajuna.NetApi.TestNode
             await _substrateClient.CloseAsync();
         }
 
+        [Test]
+        public async Task GetBlockHashTestAsync()
+        {
+            await _substrateClient.ConnectAsync(false, CancellationToken.None);
+
+            var result = await _substrateClient.Chain.GetBlockAsync(CancellationToken.None);
+
+            Assert.IsTrue(result.Block.Extrinsics.Length > 0);
+
+            await _substrateClient.CloseAsync();
+        }
+
         /// <summary>
         /// Simple extrinsic tester
         /// </summary>
