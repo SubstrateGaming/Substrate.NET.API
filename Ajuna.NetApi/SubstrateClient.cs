@@ -286,7 +286,7 @@ namespace Ajuna.NetApi
         /// <param name="signed"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<UnCheckedExtrinsic> GetExtrinsicParametersAsync(Method method, Account account, ChargeAssetTxPayment assetTxPayment, uint lifeTime, bool signed, CancellationToken token)
+        public async Task<UnCheckedExtrinsic> GetExtrinsicParametersAsync(Method method, Account account, ChargeType charge, uint lifeTime, bool signed, CancellationToken token)
         {
             var nonce = await System.AccountNextIndexAsync(account.Value, token);
 
@@ -305,7 +305,7 @@ namespace Ajuna.NetApi
                 era = Era.Create(lifeTime, finalizedHeader.Number.Value);
             }
 
-            return RequestGenerator.SubmitExtrinsic(signed, account, method, era, nonce, assetTxPayment, GenesisHash, startEra, RuntimeVersion);
+            return RequestGenerator.SubmitExtrinsic(signed, account, method, era, nonce, charge, GenesisHash, startEra, RuntimeVersion);
         }
 
         /// <summary>

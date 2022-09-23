@@ -50,16 +50,16 @@ namespace Ajuna.NetApi.Modules
         /// <returns>
         ///   <br />
         /// </returns>
-        public async Task<Hash> SubmitExtrinsicAsync(Method method, Account account, ChargeAssetTxPayment assetTxPayment, uint lifeTime)
+        public async Task<Hash> SubmitExtrinsicAsync(Method method, Account account, ChargeType charge, uint lifeTime)
         {
-            var extrinsic = await _client.GetExtrinsicParametersAsync(method, account, assetTxPayment, lifeTime, signed: true, CancellationToken.None);
+            var extrinsic = await _client.GetExtrinsicParametersAsync(method, account, charge, lifeTime, signed: true, CancellationToken.None);
 
             return await SubmitExtrinsicAsync(Utils.Bytes2HexString(extrinsic.Encode()));
         }
 
-        public async Task<Hash> SubmitExtrinsicAsync(Method method, Account account, ChargeAssetTxPayment assetTxPayment, uint lifeTime, CancellationToken token)
+        public async Task<Hash> SubmitExtrinsicAsync(Method method, Account account, ChargeType charge, uint lifeTime, CancellationToken token)
         {
-            var extrinsic = await _client.GetExtrinsicParametersAsync(method, account, assetTxPayment, lifeTime, signed: true, token);
+            var extrinsic = await _client.GetExtrinsicParametersAsync(method, account, charge, lifeTime, signed: true, token);
 
             return await SubmitExtrinsicAsync(Utils.Bytes2HexString(extrinsic.Encode()), token);
         }
@@ -95,9 +95,9 @@ namespace Ajuna.NetApi.Modules
         ///   <br />
         /// </returns>
         public async Task<string> SubmitAndWatchExtrinsicAsync(Action<string, ExtrinsicStatus> callback,
-            Method method, Account account, ChargeAssetTxPayment assetTxPayment, uint lifeTime)
+            Method method, Account account, ChargeType charge, uint lifeTime)
         {
-            var extrinsic = await _client.GetExtrinsicParametersAsync(method, account, assetTxPayment, lifeTime, signed: true, CancellationToken.None);
+            var extrinsic = await _client.GetExtrinsicParametersAsync(method, account, charge, lifeTime, signed: true, CancellationToken.None);
 
             return await SubmitAndWatchExtrinsicAsync(callback, Utils.Bytes2HexString(extrinsic.Encode()));
         }
@@ -112,9 +112,9 @@ namespace Ajuna.NetApi.Modules
         ///   <br />
         /// </returns>
         public async Task<string> SubmitAndWatchExtrinsicAsync(Action<string, ExtrinsicStatus> callback, 
-            Method method, Account account, ChargeAssetTxPayment assetTxPayment, uint lifeTime, CancellationToken token)
+            Method method, Account account, ChargeType charge, uint lifeTime, CancellationToken token)
         {
-            var extrinsic = await _client.GetExtrinsicParametersAsync(method, account, assetTxPayment, lifeTime, signed: true, token);
+            var extrinsic = await _client.GetExtrinsicParametersAsync(method, account, charge, lifeTime, signed: true, token);
             var extrinsicHex = Utils.Bytes2HexString(extrinsic.Encode());
             return await SubmitAndWatchExtrinsicAsync(callback, extrinsicHex);
         }

@@ -2,6 +2,7 @@
 using Ajuna.NetApi.Model.Types;
 using System;
 using Serilog;
+using Ajuna.NetApi.Model.Types.Base;
 
 namespace Ajuna.NetApi.Model.Extrinsics
 {
@@ -21,7 +22,7 @@ namespace Ajuna.NetApi.Model.Extrinsics
 
         public CompactInteger Nonce;
 
-        public ChargeAssetTxPayment AssetTxPayment;
+        public ChargeType Charge;
 
         public Method Method;
 
@@ -98,7 +99,8 @@ namespace Ajuna.NetApi.Model.Extrinsics
                 Nonce = CompactInteger.Decode(memory.ToArray(), ref p);
 
                 // chargeAssetTxPayment
-                AssetTxPayment = ChargeAssetTxPayment.Decode(memory.ToArray(), ref p);
+                Charge = new ChargeType();
+                Charge.Decode(memory.ToArray(), ref p);
             }
 
             // method
@@ -121,14 +123,14 @@ namespace Ajuna.NetApi.Model.Extrinsics
         /// <param name="method">The method.</param>
         /// <param name="era">The era.</param>
         /// <param name="tip">The tip.</param>
-        public Extrinsic(bool signed, Account account, CompactInteger nonce, Method method, Era era, ChargeAssetTxPayment assetTxPayment)
+        public Extrinsic(bool signed, Account account, CompactInteger nonce, Method method, Era era, ChargeType charge)
         {
             Signed = signed;
             TransactionVersion = Constants.ExtrinsicVersion;
             Account = account;
             Era = era;
             Nonce = nonce;
-            AssetTxPayment = assetTxPayment;
+            Charge = charge;
             Method = method;
         }
 
