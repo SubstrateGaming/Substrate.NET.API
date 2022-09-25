@@ -12,6 +12,13 @@ namespace Ajuna.NetApi.TypeConverters
     {
         /// <summary> The logger. </summary>
         private static readonly ILogger Logger = new LoggerConfiguration().CreateLogger();
+        
+        private ChargeType _chargeType;
+
+        public ExtrinsicJsonConverter(ChargeType chargeType)
+        {
+            _chargeType = chargeType;
+        }
 
         /// <summary>Reads the JSON representation of the object.</summary>
         /// <param name="reader">The <see cref="T:Newtonsoft.Json.JsonReader" /> to read from.</param>
@@ -23,7 +30,7 @@ namespace Ajuna.NetApi.TypeConverters
         public override Extrinsic ReadJson(JsonReader reader, Type objectType, Extrinsic existingValue,
             bool hasExistingValue, JsonSerializer serializer)
         {
-            return new Extrinsic((string) reader.Value);
+            return new Extrinsic((string) reader.Value, _chargeType);
         }
 
         /// <summary>Writes the JSON representation of the object.</summary>
