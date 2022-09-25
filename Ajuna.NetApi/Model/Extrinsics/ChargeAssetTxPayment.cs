@@ -1,22 +1,12 @@
 ﻿using Ajuna.NetApi.Model.Types;
 using Ajuna.NetApi.Model.Types.Base;
+using Org.BouncyCastle.Cms;
 using System;
 using System.Collections.Generic;
 
 namespace Ajuna.NetApi.Model.Extrinsics
 {
-    public class ChargeType : BaseType
-    {
-        public override void Decode(byte[] byteArray, ref int p)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override byte[] Encode()
-        {
-            throw new NotImplementedException();
-        }
-    }
+    public abstract class ChargeType : BaseType {}
 
     public class ChargeAssetTxPayment : ChargeType
     {
@@ -47,6 +37,11 @@ namespace Ajuna.NetApi.Model.Extrinsics
             _tip = CompactInteger.Decode(byteArray, ref p);
             _assetId = CompactInteger.Decode(byteArray, ref p);
         }
+
+        public static ChargeAssetTxPayment Default()
+        {
+            return new ChargeAssetTxPayment(0, 0);
+        }
     }
 
     public class ChargeTransactionPayment : ChargeType
@@ -71,6 +66,11 @@ namespace Ajuna.NetApi.Model.Extrinsics
         public override void Decode(byte[] byteArray, ref int p)
         {
             _tip = CompactInteger.Decode(byteArray, ref p);
+        }
+
+        public static ChargeTransactionPayment Default()
+        {
+            return new ChargeTransactionPayment(0);
         }
     }
 }

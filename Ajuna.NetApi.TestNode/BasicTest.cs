@@ -1,3 +1,4 @@
+using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.Types;
 using NUnit.Framework;
@@ -34,7 +35,7 @@ namespace Ajuna.NetApi.TestNode
         [SetUp]
         public void Setup()
         {
-            _substrateClient = new SubstrateClient(new Uri(WebSocketUrl));
+            _substrateClient = new SubstrateClient(new Uri(WebSocketUrl), ChargeTransactionPayment.Default());
 
         }
 

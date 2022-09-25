@@ -32,10 +32,9 @@ namespace Ajuna.NetApi
         /// <summary> The logger. </summary>
         private static readonly ILogger Logger = new LoggerConfiguration().CreateLogger();
 
-        private readonly ExtrinsicJsonConverter _extrinsicJsonConverter = new ExtrinsicJsonConverter();
+        private readonly ExtrinsicJsonConverter _extrinsicJsonConverter;
 
-        private readonly ExtrinsicStatusJsonConverter
-            _extrinsicStatusJsonConverter = new ExtrinsicStatusJsonConverter();
+        private readonly ExtrinsicStatusJsonConverter _extrinsicStatusJsonConverter;
 
         /// <summary> The request token sources. </summary>
         private readonly ConcurrentDictionary<CancellationTokenSource, string> _requestTokenSourceDict;
@@ -55,9 +54,12 @@ namespace Ajuna.NetApi
         /// <summary> Constructor. </summary>
         /// <remarks> 19.09.2020. </remarks>
         /// <param name="uri"> URI of the resource. </param>
-        public SubstrateClient(Uri uri)
+        public SubstrateClient(Uri uri, ChargeType chargeType)
         {
             _uri = uri;
+
+            _extrinsicJsonConverter = new ExtrinsicJsonConverter(chargeType);
+            _extrinsicStatusJsonConverter = new ExtrinsicStatusJsonConverter();
 
             System = new Modules.System(this);
             Chain = new Chain(this);

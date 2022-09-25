@@ -8,9 +8,6 @@ namespace Ajuna.NetApi.Model.Extrinsics
 {
     public class Extrinsic
     {
-        /// <summary> The logger. </summary>
-        private static readonly ILogger Logger = new LoggerConfiguration().CreateLogger();
-
         public bool Signed;
 
         public byte TransactionVersion;
@@ -32,7 +29,7 @@ namespace Ajuna.NetApi.Model.Extrinsics
         /// Initializes a new instance of the <see cref="Extrinsic"/> class.
         /// </summary>
         /// <param name="str">The string.</param>
-        public Extrinsic(string str) : this(Utils.HexToByteArray(str).AsMemory())
+        public Extrinsic(string str, ChargeType chargeType) : this(Utils.HexToByteArray(str).AsMemory(), chargeType)
         {
 
         }
@@ -41,7 +38,7 @@ namespace Ajuna.NetApi.Model.Extrinsics
         /// Initializes a new instance of the <see cref="Extrinsic"/> class.
         /// </summary>
         /// <param name="memory">The memory.</param>
-        internal Extrinsic(Memory<byte> memory)
+        internal Extrinsic(Memory<byte> memory, ChargeType chargeType)
         {
             int p = 0;
             int m;
@@ -99,7 +96,7 @@ namespace Ajuna.NetApi.Model.Extrinsics
                 Nonce = CompactInteger.Decode(memory.ToArray(), ref p);
 
                 // chargeAssetTxPayment
-                Charge = new ChargeType();
+                Charge = chargeType;
                 Charge.Decode(memory.ToArray(), ref p);
             }
 
