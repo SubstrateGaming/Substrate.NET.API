@@ -24,18 +24,21 @@ namespace Ajuna.NetApi
         /// <param name="callback">The callback.</param>
         public void RegisterCallBackHandler<T>(string subscriptionId, Action<string, T> callback)
         {
-            if (!_headerCallbacks.ContainsKey(subscriptionId))
+            lock (this)
             {
-                Logger.Debug($"Register {callback} for subscription '{subscriptionId}'");
-                _headerCallbacks.Add(subscriptionId, callback);
-            }
+                if (!_headerCallbacks.ContainsKey(subscriptionId))
+                {
+                    Logger.Debug($"Register {callback} for subscription '{subscriptionId}'");
+                    _headerCallbacks.Add(subscriptionId, callback);
+                }
 
-            if (_pendingHeaders.ContainsKey(subscriptionId))
-            {
-                foreach (var h in _pendingHeaders[subscriptionId])
-                    // we don't wait on the tasks to finish
-                    callback(subscriptionId, (T) h);
-                _pendingHeaders.Remove(subscriptionId);
+                if (_pendingHeaders.ContainsKey(subscriptionId))
+                {
+                    foreach (var h in _pendingHeaders[subscriptionId])
+                        // we don't wait on the tasks to finish
+                        callback(subscriptionId, (T)h);
+                    _pendingHeaders.Remove(subscriptionId);
+                }
             }
         }
 
@@ -45,25 +48,30 @@ namespace Ajuna.NetApi
         /// <param name="subscriptionId">The subscription identifier.</param>
         public void UnregisterHeaderHandler(string subscriptionId)
         {
-            if (_headerCallbacks.ContainsKey(subscriptionId))
+            lock (this)
             {
-                Logger.Debug($"Unregister subscription '{subscriptionId}'");
-                _headerCallbacks.Remove(subscriptionId);
+                if (_headerCallbacks.ContainsKey(subscriptionId))
+                {
+                    Logger.Debug($"Unregister subscription '{subscriptionId}'");
+                    _headerCallbacks.Remove(subscriptionId);
+                }
             }
         }
 
         private void GenericCallBack<T>(string subscription, T result)
         {
-            Logger.Debug($"{subscription}: {result}");
-
-            if (_headerCallbacks.ContainsKey(subscription))
+            lock (this)
             {
-                ((Action<string, T>) _headerCallbacks[subscription])(subscription, result);
-            }
-            else
-            {
-                if (!_pendingHeaders.ContainsKey(subscription)) _pendingHeaders.Add(subscription, new List<object>());
-                _pendingHeaders[subscription].Add(result);
+                Logger.Debug($"{subscription}: {result}");
+                if (_headerCallbacks.ContainsKey(subscription))
+                {
+                    ((Action<string, T>)_headerCallbacks[subscription])(subscription, result);
+                }
+                else
+                {
+                    if (!_pendingHeaders.ContainsKey(subscription)) _pendingHeaders.Add(subscription, new List<object>());
+                    _pendingHeaders[subscription].Add(result);
+                }
             }
         }
 
