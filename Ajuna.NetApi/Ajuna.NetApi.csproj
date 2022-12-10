@@ -7,7 +7,7 @@
 		<Company>BloGa Tech AG</Company>
 		<Authors>Cedric Decoster</Authors>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Description>Ajuna Network Substrate NETStandard2.0 API</Description>
+		<Description>Ajuna Network Substrate NETStandard2.1 API</Description>
 		<PackageProjectUrl>https://ajuna.io</PackageProjectUrl>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<RepositoryUrl>https://github.com/ajuna-network/Ajuna.NetApi</RepositoryUrl>
