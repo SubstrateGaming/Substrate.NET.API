@@ -15,7 +15,6 @@ namespace Ajuna.NetApi.TestNode
 
         private SubstrateClient _substrateClient;
 
-
         // Secret Key URI `//Alice` is account:
         // Secret seed:      0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a
         // Public key(hex):  0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
@@ -53,6 +52,54 @@ namespace Ajuna.NetApi.TestNode
             var result = await _substrateClient.System.ChainAsync(CancellationToken.None);
 
             Assert.AreEqual("Bajun Kusama", result);
+
+            await _substrateClient.CloseAsync();
+        }
+
+        [Test]
+        public async Task GetSystemChainTypeTestAsync()
+        {
+            await _substrateClient.ConnectAsync(false, CancellationToken.None);
+
+            var result = await _substrateClient.System.ChainTypeAsync(CancellationToken.None);
+
+            Assert.AreEqual("Live", result);
+
+            await _substrateClient.CloseAsync();
+        }
+
+        [Test]
+        public async Task GetLocalListenAddressesTestAsync()
+        {
+            await _substrateClient.ConnectAsync(false, CancellationToken.None);
+
+            var result = await _substrateClient.System.LocalListenAddressesAsync(CancellationToken.None);
+
+            Assert.IsNotNull(result);
+
+            await _substrateClient.CloseAsync();
+        }
+
+        [Test]
+        public async Task GetLocalPeerIdTestAsync()
+        {
+            await _substrateClient.ConnectAsync(false, CancellationToken.None);
+
+            var result = await _substrateClient.System.LocalPeerIdAsync(CancellationToken.None);
+
+            Assert.IsNotNull(result);
+
+            await _substrateClient.CloseAsync();
+        }
+
+        [Test]
+        public async Task GetNodeRolesTestAsync()
+        {
+            await _substrateClient.ConnectAsync(false, CancellationToken.None);
+
+            var result = await _substrateClient.System.NodeRolesAsync(CancellationToken.None);
+
+            Assert.IsNotNull(result);
 
             await _substrateClient.CloseAsync();
         }
