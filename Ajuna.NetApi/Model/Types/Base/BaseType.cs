@@ -23,6 +23,7 @@ namespace Ajuna.NetApi.Model.Types.Base
         public virtual void Create(byte[] byteArray)
         {
             var p = 0;
+            Bytes = byteArray;
             Decode(byteArray, ref p);
         }
 

@@ -1,6 +1,7 @@
 using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.Types;
+using Ajuna.NetApi.Model.Types.Base;
 using NUnit.Framework;
 using Schnorrkel.Keys;
 using System;
@@ -114,6 +115,21 @@ namespace Ajuna.NetApi.TestNode
             Assert.AreEqual(1337, result.Ss58Format);
             Assert.AreEqual(12, result.TokenDecimals);
             Assert.AreEqual("BAJU", result.TokenSymbol);
+
+            await _substrateClient.CloseAsync();
+        }
+
+        [Test]
+        public async Task GetBlockNumberTestAsync()
+        {
+            await _substrateClient.ConnectAsync(false, CancellationToken.None);
+
+            var blockNumber = new BlockNumber();
+            blockNumber.Create(0);
+
+            var result = await _substrateClient.Chain.GetBlockHashAsync(blockNumber, CancellationToken.None);
+
+            Assert.AreEqual("0x35A06BFEC2EDF0FF4BE89A6428CCD9FF5BD0167D618C5A0D4341F9600A458D14", result.Value);
 
             await _substrateClient.CloseAsync();
         }
