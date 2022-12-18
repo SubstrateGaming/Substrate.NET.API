@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
 using Ajuna.NetApi.TypeConverters;
-using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace Ajuna.NetApi.Test
 {
@@ -34,7 +34,6 @@ namespace Ajuna.NetApi.Test
             vecU8.Create(list);
 
             Assert.AreEqual("0x200101020304050607", Utils.Bytes2HexString(vecU8.Bytes));
-
         }
 
         public enum DispatchClass
@@ -47,11 +46,9 @@ namespace Ajuna.NetApi.Test
         [Test]
         public void EnumEncodingTest()
         {
-
             var dispatchClass1 = new BaseEnum<DispatchClass>();
             var dispatchClass2 = new BaseEnum<DispatchClass>();
             var dispatchClass3 = new BaseEnum<DispatchClass>();
-
 
             dispatchClass1.Create("0x00");
             dispatchClass2.Create(DispatchClass.Normal);
@@ -77,7 +74,6 @@ namespace Ajuna.NetApi.Test
             Assert.AreEqual(DispatchClass.Mandatory, dispatchClass1.Value);
             Assert.AreEqual(dispatchClass2.Value, dispatchClass1.Value);
             Assert.AreEqual(dispatchClass2.Encode(), dispatchClass1.Encode());
-
         }
 
         [Test]
@@ -114,7 +110,6 @@ namespace Ajuna.NetApi.Test
             Assert.AreEqual(PhaseState.None, extEnumType.Value);
             Assert.AreEqual("U8", extEnumType.Value2.GetType().Name);
             Assert.AreEqual(1, (extEnumType.Value2 as U8).Value);
-
         }
 
         [Test]
@@ -157,7 +152,7 @@ namespace Ajuna.NetApi.Test
             var encoded = vecExtEnumType.Encode();
             int p = 0;
             vecExtEnumType.Decode(encoded, ref p);
-            
+
             Assert.Pass();
         }
 
@@ -182,7 +177,7 @@ namespace Ajuna.NetApi.Test
             var encoded = ext1.Encode();
 
             var ext2 = new BaseEnumExt<TestEnum26, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16>();
-            
+
             int p = 0;
             ext2.Decode(encoded, ref p);
 
@@ -193,7 +188,6 @@ namespace Ajuna.NetApi.Test
 
     public sealed class Arr4U8 : BaseType
     {
-
         private Ajuna.NetApi.Model.Types.Primitive.U8[] _value;
 
         public override int TypeSize

@@ -1,12 +1,11 @@
-﻿using Ajuna.NetApi.Model.Meta;
+﻿using System;
+using Ajuna.NetApi.Model.Meta;
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
-using System;
 using static Ajuna.NetApi.Model.Meta.Storage;
 
 namespace Ajuna.NetApi.Model.Types.Metadata.V14
 {
-
     public class RuntimeMetadataV14 : BaseType
     {
         public override byte[] Encode()
@@ -32,10 +31,11 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public PortableRegistry Types { get; private set; }
- 
+
         public BaseVec<PalletMetadata> Modules { get; private set; }
-        
+
         public ExtrinsicMetadataStruct Extrinsic { get; private set; }
 
         public TType TypeId { get; private set; }
@@ -60,9 +60,9 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public U32 Magic { get; private set; }
         public U8 Version { get; private set; }
-
     }
 
     public class PalletMetadata : BaseType
@@ -99,6 +99,7 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public Str PalletName { get; private set; }
         public BaseOpt<StorageMetadata> PalletStorage { get; private set; }
         public BaseOpt<PalletCallMetadata> PalletCalls { get; private set; }
@@ -127,6 +128,7 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public Str Prefix { get; private set; }
         public BaseVec<StorageEntryMetadata> Entries { get; private set; }
     }
@@ -159,6 +161,7 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public Str StorageName { get; private set; }
         public BaseEnum<Modifier> StorageModifier { get; private set; }
         public BaseEnumExt<Storage.Type, TType, StorageEntryTypeMap> StorageType { get; private set; }
@@ -192,6 +195,7 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public BaseVec<BaseEnum<Hasher>> Hashers { get; private set; }
         public TType Key { get; private set; }
         public TType Value { get; private set; }
@@ -213,6 +217,7 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public TType CallType { get; private set; }
     }
 
@@ -232,8 +237,10 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public TType EventType { get; private set; }
     }
+
     public class PalletConstantMetadata : BaseType
     {
         public override byte[] Encode()
@@ -259,6 +266,7 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public Str ConstantName { get; private set; }
         public TType ConstantType { get; private set; }
         public ByteGetter ConstantValue { get; private set; }
@@ -281,8 +289,8 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
-        public TType ErrorType { get; private set; }
 
+        public TType ErrorType { get; private set; }
     }
 
     public class ExtrinsicMetadataStruct : BaseType
@@ -307,6 +315,7 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public TType ExtrinsicType { get; private set; }
         public U8 Version { get; private set; }
         public BaseVec<SignedExtensionMetadataStruct> SignedExtensions { get; private set; }
@@ -334,9 +343,9 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public Str SignedIdentifier { get; private set; }
         public TType SignedExtType { get; private set; }
         public TType AddSignedExtType { get; private set; }
     }
-
 }

@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using Ajuna.NetApi.Model.Types.Primitive;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Ajuna.NetApi.Model.Types.Primitive;
+using Newtonsoft.Json;
 
 namespace Ajuna.NetApi.Model.Types.Base
 {
@@ -16,13 +16,13 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public byte[] Encode()
         {
-           var bytes = new List<byte>();
-           if (OptionFlag)
+            var bytes = new List<byte>();
+            if (OptionFlag)
             {
                 bytes.Add(1);
                 bytes.AddRange(Value.Encode());
-
-            } else
+            }
+            else
             {
                 bytes.Add(0);
             }
@@ -79,6 +79,5 @@ namespace Ajuna.NetApi.Model.Types.Base
         public IType New() => this;
 
         public override string ToString() => JsonConvert.SerializeObject(this);
-
     }
 }

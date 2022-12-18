@@ -1,12 +1,12 @@
-﻿using System.Text;
-using System.Security.Cryptography;
-using Schnorrkel.Keys;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 using Ajuna.NetApi.BIP39;
 using Ajuna.NetApi.Model.Types;
+using Schnorrkel.Keys;
 
 namespace Ajuna.NetApi
 {
@@ -97,7 +97,7 @@ namespace Ajuna.NetApi
         /// + 24 bytes for 18 words.
         /// + 28 bytes for 21 words.
         /// + 32 bytes for 24 words.
-        /// Other slices will lead to a InvalidEntropy error. 
+        /// Other slices will lead to a InvalidEntropy error.
         /// https://github.com/paritytech/substrate-bip39/blob/eef2f86337d2dab075806c12948e8a098aa59d59/src/lib.rs#L45
         /// </summary>
         /// <param name="entropyBytes"></param>
@@ -184,7 +184,7 @@ namespace Ajuna.NetApi
                 case KeyType.Ed25519:
                     Chaos.NaCl.Ed25519.KeyPairFromSeed(out byte[] pubKey, out byte[] priKey, secretBytes.Take(32).ToArray());
                     return Account.Build(KeyType.Ed25519, priKey, pubKey);
-                
+
                 case KeyType.Sr25519:
                     var miniSecret = new MiniSecret(secretBytes, expandMode);
                     return Account.Build(KeyType.Sr25519, miniSecret.ExpandToSecret().ToBytes(), miniSecret.GetPair().Public.Key);
@@ -272,30 +272,39 @@ namespace Ajuna.NetApi
             {
                 case BIP39Wordlist.ChineseSimplified:
                     return new ChineseSimplified();
+
                 case BIP39Wordlist.ChineseTraditional:
                     return new ChineseTraditional();
+
                 case BIP39Wordlist.English:
                     return new English();
+
                 case BIP39Wordlist.French:
                     return new French();
+
                 case BIP39Wordlist.Italian:
                     return new Italian();
+
                 case BIP39Wordlist.Japanese:
                     return new Japanese();
+
                 case BIP39Wordlist.Korean:
                     return new Korean();
+
                 case BIP39Wordlist.Spanish:
                     return new Spanish();
+
                 case BIP39Wordlist.Czech:
                     return new Czech();
+
                 case BIP39Wordlist.Portuguese:
                     return new Portuguese();
+
                 default:
                     throw new Exception($"Unknown {language} in BIP39 implementation!");
             }
         }
     }
-
 
     //namespace System.Security.Cryptography
     //{
@@ -542,7 +551,7 @@ namespace Ajuna.NetApi
     //        }
 
     //        // This function is defined as follows:
-    //        // Func (S, i) = HMAC(S || i) ^ HMAC2(S || i) ^ ... ^ HMAC(iterations) (S || i) 
+    //        // Func (S, i) = HMAC(S || i) ^ HMAC2(S || i) ^ ... ^ HMAC(iterations) (S || i)
     //        // where i is the block number.
     //        private byte[] Func()
     //        {
@@ -567,7 +576,6 @@ namespace Ajuna.NetApi
     //            _block++;
     //            return ret;
     //        }
-
 
     //    }
 
@@ -697,5 +705,4 @@ namespace Ajuna.NetApi
     //    }
 
     //}
-
 }

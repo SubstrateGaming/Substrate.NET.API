@@ -7,6 +7,7 @@ namespace Ajuna.NetApi.Model.Rpc
         public bool IsSyncing { get; set; }
         public int Peers { get; set; }
         public bool ShouldHavePeers { get; set; }
+
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);

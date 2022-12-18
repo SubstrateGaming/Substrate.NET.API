@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using Ajuna.NetApi.Model.Types.Base;
+﻿using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
 using Ajuna.NetApi.TypeConverters;
+using Newtonsoft.Json;
 
 namespace Ajuna.NetApi.Model.Rpc
 {
@@ -10,7 +10,6 @@ namespace Ajuna.NetApi.Model.Rpc
         [JsonConverter(typeof(GenericTypeConverter<Hash>))]
         public Hash Block { get; set; }
 
-        
         public string[][] Changes { get; set; }
         //[JsonConverter(typeof(GenericTypeConverter<Vec<RustTuple<StorageKey, StorageData>>>))]
         //public Vec<RustTuple<StorageKey, StorageData>> Changes { get; set; }
@@ -23,7 +22,7 @@ namespace Ajuna.NetApi.Model.Rpc
 
     /// <summary>
     /// TODO: This needs to be verified, if we can use it to convert straight
-    /// 
+    ///
     /// pub struct StorageChangeSet<Hash> {
     ///     pub block: Hash,
     ///     pub changes: Vec<(StorageKey, Option<StorageData>)>,

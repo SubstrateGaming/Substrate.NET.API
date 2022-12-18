@@ -6,5 +6,4 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
     {
         public override string TypeName() => "PortableRegistry";
     }
-
 }

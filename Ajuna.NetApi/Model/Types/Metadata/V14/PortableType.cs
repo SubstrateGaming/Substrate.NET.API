@@ -1,6 +1,6 @@
-﻿using Ajuna.NetApi.Model.Types.Base;
+﻿using System;
+using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
-using System;
 
 namespace Ajuna.NetApi.Model.Types.Metadata.V14
 {
@@ -26,8 +26,8 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public U32 Id { get; private set; }
         public TypePortableForm Ty { get; private set; }
     }
-
 }

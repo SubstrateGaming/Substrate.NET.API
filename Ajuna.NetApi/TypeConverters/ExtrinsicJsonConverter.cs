@@ -1,6 +1,6 @@
 ﻿using System;
-using Newtonsoft.Json;
 using Ajuna.NetApi.Model.Extrinsics;
+using Newtonsoft.Json;
 using Serilog;
 
 namespace Ajuna.NetApi.TypeConverters
@@ -12,7 +12,7 @@ namespace Ajuna.NetApi.TypeConverters
     {
         /// <summary> The logger. </summary>
         private static readonly ILogger Logger = new LoggerConfiguration().CreateLogger();
-        
+
         private ChargeType _chargeType;
 
         public ExtrinsicJsonConverter(ChargeType chargeType)
@@ -30,7 +30,7 @@ namespace Ajuna.NetApi.TypeConverters
         public override Extrinsic ReadJson(JsonReader reader, Type objectType, Extrinsic existingValue,
             bool hasExistingValue, JsonSerializer serializer)
         {
-            return new Extrinsic((string) reader.Value, _chargeType);
+            return new Extrinsic((string)reader.Value, _chargeType);
         }
 
         /// <summary>Writes the JSON representation of the object.</summary>

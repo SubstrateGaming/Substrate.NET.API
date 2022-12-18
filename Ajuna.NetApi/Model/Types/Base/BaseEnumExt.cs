@@ -7,9 +7,8 @@ namespace Ajuna.NetApi.Model.Types.Base
 {
     public abstract class BaseEnumType : BaseType
     {
-
     }
-    
+
     public class BaseEnumExt<T0, T1> : BaseEnumType
                                         where T0 : Enum
                                         where T1 : IType, new()
@@ -69,7 +68,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2> : BaseEnumType
@@ -131,7 +129,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3> : BaseEnumType
@@ -197,7 +194,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4> : BaseEnumType
@@ -265,7 +261,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5> : BaseEnumType
@@ -335,7 +330,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6> : BaseEnumType
@@ -407,7 +401,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7> : BaseEnumType
@@ -481,7 +474,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8> : BaseEnumType
@@ -557,7 +549,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : BaseEnumType
@@ -633,7 +624,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : BaseEnumType
@@ -711,7 +701,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : BaseEnumType
@@ -791,7 +780,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : BaseEnumType
@@ -873,7 +861,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : BaseEnumType
@@ -957,7 +944,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : BaseEnumType
@@ -1043,7 +1029,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> : BaseEnumType
@@ -1131,7 +1116,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> : BaseEnumType
@@ -1221,7 +1205,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> : BaseEnumType
@@ -1313,7 +1296,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> : BaseEnumType
@@ -1407,7 +1389,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> : BaseEnumType
@@ -1503,7 +1484,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> : BaseEnumType
@@ -1601,7 +1581,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> : BaseEnumType
@@ -1701,7 +1680,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> : BaseEnumType
@@ -1803,7 +1781,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23> : BaseEnumType
@@ -1907,7 +1884,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24> : BaseEnumType
@@ -2013,7 +1989,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25> : BaseEnumType
@@ -2121,7 +2096,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26> : BaseEnumType
@@ -2231,7 +2205,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27> : BaseEnumType
@@ -2343,7 +2316,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28> : BaseEnumType
@@ -2457,7 +2429,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29> : BaseEnumType
@@ -2573,7 +2544,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30> : BaseEnumType
@@ -2691,7 +2661,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31> : BaseEnumType
@@ -2811,7 +2780,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32> : BaseEnumType
@@ -2933,7 +2901,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33> : BaseEnumType
@@ -3057,7 +3024,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34> : BaseEnumType
@@ -3183,7 +3149,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35> : BaseEnumType
@@ -3311,7 +3276,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36> : BaseEnumType
@@ -3441,7 +3405,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37> : BaseEnumType
@@ -3573,7 +3536,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38> : BaseEnumType
@@ -3707,7 +3669,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39> : BaseEnumType
@@ -3843,7 +3804,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40> : BaseEnumType
@@ -3981,7 +3941,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41> : BaseEnumType
@@ -4121,7 +4080,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42> : BaseEnumType
@@ -4263,7 +4221,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43> : BaseEnumType
@@ -4407,7 +4364,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44> : BaseEnumType
@@ -4553,7 +4509,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45> : BaseEnumType
@@ -4701,7 +4656,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46> : BaseEnumType
@@ -4851,7 +4805,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47> : BaseEnumType
@@ -5003,7 +4956,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48> : BaseEnumType
@@ -5157,7 +5109,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49> : BaseEnumType
@@ -5313,7 +5264,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50> : BaseEnumType
@@ -5471,7 +5421,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51> : BaseEnumType
@@ -5631,7 +5580,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52> : BaseEnumType
@@ -5793,7 +5741,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53> : BaseEnumType
@@ -5957,7 +5904,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54> : BaseEnumType
@@ -6123,7 +6069,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55> : BaseEnumType
@@ -6291,8 +6236,8 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
+
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56> : BaseEnumType
         where T0 : Enum
         where T1 : IType, new()
@@ -6460,7 +6405,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57> : BaseEnumType
@@ -6632,7 +6576,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58> : BaseEnumType
@@ -6806,7 +6749,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59> : BaseEnumType
@@ -6982,7 +6924,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60> : BaseEnumType
@@ -7160,7 +7101,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61> : BaseEnumType
@@ -7340,7 +7280,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62> : BaseEnumType
@@ -7522,7 +7461,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63> : BaseEnumType
@@ -7706,7 +7644,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64> : BaseEnumType
@@ -7892,7 +7829,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65> : BaseEnumType
@@ -8080,7 +8016,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66> : BaseEnumType
@@ -8270,7 +8205,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67> : BaseEnumType
@@ -8462,7 +8396,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68> : BaseEnumType
@@ -8656,7 +8589,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69> : BaseEnumType
@@ -8852,7 +8784,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70> : BaseEnumType
@@ -9050,7 +8981,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71> : BaseEnumType
@@ -9250,7 +9180,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72> : BaseEnumType
@@ -9452,7 +9381,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73> : BaseEnumType
@@ -9656,7 +9584,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74> : BaseEnumType
@@ -9862,7 +9789,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75> : BaseEnumType
@@ -10070,7 +9996,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76> : BaseEnumType
@@ -10280,7 +10205,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77> : BaseEnumType
@@ -10492,7 +10416,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78> : BaseEnumType
@@ -10706,7 +10629,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79> : BaseEnumType
@@ -10922,7 +10844,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80> : BaseEnumType
@@ -11140,7 +11061,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81> : BaseEnumType
@@ -11360,7 +11280,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82> : BaseEnumType
@@ -11582,7 +11501,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83> : BaseEnumType
@@ -11806,7 +11724,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84> : BaseEnumType
@@ -12032,7 +11949,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85> : BaseEnumType
@@ -12260,7 +12176,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86> : BaseEnumType
@@ -12490,7 +12405,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87> : BaseEnumType
@@ -12722,7 +12636,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88> : BaseEnumType
@@ -12956,7 +12869,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89> : BaseEnumType
@@ -13192,7 +13104,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90> : BaseEnumType
@@ -13430,7 +13341,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91> : BaseEnumType
@@ -13670,7 +13580,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92> : BaseEnumType
@@ -13912,7 +13821,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93> : BaseEnumType
@@ -14156,7 +14064,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94> : BaseEnumType
@@ -14402,7 +14309,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94, T95> : BaseEnumType
@@ -14650,7 +14556,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94, T95, T96> : BaseEnumType
@@ -14900,7 +14805,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94, T95, T96, T97> : BaseEnumType
@@ -15152,7 +15056,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94, T95, T96, T97, T98> : BaseEnumType
@@ -15406,7 +15309,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94, T95, T96, T97, T98, T99> : BaseEnumType
@@ -15662,7 +15564,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94, T95, T96, T97, T98, T99, T100> : BaseEnumType
@@ -15920,7 +15821,6 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94, T95, T96, T97, T98, T99, T100, T101> : BaseEnumType
@@ -16180,6 +16080,5 @@ namespace Ajuna.NetApi.Model.Types.Base
         public T0 Value { get; set; }
 
         public IType Value2 { get; set; }
-
     }
 }

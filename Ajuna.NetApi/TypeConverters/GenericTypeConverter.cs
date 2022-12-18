@@ -1,6 +1,6 @@
 ﻿using System;
-using Newtonsoft.Json;
 using Ajuna.NetApi.Model.Types;
+using Newtonsoft.Json;
 
 namespace Ajuna.NetApi.TypeConverters
 {
@@ -33,7 +33,7 @@ namespace Ajuna.NetApi.TypeConverters
             JsonSerializer serializer)
         {
             var baseType = new T();
-            baseType.CreateFromJson((string) reader.Value);
+            baseType.CreateFromJson((string)reader.Value);
             return baseType;
         }
 

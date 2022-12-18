@@ -4,7 +4,6 @@ namespace Ajuna.NetApi.Model.Rpc
 {
     public class BlockData
     {
-
         public BlockData(Block block, object justification)
         {
             Block = block;

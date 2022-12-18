@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System;
 using Ajuna.NetApi.Model.Types;
-using System;
-using Serilog;
-using Ajuna.NetApi.Model.Types.Base;
+using Newtonsoft.Json;
 
 namespace Ajuna.NetApi.Model.Extrinsics
 {
@@ -31,7 +29,6 @@ namespace Ajuna.NetApi.Model.Extrinsics
         /// <param name="str">The string.</param>
         public Extrinsic(string str, ChargeType chargeType) : this(Utils.HexToByteArray(str).AsMemory(), chargeType)
         {
-
         }
 
         /// <summary>
@@ -56,7 +53,6 @@ namespace Ajuna.NetApi.Model.Extrinsics
             // this part is for signed extrinsics
             if (Signed)
             {
-
                 // start bytes
                 m = 1;
                 var _startBytes = memory.Slice(p, m).ToArray()[0];
@@ -135,6 +131,5 @@ namespace Ajuna.NetApi.Model.Extrinsics
         {
             return JsonConvert.SerializeObject(this);
         }
-
     }
 }

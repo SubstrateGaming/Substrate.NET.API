@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
-using Ajuna.NetApi.Model.Types.Base;
-using Ajuna.NetApi.Model.Types;
-using System.Collections.Generic;
-using Ajuna.NetApi.Model.Types.Primitive;
+﻿using System.Collections.Generic;
 using System.Numerics;
+using Ajuna.NetApi.Model.Types;
+using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
+using NUnit.Framework;
 
 namespace Ajuna.NetApi.Test
 {
@@ -92,6 +92,7 @@ namespace Ajuna.NetApi.Test
         public RefCount Providers { get; private set; }
         public AccountData AccountData { get; private set; }
     }
+
     public class RefCount : U32
     {
         public override string TypeName() => "RefCount";
@@ -109,11 +110,11 @@ namespace Ajuna.NetApi.Test
             balance.Create(100);
 
             var byteList = new List<byte>();
-            foreach (var callArgument in new IType[] { accountId , balance })
+            foreach (var callArgument in new IType[] { accountId, balance })
             {
                 byteList.AddRange(callArgument.Encode());
             }
-            var callArguments =  byteList.ToArray();
+            var callArguments = byteList.ToArray();
 
             switch (Constants.AddressVersion)
             {
@@ -121,10 +122,12 @@ namespace Ajuna.NetApi.Test
                     Assert.AreEqual("D43593C715FDD31C61141ABD04A99FD6822C8558854CCDE39A5684E7A56DA27D9101",
                         Utils.Bytes2HexString(callArguments, Utils.HexStringFormat.Pure));
                     break;
+
                 case 1:
                     Assert.AreEqual("FFD43593C715FDD31C61141ABD04A99FD6822C8558854CCDE39A5684E7A56DA27D9101",
                         Utils.Bytes2HexString(callArguments, Utils.HexStringFormat.Pure));
                     break;
+
                 case 2:
                     Assert.AreEqual("00D43593C715FDD31C61141ABD04A99FD6822C8558854CCDE39A5684E7A56DA27D9101",
                         Utils.Bytes2HexString(callArguments, Utils.HexStringFormat.Pure));

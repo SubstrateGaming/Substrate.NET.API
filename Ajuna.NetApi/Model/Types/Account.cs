@@ -1,6 +1,6 @@
 ﻿using System;
-using Newtonsoft.Json;
 using Ajuna.NetApi.Model.Types.Base;
+using Newtonsoft.Json;
 
 namespace Ajuna.NetApi.Model.Types
 {
@@ -23,8 +23,10 @@ namespace Ajuna.NetApi.Model.Types
                 {
                     case KeyType.Ed25519:
                         return 0;
+
                     case KeyType.Sr25519:
                         return 1;
+
                     default:
                         throw new Exception($"Unknown key type found '{KeyType}'.");
                 }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
 using Ajuna.NetApi.Model.Extrinsics;
+using NUnit.Framework;
 
 namespace Ajuna.NetApi.Test.Extrinsic
 {

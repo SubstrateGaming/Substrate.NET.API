@@ -18,14 +18,17 @@ namespace Ajuna.NetApi.Model.Types.Base
             {
                 case 0:
                     return Bytes;
+
                 case 1:
                     bytes.Add(0xFF);
                     bytes.AddRange(Bytes);
                     return bytes.ToArray();
+
                 case 2:
                     bytes.Add(0x00);
                     bytes.AddRange(Bytes);
                     return bytes.ToArray();
+
                 default:
                     throw new NotImplementedException("Unknown address version please refer to Constants.cs");
             }

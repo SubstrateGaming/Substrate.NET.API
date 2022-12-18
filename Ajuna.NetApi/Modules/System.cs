@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Ajuna.NetApi.Model.Rpc;
@@ -147,7 +147,7 @@ namespace Ajuna.NetApi.Modules
             return await _client.InvokeAsync<string[]>("system_localListenAddresses", null, token);
         }
 
-         /// <summary>
+        /// <summary>
         /// Local peer id
         /// </summary>
         /// <param name="token"></param>
@@ -183,7 +183,7 @@ namespace Ajuna.NetApi.Modules
         {
             return await _client.InvokeAsync<string[]>("system_nodeRoles", null, token);
         }
-      
+
         /// <summary>
         /// Peers
         /// </summary>
@@ -273,6 +273,5 @@ namespace Ajuna.NetApi.Modules
         {
             return await _client.InvokeAsync<string>("system_version", null, token);
         }
-
     }
 }

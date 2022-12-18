@@ -1,7 +1,7 @@
 using System;
 using System.Text;
-using NUnit.Framework;
 using Ajuna.NetApi.Model.Meta;
+using NUnit.Framework;
 
 namespace Ajuna.NetApi.Test
 {
@@ -30,7 +30,7 @@ namespace Ajuna.NetApi.Test
             var bytes = Utils.HexToByteArray("0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d");
             var hashBytes = HashExtension.Hash(Storage.Hasher.BlakeTwo128, bytes);
             Assert.AreEqual(
-                "DE1E86A9A8C739864CF3CC5EC2BEA59F", 
+                "DE1E86A9A8C739864CF3CC5EC2BEA59F",
                 BitConverter.ToString(hashBytes).Replace("-", ""));
         }
 
@@ -40,7 +40,7 @@ namespace Ajuna.NetApi.Test
             var bytes = Utils.HexToByteArray("0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d");
             var hashBytes = HashExtension.Hash(Storage.Hasher.BlakeTwo256, bytes);
             Assert.AreEqual(
-                "2E3FB4C297A84C5CEBC0E78257D213D0927CCC7596044C6BA013DD05522AACBA", 
+                "2E3FB4C297A84C5CEBC0E78257D213D0927CCC7596044C6BA013DD05522AACBA",
                 BitConverter.ToString(hashBytes).Replace("-", ""));
         }
 

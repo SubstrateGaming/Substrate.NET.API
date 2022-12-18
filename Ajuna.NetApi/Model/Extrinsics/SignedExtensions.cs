@@ -99,6 +99,5 @@ namespace Ajuna.NetApi.Model.Extrinsics
 
             return bytes.ToArray();
         }
-
     }
 }

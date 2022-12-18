@@ -1,6 +1,6 @@
-﻿using Ajuna.NetApi.Model.Types.Base;
+﻿using System;
+using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
-using System;
 
 namespace Ajuna.NetApi.Model.Types.Metadata.V14
 {
@@ -31,6 +31,7 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public Path Path { get; private set; }
         public BaseVec<TypeParameter> TypeParams { get; private set; }
         public BaseEnumExt<TypeDefEnum, TypeDefComposite, TypeDefVariant, TypeDefSequence, TypeDefArray, TypeDefTuple, BaseEnum<TypeDefPrimitive>, TypeDefCompact, TypeDefBitSequence, BaseVoid> TypeDef { get; private set; }
@@ -63,8 +64,8 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public Str TypeParameterName { get; private set; }
         public BaseOpt<TType> TypeParameterType { get; private set; }
     }
-
 }

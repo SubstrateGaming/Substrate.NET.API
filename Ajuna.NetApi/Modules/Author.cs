@@ -82,7 +82,7 @@ namespace Ajuna.NetApi.Modules
         /// </returns>
         public async Task<Hash> SubmitExtrinsicAsync(string parameters, CancellationToken token)
         {
-            return await _client.InvokeAsync<Hash>("author_submitExtrinsic", new object[] {parameters}, token);
+            return await _client.InvokeAsync<Hash>("author_submitExtrinsic", new object[] { parameters }, token);
         }
 
         /// <summary>Submits the and watch extrinsic asynchronous.</summary>
@@ -111,7 +111,7 @@ namespace Ajuna.NetApi.Modules
         /// <returns>
         ///   <br />
         /// </returns>
-        public async Task<string> SubmitAndWatchExtrinsicAsync(Action<string, ExtrinsicStatus> callback, 
+        public async Task<string> SubmitAndWatchExtrinsicAsync(Action<string, ExtrinsicStatus> callback,
             Method method, Account account, ChargeType charge, uint lifeTime, CancellationToken token)
         {
             var extrinsic = await _client.GetExtrinsicParametersAsync(method, account, charge, lifeTime, signed: true, token);
@@ -142,7 +142,7 @@ namespace Ajuna.NetApi.Modules
             string parameters, CancellationToken token)
         {
             var subscriptionId =
-                await _client.InvokeAsync<string>("author_submitAndWatchExtrinsic", new object[] {parameters}, token);
+                await _client.InvokeAsync<string>("author_submitAndWatchExtrinsic", new object[] { parameters }, token);
             _client.Listener.RegisterCallBackHandler(subscriptionId, callback);
             return subscriptionId;
         }
@@ -166,7 +166,7 @@ namespace Ajuna.NetApi.Modules
         public async Task<bool> UnwatchExtrinsicAsync(string subscriptionId, CancellationToken token)
         {
             var result =
-                await _client.InvokeAsync<bool>("author_unwatchExtrinsic", new object[] {subscriptionId}, token);
+                await _client.InvokeAsync<bool>("author_unwatchExtrinsic", new object[] { subscriptionId }, token);
             if (result) _client.Listener.UnregisterHeaderHandler(subscriptionId);
             return result;
         }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ajuna.NetApi.Model.Meta;
 using Blake2Core;
 using Extensions.Data;
-using Ajuna.NetApi.Model.Meta;
 
 namespace Ajuna.NetApi
 {
@@ -55,7 +55,7 @@ namespace Ajuna.NetApi
         /// </returns>
         public static byte[] Blake2(byte[] bytes, int size = 128, IReadOnlyList<byte> key = null)
         {
-            var config = new Blake2BConfig {OutputSizeInBits = size, Key = null};
+            var config = new Blake2BConfig { OutputSizeInBits = size, Key = null };
             return Blake2B.ComputeHash(bytes, config);
         }
 
@@ -67,7 +67,7 @@ namespace Ajuna.NetApi
         /// </returns>
         public static byte[] Blake2Concat(byte[] bytes, int size = 128)
         {
-            var config = new Blake2BConfig {OutputSizeInBits = size, Key = null};
+            var config = new Blake2BConfig { OutputSizeInBits = size, Key = null };
             return Blake2B.ComputeHash(bytes, config).Concat(bytes).ToArray();
         }
 

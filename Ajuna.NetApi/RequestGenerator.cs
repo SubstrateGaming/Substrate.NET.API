@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using Chaos.NaCl;
-using Schnorrkel;
 using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Meta;
 using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.Types;
 using Ajuna.NetApi.Model.Types.Base;
+using Chaos.NaCl;
+using Schnorrkel;
 
 namespace Ajuna.NetApi
 {
@@ -98,9 +98,11 @@ namespace Ajuna.NetApi
                 case KeyType.Ed25519:
                     signature = Ed25519.Sign(payload, account.PrivateKey);
                     break;
+
                 case KeyType.Sr25519:
                     signature = Sr25519v091.SignSimple(account.Bytes, account.PrivateKey, payload);
                     break;
+
                 default:
                     throw new Exception($"Unknown key type found '{account.KeyType}'.");
             }

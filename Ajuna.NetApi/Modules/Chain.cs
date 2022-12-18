@@ -41,7 +41,7 @@ namespace Ajuna.NetApi.Modules
         public async Task<Header> GetHeaderAsync(Hash hash, CancellationToken token)
         {
             var parameter = hash != null ? hash.Value : null;
-            return await _client.InvokeAsync<Header>("chain_getHeader", new object[] {parameter}, token);
+            return await _client.InvokeAsync<Header>("chain_getHeader", new object[] { parameter }, token);
         }
 
         /// <summary> Gets block asynchronous. </summary>
@@ -78,7 +78,7 @@ namespace Ajuna.NetApi.Modules
         public async Task<BlockData> GetBlockAsync(Hash hash, CancellationToken token)
         {
             var parameter = hash != null ? hash.Value : null;
-            var result = await _client.InvokeAsync<BlockData>("chain_getBlock", new object[] {parameter}, token);
+            var result = await _client.InvokeAsync<BlockData>("chain_getBlock", new object[] { parameter }, token);
 
             return result;
         }
@@ -106,7 +106,7 @@ namespace Ajuna.NetApi.Modules
         /// <returns> The block hash. </returns>
         public async Task<Hash> GetBlockHashAsync(CancellationToken token)
         {
-            return await _client.InvokeAsync<Hash>("chain_getBlockHash", new object[] {null}, token);
+            return await _client.InvokeAsync<Hash>("chain_getBlockHash", new object[] { null }, token);
         }
 
         /// <summary> Gets block hash asynchronous. </summary>
@@ -117,7 +117,7 @@ namespace Ajuna.NetApi.Modules
         public async Task<Hash> GetBlockHashAsync(BlockNumber blockNumber, CancellationToken token)
         {
             return await _client.InvokeAsync<Hash>("chain_getBlockHash",
-                new object[] {Utils.Bytes2HexString(blockNumber.Encode())}, token);
+                new object[] { Utils.Bytes2HexString(blockNumber.Encode()) }, token);
         }
 
         /// Get hash of the last finalized block in the canon chain.
@@ -166,7 +166,7 @@ namespace Ajuna.NetApi.Modules
         public async Task<bool> UnsubscribeAllHeadsAsync(string subscriptionId, CancellationToken token)
         {
             var result =
-                await _client.InvokeAsync<bool>("chain_unsubscribeAllHeads", new object[] {subscriptionId}, token);
+                await _client.InvokeAsync<bool>("chain_unsubscribeAllHeads", new object[] { subscriptionId }, token);
             if (result) _client.Listener.UnregisterHeaderHandler(subscriptionId);
             return result;
         }
@@ -205,7 +205,7 @@ namespace Ajuna.NetApi.Modules
         public async Task<bool> UnsubscribeNewHeadsAsync(string subscriptionId, CancellationToken token)
         {
             var result =
-                await _client.InvokeAsync<bool>("chain_unsubscribeNewHeads", new object[] {subscriptionId}, token);
+                await _client.InvokeAsync<bool>("chain_unsubscribeNewHeads", new object[] { subscriptionId }, token);
             if (result) _client.Listener.UnregisterHeaderHandler(subscriptionId);
             return result;
         }
@@ -244,7 +244,7 @@ namespace Ajuna.NetApi.Modules
         public async Task<bool> UnsubscribeFinalizedHeadsAsync(string subscriptionId, CancellationToken token)
         {
             var result = await _client.InvokeAsync<bool>("chain_unsubscribeFinalizedHeads",
-                new object[] {subscriptionId}, token);
+                new object[] { subscriptionId }, token);
             if (result) _client.Listener.UnregisterHeaderHandler(subscriptionId);
             return result;
         }

@@ -14,6 +14,5 @@ namespace Ajuna.NetApi.Model.Types
         }
 
         public T Value { get; set; }
-
     }
 }

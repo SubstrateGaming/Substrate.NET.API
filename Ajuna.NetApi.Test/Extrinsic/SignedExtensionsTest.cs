@@ -1,7 +1,7 @@
 using System;
-using NUnit.Framework;
 using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Types.Base;
+using NUnit.Framework;
 
 namespace Ajuna.NetApi.Test.Extrinsic
 {

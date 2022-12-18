@@ -1,16 +1,16 @@
-﻿using Ajuna.NetApi.Model.Types.Metadata.V14;
-using System;
+﻿using System;
+using Ajuna.NetApi.Model.Types.Metadata.V14;
 
 namespace Ajuna.NetApi.Attributes
 {
-   [AttributeUsage(AttributeTargets.Class)]
-   public class AjunaNodeTypeAttribute : Attribute
-   {
-      public TypeDefEnum NodeType { get; set; }
+    [AttributeUsage(AttributeTargets.Class)]
+    public class AjunaNodeTypeAttribute : Attribute
+    {
+        public TypeDefEnum NodeType { get; set; }
 
-      public AjunaNodeTypeAttribute(TypeDefEnum nodeType)
-      {
-         NodeType = nodeType;
-      }
-   }
+        public AjunaNodeTypeAttribute(TypeDefEnum nodeType)
+        {
+            NodeType = nodeType;
+        }
+    }
 }

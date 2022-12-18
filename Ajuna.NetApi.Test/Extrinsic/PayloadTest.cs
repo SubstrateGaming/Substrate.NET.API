@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using NUnit.Framework;
 using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Types.Base;
+using NUnit.Framework;
 
 namespace Ajuna.NetApi.Test.Extrinsic
 {
@@ -35,7 +35,7 @@ namespace Ajuna.NetApi.Test.Extrinsic
             paramsList.Add(0xFF);
             paramsList.AddRange(
                 Utils.HexToByteArray(
-                    "d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d")); // Utils.GetPublicKeyFrom("5FfBQ3kwXrbdyoqLPvcXRp7ikWydXawpNs2Ceu3WwFdhZ8W4");          
+                    "d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d")); // Utils.GetPublicKeyFrom("5FfBQ3kwXrbdyoqLPvcXRp7ikWydXawpNs2Ceu3WwFdhZ8W4");
             CompactInteger amount = 100;
             paramsList.AddRange(amount.Encode());
             var parameters = paramsList.ToArray();

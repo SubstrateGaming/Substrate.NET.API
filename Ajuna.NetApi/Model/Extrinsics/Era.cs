@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System;
 using Ajuna.NetApi.Model.Types;
-using System;
+using Newtonsoft.Json;
 
 namespace Ajuna.NetApi.Model.Extrinsics
 {
@@ -25,11 +25,9 @@ namespace Ajuna.NetApi.Model.Extrinsics
             Period = period;
             Phase = phase;
             IsImmortal = isImmortal;
-
         }
 
-        override
-        public string ToString()
+        public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
         }
@@ -112,7 +110,6 @@ namespace Ajuna.NetApi.Model.Extrinsics
             if (bytes.Length == 1 && bytes[0] == 0x00)
             {
                 return new Era(0, 0, true);
-
             }
             else if (bytes.Length == 2)
             {

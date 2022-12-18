@@ -1,11 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.Types;
+using Ajuna.NetApi.Model.Types.Base;
 using NUnit.Framework;
 using Schnorrkel.Keys;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Ajuna.NetApi.TestNode
 {
@@ -21,6 +23,7 @@ namespace Ajuna.NetApi.TestNode
         // Account ID:       0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
         // SS58 Address:     5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
         public MiniSecret MiniSecretAlice => new MiniSecret(Utils.HexToByteArray("0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a"), ExpandMode.Ed25519);
+
         public Account Alice => Account.Build(KeyType.Sr25519, MiniSecretAlice.ExpandToSecret().ToBytes(), MiniSecretAlice.GetPair().Public.Key);
 
         // Secret Key URI `//Bob` is account:
@@ -29,13 +32,13 @@ namespace Ajuna.NetApi.TestNode
         // Account ID:       0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48
         // SS58 Address:     5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
         public MiniSecret MiniSecretBob => new MiniSecret(Utils.HexToByteArray("0x398f0c28f98885e046333d4a41c19cee4c37368a9832c6502f6cfd182e2aef89"), ExpandMode.Ed25519);
+
         public Account Bob => Account.Build(KeyType.Sr25519, MiniSecretBob.ExpandToSecret().ToBytes(), MiniSecretBob.GetPair().Public.Key);
 
         [SetUp]
         public void Setup()
         {
             _substrateClient = new SubstrateClient(new Uri(WebSocketUrl), ChargeTransactionPayment.Default());
-
         }
 
         [TearDown]
@@ -118,12 +121,44 @@ namespace Ajuna.NetApi.TestNode
             await _substrateClient.CloseAsync();
         }
 
+        [Test]
+        public async Task GetBlockNumberTestAsync()
+        {
+            await _substrateClient.ConnectAsync(false, CancellationToken.None);
+
+            var blockNumber = new BlockNumber();
+            blockNumber.Create(0);
+
+            var result = await _substrateClient.Chain.GetBlockHashAsync(blockNumber, CancellationToken.None);
+
+            Assert.AreEqual("0x35A06BFEC2EDF0FF4BE89A6428CCD9FF5BD0167D618C5A0D4341F9600A458D14", result.Value);
+
+            await _substrateClient.CloseAsync();
+        }
+
+        [Test]
+        public async Task GetQueryStorageAtAsyncTestAsync()
+        {
+            await _substrateClient.ConnectAsync(false, CancellationToken.None);
+
+            var list = new List<byte[]>() {
+                Utils.HexToByteArray("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000")};
+
+            var result = await _substrateClient.State.GetQueryStorageAtAsync(list, CancellationToken.None);
+
+            Assert.True(result.Block.Value.StartsWith("0x"));
+            Assert.AreEqual(1, result.Changes.Length);
+            Assert.AreEqual("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000", result.Changes[0][0]);
+            Assert.AreEqual("0x35a06bfec2edf0ff4be89a6428ccd9ff5bd0167d618c5a0d4341f9600a458d14", result.Changes[0][1]);
+            await _substrateClient.CloseAsync();
+        }
+
         /// <summary>
         /// Simple extrinsic tester
         /// </summary>
         /// <param name="subscriptionId"></param>
         /// <param name="extrinsicUpdate"></param>
-        static void ActionExtrinsicUpdate(string subscriptionId, ExtrinsicStatus extrinsicUpdate)
+        private static void ActionExtrinsicUpdate(string subscriptionId, ExtrinsicStatus extrinsicUpdate)
         {
             switch (extrinsicUpdate.ExtrinsicState)
             {
@@ -131,20 +166,23 @@ namespace Ajuna.NetApi.TestNode
                     Assert.IsTrue(true);
                     Assert.IsTrue(extrinsicUpdate.InBlock.Value.Length > 0 || extrinsicUpdate.Finalized.Value.Length > 0);
                     break;
+
                 case ExtrinsicState.Future:
                     Assert.IsTrue(false);
                     break;
+
                 case ExtrinsicState.Ready:
                     Assert.IsTrue(true);
                     break;
+
                 case ExtrinsicState.Dropped:
                     Assert.IsTrue(false);
                     break;
+
                 case ExtrinsicState.Invalid:
                     Assert.IsTrue(false);
                     break;
             }
         }
-
     }
 }

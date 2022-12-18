@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Ajuna.NetApi.Model.Types.Base
 {
@@ -55,7 +55,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public void Create(string str) => Create(Utils.HexToByteArray(str));
 
-        public void CreateFromJson(string str)=> Create(Utils.HexToByteArray(str));
+        public void CreateFromJson(string str) => Create(Utils.HexToByteArray(str));
 
         public void Create(byte[] byteArray)
         {

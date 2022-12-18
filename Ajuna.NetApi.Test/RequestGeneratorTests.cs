@@ -1,5 +1,5 @@
-using NUnit.Framework;
 using Ajuna.NetApi.Model.Meta;
+using NUnit.Framework;
 
 namespace Ajuna.NetApi.Test
 {

@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System;
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
-using System;
+using Newtonsoft.Json;
 
 namespace Ajuna.NetApi.Model.Types.Metadata.V14
 {
@@ -41,31 +41,36 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
         public IType New() => this;
 
         public CompactInteger Value { get; set; }
-
     }
 
     public class TType : CompactIntegerType
     {
         public override string TypeName() => "T::Type";
-
     }
 
     public enum TypeDefEnum
     {
         /// A composite type (e.g. a struct or a tuple)
         Composite = 0,
+
         /// A variant type (e.g. an enum)
         Variant = 1,
+
         /// A sequence type with runtime known length.
         Sequence = 2,
+
         /// An array type with compile-time known length.
         Array = 3,
+
         /// A tuple type.
         Tuple = 4,
+
         /// A Rust primitive type.
         Primitive = 5,
+
         /// A type using the [`Compact`] encoding
         Compact = 6,
+
         /// A type representing a sequence of bits.
         BitSequence = 7
     }
@@ -88,8 +93,8 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
-        public BaseVec<Field> Fields { get; private set; }
 
+        public BaseVec<Field> Fields { get; private set; }
     }
 
     public class TypeDefVariant : BaseType
@@ -110,6 +115,7 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public BaseVec<Variant> TypeParam { get; private set; }
     }
 
@@ -131,6 +137,7 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public TType TypeParam { get; private set; }
     }
 
@@ -155,6 +162,7 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public U32 Len { get; private set; }
         public TType TypeParam { get; private set; }
     }
@@ -177,6 +185,7 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public BaseVec<TType> Fields { get; private set; }
     }
 
@@ -184,32 +193,46 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
     {
         /// `bool` type
         Bool,
+
         /// `char` type
         Char,
+
         /// `str` type
         Str,
+
         /// `u8`
         U8,
+
         /// `u16`
         U16,
+
         /// `u32`
         U32,
+
         /// `u64`
         U64,
+
         /// `u128`
         U128,
+
         /// 256 bits unsigned int (no rust equivalent)
         U256,
+
         /// `i8`
         I8,
+
         /// `i16`
         I16,
+
         /// `i32`
         I32,
+
         /// `i64`
         I64,
+
         /// `i128`
         I128,
+
         /// 256 bits signed int (no rust equivalent)
         I256,
     }
@@ -232,6 +255,7 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public TType TypeParam { get; private set; }
     }
 
@@ -256,6 +280,7 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public TType BitStoreType { get; private set; }
         public TType BitOrderType { get; private set; }
     }

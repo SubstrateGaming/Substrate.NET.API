@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Ajuna.NetApi.Model.Types.Base
 {
@@ -10,9 +10,9 @@ namespace Ajuna.NetApi.Model.Types.Base
     /// </summary>
     /// <typeparam name="T1"></typeparam>
     /// <typeparam name="T2"></typeparam>
-    public class BaseBitSeq<T1,T2>: IType 
-        where T1: IType, new()
-        where T2: IType, new()
+    public class BaseBitSeq<T1, T2> : IType
+        where T1 : IType, new()
+        where T2 : IType, new()
     {
         public virtual string TypeName() => $"BitSequence<{new T1().TypeName()},{new T2().TypeName()}>";
 
@@ -35,11 +35,11 @@ namespace Ajuna.NetApi.Model.Types.Base
         public void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            
+
             var length = Reverse(byteArray[0]);
 
             p++;
-            
+
             var array = new T1[length];
             for (var i = 0; i < length; i++)
             {
@@ -53,7 +53,6 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = new byte[TypeSize];
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
             Value = array;
-
         }
 
         public virtual T1[] Value { get; internal set; }
