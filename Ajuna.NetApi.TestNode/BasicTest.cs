@@ -137,7 +137,7 @@ namespace Ajuna.NetApi.TestNode
         }
 
         [Test]
-        public async Task GetKeysPagedAtTestAsync()
+        public async Task GetQueryStorageAtAsyncTestAsync()
         {
             await _substrateClient.ConnectAsync(false, CancellationToken.None);
 

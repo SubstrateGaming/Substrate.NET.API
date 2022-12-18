@@ -1,10 +1,10 @@
 ﻿using System;
-using NUnit.Framework;
-using Schnorrkel.Keys;
 using System.Collections.Generic;
 using System.Text;
-using static Ajuna.NetApi.Mnemonic;
 using Ajuna.NetApi.Model.Types;
+using NUnit.Framework;
+using Schnorrkel.Keys;
+using static Ajuna.NetApi.Mnemonic;
 
 namespace Ajuna.NetApi.Test
 {
@@ -150,7 +150,6 @@ namespace Ajuna.NetApi.Test
         [Test]
         public void MnemonicSeedAndMiniSecretTest()
         {
-
             foreach (var vector in Vectors)
             {
                 var mnemonic = vector[0];
@@ -214,14 +213,13 @@ namespace Ajuna.NetApi.Test
 
             Assert.AreEqual(keyPair2.Public.Key, keyPair3.Public.Key);
             Assert.AreEqual(keyPair2.Secret.ToBytes(), keyPair3.Secret.ToBytes());
-
         }
 
         [Test]
         public void MnemonicFromEntropyTest()
         {
             var random = new Random(1234);
-            
+
             byte[] entropyBytes;
             string[] mnemonicArray;
             string mnemonic;
@@ -236,7 +234,6 @@ namespace Ajuna.NetApi.Test
             Assert.AreEqual("5Fe24e21Ff5vRtuWa4ZNPv1EGQz1zBq1VtT8ojqfmzo9k11P", account.Value);
             account = GetAccountFromMnemonic(mnemonic, "", KeyType.Ed25519);
             Assert.AreEqual("5CcaF7yE6YU67TyPHjSwd9DKiVBTAS2AktdxNG3DeLYs63gF", account.Value);
-
 
             entropyBytes = new byte[20];
             random.NextBytes(entropyBytes);

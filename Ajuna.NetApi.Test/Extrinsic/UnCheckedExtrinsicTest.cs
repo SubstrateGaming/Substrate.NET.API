@@ -7,7 +7,6 @@ namespace Ajuna.NetApi.Test.Extrinsic
     {
         private Random _random;
 
-
         [OneTimeSetUp]
         public void Setup()
         {
@@ -180,7 +179,7 @@ namespace Ajuna.NetApi.Test.Extrinsic
 
         //    var uncheckedExtrinsic = new UnCheckedExtrinsic(true,
         //        Account.Build(KeyType.Sr25519, new byte[0], publicKey), method, era, nonce, assetTxPayment, genesis, startEraHash);
-        
+
         //    var balanceTransfer =
         //        "0x2d0284d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d01726ba1fab06d3e1bf6abfa0d5af85e25f2a970e11384162b7caf83935c58f769b6fef3b83a29ffd8d813a037d01cd6bcb21beaa88e9a18b3abe366b0458a8a82a5001049130400278117fc144c72340f67d0f2316e8386ceffbf2b2428c9c51fef7c597f1d426e8543";
 

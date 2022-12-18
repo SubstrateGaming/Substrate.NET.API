@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
+﻿using System;
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
-using System;
+using NUnit.Framework;
 
 namespace Ajuna.NetApi.Test
 {
@@ -89,6 +89,5 @@ namespace Ajuna.NetApi.Test
             }
             return result;
         }
-
     }
 }

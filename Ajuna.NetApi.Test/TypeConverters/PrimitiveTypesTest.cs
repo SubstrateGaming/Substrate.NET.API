@@ -25,7 +25,6 @@ namespace Ajuna.NetApi.Test
             var primChar = new Ajuna.NetApi.Model.Types.Primitive.PrimChar();
             primChar.Create(oneChar);
             Assert.AreEqual(oneChar, primChar.Value);
-
         }
 
         [Test]
@@ -105,8 +104,6 @@ namespace Ajuna.NetApi.Test
             Assert.AreEqual(number, prim2.Value);
 
             Assert.AreEqual(prim.Bytes, prim2.Bytes);
-
-
         }
 
         [Test]
