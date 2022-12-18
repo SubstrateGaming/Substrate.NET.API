@@ -2,9 +2,11 @@ using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.Types;
 using Ajuna.NetApi.Model.Types.Base;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using Schnorrkel.Keys;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -131,6 +133,23 @@ namespace Ajuna.NetApi.TestNode
 
             Assert.AreEqual("0x35A06BFEC2EDF0FF4BE89A6428CCD9FF5BD0167D618C5A0D4341F9600A458D14", result.Value);
 
+            await _substrateClient.CloseAsync();
+        }
+
+        [Test]
+        public async Task GetKeysPagedAtTestAsync()
+        {
+            await _substrateClient.ConnectAsync(false, CancellationToken.None);
+
+            var list = new List<byte[]>() { 
+                Utils.HexToByteArray("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000")};
+
+            var result = await _substrateClient.State.GetQueryStorageAtAsync(list, CancellationToken.None);
+
+            Assert.True(result.Block.Value.StartsWith("0x"));
+            Assert.AreEqual(1, result.Changes.Length);
+            Assert.AreEqual("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000", result.Changes[0][0]);
+            Assert.AreEqual("0x35a06bfec2edf0ff4be89a6428ccd9ff5bd0167d618c5a0d4341f9600a458d14", result.Changes[0][1]);
             await _substrateClient.CloseAsync();
         }
 

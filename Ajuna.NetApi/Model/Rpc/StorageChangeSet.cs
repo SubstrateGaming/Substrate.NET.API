@@ -2,6 +2,7 @@
 using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
 using Ajuna.NetApi.TypeConverters;
+using System.Collections.Generic;
 
 namespace Ajuna.NetApi.Model.Rpc
 {
