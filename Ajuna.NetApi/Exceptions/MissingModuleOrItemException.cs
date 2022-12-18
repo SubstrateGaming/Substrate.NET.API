@@ -7,7 +7,6 @@ namespace Ajuna.NetApi.Exceptions
         public MissingModuleOrItemException(string message)
             : base(message)
         {
-
         }
     }
 }

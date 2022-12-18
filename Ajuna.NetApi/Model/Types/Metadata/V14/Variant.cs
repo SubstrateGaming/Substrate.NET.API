@@ -1,6 +1,6 @@
-﻿using Ajuna.NetApi.Model.Types.Base;
+﻿using System;
+using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Primitive;
-using System;
 
 namespace Ajuna.NetApi.Model.Types.Metadata.V14
 {
@@ -31,10 +31,10 @@ namespace Ajuna.NetApi.Model.Types.Metadata.V14
 
             TypeSize = p - start;
         }
+
         public Str VariantName { get; private set; }
         public BaseVec<Field> VariantFields { get; private set; }
         public U8 Index { get; private set; }
         public BaseVec<Str> Docs { get; private set; }
     }
-
 }

@@ -16,7 +16,6 @@
             Value = CompactInteger.Decode(byteArray, ref p);
 
             TypeSize = p - start;
-
         }
 
         public virtual CompactInteger Value { get; internal set; }

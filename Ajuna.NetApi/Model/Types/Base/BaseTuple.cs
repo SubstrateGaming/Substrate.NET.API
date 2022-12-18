@@ -70,6 +70,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -123,6 +124,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -183,6 +185,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -250,6 +253,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -324,6 +328,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -405,6 +410,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -493,6 +499,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -588,6 +595,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -690,6 +698,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -799,6 +808,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -915,6 +925,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -1038,6 +1049,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -1168,6 +1180,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -1305,6 +1318,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -1449,6 +1463,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -1600,6 +1615,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -1758,6 +1774,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -1923,6 +1940,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -2095,6 +2113,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -2274,6 +2293,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -2460,6 +2480,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -2653,6 +2674,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -2853,6 +2875,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -3060,6 +3083,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -3274,6 +3298,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -3495,6 +3520,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -3723,6 +3749,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -3958,6 +3985,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -4200,6 +4228,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -4449,6 +4478,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -4705,6 +4735,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -4968,6 +4999,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -5238,6 +5270,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -5515,6 +5548,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -5799,6 +5833,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -6090,6 +6125,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -6388,6 +6424,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -6693,6 +6730,7 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         public IType[] Value { get; internal set; }
     }
+
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()

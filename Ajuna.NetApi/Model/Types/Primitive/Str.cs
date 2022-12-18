@@ -1,7 +1,7 @@
-﻿using Ajuna.NetApi.Model.Types.Base;
-using System;
+﻿using System;
 using System.Linq;
 using System.Text;
+using Ajuna.NetApi.Model.Types.Base;
 
 namespace Ajuna.NetApi.Model.Types.Primitive
 {

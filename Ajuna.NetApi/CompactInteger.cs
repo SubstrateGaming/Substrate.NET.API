@@ -13,17 +13,29 @@ namespace Ajuna.NetApi
         /// <remarks> 19.09.2020. </remarks>
         /// <param name="value"> The value. </param>
         public CompactInteger(BigInteger value) => Value = value;
+
         public CompactInteger(I8 value) => Value = value.Value;
+
         public CompactInteger(I16 value) => Value = value.Value;
+
         public CompactInteger(I32 value) => Value = value.Value;
+
         public CompactInteger(I64 value) => Value = value.Value;
+
         public CompactInteger(I128 value) => Value = value.Value;
+
         public CompactInteger(I256 value) => Value = value.Value;
+
         public CompactInteger(U8 value) => Value = value.Value;
+
         public CompactInteger(U16 value) => Value = value.Value;
+
         public CompactInteger(U32 value) => Value = value.Value;
+
         public CompactInteger(U64 value) => Value = value.Value;
+
         public CompactInteger(U128 value) => Value = value.Value;
+
         public CompactInteger(U256 value) => Value = value.Value;
 
         /// <summary> Indicates whether this instance and a specified object are equal. </summary>
@@ -206,7 +218,7 @@ namespace Ajuna.NetApi
         /// <returns> The result of the operation. </returns>
         public static implicit operator sbyte(CompactInteger c)
         {
-            return (sbyte) c.Value;
+            return (sbyte)c.Value;
         }
 
         /// <summary> Implicit cast that converts the given CompactInteger to a byte. </summary>
@@ -215,7 +227,7 @@ namespace Ajuna.NetApi
         /// <returns> The result of the operation. </returns>
         public static implicit operator byte(CompactInteger c)
         {
-            return (byte) c.Value;
+            return (byte)c.Value;
         }
 
         /// <summary> Implicit cast that converts the given CompactInteger to a short. </summary>
@@ -224,7 +236,7 @@ namespace Ajuna.NetApi
         /// <returns> The result of the operation. </returns>
         public static implicit operator short(CompactInteger c)
         {
-            return (short) c.Value;
+            return (short)c.Value;
         }
 
         /// <summary> Implicit cast that converts the given CompactInteger to an ushort. </summary>
@@ -233,7 +245,7 @@ namespace Ajuna.NetApi
         /// <returns> The result of the operation. </returns>
         public static implicit operator ushort(CompactInteger c)
         {
-            return (ushort) c.Value;
+            return (ushort)c.Value;
         }
 
         /// <summary> Implicit cast that converts the given CompactInteger to an int. </summary>
@@ -242,7 +254,7 @@ namespace Ajuna.NetApi
         /// <returns> The result of the operation. </returns>
         public static implicit operator int(CompactInteger c)
         {
-            return (int) c.Value;
+            return (int)c.Value;
         }
 
         /// <summary> Implicit cast that converts the given CompactInteger to an uint. </summary>
@@ -251,7 +263,7 @@ namespace Ajuna.NetApi
         /// <returns> The result of the operation. </returns>
         public static implicit operator uint(CompactInteger c)
         {
-            return (uint) c.Value;
+            return (uint)c.Value;
         }
 
         /// <summary> Implicit cast that converts the given CompactInteger to a long. </summary>
@@ -260,7 +272,7 @@ namespace Ajuna.NetApi
         /// <returns> The result of the operation. </returns>
         public static implicit operator long(CompactInteger c)
         {
-            return (long) c.Value;
+            return (long)c.Value;
         }
 
         /// <summary> Implicit cast that converts the given CompactInteger to an ulong. </summary>
@@ -269,7 +281,7 @@ namespace Ajuna.NetApi
         /// <returns> The result of the operation. </returns>
         public static implicit operator ulong(CompactInteger c)
         {
-            return (ulong) c.Value;
+            return (ulong)c.Value;
         }
 
         /// <summary> Implicit cast that converts the given BigInteger to a CompactInteger. </summary>
@@ -381,50 +393,50 @@ namespace Ajuna.NetApi
             switch (flag)
             {
                 case 0b00u:
-                {
-                    number = firstByte >> 2;
-                    break;
-                }
+                    {
+                        number = firstByte >> 2;
+                        break;
+                    }
 
                 case 0b01u:
-                {
-                    uint secondByte = m[p++];
+                    {
+                        uint secondByte = m[p++];
 
-                    number = ((firstByte & 0b11111100u) + secondByte * 256u) >> 2;
-                    break;
-                }
+                        number = ((firstByte & 0b11111100u) + secondByte * 256u) >> 2;
+                        break;
+                    }
 
                 case 0b10u:
-                {
-                    number = firstByte;
-                    var multiplier = 256u;
-
-                    for (var i = 0; i < 3; ++i)
                     {
-                        number += m[p++] * multiplier;
-                        multiplier = multiplier << 8;
-                    }
+                        number = firstByte;
+                        var multiplier = 256u;
 
-                    number = number >> 2;
-                    break;
-                }
+                        for (var i = 0; i < 3; ++i)
+                        {
+                            number += m[p++] * multiplier;
+                            multiplier = multiplier << 8;
+                        }
+
+                        number = number >> 2;
+                        break;
+                    }
 
                 case 0b11:
-                {
-                    var bytesCount = (firstByte >> 2) + 4u;
-                    CompactInteger multiplier = 1u;
-                    CompactInteger value = 0;
-
-                    // we assured that there are m more bytes,
-                    // no need to make checks in a loop
-                    for (var i = 0; i < bytesCount; ++i)
                     {
-                        value += multiplier * m[p++];
-                        multiplier *= 256u;
-                    }
+                        var bytesCount = (firstByte >> 2) + 4u;
+                        CompactInteger multiplier = 1u;
+                        CompactInteger value = 0;
 
-                    return value;
-                }
+                        // we assured that there are m more bytes,
+                        // no need to make checks in a loop
+                        for (var i = 0; i < bytesCount; ++i)
+                        {
+                            value += multiplier * m[p++];
+                            multiplier *= 256u;
+                        }
+
+                        return value;
+                    }
             }
 
             return number;
@@ -435,7 +447,7 @@ namespace Ajuna.NetApi
         /// <returns> A byte[]. </returns>
         public byte[] Encode()
         {
-            if (this <= 63) return new byte[] {this << 2};
+            if (this <= 63) return new byte[] { this << 2 };
 
             if (this <= 0x3FFF)
                 return new byte[]

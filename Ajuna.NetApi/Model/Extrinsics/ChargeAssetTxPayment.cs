@@ -1,12 +1,10 @@
-﻿using Ajuna.NetApi.Model.Types;
+﻿using System.Collections.Generic;
 using Ajuna.NetApi.Model.Types.Base;
-using Org.BouncyCastle.Cms;
-using System;
-using System.Collections.Generic;
 
 namespace Ajuna.NetApi.Model.Extrinsics
 {
-    public abstract class ChargeType : BaseType {}
+    public abstract class ChargeType : BaseType
+    { }
 
     public class ChargeAssetTxPayment : ChargeType
     {

@@ -14,7 +14,6 @@ namespace Ajuna.NetApi
     /// <remarks> 19.09.2020. </remarks>
     public class Utils
     {
-
         /// <summary>
         /// Different representations of a hex string.
         /// </summary>
@@ -38,10 +37,13 @@ namespace Ajuna.NetApi
             {
                 case HexStringFormat.Pure:
                     return BitConverter.ToString(bytes).Replace("-", string.Empty);
+
                 case HexStringFormat.Dash:
                     return BitConverter.ToString(bytes);
+
                 case HexStringFormat.Prefixed:
                     return $"0x{BitConverter.ToString(bytes).Replace("-", string.Empty)}";
+
                 default:
                     throw new Exception($"Unimplemented hex string format '{format}'");
             }
@@ -114,10 +116,13 @@ namespace Ajuna.NetApi
             {
                 case 2:
                     return BitConverter.ToUInt16(value, 0);
+
                 case 4:
                     return BitConverter.ToUInt32(value, 0);
+
                 case 8:
                     return BitConverter.ToUInt64(value, 0);
+
                 default:
                     throw new Exception($"Unhandled byte size {value.Length} for this method!");
             }
@@ -150,12 +155,15 @@ namespace Ajuna.NetApi
                 case ushort s:
                     result = BitConverter.GetBytes(s);
                     break;
+
                 case uint s:
                     result = BitConverter.GetBytes(s);
                     break;
+
                 case ulong s:
                     result = BitConverter.GetBytes(s);
                     break;
+
                 default:
                     throw new Exception("Unhandled byte size for this method!");
             }
@@ -224,14 +232,13 @@ namespace Ajuna.NetApi
             {
                 PREFIX_SIZE = 2;
                 // set network
-                byte b2up = (byte) ((bs58decoded[0] << 2) & 0b1111_1100);
-                byte b2lo = (byte) ((bs58decoded[1] >> 6) & 0b0000_0011);
-                byte b2 = (byte) (b2up | b2lo);
-                byte b1 = (byte) (bs58decoded[1] & 0b0011_1111);
+                byte b2up = (byte)((bs58decoded[0] << 2) & 0b1111_1100);
+                byte b2lo = (byte)((bs58decoded[1] >> 6) & 0b0000_0011);
+                byte b2 = (byte)(b2up | b2lo);
+                byte b1 = (byte)(bs58decoded[1] & 0b0011_1111);
                 network = (short)BitConverter.ToInt16(
                     new byte[] { b2, b1 }, 0); // big endian, for BitConverter
-            } 
-
+            }
             else
             {
                 throw new ApplicationException("Unsupported address size.");
@@ -248,7 +255,6 @@ namespace Ajuna.NetApi
             }
 
             return bs58decoded.Skip(PREFIX_SIZE).Take(PUBLIC_KEY_LENGTH).ToArray();
-
         }
 
         /// <summary>
@@ -285,15 +291,16 @@ namespace Ajuna.NetApi
                 plainAddr = new byte[36];
 
                 // parity style
-                var ident = (short) ss58Prefix & 0b00111111_11111111; // clear first two bits
-                var first = (byte) (((ident & 0b0000_0000_1111_1100) >> 2) | 0b0100_0000);
-                var second = (byte) ((ident >> 8) | (ident & 0b0000_0000_0000_0011) << 6);
+                var ident = (short)ss58Prefix & 0b00111111_11111111; // clear first two bits
+                var first = (byte)(((ident & 0b0000_0000_1111_1100) >> 2) | 0b0100_0000);
+                var second = (byte)((ident >> 8) | (ident & 0b0000_0000_0000_0011) << 6);
 
                 plainAddr[0] = first;
                 plainAddr[1] = second;
 
                 bytes.CopyTo(plainAddr.AsMemory(2));
-            } else
+            }
+            else
             {
                 throw new Exception("Unsupported prefix used, support only up to 16383!");
             }
@@ -321,7 +328,7 @@ namespace Ajuna.NetApi
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="DataToEncrypt"></param>
         /// <param name="RSAKeyInfo"></param>
@@ -335,17 +342,15 @@ namespace Ajuna.NetApi
                 //Create a new instance of RSACryptoServiceProvider.
                 using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
                 {
-
                     //Import the RSA Key information. This only needs
                     //toinclude the public key information.
                     RSA.ImportParameters(RSAKeyInfo);
 
-                    //Encrypt the passed byte array and specify OAEP padding.  
+                    //Encrypt the passed byte array and specify OAEP padding.
                     //OAEP padding is only available on Microsoft Windows XP or
-                    //later.  
+                    //later.
                     if (OAEPPadding != null)
                     {
-
                         encryptedData = RSA.Encrypt(DataToEncrypt, OAEPPadding);
                     }
                     else
@@ -355,7 +360,7 @@ namespace Ajuna.NetApi
                 }
                 return encryptedData;
             }
-            //Catch and display a CryptographicException  
+            //Catch and display a CryptographicException
             //to the console.
             catch (CryptographicException e)
             {
@@ -366,7 +371,7 @@ namespace Ajuna.NetApi
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="DataToDecrypt"></param>
         /// <param name="RSAKeyInfo"></param>
@@ -385,27 +390,25 @@ namespace Ajuna.NetApi
                     //to include the private key information.
                     RSA.ImportParameters(RSAKeyInfo);
 
-                    //Decrypt the passed byte array and specify OAEP padding.  
+                    //Decrypt the passed byte array and specify OAEP padding.
                     //OAEP padding is only available on Microsoft Windows XP or
-                    //later.  
+                    //later.
 
-                    //Encrypt the passed byte array and specify OAEP padding.  
+                    //Encrypt the passed byte array and specify OAEP padding.
                     //OAEP padding is only available on Microsoft Windows XP or
-                    //later.  
+                    //later.
                     if (OAEPPadding != null)
                     {
-
                         decryptedData = RSA.Decrypt(DataToDecrypt, OAEPPadding);
                     }
                     else
                     {
                         decryptedData = RSA.Decrypt(DataToDecrypt, false);
                     }
-
                 }
                 return decryptedData;
             }
-            //Catch and display a CryptographicException  
+            //Catch and display a CryptographicException
             //to the console.
             catch (CryptographicException e)
             {

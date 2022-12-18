@@ -5,20 +5,20 @@ using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.Threading;
-using Newtonsoft.Json.Linq;
-using Serilog;
-using StreamJsonRpc;
 using Ajuna.NetApi.Exceptions;
 using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Meta;
 using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.Types;
 using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Metadata;
 using Ajuna.NetApi.Model.Types.Primitive;
 using Ajuna.NetApi.Modules;
 using Ajuna.NetApi.TypeConverters;
-using Ajuna.NetApi.Model.Types.Metadata;
+using Microsoft.VisualStudio.Threading;
+using Newtonsoft.Json.Linq;
+using Serilog;
+using StreamJsonRpc;
 
 [assembly: InternalsVisibleTo("AjunaNetTests")]
 
@@ -104,11 +104,12 @@ namespace Ajuna.NetApi
         public bool IsConnected => _socket?.State == WebSocketState.Open && _jsonRpc != null;
 
         /// <summary>
-        /// Sets the JSON-RPC logging level. 
+        /// Sets the JSON-RPC logging level.
         /// </summary>
         /// <param name="sourceLevels"></param>
         /// <returns></returns>
-        public bool SetJsonRPCTraceLevel(SourceLevels sourceLevels) {
+        public bool SetJsonRPCTraceLevel(SourceLevels sourceLevels)
+        {
             if (_jsonRpc == null)
             {
                 return false;
@@ -176,10 +177,9 @@ namespace Ajuna.NetApi
             _jsonRpc = new JsonRpc(new WebSocketMessageHandler(_socket, formatter));
             _jsonRpc.TraceSource.Listeners.Add(new SerilogTraceListener.SerilogTraceListener());
             _jsonRpc.TraceSource.Switch.Level = SourceLevels.Warning;
-            _jsonRpc.AddLocalRpcTarget(Listener, new JsonRpcTargetOptions {AllowNonPublicInvocation = false});
+            _jsonRpc.AddLocalRpcTarget(Listener, new JsonRpcTargetOptions { AllowNonPublicInvocation = false });
             _jsonRpc.StartListening();
             Logger.Debug("Listening to websocket.");
-
 
             if (useMetaData)
             {
@@ -241,7 +241,7 @@ namespace Ajuna.NetApi
                 await InvokeAsync<string>("state_subscribeStorage", new object[] { new JArray { storageParams } }, token);
 
             Listener.RegisterCallBackHandler(subscriptionId, callback);
-            
+
             return subscriptionId;
         }
 
@@ -275,7 +275,7 @@ namespace Ajuna.NetApi
         /// <returns> The method async&lt; t&gt; </returns>
         public async Task<T> GetMethodAsync<T>(string method, string parameter, CancellationToken token)
         {
-            return await InvokeAsync<T>(method, new object[] {parameter}, token);
+            return await InvokeAsync<T>(method, new object[] { parameter }, token);
         }
 
         /// <summary>
@@ -428,6 +428,6 @@ namespace Ajuna.NetApi
             // GC.SuppressFinalize(this);
         }
 
-        #endregion
+        #endregion IDisposable Support
     }
 }

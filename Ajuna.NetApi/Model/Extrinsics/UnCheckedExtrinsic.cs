@@ -1,7 +1,7 @@
-﻿using Ajuna.NetApi.Model.Types;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Ajuna.NetApi.Model.Rpc;
+using Ajuna.NetApi.Model.Types;
 using Ajuna.NetApi.Model.Types.Base;
 
 namespace Ajuna.NetApi.Model.Extrinsics
@@ -79,7 +79,6 @@ namespace Ajuna.NetApi.Model.Extrinsics
             }
             else
             {
-
             }
 
             list.AddRange(Era.Encode());

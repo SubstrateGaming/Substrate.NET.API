@@ -48,6 +48,5 @@ namespace Ajuna.NetApi.Model.Types.Base
 
         [JsonConverter(typeof(StringEnumConverter))]
         public T Value { get; internal set; }
-
     }
 }

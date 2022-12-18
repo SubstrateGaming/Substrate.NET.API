@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using System.Collections.Generic;
 using Ajuna.NetApi.Model.Types.Metadata.V14;
-using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Ajuna.NetApi.Model.Meta
 {
@@ -141,12 +141,16 @@ namespace Ajuna.NetApi.Model.Meta
     public class Entry
     {
         public string Name { get; set; }
+
         [JsonConverter(typeof(StringEnumConverter))]
         public Storage.Modifier Modifier { get; set; }
+
         [JsonConverter(typeof(StringEnumConverter))]
         public Storage.Type StorageType { get; set; }
+
         public (uint, TypeMap) TypeMap { get; set; }
         public byte[] Default { get; set; }
+
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string[] Docs { get; set; }
     }
@@ -155,6 +159,7 @@ namespace Ajuna.NetApi.Model.Meta
     {
         [JsonProperty("Hashers", ItemConverterType = typeof(StringEnumConverter))]
         public Storage.Hasher[] Hashers { get; set; }
+
         public uint Key { get; set; }
         public uint Value { get; set; }
     }
@@ -184,5 +189,4 @@ namespace Ajuna.NetApi.Model.Meta
     {
         public uint TypeId { get; set; }
     }
-
 }

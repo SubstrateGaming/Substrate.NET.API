@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ajuna.NetApi.Model.Rpc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Org.BouncyCastle.Crypto.Parameters;
-using static Org.BouncyCastle.Crypto.Digests.SkeinEngine;
 
 namespace Ajuna.NetApi.Modules
 {
@@ -33,7 +30,7 @@ namespace Ajuna.NetApi.Modules
         //state_getKeys
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="keyPrefix"></param>
         /// <param name="pageCount"></param>
@@ -45,7 +42,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="keyPrefix"></param>
         /// <param name="pageCount"></param>
@@ -63,7 +60,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="keyPrefix"></param>
         /// <param name="pageCount"></param>
@@ -82,7 +79,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task<string> GetMetaDataAsync()
@@ -91,7 +88,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -99,9 +96,9 @@ namespace Ajuna.NetApi.Modules
         {
             return await _client.InvokeAsync<string>("state_getMetadata", null, token);
         }
-      
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="keyPrefix"></param>
         /// <returns></returns>
@@ -111,7 +108,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="keyPrefix"></param>
         /// <param name="token"></param>
@@ -122,7 +119,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task GetReadProofAsync()
@@ -132,7 +129,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task<RuntimeVersion> GetRuntimeVersionAsync()
@@ -141,7 +138,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -151,7 +148,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
@@ -161,7 +158,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="parameters"></param>
         /// <param name="token"></param>
@@ -172,7 +169,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="parameters"></param>
         /// <param name="token"></param>
@@ -184,7 +181,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="key"></param>
         /// <param name="token"></param>
@@ -195,7 +192,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="parameters"></param>
         /// <param name="token"></param>
@@ -208,7 +205,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="parameters"></param>
         /// <param name="token"></param>
@@ -221,7 +218,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="parameters"></param>
         /// <param name="token"></param>
@@ -234,7 +231,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="parameters"></param>
         /// <param name="token"></param>
@@ -247,7 +244,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="parameters"></param>
         /// <param name="token"></param>
@@ -263,7 +260,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task<string> SubscribeRuntimeVersionAsync()
@@ -272,7 +269,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -282,7 +279,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="keys"></param>
         /// <param name="callback"></param>
@@ -293,7 +290,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="keys"></param>
         /// <param name="callback"></param>
@@ -309,7 +306,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="parameters"></param>
         /// <param name="token"></param>
@@ -322,7 +319,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="subscriptionId"></param>
         /// <returns></returns>
@@ -332,7 +329,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="subscriptionId"></param>
         /// <param name="token"></param>
@@ -344,7 +341,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="subscriptionId"></param>
         /// <returns></returns>
@@ -354,7 +351,7 @@ namespace Ajuna.NetApi.Modules
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="subscriptionId"></param>
         /// <param name="token"></param>

@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Ajuna.NetApi.Model.Types.Metadata.V14;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Ajuna.NetApi.Model.Types.Metadata;
+using Ajuna.NetApi.Model.Types.Metadata.V14;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Ajuna.NetApi.Model.Meta
 {
@@ -23,10 +23,12 @@ namespace Ajuna.NetApi.Model.Meta
                 TypeId = (uint)rtmd.RuntimeMetadataData.TypeId.Value
             };
         }
+
         public string Origin { get; set; }
         public string Magic { get; set; }
         public byte Version { get; set; }
         public NodeMetadataV14 NodeMetadata { get; set; }
+
         public string Serialize()
         {
             return JsonConvert.SerializeObject(this, new StringEnumConverter());
@@ -77,6 +79,7 @@ namespace Ajuna.NetApi.Model.Meta
                             };
                         }
                         break;
+
                     case TypeDefEnum.Variant:
                         {
                             var typeDef = type.Ty.TypeDef.Value2 as TypeDefVariant;
@@ -111,6 +114,7 @@ namespace Ajuna.NetApi.Model.Meta
                             };
                         }
                         break;
+
                     case TypeDefEnum.Sequence:
                         {
                             var typeDef = type.Ty.TypeDef.Value2 as TypeDefSequence;
@@ -125,6 +129,7 @@ namespace Ajuna.NetApi.Model.Meta
                             };
                         }
                         break;
+
                     case TypeDefEnum.Array:
                         {
                             var typeDef = type.Ty.TypeDef.Value2 as TypeDefArray;
@@ -140,6 +145,7 @@ namespace Ajuna.NetApi.Model.Meta
                             };
                         }
                         break;
+
                     case TypeDefEnum.Tuple:
                         {
                             var typeDef = type.Ty.TypeDef.Value2 as TypeDefTuple;
@@ -154,6 +160,7 @@ namespace Ajuna.NetApi.Model.Meta
                             };
                         }
                         break;
+
                     case TypeDefEnum.Primitive:
                         {
                             var typeDef = (TypeDefPrimitive)Enum.Parse(typeof(TypeDefPrimitive), type.Ty.TypeDef.Value2.ToString());
@@ -168,6 +175,7 @@ namespace Ajuna.NetApi.Model.Meta
                             };
                         }
                         break;
+
                     case TypeDefEnum.Compact:
                         {
                             var typeDef = type.Ty.TypeDef.Value2 as TypeDefCompact;
@@ -182,6 +190,7 @@ namespace Ajuna.NetApi.Model.Meta
                             };
                         }
                         break;
+
                     case TypeDefEnum.BitSequence:
                         {
                             var typeDef = type.Ty.TypeDef.Value2 as TypeDefBitSequence;
@@ -214,7 +223,6 @@ namespace Ajuna.NetApi.Model.Meta
 
             foreach (var module in modules)
             {
-
                 var palletModule = new PalletModule()
                 {
                     Name = module.PalletName.Value,
@@ -248,6 +256,7 @@ namespace Ajuna.NetApi.Model.Meta
                             case Storage.Type.Plain:
                                 palletModule.Storage.Entries[i].TypeMap = (((TType)entry.StorageType.Value2).Value, null);
                                 break;
+
                             case Storage.Type.Map:
                                 var typeMap = ((StorageEntryTypeMap)entry.StorageType.Value2);
                                 palletModule.Storage.Entries[i].TypeMap = (0, new TypeMap()
@@ -257,10 +266,10 @@ namespace Ajuna.NetApi.Model.Meta
                                     Value = (uint)typeMap.Value.Value
                                 });
                                 break;
+
                             default:
                                 throw new NotImplementedException();
                         }
-
                     }
                 }
 
@@ -293,7 +302,6 @@ namespace Ajuna.NetApi.Model.Meta
                         TypeId = (uint)constant.ConstantType.Value,
                         Value = constant.ConstantValue.Value.Select(p => p.Value).ToArray(),
                         Docs = constant.Documentation.Value.Select(p => p.Value).ToArray()
-
                     };
                 }
 

@@ -14,7 +14,7 @@
         public override void Create(byte[] byteArray)
         {
             Bytes = byteArray;
-            Value = (sbyte) byteArray[0];
+            Value = (sbyte)byteArray[0];
         }
 
         public void Create(sbyte value)

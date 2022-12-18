@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using Ajuna.NetApi.Model.Types.Base;
+﻿using Ajuna.NetApi.Model.Types.Base;
+using Newtonsoft.Json;
 
 namespace Ajuna.NetApi.Model.Rpc
 {

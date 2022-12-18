@@ -1,6 +1,6 @@
-﻿using Ajuna.NetApi.Model.Types.Base;
+﻿using System;
+using Ajuna.NetApi.Model.Types.Base;
 using Ajuna.NetApi.Model.Types.Metadata.V14;
-using System;
 
 namespace Ajuna.NetApi.Model.Types.Metadata
 {
@@ -25,8 +25,8 @@ namespace Ajuna.NetApi.Model.Types.Metadata
 
             TypeSize = p - start;
         }
+
         public MetaDataInfo MetaDataInfo { get; private set; }
         public RuntimeMetadataV14 RuntimeMetadataData { get; private set; }
     }
-
 }

@@ -6,6 +6,5 @@ namespace Ajuna.NetApi.Model.Rpc
     {
         public Extrinsic[] Extrinsics { get; set; }
         public Header Header { get; set; }
-
     }
 }

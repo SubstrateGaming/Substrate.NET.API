@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-using StreamJsonRpc;
 using Ajuna.NetApi.Model.Rpc;
+using Newtonsoft.Json.Linq;
 using Serilog;
+using StreamJsonRpc;
 
 namespace Ajuna.NetApi
 {
