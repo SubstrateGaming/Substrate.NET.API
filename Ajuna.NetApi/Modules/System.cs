@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Ajuna.NetApi.Model.Rpc;
@@ -183,7 +183,7 @@ namespace Ajuna.NetApi.Modules
         {
             return await _client.InvokeAsync<string[]>("system_nodeRoles", null, token);
         }
-
+      
         /// <summary>
         /// Peers
         /// </summary>
@@ -255,6 +255,23 @@ namespace Ajuna.NetApi.Modules
         public async Task<SyncState> SyncStateAsync(CancellationToken token)
         {
             return await _client.InvokeAsync<SyncState>("system_syncState", null, token);
+        }
+
+        /// <summary> Version asynchronous. </summary>
+        /// <remarks> 19.09.2020. </remarks>
+        /// <returns> The version. </returns>
+        public async Task<string> VersionAsync()
+        {
+            return await VersionAsync(CancellationToken.None);
+        }
+
+        /// <summary> Version asynchronous. </summary>
+        /// <remarks> 19.09.2020. </remarks>
+        /// <param name="token"> A token that allows processing to be cancelled. </param>
+        /// <returns> The version. </returns>
+        public async Task<string> VersionAsync(CancellationToken token)
+        {
+            return await _client.InvokeAsync<string>("system_version", null, token);
         }
 
         /// <summary> Version asynchronous. </summary>
