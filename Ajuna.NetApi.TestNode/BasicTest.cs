@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.Types;
 using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
 using NUnit.Framework;
 using Schnorrkel.Keys;
 
@@ -137,6 +139,38 @@ namespace Ajuna.NetApi.TestNode
         }
 
         [Test]
+        public async Task GetAccountInfoTestAsync()
+        {
+            await _substrateClient.ConnectAsync(false, CancellationToken.None);
+
+            var blockNumber = new U32();
+            blockNumber.Create(0);
+
+            var parameters = RequestGenerator.GetStorage("System", "BlockHash", 
+                Model.Meta.Storage.Type.Map,
+                new Model.Meta.Storage.Hasher[] { Model.Meta.Storage.Hasher.Twox64Concat}, 
+                new IType[] { blockNumber });
+
+            var result = await _substrateClient.GetStorageAsync<Arr32U8>(parameters, CancellationToken.None);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("0x35A06BFEC2EDF0FF4BE89A6428CCD9FF5BD0167D618C5A0D4341F9600A458D14", Utils.Bytes2HexString(result.Value.Select(p => p.Value).ToArray()));
+
+            blockNumber.Create(999999999);
+
+            parameters = RequestGenerator.GetStorage("System", "BlockHash",
+                Model.Meta.Storage.Type.Map,
+                new Model.Meta.Storage.Hasher[] { Model.Meta.Storage.Hasher.Twox64Concat },
+                new IType[] { blockNumber });
+
+            result = await _substrateClient.GetStorageAsync<Arr32U8>(parameters, CancellationToken.None);
+
+            Assert.IsNull(result);
+
+            await _substrateClient.CloseAsync();
+        }
+
+        [Test]
         public async Task GetQueryStorageAtAsyncTestAsync()
         {
             await _substrateClient.ConnectAsync(false, CancellationToken.None);
@@ -182,6 +216,64 @@ namespace Ajuna.NetApi.TestNode
                 case ExtrinsicState.Invalid:
                     Assert.IsTrue(false);
                     break;
+            }
+        }
+
+        /// <summary>
+        /// >> 1 - Array
+        /// </summary>
+        public sealed class Arr32U8 : BaseType
+        {
+
+            private U8[] _value;
+
+            public override int TypeSize
+            {
+                get
+                {
+                    return 32;
+                }
+            }
+
+            public U8[] Value
+            {
+                get
+                {
+                    return this._value;
+                }
+                set
+                {
+                    this._value = value;
+                }
+            }
+
+            public override string TypeName()
+            {
+                return string.Format("[{0}; {1}]", new U8().TypeName(), this.TypeSize);
+            }
+
+            public override byte[] Encode()
+            {
+                var result = new List<byte>();
+                foreach (var v in Value) { result.AddRange(v.Encode()); };
+                return result.ToArray();
+            }
+
+            public override void Decode(byte[] byteArray, ref int p)
+            {
+                var start = p;
+                var array = new U8[TypeSize];
+                for (var i = 0; i < array.Length; i++) { var t = new U8(); t.Decode(byteArray, ref p); array[i] = t; };
+                var bytesLength = p - start;
+                Bytes = new byte[bytesLength];
+                System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+                Value = array;
+            }
+
+            public void Create(U8[] array)
+            {
+                Value = array;
+                Bytes = Encode();
             }
         }
     }
