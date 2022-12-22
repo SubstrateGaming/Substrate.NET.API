@@ -215,11 +215,15 @@ namespace Ajuna.NetApi
         public async Task<T> GetStorageAsync<T>(string parameters, CancellationToken token) where T : IType, new()
         {
             var str = await InvokeAsync<string>("state_getStorage", new object[] { parameters }, token);
-            T t = new T();
-            if (str != null && str.Length > 0)
+
+            if (str == null || str.Length == 0)
             {
-                t.Create(str);
+                return default;
             }
+
+            T t = new T();
+            t.Create(str);
+
             return t;
         }
 
