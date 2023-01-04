@@ -88,7 +88,7 @@ namespace Ajuna.NetApi.Modules
         /// <returns> The block hash. </returns>
         public async Task<Hash> GetBlockHashAsync()
         {
-            return await GetBlockHashAsync(null, CancellationToken.None);
+            return await GetBlockHashAsync(CancellationToken.None);
         }
 
         /// <summary> Gets block hash asynchronous. </summary>
