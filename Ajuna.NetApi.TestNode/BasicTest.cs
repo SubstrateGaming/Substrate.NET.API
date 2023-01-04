@@ -146,9 +146,9 @@ namespace Ajuna.NetApi.TestNode
             var blockNumber = new U32();
             blockNumber.Create(0);
 
-            var parameters = RequestGenerator.GetStorage("System", "BlockHash", 
+            var parameters = RequestGenerator.GetStorage("System", "BlockHash",
                 Model.Meta.Storage.Type.Map,
-                new Model.Meta.Storage.Hasher[] { Model.Meta.Storage.Hasher.Twox64Concat}, 
+                new Model.Meta.Storage.Hasher[] { Model.Meta.Storage.Hasher.Twox64Concat },
                 new IType[] { blockNumber });
 
             var result = await _substrateClient.GetStorageAsync<Arr32U8>(parameters, CancellationToken.None);
@@ -247,7 +247,6 @@ namespace Ajuna.NetApi.TestNode
         /// </summary>
         public sealed class Arr32U8 : BaseType
         {
-
             private U8[] _value;
 
             public override int TypeSize
