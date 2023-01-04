@@ -178,12 +178,35 @@ namespace Ajuna.NetApi.TestNode
             var list = new List<byte[]>() {
                 Utils.HexToByteArray("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000")};
 
-            var result = await _substrateClient.State.GetQueryStorageAtAsync(list, CancellationToken.None);
+            var result = await _substrateClient.State.GetQueryStorageAtAsync(list, null, CancellationToken.None);
 
             Assert.True(result.Block.Value.StartsWith("0x"));
             Assert.AreEqual(1, result.Changes.Length);
             Assert.AreEqual("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000", result.Changes[0][0]);
             Assert.AreEqual("0x35a06bfec2edf0ff4be89a6428ccd9ff5bd0167d618c5a0d4341f9600a458d14", result.Changes[0][1]);
+            await _substrateClient.CloseAsync();
+        }
+
+        [Test]
+        public async Task GetBlocknumberAtBlockHashTestAsync()
+        {
+            await _substrateClient.ConnectAsync(false, CancellationToken.None);
+
+            var parameters = RequestGenerator.GetStorage("System", "Number",
+                Model.Meta.Storage.Type.Plain);
+
+            var currentBlocknumber = await _substrateClient.GetStorageAsync<U32>(parameters, CancellationToken.None);
+
+            var blockNumber = new BlockNumber();
+            blockNumber.Create(currentBlocknumber.Value);
+
+            var blockHash = await _substrateClient.Chain.GetBlockHashAsync(blockNumber);
+
+            var result = await _substrateClient.GetStorageAsync<U32>(parameters, blockHash.Value, CancellationToken.None);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(currentBlocknumber.Value, result.Value);
+
             await _substrateClient.CloseAsync();
         }
 

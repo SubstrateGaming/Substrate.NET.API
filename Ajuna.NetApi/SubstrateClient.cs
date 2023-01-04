@@ -214,7 +214,19 @@ namespace Ajuna.NetApi
         /// <returns></returns>
         public async Task<T> GetStorageAsync<T>(string parameters, CancellationToken token) where T : IType, new()
         {
-            var str = await InvokeAsync<string>("state_getStorage", new object[] { parameters }, token);
+            return await GetStorageAsync<T>(parameters, null, token);
+        }
+
+        /// <summary>
+        /// Gets the storage asynchronous from a blockhash for generated code.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parameters"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public async Task<T> GetStorageAsync<T>(string parameters, string blockhash, CancellationToken token) where T : IType, new()
+        {
+            var str = await InvokeAsync<string>("state_getStorage", new object[] { parameters, blockhash }, token);
 
             if (str == null || str.Length == 0)
             {

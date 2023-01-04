@@ -154,7 +154,7 @@ namespace Ajuna.NetApi.Modules
         /// <returns></returns>
         public async Task<object> GetStorageAsync(byte[] parameters)
         {
-            return await GetStorageAsync(parameters, CancellationToken.None);
+            return await GetStorageAsync(parameters, null, CancellationToken.None);
         }
 
         /// <summary>
@@ -163,9 +163,10 @@ namespace Ajuna.NetApi.Modules
         /// <param name="parameters"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<object> GetStorageAsync(byte[] parameters, CancellationToken token)
+        public async Task<object> GetStorageAsync(byte[] parameters, byte[] blockHash, CancellationToken token)
         {
-            return await _client.InvokeAsync<object>("state_getStorage", new object[] { Utils.Bytes2HexString(parameters) }, token);
+            var blochHashArg = blockHash != null ? Utils.Bytes2HexString(blockHash) : null;
+            return await _client.InvokeAsync<object>("state_getStorage", new object[] { Utils.Bytes2HexString(parameters), blochHashArg }, token);
         }
 
         /// <summary>
@@ -186,9 +187,9 @@ namespace Ajuna.NetApi.Modules
         /// <param name="key"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<object> GetStorageHashAsync(byte[] key, CancellationToken token)
+        public async Task<object> GetStorageHashAsync(byte[] key, byte[] blockHash, CancellationToken token)
         {
-            return await _client.InvokeAsync<JArray>("state_getStorageHash", new object[] { Utils.Bytes2HexString(key) }, token);
+            return await _client.InvokeAsync<JArray>("state_getStorageHash", new object[] { Utils.Bytes2HexString(key), Utils.Bytes2HexString(blockHash) }, token);
         }
 
         /// <summary>
@@ -249,9 +250,10 @@ namespace Ajuna.NetApi.Modules
         /// <param name="parameters"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<StorageChangeSet> GetQueryStorageAtAsync(List<byte[]> keysList, CancellationToken token)
+        public async Task<StorageChangeSet> GetQueryStorageAtAsync(List<byte[]> keysList, byte[] blockHash, CancellationToken token)
         {
-            var jArray = await _client.InvokeAsync<JArray>("state_queryStorageAt", new object[] { keysList.Select(p => Utils.Bytes2HexString(p)).ToArray() }, token);
+            var blochHashArg = blockHash != null ? Utils.Bytes2HexString(blockHash) : null;
+            var jArray = await _client.InvokeAsync<JArray>("state_queryStorageAt", new object[] { keysList.Select(p => Utils.Bytes2HexString(p)).ToArray(), blochHashArg }, token);
             if (jArray.Count != 1)
             {
                 return null;
