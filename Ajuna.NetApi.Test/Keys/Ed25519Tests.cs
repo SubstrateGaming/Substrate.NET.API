@@ -2,8 +2,10 @@ using System;
 using System.Linq;
 using System.Text;
 using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Sign;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using Schnorrkel.Keys;
 
 namespace Ajuna.NetApi.Test.Keys
@@ -110,7 +112,8 @@ namespace Ajuna.NetApi.Test.Keys
         }
 
         [Test]
-        public void SignatureVerifySignedOnNodeByAccount2()
+        [TestCase("0xd2baabb61bcd0026e797136cb0938d55e3c3ea8825c163eb3d1738b3c79af8e8f4953ba4767dc5477202756d3fba97bc50fc3ac8355ff5acfba88a36311f2f0f")]
+        public void SignatureVerifySignedOnNodeByAccountComparePolkadotJs(string polkadotJsSignature)
         {
             var rawSeed = "0x70f93a75dbc6ad5b0c051210704a00a9937732d0c360792b0fea24efb8ea8465";
 
@@ -119,7 +122,8 @@ namespace Ajuna.NetApi.Test.Keys
 
 
             var message = "I test this signature!";
-            var messageBytes = Encoding.UTF8.GetBytes(message);
+            // According to https://github.com/polkadot-js/apps/blob/master/packages/page-signing/src/Sign.tsx#L93
+            var messageBytes = WrapMessage.Wrap(message);
 
             var signature = Chaos.NaCl.Ed25519.Sign(messageBytes, priKey);
             var singatureHexString = Utils.Bytes2HexString(signature);
@@ -127,8 +131,7 @@ namespace Ajuna.NetApi.Test.Keys
             // SIGn C#: 0x679FA7BC8B2A7C40B5ECD50CA041E961DB8971D2B454DB7DE64E543B3C1892A6D3F223DDA01C66B9878C149CFCC8B86ECF2B20F11F7610596F51479405776907
 
             // SIGn PolkaJS:0xd2baabb61bcd0026e797136cb0938d55e3c3ea8825c163eb3d1738b3c79af8e8f4953ba4767dc5477202756d3fba97bc50fc3ac8355ff5acfba88a36311f2f0f
-            var testSign = "0xd2baabb61bcd0026e797136cb0938d55e3c3ea8825c163eb3d1738b3c79af8e8f4953ba4767dc5477202756d3fba97bc50fc3ac8355ff5acfba88a36311f2f0f";
-            Assert.True(Chaos.NaCl.Ed25519.Verify(Utils.HexToByteArray(testSign), messageBytes, pubKey));
+            Assert.True(Chaos.NaCl.Ed25519.Verify(Utils.HexToByteArray(polkadotJsSignature), messageBytes, pubKey));
         }
 
         [Test]
