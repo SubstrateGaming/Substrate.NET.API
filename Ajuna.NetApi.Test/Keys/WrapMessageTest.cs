@@ -50,6 +50,7 @@ namespace Ajuna.NetApi.Test.Keys
             };
 
             Assert.That(WrapMessage.IsWrapped(message), Is.True);
+            Assert.That(WrapMessage.Wrap(message), Is.EqualTo(message));
             Assert.That(WrapMessage.Unwrap(message), Is.EqualTo(messageUnwrapped));
         }
 
@@ -57,6 +58,8 @@ namespace Ajuna.NetApi.Test.Keys
         public void MultipleWrapAndUnwrap_ShouldBeUntouched()
         {
             var message = "IAmAMessage";
+
+            Assert.That(WrapMessage.Unwrap(message), Is.EqualTo(message));
             Assert.That(WrapMessage.Wrap(WrapMessage.Wrap(WrapMessage.Wrap(WrapMessage.Wrap(message)))), Is.EqualTo(WrapMessage.Wrap(message)));
             Assert.That(WrapMessage.Unwrap(WrapMessage.Unwrap(WrapMessage.Unwrap(WrapMessage.Unwrap(message)))), Is.EqualTo(WrapMessage.Unwrap(message)));
         }
