@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Ajuna.NetApi.Model.Types;
 using Newtonsoft.Json;
 
@@ -125,6 +126,31 @@ namespace Ajuna.NetApi.Model.Extrinsics
             Nonce = nonce;
             Charge = charge;
             Method = method;
+        }
+
+        public byte[] Encode()
+        {
+            var result = new List<byte>();
+
+            var signatureVersion = (byte)((Signed ? 0x80 : 0x00) + TransactionVersion);
+            result.Add(signatureVersion);
+
+            if (Signed)
+            {
+                result.AddRange(Account.Encode());
+                result.Add(Account.KeyTypeByte);
+                result.AddRange(Signature);
+                result.AddRange(Era.Encode());
+                result.AddRange(Nonce.Encode());
+                result.AddRange(Charge.Encode());
+            }
+
+            result.AddRange(Method.Encode());
+
+            var length = new CompactInteger(result.Count);
+            result.InsertRange(0, length.Encode());
+
+            return result.ToArray();
         }
 
         public override string ToString()
