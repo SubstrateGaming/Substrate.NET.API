@@ -49,14 +49,11 @@ namespace Ajuna.NetApi.Modules
         /// <param name="startKey"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<JArray> GetKeysPagedAsync(byte[] keyPrefix, uint pageCount, byte[] startKey,
-            CancellationToken token)
+        public async Task<JArray> GetKeysPagedAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, CancellationToken token)
         {
-            return startKey.Length == 0
-                ? await _client.InvokeAsync<JArray>("state_getKeysPaged",
-                    new object[] { Utils.Bytes2HexString(keyPrefix), pageCount }, token)
-                : await _client.InvokeAsync<JArray>("state_getKeysPaged",
-                    new object[] { Utils.Bytes2HexString(keyPrefix), pageCount, Utils.Bytes2HexString(startKey) }, token);
+            var startKeyArg = startKey != null ? Utils.Bytes2HexString(startKey) : null;
+            return await _client.InvokeAsync<JArray>("state_getKeysPaged",
+                    new object[] { Utils.Bytes2HexString(keyPrefix), pageCount, startKeyArg }, token);
         }
 
         /// <summary>
@@ -68,14 +65,12 @@ namespace Ajuna.NetApi.Modules
         /// <param name="token"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, byte[] blockHash, uint pageCount, byte[] startKey, CancellationToken token)
+        public async Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, byte[] blockHash, CancellationToken token)
         {
-            throw new NotImplementedException();
-            //return startKey.Length == 0
-            //    ? await _client.InvokeAsync<JArray>("state_getKeysPagedAt",
-            //        new object[] { Utils.Bytes2HexString(keyPrefix), 0, pageCount }, token)
-            //    : await _client.InvokeAsync<JArray>("state_getKeysPagedAt",
-            //        new object[] { Utils.Bytes2HexString(keyPrefix), 0, pageCount, Utils.Bytes2HexString(startKey) }, token);
+            var blochHashArg = blockHash != null ? Utils.Bytes2HexString(blockHash) : null;
+            var startKeyArg = startKey != null ? Utils.Bytes2HexString(startKey) : null;
+            return await _client.InvokeAsync<JArray>("state_getKeysPagedAt",
+                    new object[] { Utils.Bytes2HexString(keyPrefix), pageCount, startKeyArg, blochHashArg }, token);
         }
 
         /// <summary>
