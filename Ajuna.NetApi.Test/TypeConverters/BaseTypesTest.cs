@@ -89,5 +89,29 @@ namespace Ajuna.NetApi.Test
             }
             return result;
         }
+
+        [Test]
+        public void AccountIdTest()
+        {
+            var accountId = new AccountId();
+            accountId.Create("0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d");
+
+            var accountIdPrim = new AccountId("0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d");
+
+            Assert.AreEqual(accountId.Bytes, accountIdPrim.Bytes);
+        }
+
+        [Test]
+        public void HashTest()
+        {
+            var blockHash = new byte[]
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+            var hash = new Hash();
+            hash.Create(blockHash);
+
+            var hashPrim = new Hash(blockHash);
+
+            Assert.AreEqual(hash.Bytes, hashPrim.Bytes);
+        }
     }
 }

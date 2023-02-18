@@ -5,6 +5,17 @@ namespace Ajuna.NetApi.Model.Types.Base
 {
     public class AccountId : BasePrim<string>
     {
+        public AccountId() { }
+        public AccountId(string value)
+        {
+            Create(value);
+        }
+
+        public AccountId(byte[] value)
+        {
+            Create(value);
+        }
+
         // TODO: <T::Lookup as StaticLookup>::Source -- RawAccountId is unprefixed Address
         public override string TypeName() => "T::AccountId";
 

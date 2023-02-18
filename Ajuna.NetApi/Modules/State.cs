@@ -193,8 +193,7 @@ namespace Ajuna.NetApi.Modules
              * _client.InvokeAsync<U64> ? 
              * Because actually converter force string cast (GenericTypeConverter.cs line 36) and it fail
              */
-            var resNumber = new U64();
-            resNumber.Create(UInt32.Parse(res));
+            var resNumber = new U64(ulong.Parse(res));
             return resNumber;
         }
 

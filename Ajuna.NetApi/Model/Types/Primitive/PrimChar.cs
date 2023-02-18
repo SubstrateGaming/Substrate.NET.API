@@ -5,6 +5,12 @@ namespace Ajuna.NetApi.Model.Types.Primitive
 {
     public class PrimChar : BasePrim<char>
     {
+        public PrimChar() { }
+        public PrimChar(char value)
+        {
+            Create(value);
+        }
+
         public override string TypeName() => "char";
 
         public override int TypeSize => 1;

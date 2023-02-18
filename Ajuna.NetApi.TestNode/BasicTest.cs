@@ -38,97 +38,67 @@ namespace Ajuna.NetApi.TestNode
         [Test]
         public async Task GetSystemChainTestAsync()
         {
-            await _substrateClient.ConnectAsync(false, CancellationToken.None);
-
             var result = await _substrateClient.System.ChainAsync(CancellationToken.None);
 
             Assert.AreEqual("Bajun Kusama", result);
-
-            await _substrateClient.CloseAsync();
         }
 
         [Test]
         public async Task GetSystemChainTypeTestAsync()
         {
-            await _substrateClient.ConnectAsync(false, CancellationToken.None);
-
             var result = await _substrateClient.System.ChainTypeAsync(CancellationToken.None);
 
             Assert.AreEqual("Live", result);
-
-            await _substrateClient.CloseAsync();
         }
 
         [Test]
         public async Task GetLocalListenAddressesTestAsync()
         {
-            await _substrateClient.ConnectAsync(false, CancellationToken.None);
-
             var result = await _substrateClient.System.LocalListenAddressesAsync(CancellationToken.None);
 
             Assert.IsNotNull(result);
-
-            await _substrateClient.CloseAsync();
         }
 
         [Test]
         public async Task GetLocalPeerIdTestAsync()
         {
-            await _substrateClient.ConnectAsync(false, CancellationToken.None);
-
             var result = await _substrateClient.System.LocalPeerIdAsync(CancellationToken.None);
 
             Assert.IsNotNull(result);
-
-            await _substrateClient.CloseAsync();
         }
 
         [Test]
         public async Task GetNodeRolesTestAsync()
         {
-            await _substrateClient.ConnectAsync(false, CancellationToken.None);
-
             var result = await _substrateClient.System.NodeRolesAsync(CancellationToken.None);
 
             Assert.IsNotNull(result);
-
-            await _substrateClient.CloseAsync();
         }
 
         [Test]
         public async Task GetSystemPropertiesTestAsync()
         {
-            await _substrateClient.ConnectAsync(false, CancellationToken.None);
-
             var result = await _substrateClient.System.PropertiesAsync(CancellationToken.None);
 
             Assert.AreEqual(1337, result.Ss58Format);
             Assert.AreEqual(12, result.TokenDecimals);
             Assert.AreEqual("BAJU", result.TokenSymbol);
-
-            await _substrateClient.CloseAsync();
         }
 
         [Test]
         public async Task GetBlockNumberTestAsync()
         {
-            await _substrateClient.ConnectAsync(false, CancellationToken.None);
-
             var blockNumber = new BlockNumber();
             blockNumber.Create(0);
 
             var result = await _substrateClient.Chain.GetBlockHashAsync(blockNumber, CancellationToken.None);
 
             Assert.AreEqual("0x35A06BFEC2EDF0FF4BE89A6428CCD9FF5BD0167D618C5A0D4341F9600A458D14", result.Value);
-
-            await _substrateClient.CloseAsync();
         }
 
         [Test]
         public async Task GetAccountInfoTestAsync()
         {
-            await _substrateClient.ConnectAsync(false, CancellationToken.None);
-
             var blockNumber = new U32();
             blockNumber.Create(0);
 
@@ -152,8 +122,6 @@ namespace Ajuna.NetApi.TestNode
             result = await _substrateClient.GetStorageAsync<Arr32U8>(parameters, CancellationToken.None);
 
             Assert.IsNull(result);
-
-            await _substrateClient.CloseAsync();
         }
 
         
@@ -161,8 +129,6 @@ namespace Ajuna.NetApi.TestNode
         [Test]
         public async Task GetBlocknumberAtBlockHashTestAsync()
         {
-            await _substrateClient.ConnectAsync(false, CancellationToken.None);
-
             var parameters = RequestGenerator.GetStorage("System", "Number",
                 Model.Meta.Storage.Type.Plain);
 
@@ -177,8 +143,6 @@ namespace Ajuna.NetApi.TestNode
 
             Assert.IsNotNull(result);
             Assert.AreEqual(currentBlocknumber.Value, result.Value);
-
-            await _substrateClient.CloseAsync();
         }
 
         /// <summary>

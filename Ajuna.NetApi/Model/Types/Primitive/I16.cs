@@ -4,6 +4,12 @@ namespace Ajuna.NetApi.Model.Types.Primitive
 {
     public class I16 : BasePrim<short>
     {
+        public I16() { }
+        public I16(short value)
+        {
+            Create(value);
+        }
+
         public override string TypeName() => "i16";
 
         public override int TypeSize => 2;

@@ -4,6 +4,12 @@ namespace Ajuna.NetApi.Model.Types.Base
 {
     public class BlockNumber : BasePrim<uint>
     {
+        public BlockNumber() { }
+        public BlockNumber(uint value)
+        {
+            Create(value);
+        }
+
         public override string TypeName() => "T::BlockNumber";
 
         public override int TypeSize => 4;

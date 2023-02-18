@@ -15,29 +15,27 @@ namespace Ajuna.NetApi.TestNode
         protected SubstrateClient _substrateClient;
 
 
-        //[SetUp]
-        //public void Setup()
-        //{
-        //    _substrateClient = new SubstrateClient(new Uri(WebSocketUrl), ChargeTransactionPayment.Default());
-        //}
-
-        //[TearDown]
-        //public void TearDown()
-        //{
-        //    _substrateClient.Dispose();
-        //}
-
-        [OneTimeSetUp]
+        [SetUp]
         public async Task ConnectAsync()
         {
-            _substrateClient = new SubstrateClient(new Uri(WebSocketUrl), ChargeTransactionPayment.Default());
             await _substrateClient.ConnectAsync();
         }
 
-        [OneTimeTearDown]
-        public async Task DisconnectAsync()
+        [TearDown]
+        public async Task CloseAsync()
         {
             await _substrateClient.CloseAsync();
+        }
+
+        [OneTimeSetUp]
+        public void CreateClient()
+        {
+            _substrateClient = new SubstrateClient(new Uri(WebSocketUrl), ChargeTransactionPayment.Default());
+        }
+
+        [OneTimeTearDown]
+        public void DisposeClient()
+        {
             _substrateClient.Dispose();
         }
 

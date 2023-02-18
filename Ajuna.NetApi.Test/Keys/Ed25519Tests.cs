@@ -47,6 +47,8 @@ namespace Ajuna.NetApi.Test.Keys
 
             var accountId = new AccountId();
             accountId.Create("0x278117FC144C72340F67D0F2316E8386CEFFBF2B2428C9C51FEF7C597F1D426E");
+
+
             Assert.AreEqual("5CxW5DWQDpXi4cpACd62wzbPjbYrx4y67TZEmRXBcvmDTNaM", accountId.Value);
         }
 

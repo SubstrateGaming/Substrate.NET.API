@@ -7,6 +7,12 @@ namespace Ajuna.NetApi.Model.Types.Primitive
 {
     public class Str : BaseType
     {
+        public Str() { }
+        public Str(string value) 
+        {
+            Create(value);
+        }
+
         public override string TypeName() => "str";
 
         public override byte[] Encode()

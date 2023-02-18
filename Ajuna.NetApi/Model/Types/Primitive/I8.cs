@@ -2,6 +2,12 @@
 {
     public class I8 : BasePrim<sbyte>
     {
+        public I8() { }
+        public I8(sbyte value)
+        {
+            Create(value);
+        }
+
         public override string TypeName() => "i8";
 
         public override int TypeSize => 1;

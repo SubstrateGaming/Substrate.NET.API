@@ -4,6 +4,12 @@ namespace Ajuna.NetApi.Model.Types.Primitive
 {
     public class U32 : BasePrim<uint>
     {
+        public U32() { }
+        public U32(uint value)
+        {
+            Create(value);
+        }
+
         public override string TypeName() => "u32";
 
         public override int TypeSize => 4;
