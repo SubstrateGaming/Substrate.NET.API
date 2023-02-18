@@ -39,12 +39,12 @@ namespace Ajuna.NetApi.Modules
 
         public Task<JArray> GetKeysPagedAsync(byte[] keyPrefix, uint pageCount, byte[] startKey,
             CancellationToken token)
-            => GetKeysPagedAtAsync(keyPrefix, string.Empty, pageCount, startKey, token);
+            => GetKeysPagedAtAsync(keyPrefix, pageCount, startKey, string.Empty, token);
 
-        public Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, byte[] blockHash, uint pageCount, byte[] startKey, CancellationToken token)
-            => GetKeysPagedAtAsync(keyPrefix, Utils.Bytes2HexString(blockHash), pageCount, startKey, token);
+        public Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, byte[] blockHash, CancellationToken token)
+            => GetKeysPagedAtAsync(keyPrefix, pageCount, startKey, Utils.Bytes2HexString(blockHash), token);
 
-        public async Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, string blockHash, uint pageCount, byte[] startKey, CancellationToken token)
+        public async Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, string blockHash, CancellationToken token)
         {
             var fullParams = new object[]
             {

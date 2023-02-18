@@ -1,4 +1,6 @@
 ﻿using Ajuna.NetApi.Model.Meta;
+using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
 using NUnit.Framework;
 using Org.BouncyCastle.Math.EC.Rfc7748;
 using System;
@@ -12,6 +14,28 @@ namespace Ajuna.NetApi.TestNode
 {
     public class StateTest : NodeTest
     {
+        [Test]
+        public async Task GetKeysPagedAtTestAsync()
+        {
+            await _substrateClient.ConnectAsync(false, CancellationToken.None);
+
+            var parameters = RequestGenerator.GetStorage("System", "Number",
+                Model.Meta.Storage.Type.Plain);
+
+            var currentBlocknumber = await _substrateClient.GetStorageAsync<U32>(parameters, CancellationToken.None);
+
+            var blockNumber = new BlockNumber();
+            blockNumber.Create(currentBlocknumber.Value);
+
+            var blockHash = await _substrateClient.Chain.GetBlockHashAsync(blockNumber);
+
+
+            var result = await _substrateClient.State.GetKeysPagedAtAsync(RequestGenerator.GetStorageKeyBytesHash("System", "BlockHash"), 10, null, blockHash.Bytes, CancellationToken.None);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(10, result.Count);
+        }
+
         [Test]
         [TestCase("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000")]
         public async Task GetQueryStorageAtAsyncTestAsync(string storageKeyHex)
@@ -209,6 +233,7 @@ namespace Ajuna.NetApi.TestNode
             Assert.That(call_1, Is.Not.Null);
             Assert.That(call_2, Is.Not.Null);
             Assert.That(call_1.Value, Is.EqualTo(call_2.Value));
+            Assert.That(call_1.Value, Is.EqualTo((ulong)32));
         }
 
     }

@@ -39,8 +39,8 @@ namespace Ajuna.NetApi.Modules.Contracts
         /// <param name="startKey"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, byte[] blockHash, uint pageCount, byte[] startKey, CancellationToken token);
-        Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, string blockHash, uint pageCount, byte[] startKey, CancellationToken token);
+        Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, byte[] blockHash, CancellationToken token);
+        Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, string blockHash, CancellationToken token);
 
         /// <summary>
         /// Returns the runtime metadata

@@ -181,30 +181,6 @@ namespace Ajuna.NetApi.TestNode
             await _substrateClient.CloseAsync();
         }
 
-        [Test]
-        public async Task GetKeysPagedAtTestAsync()
-        {
-            await _substrateClient.ConnectAsync(false, CancellationToken.None);
-
-            var parameters = RequestGenerator.GetStorage("System", "Number",
-                Model.Meta.Storage.Type.Plain);
-
-            var currentBlocknumber = await _substrateClient.GetStorageAsync<U32>(parameters, CancellationToken.None);
-
-            var blockNumber = new BlockNumber();
-            blockNumber.Create(currentBlocknumber.Value);
-
-            var blockHash = await _substrateClient.Chain.GetBlockHashAsync(blockNumber);
-
-
-            var result = await _substrateClient.State.GetKeysPagedAtAsync(RequestGenerator.GetStorageKeyBytesHash("System", "BlockHash"), 10, null, blockHash.Bytes, CancellationToken.None);
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(10, result.Count);
-
-            await _substrateClient.CloseAsync();
-        }
-
         /// <summary>
         /// Simple extrinsic tester
         /// </summary>
