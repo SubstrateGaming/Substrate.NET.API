@@ -13,11 +13,9 @@ using Schnorrkel.Keys;
 
 namespace Ajuna.NetApi.TestNode
 {
-    public class BasicTest
+    public class BasicTest : NodeTest
     {
-        private const string WebSocketUrl = "ws://rpc-parachain.bajun.network";
-
-        private SubstrateClient _substrateClient;
+        
 
         // Secret Key URI `//Alice` is account:
         // Secret seed:      0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a
@@ -36,18 +34,6 @@ namespace Ajuna.NetApi.TestNode
         public MiniSecret MiniSecretBob => new MiniSecret(Utils.HexToByteArray("0x398f0c28f98885e046333d4a41c19cee4c37368a9832c6502f6cfd182e2aef89"), ExpandMode.Ed25519);
 
         public Account Bob => Account.Build(KeyType.Sr25519, MiniSecretBob.ExpandToSecret().ToBytes(), MiniSecretBob.GetPair().Public.Key);
-
-        [SetUp]
-        public void Setup()
-        {
-            _substrateClient = new SubstrateClient(new Uri(WebSocketUrl), ChargeTransactionPayment.Default());
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            _substrateClient.Dispose();
-        }
 
         [Test]
         public async Task GetSystemChainTestAsync()
@@ -170,22 +156,7 @@ namespace Ajuna.NetApi.TestNode
             await _substrateClient.CloseAsync();
         }
 
-        [Test]
-        public async Task GetQueryStorageAtAsyncTestAsync()
-        {
-            await _substrateClient.ConnectAsync(false, CancellationToken.None);
-
-            var list = new List<byte[]>() {
-                Utils.HexToByteArray("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000")};
-
-            var result = await _substrateClient.State.GetQueryStorageAtAsync(list, null, CancellationToken.None);
-
-            Assert.True(result.Block.Value.StartsWith("0x"));
-            Assert.AreEqual(1, result.Changes.Length);
-            Assert.AreEqual("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000", result.Changes[0][0]);
-            Assert.AreEqual("0x35a06bfec2edf0ff4be89a6428ccd9ff5bd0167d618c5a0d4341f9600a458d14", result.Changes[0][1]);
-            await _substrateClient.CloseAsync();
-        }
+        
 
         [Test]
         public async Task GetBlocknumberAtBlockHashTestAsync()

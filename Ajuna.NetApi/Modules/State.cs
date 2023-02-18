@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ajuna.NetApi.Model.Rpc;
+using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Model.Types.Primitive;
+using Ajuna.NetApi.Modules.Contracts;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Schnorrkel.Ristretto;
 
 namespace Ajuna.NetApi.Modules
 {
     /// <summary> A state. </summary>
     /// <remarks> 19.09.2020. </remarks>
-    public class State
+    public class State : IState
     {
         /// <summary> The client. </summary>
         private readonly SubstrateClient _client;
@@ -29,270 +34,235 @@ namespace Ajuna.NetApi.Modules
         //state_getChildReadProof
         //state_getKeys
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="keyPrefix"></param>
-        /// <param name="pageCount"></param>
-        /// <param name="startKey"></param>
-        /// <returns></returns>
-        public async Task<JArray> GetKeysPagedAsync(byte[] keyPrefix, uint pageCount, byte[] startKey)
+        public Task<JArray> GetKeysPagedAsync(byte[] keyPrefix, uint pageCount, byte[] startKey)
+            => GetKeysPagedAsync(keyPrefix, pageCount, startKey, CancellationToken.None);
+
+        public Task<JArray> GetKeysPagedAsync(byte[] keyPrefix, uint pageCount, byte[] startKey,
+            CancellationToken token)
+            => GetKeysPagedAtAsync(keyPrefix, string.Empty, pageCount, startKey, token);
+
+        public Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, byte[] blockHash, uint pageCount, byte[] startKey, CancellationToken token)
+            => GetKeysPagedAtAsync(keyPrefix, Utils.Bytes2HexString(blockHash), pageCount, startKey, token);
+
+        public async Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, string blockHash, uint pageCount, byte[] startKey, CancellationToken token)
         {
-            return await GetKeysPagedAsync(keyPrefix, pageCount, startKey, CancellationToken.None);
+            var fullParams = new object[]
+            {
+                Utils.Bytes2HexString(keyPrefix),
+                pageCount,
+                startKey != null ? Utils.Bytes2HexString(startKey) : null,
+                string.IsNullOrEmpty(blockHash) ? null : blockHash
+            };
+            return await _client.InvokeAsync<JArray>("state_getKeysPaged", fullParams, token);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="keyPrefix"></param>
-        /// <param name="pageCount"></param>
-        /// <param name="startKey"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public async Task<JArray> GetKeysPagedAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, CancellationToken token)
+        public Task<string> GetMetaDataAsync()
+            => GetMetaDataAsync(CancellationToken.None);
+
+        public Task<string> GetMetaDataAsync(CancellationToken token)
+            => GetMetaDataAtAsync(string.Empty, token);
+
+        public Task<string> GetMetaDataAtAsync(byte[] blockHash, CancellationToken token)
+            => GetMetaDataAtAsync(Utils.Bytes2HexString(blockHash), token);
+
+        public async Task<string> GetMetaDataAtAsync(string blockHash, CancellationToken token)
         {
-            var startKeyArg = startKey != null ? Utils.Bytes2HexString(startKey) : null;
-            return await _client.InvokeAsync<JArray>("state_getKeysPaged",
-                    new object[] { Utils.Bytes2HexString(keyPrefix), pageCount, startKeyArg }, token);
+            var fullParams = new object[] { string.IsNullOrEmpty(blockHash) ? null : blockHash };
+            return await _client.InvokeAsync<string>("state_getMetadata", fullParams, token);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="keyPrefix"></param>
-        /// <param name="pageCount"></param>
-        /// <param name="startKey"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, byte[] blockHash, CancellationToken token)
+        public Task<JArray> GetPairsAsync(byte[] keyPrefix)
+            => GetPairsAsync(keyPrefix, CancellationToken.None);
+
+        public Task<JArray> GetPairsAsync(byte[] keyPrefix, CancellationToken token)
+            => GetPairsAtAsync(keyPrefix, string.Empty, token);
+
+        public Task<JArray> GetPairsAtAsync(byte[] keyPrefix, byte[] blockHash, CancellationToken token)
+            => GetPairsAtAsync(keyPrefix, Utils.Bytes2HexString(blockHash), token);
+
+        public async Task<JArray> GetPairsAtAsync(byte[] keyPrefix, string blockHash, CancellationToken token)
         {
-            var blochHashArg = blockHash != null ? Utils.Bytes2HexString(blockHash) : null;
-            var startKeyArg = startKey != null ? Utils.Bytes2HexString(startKey) : null;
-            return await _client.InvokeAsync<JArray>("state_getKeysPagedAt",
-                    new object[] { Utils.Bytes2HexString(keyPrefix), pageCount, startKeyArg, blochHashArg }, token);
+            var fullParams = new object[]
+            {
+                Utils.Bytes2HexString(keyPrefix),
+                string.IsNullOrEmpty(blockHash) ? null : blockHash
+            };
+
+            return await _client.InvokeAsync<JArray>("state_getPairs", fullParams, token);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        public async Task<string> GetMetaDataAsync()
+        public Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes)
+         => GetReadProofAsync(keyPrefixes, CancellationToken.None);
+
+        public Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes, CancellationToken token)
+            => GetReadProofAtAsync(keyPrefixes, string.Empty, token);
+
+        public Task<ReadProof> GetReadProofAtAsync(IEnumerable<byte[]> keyPrefixes, byte[] blockHash, CancellationToken token)
+            => GetReadProofAtAsync(keyPrefixes, Utils.Bytes2HexString(blockHash), token);
+
+        public async Task<ReadProof> GetReadProofAtAsync(IEnumerable<byte[]> keyPrefixes, string blockHash, CancellationToken token)
         {
-            return await GetMetaDataAsync(CancellationToken.None);
+            var fullParams = new object[]
+            {
+                keyPrefixes?.Select(k => Utils.Bytes2HexString(k)).ToArray(),
+                string.IsNullOrEmpty(blockHash) ? null : blockHash
+            };
+
+            return await _client.InvokeAsync<ReadProof>("state_getReadProof", fullParams, token);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public async Task<string> GetMetaDataAsync(CancellationToken token)
+        public Task<RuntimeVersion> GetRuntimeVersionAsync()
+            => GetRuntimeVersionAsync(CancellationToken.None);
+
+        public Task<RuntimeVersion> GetRuntimeVersionAsync(CancellationToken token)
+            => GetRuntimeVersionAtAsync(string.Empty, token);
+
+        public Task<RuntimeVersion> GetRuntimeVersionAtAsync(byte[] blockHash, CancellationToken token)
+            => GetRuntimeVersionAtAsync(Utils.Bytes2HexString(blockHash), token);
+
+        public async Task<RuntimeVersion> GetRuntimeVersionAtAsync(string blockHash, CancellationToken token)
         {
-            return await _client.InvokeAsync<string>("state_getMetadata", null, token);
+            var fullParams = new object[]
+            {
+                string.IsNullOrEmpty(blockHash) ? null : blockHash
+            };
+
+            return await _client.InvokeAsync<RuntimeVersion>("state_getRuntimeVersion", fullParams, token);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="keyPrefix"></param>
-        /// <returns></returns>
-        public async Task<JArray> GetPairsAsync(byte[] keyPrefix)
+        public Task<object> GetStorageAsync(byte[] parameters)
+            => GetStorageAsync(parameters, CancellationToken.None);
+
+        public Task<object> GetStorageAsync(byte[] parameters, CancellationToken token)
+            => GetStorageAtAsync(parameters, string.Empty, token);
+
+        public Task<object> GetStorageAtAsync(byte[] parameters, byte[] blockHash, CancellationToken token)
+            => GetStorageAtAsync(parameters, Utils.Bytes2HexString(blockHash), token);
+
+        public async Task<object> GetStorageAtAsync(byte[] parameters, string blockHash, CancellationToken token)
         {
-            return await GetPairsAsync(keyPrefix, CancellationToken.None);
+            var fullParams = new object[]
+            {
+                Utils.Bytes2HexString(parameters),
+                string.IsNullOrEmpty(blockHash) ? null : blockHash
+            };
+
+            return await _client.InvokeAsync<object>("state_getStorage", fullParams.ToArray(), token);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="keyPrefix"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public async Task<JArray> GetPairsAsync(byte[] keyPrefix, CancellationToken token)
+        public Task<Hash> GetStorageHashAsync(byte[] key)
+            => GetStorageHashAsync(key, CancellationToken.None);
+
+        public Task<Hash> GetStorageHashAsync(byte[] key, CancellationToken token)
+            => GetStorageHashAtAsync(key, string.Empty, token);
+
+        public Task<Hash> GetStorageHashAtAsync(byte[] key, byte[] blockHash, CancellationToken token)
+            => GetStorageHashAtAsync(key, Utils.Bytes2HexString(blockHash), token);
+
+        public async Task<Hash> GetStorageHashAtAsync(byte[] parameters, string blockHash, CancellationToken token)
         {
-            return await _client.InvokeAsync<JArray>("state_getPairs", new object[] { Utils.Bytes2HexString(keyPrefix) }, token);
+            var fullParams = new object[]
+            {
+                Utils.Bytes2HexString(parameters),
+                string.IsNullOrEmpty(blockHash) ? null : blockHash
+            };
+
+            return await _client.InvokeAsync<Hash>("state_getStorageHash", fullParams, token);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        public async Task GetReadProofAsync()
+        public Task<U64> GetStorageSizeAsync(byte[] parameters)
+            => GetStorageSizeAsync(parameters, CancellationToken.None);
+        public Task<U64> GetStorageSizeAsync(byte[] parameters, CancellationToken token)
+            => GetStorageSizeAtAsync(parameters, string.Empty, token);
+
+        public Task<U64> GetStorageSizeAtAsync(byte[] parameters, byte[] blockHash, CancellationToken token)
+            => GetStorageSizeAtAsync(parameters, Utils.Bytes2HexString(blockHash), token);
+
+        public async Task<U64> GetStorageSizeAtAsync(byte[] parameters, string blockHash, CancellationToken token)
         {
-            throw new NotImplementedException();
-            //return await _client.InvokeAsync<object>("state_getReadProof", new object[] { }, token);
+            var fullParams = new object[]
+            {
+                Utils.Bytes2HexString(parameters),
+                string.IsNullOrEmpty(blockHash) ? null : blockHash
+            };
+
+            var res = await _client.InvokeAsync<string>("state_getStorageSize", fullParams.ToArray(), token);
+
+            /* 
+             * Cedric : Is it better to override GenericTypeConverter.cs in order to do :  
+             * _client.InvokeAsync<U64> ? 
+             * Because actually converter force string cast (GenericTypeConverter.cs line 36) and it fail
+             */
+            var resNumber = new U64();
+            resNumber.Create(UInt32.Parse(res));
+            return resNumber;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        public async Task<RuntimeVersion> GetRuntimeVersionAsync()
-        {
-            return await GetRuntimeVersionAsync(CancellationToken.None);
-        }
+        public Task<IEnumerable<StorageChangeSet>> GetQueryStorageAsync(List<byte[]> keysList, string fromBlock, string toBlock)
+            => GetQueryStorageAsync(keysList, fromBlock, toBlock, CancellationToken.None);
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public async Task<RuntimeVersion> GetRuntimeVersionAsync(CancellationToken token)
+        public async Task<IEnumerable<StorageChangeSet>> GetQueryStorageAsync(List<byte[]> keysList, string fromBlock, string toBlock, CancellationToken token)
         {
-            return await _client.InvokeAsync<RuntimeVersion>("state_getRuntimeVersion", null, token);
-        }
+            var fullParams = new object[]
+            {
+                keysList.Select(p => Utils.Bytes2HexString(p)),
+                string.IsNullOrEmpty(fromBlock) ? null : fromBlock,
+                string.IsNullOrEmpty(toBlock) ? null : toBlock
+            };
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
-        public async Task<object> GetStorageAsync(byte[] parameters)
-        {
-            return await GetStorageAsync(parameters, null, CancellationToken.None);
-        }
+            var jArray = await _client.InvokeAsync<JArray>("state_queryStorage", fullParams, token);
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public async Task<object> GetStorageAsync(byte[] parameters, byte[] blockHash, CancellationToken token)
-        {
-            var blochHashArg = blockHash != null ? Utils.Bytes2HexString(blockHash) : null;
-            return await _client.InvokeAsync<object>("state_getStorage", new object[] { Utils.Bytes2HexString(parameters), blochHashArg }, token);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public async Task<object> GetStorageAtAsync(byte[] parameters, CancellationToken token)
-        {
-            throw new NotImplementedException();
-            //return await _client.InvokeAsync<object>("state_getStorageAt", new object[] { Utils.Bytes2HexString(parameters) }, token);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public async Task<object> GetStorageHashAsync(byte[] key, byte[] blockHash, CancellationToken token)
-        {
-            return await _client.InvokeAsync<JArray>("state_getStorageHash", new object[] { Utils.Bytes2HexString(key), Utils.Bytes2HexString(blockHash) }, token);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<object> GetStorageHashAtAsync(byte[] parameters, CancellationToken token)
-        {
-            throw new NotImplementedException();
-            //return await _client.InvokeAsync<object>("state_getStorageHashAt", new object[] { Utils.Bytes2HexString(parameters) }, token);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<object> GetStorageSizeAsync(byte[] parameters, CancellationToken token)
-        {
-            throw new NotImplementedException();
-            //return await _client.InvokeAsync<object>("state_getStorageSize", new object[] { Utils.Bytes2HexString(parameters) }, token);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<object> GetStorageSizeAtAsync(byte[] parameters, CancellationToken token)
-        {
-            throw new NotImplementedException();
-            //return await _client.InvokeAsync<object>("state_getStorageSizeAt", new object[] { Utils.Bytes2HexString(parameters) }, token);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<object> GetQueryStorageAsync(byte[] parameters, CancellationToken token)
-        {
-            throw new NotImplementedException();
-            //return await _client.InvokeAsync<JArray>("state_queryStorage", jsonObject, token);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public async Task<StorageChangeSet> GetQueryStorageAtAsync(List<byte[]> keysList, byte[] blockHash, CancellationToken token)
-        {
-            var blochHashArg = blockHash != null ? Utils.Bytes2HexString(blockHash) : null;
-            var jArray = await _client.InvokeAsync<JArray>("state_queryStorageAt", new object[] { keysList.Select(p => Utils.Bytes2HexString(p)).ToArray(), blochHashArg }, token);
             if (jArray.Count != 1)
             {
-                return null;
+                return Enumerable.Empty<StorageChangeSet>();
             }
-            return JsonConvert.DeserializeObject<StorageChangeSet>(jArray.First.ToString());
+            return JsonConvert.DeserializeObject<IEnumerable<StorageChangeSet>>(jArray.ToString());
         }
+        
+        public Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, byte[] blockHash, CancellationToken token)
+            => GetQueryStorageAtAsync(keysList, Utils.Bytes2HexString(blockHash), token);
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        public async Task<string> SubscribeRuntimeVersionAsync()
+        public async Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, string blockHash, CancellationToken token)
         {
-            return await SubscribeRuntimeVersionAsync(CancellationToken.None);
+            var fullParams = new object[]
+            {
+                keysList.Select(p => Utils.Bytes2HexString(p)),
+                string.IsNullOrEmpty(blockHash) ? null : blockHash
+            };
+            
+            var jArray = await _client.InvokeAsync<JArray>("state_queryStorageAt", fullParams, token);
+
+            if (jArray.Count != 1)
+            {
+                return Enumerable.Empty<StorageChangeSet>();
+            }
+            return JsonConvert.DeserializeObject<IEnumerable<StorageChangeSet>>(jArray.ToString());
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public async Task<string> SubscribeRuntimeVersionAsync(CancellationToken token)
+        public Task<string> SubscribeRuntimeVersionAsync()
+            => SubscribeRuntimeVersionAsync(CancellationToken.None);
+
+        public Task<string> SubscribeRuntimeVersionAsync(CancellationToken token)
+            => SubscribeRuntimeVersionAtAsync(string.Empty, token);
+
+        public Task<string> SubscribeRuntimeVersionAtAsync(byte[] blockHash, CancellationToken token)
+            => SubscribeRuntimeVersionAtAsync(Utils.Bytes2HexString(blockHash), token);
+
+        public async Task<string> SubscribeRuntimeVersionAtAsync(string blockHash, CancellationToken token)
         {
-            return await _client.InvokeAsync<string>("state_subscribeRuntimeVersion", null, token);
+            var fullParams = new object[]
+            {
+                string.IsNullOrEmpty(blockHash) ? null : blockHash
+            };
+
+            return await _client.InvokeAsync<string>("state_subscribeRuntimeVersion", fullParams, token);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="keys"></param>
-        /// <param name="callback"></param>
-        /// <returns></returns>
         public async Task<string> SubscribeStorageAsync(JArray keys, Action<string, StorageChangeSet> callback)
         {
             return await SubscribeStorageAsync(keys, callback, CancellationToken.None);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="keys"></param>
-        /// <param name="callback"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
         public async Task<string> SubscribeStorageAsync(JArray keys, Action<string, StorageChangeSet> callback,
             CancellationToken token)
         {
@@ -302,57 +272,42 @@ namespace Ajuna.NetApi.Modules
             return subscriptionId;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<object> GetTraceBlockAsync(byte[] parameters, CancellationToken token)
+        public Task<object> GetTraceBlockAsync(byte[] parameters)
+            => GetTraceBlockAsync(parameters, CancellationToken.None);
+
+        public Task<object> GetTraceBlockAsync(byte[] parameters, CancellationToken token)
+            => GetTraceBlockAtAsync(parameters, string.Empty, token);
+
+        public Task<object> GetTraceBlockAtAsync(byte[] parameters, byte[] blockHash, CancellationToken token)
+            => GetTraceBlockAtAsync(parameters, Utils.Bytes2HexString(blockHash), token);
+
+        public async Task<object> GetTraceBlockAtAsync(byte[] parameters, string blockHash, CancellationToken token)
         {
-            throw new NotImplementedException();
-            //return await _client.InvokeAsync<object>("state_traceBlock", new object[] { Utils.Bytes2HexString(parameters) }, token);
+            var fullParams = new object[]
+            {
+                Utils.Bytes2HexString(parameters),
+                string.IsNullOrEmpty(blockHash) ? null : blockHash
+            };
+
+            return await _client.InvokeAsync<object>("state_traceBlock", fullParams, token);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="subscriptionId"></param>
-        /// <returns></returns>
         public async Task<bool> UnsubscribeRuntimeVersionAsync(string subscriptionId)
         {
             return await UnsubscribeRuntimeVersionAsync(subscriptionId, CancellationToken.None);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="subscriptionId"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
         public async Task<bool> UnsubscribeRuntimeVersionAsync(string subscriptionId, CancellationToken token)
         {
             return await _client.InvokeAsync<bool>("state_unsubscribeRuntimeVersion", new object[] { subscriptionId },
                 token);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="subscriptionId"></param>
-        /// <returns></returns>
         public async Task<bool> UnsubscribeStorageAsync(string subscriptionId)
         {
             return await UnsubscribeStorageAsync(subscriptionId, CancellationToken.None);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="subscriptionId"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
         public async Task<bool> UnsubscribeStorageAsync(string subscriptionId, CancellationToken token)
         {
             return await _client.InvokeAsync<bool>("state_unsubscribeStorage", new object[] { subscriptionId }, token);

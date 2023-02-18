@@ -2,12 +2,13 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Ajuna.NetApi.Model.Rpc;
+using Ajuna.NetApi.Modules.Contracts;
 
 namespace Ajuna.NetApi.Modules
 {
     /// <summary> A system. </summary>
     /// <remarks> 19.09.2020. </remarks>
-    public class System
+    public class System : ISystem
     {
         /// <summary> The client. </summary>
         private readonly SubstrateClient _client;
