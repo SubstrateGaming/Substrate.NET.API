@@ -4,6 +4,12 @@ namespace Ajuna.NetApi.Model.Types.Primitive
 {
     public class I64 : BasePrim<long>
     {
+        public I64() { }
+        public I64(long value)
+        {
+            Create(value);
+        }
+
         public override string TypeName() => "i64";
 
         public override int TypeSize => 8;

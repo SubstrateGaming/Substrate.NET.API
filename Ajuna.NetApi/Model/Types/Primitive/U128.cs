@@ -5,6 +5,12 @@ namespace Ajuna.NetApi.Model.Types.Primitive
 {
     public class U128 : BasePrim<BigInteger>
     {
+        public U128() { }
+        public U128(BigInteger value)
+        {
+            Create(value);
+        }
+
         public override string TypeName() => "u128";
 
         public override int TypeSize => 16;
@@ -49,9 +55,13 @@ namespace Ajuna.NetApi.Model.Types.Primitive
 
         public void Create(BigInteger value)
         {
+            // Ensure we have a positive number
+            if (value.Sign != 1)
+                throw new InvalidOperationException($"Unable to create a U256 instance while value is negative");
+
             var byteArray = value.ToByteArray();
 
-            if (byteArray.Length > 16)
+            if (byteArray.Length > TypeSize)
             {
                 throw new Exception($"Wrong byte array size for {TypeName()}, max. {TypeSize} bytes!");
             }

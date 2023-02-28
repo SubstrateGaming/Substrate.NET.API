@@ -5,6 +5,12 @@ namespace Ajuna.NetApi.Model.Types.Primitive
 {
     public class I128 : BasePrim<BigInteger>
     {
+        public I128() { }
+        public I128(BigInteger value)
+        {
+            Create(value);
+        }
+
         public override string TypeName() => "i128";
 
         public override int TypeSize => 16;
@@ -40,6 +46,21 @@ namespace Ajuna.NetApi.Model.Types.Primitive
         {
             var bytes = new byte[TypeSize];
             BitConverter.GetBytes(value).CopyTo(bytes, 0);
+            Bytes = bytes;
+            Value = value;
+        }
+
+        public void Create(BigInteger value)
+        {
+            var byteArray = value.ToByteArray();
+
+            if (byteArray.Length > TypeSize)
+            {
+                throw new Exception($"Wrong byte array size for {TypeName()}, max. {TypeSize} bytes!");
+            }
+
+            var bytes = new byte[TypeSize];
+            byteArray.CopyTo(bytes, 0);
             Bytes = bytes;
             Value = value;
         }

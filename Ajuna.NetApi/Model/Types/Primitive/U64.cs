@@ -4,6 +4,12 @@ namespace Ajuna.NetApi.Model.Types.Primitive
 {
     public class U64 : BasePrim<ulong>
     {
+        public U64() { }
+        public U64(ulong value)
+        {
+            Create(value);
+        }
+
         public override string TypeName() => "u64";
 
         public override int TypeSize => 8;

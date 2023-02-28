@@ -2,6 +2,17 @@
 {
     public class Hash : BasePrim<string>
     {
+        public Hash() { }
+        public Hash(string value)
+        {
+            Create(value);
+        }
+
+        public Hash(byte[] value)
+        {
+            Create(value);
+        }
+
         public override string TypeName() => "T::Hash";
 
         public override int TypeSize => 32;

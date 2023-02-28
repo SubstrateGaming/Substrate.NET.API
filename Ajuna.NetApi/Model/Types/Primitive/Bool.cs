@@ -2,6 +2,12 @@
 {
     public class Bool : BasePrim<bool>
     {
+        public Bool() { }
+        public Bool(bool value)
+        {
+            Create(value);
+        }
+
         public override string TypeName() => "bool";
 
         public override int TypeSize => 1;

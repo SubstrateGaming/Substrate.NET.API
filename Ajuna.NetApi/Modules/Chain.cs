@@ -3,13 +3,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ajuna.NetApi.Model.Rpc;
 using Ajuna.NetApi.Model.Types.Base;
+using Ajuna.NetApi.Modules.Contracts;
 
 namespace Ajuna.NetApi.Modules
 {
     /// <summary>
     ///   <br />
     /// </summary>
-    public class Chain
+    public class Chain : IChain
     {
         /// <summary>The client.</summary>
         private readonly SubstrateClient _client;
