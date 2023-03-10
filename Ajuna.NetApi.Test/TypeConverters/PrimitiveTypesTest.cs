@@ -146,6 +146,10 @@ namespace Ajuna.NetApi.Test
 
             var primCtor = new U128(number);
             Assert.AreEqual(prim.Value, primCtor.Value);
+
+            // 0 is a valid input
+            var primZero = new U128(0);
+            Assert.That(primZero.Value, Is.EqualTo(BigInteger.Zero));
         }
 
         [Test]
@@ -165,6 +169,10 @@ namespace Ajuna.NetApi.Test
 
             var primCtor = new U256(bigNumber);
             Assert.AreEqual(prim.Value, primCtor.Value);
+
+            // 0 is a valid input
+            var primZero = new U256(0);
+            Assert.That(primZero.Value, Is.EqualTo(BigInteger.Zero));
         }
 
         [Test]

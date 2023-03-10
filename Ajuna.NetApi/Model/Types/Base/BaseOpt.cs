@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Ajuna.NetApi.Model.Types.Primitive;
 using Newtonsoft.Json;
 
@@ -7,6 +8,12 @@ namespace Ajuna.NetApi.Model.Types.Base
 {
     public class BaseOpt<T> : IType where T : IType, new()
     {
+        public BaseOpt() { }
+        public BaseOpt(T value)
+        {
+            Create(value);
+        }
+
         public virtual string TypeName() => $"Option<{new T().TypeName()}>";
 
         public int TypeSize { get; set; }
@@ -64,6 +71,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             OptionFlag = value != null;
             Value = value;
             Bytes = Encode();
+            TypeSize = (OptionFlag ? 1 : 0) + (Value != null ? Value.TypeSize : 0);
         }
 
         public void Create(string str) => Create(Utils.HexToByteArray(str));
@@ -79,5 +87,22 @@ namespace Ajuna.NetApi.Model.Types.Base
         public IType New() => this;
 
         public override string ToString() => JsonConvert.SerializeObject(this);
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is BaseOpt<T>) || !obj.GetType().Equals(this.GetType()))
+                return false;
+
+            var baseOpt = (BaseOpt<T>)obj;
+            return TypeSize == baseOpt.TypeSize &&
+                   OptionFlag == baseOpt.OptionFlag &&
+                   (Bytes == null && baseOpt.Bytes == null || 
+                    Bytes.SequenceEqual(baseOpt.Bytes) && Value.Equals(baseOpt.Value));
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(TypeSize, Bytes, OptionFlag, Value);
+        }
     }
 }

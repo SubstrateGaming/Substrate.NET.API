@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -6,6 +7,12 @@ namespace Ajuna.NetApi.Model.Types.Base
 {
     public class BaseEnum<T> : IType where T : System.Enum
     {
+        public BaseEnum() { }
+        public BaseEnum(T t)
+        {
+            Create(t);
+        }
+
         public string TypeName() => typeof(T).Name;
 
         public int TypeSize { get; set; } = 1;
@@ -45,6 +52,21 @@ namespace Ajuna.NetApi.Model.Types.Base
         public IType New() => this;
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is BaseEnum<T>) || !obj.GetType().Equals(this.GetType()))
+                return false;
+
+            var baseVec = (BaseEnum<T>)obj;
+            return TypeSize == baseVec.TypeSize &&
+                   (Bytes == null && baseVec.Bytes == null || Bytes.SequenceEqual(baseVec.Bytes));
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(TypeSize);
+        }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public T Value { get; internal set; }

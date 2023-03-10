@@ -128,6 +128,24 @@ namespace Ajuna.NetApi.Test
         }
 
         [Test]
+        public void ExtEnumCreateTest()
+        {
+            var u8 = new U8(1);
+
+            var vecExtEnumTypeFromCreateByteArray = new BaseEnumExt<PhaseState, U8>();
+            vecExtEnumTypeFromCreateByteArray.Create(new byte[] { 0, 1 });
+
+            var vecExtEnumTypeFromCreateHex = new BaseEnumExt<PhaseState, U8>();
+            vecExtEnumTypeFromCreateHex.Create("0x0001");
+
+            var vecExtEnumTypeFromCreateValue = new BaseEnumExt<PhaseState, U8>();
+            vecExtEnumTypeFromCreateValue.Create(PhaseState.None, u8);
+
+            Assert.IsTrue(vecExtEnumTypeFromCreateByteArray.Equals(vecExtEnumTypeFromCreateHex));
+            Assert.IsTrue(vecExtEnumTypeFromCreateHex.Equals(vecExtEnumTypeFromCreateValue));
+        }
+
+        [Test]
         public void ExtEnumXXX()
         {
             var vecExtEnumType = new BaseVec<BaseEnumExt<PhaseState, BaseTuple<Arr4U8, BaseVec<U8>>, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid>>();
