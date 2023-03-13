@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<PackageId>Ajuna.NetApi</PackageId>
 		<TargetFrameworks>netstandard2.1;net6.0</TargetFrameworks>
-		<Version>0.3.5</Version>
+		<Version>0.3.6</Version>
 		<Company>BloGa Tech AG</Company>
 		<Authors>Cedric Decoster</Authors>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
