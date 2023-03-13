@@ -212,7 +212,7 @@ namespace Ajuna.NetApi
         /// <param name="parameters"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<T> GetStorageAsync<T>(string parameters, CancellationToken token) where T : IType, new()
+        public virtual async Task<T> GetStorageAsync<T>(string parameters, CancellationToken token) where T : IType, new()
         {
             return await GetStorageAsync<T>(parameters, null, token);
         }
@@ -224,7 +224,7 @@ namespace Ajuna.NetApi
         /// <param name="parameters"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<T> GetStorageAsync<T>(string parameters, string blockhash, CancellationToken token) where T : IType, new()
+        public virtual async Task<T> GetStorageAsync<T>(string parameters, string blockhash, CancellationToken token) where T : IType, new()
         {
             var str = await InvokeAsync<string>("state_getStorage", new object[] { parameters, blockhash }, token);
 
@@ -248,7 +248,7 @@ namespace Ajuna.NetApi
         /// <param name="callback"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<string> SubscribeStorageKeyAsync(string storageParams, Action<string, StorageChangeSet> callback, CancellationToken token)
+        public virtual async Task<string> SubscribeStorageKeyAsync(string storageParams, Action<string, StorageChangeSet> callback, CancellationToken token)
         {
             if (_socket?.State != WebSocketState.Open)
                 throw new ClientNotConnectedException($"WebSocketState is not open! Currently {_socket?.State}!");
@@ -339,7 +339,7 @@ namespace Ajuna.NetApi
         /// <param name="parameters"> Options for controlling the operation. </param>
         /// <param name="token">      A token that allows processing to be cancelled. </param>
         /// <returns> A T. </returns>
-        public async Task<T> InvokeAsync<T>(string method, object parameters, CancellationToken token)
+        public virtual async Task<T> InvokeAsync<T>(string method, object parameters, CancellationToken token)
         {
             if (_socket?.State != WebSocketState.Open)
                 throw new ClientNotConnectedException($"WebSocketState is not open! Currently {_socket?.State}!");

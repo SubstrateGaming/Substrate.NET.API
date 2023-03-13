@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace Ajuna.NetApi.Model.Types.Base
 {
     public class BaseVec<T> : IType where T : IType, new()
     {
+        public BaseVec() { }
+        public BaseVec(T[] value)
+        {
+            Create(value);
+        }
+
         public virtual string TypeName() => $"Vec<{new T().TypeName()}>";
 
         public int TypeSize { get; set; }
@@ -51,6 +58,15 @@ namespace Ajuna.NetApi.Model.Types.Base
         {
             Value = list;
             Bytes = Encode();
+
+            TypeSize = CalcTypeSize();
+        }
+
+        protected int CalcTypeSize()
+        {
+            int p = 0;
+            _ = CompactInteger.Decode(Bytes, ref p);
+            return p + (Value != null ? Value.Sum(x => x.TypeSize) : 0);
         }
 
         public void Create(string str) => Create(Utils.HexToByteArray(str));
@@ -66,5 +82,22 @@ namespace Ajuna.NetApi.Model.Types.Base
         public IType New() => this;
 
         public override string ToString() => JsonConvert.SerializeObject(this);
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is BaseVec<T>) || !obj.GetType().Equals(this.GetType()))
+                return false;
+
+            var baseVec = (BaseVec<T>)obj;
+            return TypeSize == baseVec.TypeSize &&
+                   (Bytes == null && baseVec.Bytes == null ||
+                        Bytes.SequenceEqual(baseVec.Bytes) &&
+                        (Value == null && baseVec.Value == null || Value.SequenceEqual(baseVec.Value)));
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(TypeSize, Bytes, Value);
+        }
     }
 }

@@ -60,6 +60,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
@@ -123,6 +124,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -186,6 +188,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
@@ -253,6 +256,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
@@ -322,6 +326,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
@@ -393,6 +398,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
@@ -466,6 +472,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
@@ -541,6 +548,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
@@ -618,6 +626,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -695,6 +704,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -774,6 +784,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -855,6 +866,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -938,6 +950,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1023,6 +1036,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1110,6 +1124,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1199,6 +1214,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1290,6 +1306,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1383,6 +1400,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1478,6 +1496,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1575,6 +1594,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1674,6 +1694,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1775,6 +1796,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1878,6 +1900,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1983,6 +2006,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2090,6 +2114,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2199,6 +2224,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2310,6 +2336,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2423,6 +2450,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2538,6 +2566,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2655,6 +2684,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2774,6 +2804,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2895,6 +2926,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3018,6 +3050,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3143,6 +3176,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3270,6 +3304,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3399,6 +3434,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3530,6 +3566,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3663,6 +3700,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3798,6 +3836,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3935,6 +3974,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -4074,6 +4114,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -4215,6 +4256,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -4358,6 +4400,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -4503,6 +4546,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -4650,6 +4694,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -4799,6 +4844,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -4950,6 +4996,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -5103,6 +5150,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -5258,6 +5306,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -5415,6 +5464,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -5574,6 +5624,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -5735,6 +5786,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -5898,6 +5950,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -6063,6 +6116,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -6230,6 +6284,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -6399,6 +6454,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -6570,6 +6626,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -6743,6 +6800,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -6918,6 +6976,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -7095,6 +7154,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -7274,6 +7334,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -7455,6 +7516,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -7638,6 +7700,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -7823,6 +7886,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -8010,6 +8074,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -8199,6 +8264,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -8390,6 +8456,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -8583,6 +8650,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -8778,6 +8846,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -8975,6 +9044,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -9174,6 +9244,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -9375,6 +9446,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -9578,6 +9650,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -9783,6 +9856,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -9990,6 +10064,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -10199,6 +10274,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -10410,6 +10486,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -10623,6 +10700,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -10838,6 +10916,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -11055,6 +11134,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -11274,6 +11354,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -11495,6 +11576,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -11718,6 +11800,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -11943,6 +12026,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -12170,6 +12254,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -12399,6 +12484,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -12630,6 +12716,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -12863,6 +12950,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -13098,6 +13186,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -13335,6 +13424,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -13574,6 +13664,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -13815,6 +13906,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -14058,6 +14150,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -14303,6 +14396,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -14550,6 +14644,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -14799,6 +14894,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -15050,6 +15146,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -15303,6 +15400,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -15558,6 +15656,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -15815,6 +15914,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -16074,6 +16174,7 @@ namespace Ajuna.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
+            TypeSize = 1 + value2.TypeSize;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]

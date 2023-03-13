@@ -1,4 +1,7 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ajuna.NetApi.Model.Types.Base
 {
@@ -30,5 +33,21 @@ namespace Ajuna.NetApi.Model.Types.Base
         public IType New() => this;
 
         public override string ToString() => JsonConvert.SerializeObject(this);
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is BaseType) || !obj.GetType().Equals(this.GetType()))
+                return false;
+
+            var baseType = (BaseType)obj;
+            return TypeSize == baseType.TypeSize &&
+                   TypeName() == baseType.TypeName() &&
+                   (Bytes == null && baseType.Bytes == null || Bytes.SequenceEqual(baseType.Bytes));
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(TypeSize, Bytes);
+        }
     }
 }

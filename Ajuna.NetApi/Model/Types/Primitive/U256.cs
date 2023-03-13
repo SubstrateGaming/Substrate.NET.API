@@ -54,8 +54,8 @@ namespace Ajuna.NetApi.Model.Types.Primitive
         public void Create(BigInteger value)
         {
             // Ensure we have a positive number
-            if (value.Sign != 1)
-                throw new InvalidOperationException($"Unable to create a U256 instance while value is negative");
+            if (value.Sign < 0)
+                throw new InvalidOperationException($"Unable to create a {nameof(U256)} instance while value is negative");
 
             var byteArray = value.ToByteArray();
 

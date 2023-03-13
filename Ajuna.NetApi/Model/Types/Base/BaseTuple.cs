@@ -27,6 +27,12 @@ namespace Ajuna.NetApi.Model.Types.Base
     public class BaseTuple<T1> : BaseType
                             where T1 : IType, new()
     {
+        public BaseTuple() { }
+        public BaseTuple(T1 t1)
+        {
+            Create(t1);
+        }
+
         public override string TypeName()
         {
             return "(" +
@@ -75,6 +81,12 @@ namespace Ajuna.NetApi.Model.Types.Base
                             where T1 : IType, new()
                             where T2 : IType, new()
     {
+        public BaseTuple() { }
+        public BaseTuple(T1 t1, T2 t2)
+        {
+            Create(t1, t2);
+        }
+
         public override string TypeName()
         {
             return "(" +
@@ -130,6 +142,12 @@ namespace Ajuna.NetApi.Model.Types.Base
                             where T2 : IType, new()
                             where T3 : IType, new()
     {
+        public BaseTuple() { }
+        public BaseTuple(T1 t1, T2 t2, T3 t3)
+        {
+            Create(t1, t2, t3);
+        }
+
         public override string TypeName()
         {
             return "(" +
@@ -192,6 +210,12 @@ namespace Ajuna.NetApi.Model.Types.Base
                             where T3 : IType, new()
                             where T4 : IType, new()
     {
+        public BaseTuple() { }
+        public BaseTuple(T1 t1, T2 t2, T3 t3, T4 t4)
+        {
+            Create(t1, t2, t3, t4);
+        }
+
         public override string TypeName()
         {
             return "(" +
