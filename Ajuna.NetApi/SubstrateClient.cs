@@ -51,12 +51,18 @@ namespace Ajuna.NetApi
         /// <summary> The socket. </summary>
         private ClientWebSocket _socket;
 
+        /// <summary>
+        /// Bypass Remote Certificate Validation. Useful when testing with self-signed SSL certificates. 
+        /// </summary>
+        private bool _bypassRemoteCertificateValidation;
+
         /// <summary> Constructor. </summary>
         /// <remarks> 19.09.2020. </remarks>
         /// <param name="uri"> URI of the resource. </param>
-        public SubstrateClient(Uri uri, ChargeType chargeType)
+        public SubstrateClient(Uri uri, ChargeType chargeType, bool bypassRemoteCertificateValidation = false)
         {
             _uri = uri;
+            _bypassRemoteCertificateValidation = bypassRemoteCertificateValidation;
 
             _extrinsicJsonConverter = new ExtrinsicJsonConverter(chargeType);
             _extrinsicStatusJsonConverter = new ExtrinsicStatusJsonConverter();
@@ -153,6 +159,13 @@ namespace Ajuna.NetApi
                 _jsonRpc?.Dispose();
                 _socket?.Dispose();
                 _socket = new ClientWebSocket();
+
+                // Set RemoteCertificateValidationCallback to return true
+                if (_bypassRemoteCertificateValidation)
+                {
+                    _socket.Options.RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true;    
+                }
+                
             }
 
             _connectTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
