@@ -1,11 +1,8 @@
 using System;
 using System.Linq;
+using NUnit.Framework;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Sign;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-using NUnit.Framework;
-using NUnit.Framework.Interfaces;
-using Schnorrkel.Keys;
 
 namespace Substrate.NetApi.Test.Keys
 {
@@ -47,7 +44,6 @@ namespace Substrate.NetApi.Test.Keys
 
             var accountId = new AccountId();
             accountId.Create("0x278117FC144C72340F67D0F2316E8386CEFFBF2B2428C9C51FEF7C597F1D426E");
-
 
             Assert.AreEqual("5CxW5DWQDpXi4cpACd62wzbPjbYrx4y67TZEmRXBcvmDTNaM", accountId.Value);
         }
@@ -120,7 +116,6 @@ namespace Substrate.NetApi.Test.Keys
 
             byte[] pubKey, priKey;
             Chaos.NaCl.Ed25519.KeyPairFromSeed(out pubKey, out priKey, Utils.HexToByteArray(rawSeed));
-
 
             var message = "I test this signature!";
             // According to https://github.com/polkadot-js/apps/blob/master/packages/page-signing/src/Sign.tsx#L93

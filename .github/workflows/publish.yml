@@ -47,19 +47,19 @@ jobs:
       # Test
       - name: Test
         run: |
-            cd Ajuna.NetApi.Test
+            cd Substrate.NetApi.Test
             dotnet test --no-restore --verbosity normal
 
       ##
       # Publish
       ##
-      - name: Publish Ajuna.NetApi
+      - name: Publish Substrate.NetApi
         id: publish_nuget_1
         uses: alirezanet/publish-nuget@v3.0.4
         with:
           # Filepath of the project to be packaged, relative to root of repository
-          PROJECT_FILE_PATH: Ajuna.NetApi/Ajuna.NetApi.csproj
+          PROJECT_FILE_PATH: Substrate.NetApi/Substrate.NetApi.csproj
           # NuGet package id, used for version detection & defaults to project name
-          PACKAGE_NAME: Ajuna.NetApi
+          PACKAGE_NAME: Substrate.NetApi
           # API key to authenticate with NuGet server
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
