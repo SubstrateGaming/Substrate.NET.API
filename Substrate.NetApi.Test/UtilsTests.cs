@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using SimpleBase;
 
 namespace Substrate.NetApi.Test
 {
@@ -51,21 +52,21 @@ namespace Substrate.NetApi.Test
         {
             var addressToBig = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY" + "FFFF";
 
-            var ex1 = Assert.Throws<ApplicationException>(
+            var ex1 = Assert.Throws<NotSupportedException>(
                     () => Utils.GetPublicKeyFrom(addressToBig, out short network)
                 );
             Assert.IsTrue(ex1.Message.Contains("Unsupported address size."));
 
             var addressToWrong1 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQX";
 
-            var ex2 = Assert.Throws<ApplicationException>(
+            var ex2 = Assert.Throws<NotSupportedException>(
                     () => Utils.GetPublicKeyFrom(addressToWrong1, out short network)
                 );
             Assert.IsTrue(ex2.Message.Contains("Address checksum is wrong."));
 
             var addressToWrong2 = "bUNdEKVCnhNAZvnEWFNcL3T82nAWQduR63fgon1qbrba7AKfM";
 
-            var ex3 = Assert.Throws<ApplicationException>(
+            var ex3 = Assert.Throws<NotSupportedException>(
                     () => Utils.GetPublicKeyFrom(addressToWrong2, out short network)
                 );
             Assert.IsTrue(ex3.Message.Contains("Address checksum is wrong."));
@@ -179,5 +180,6 @@ namespace Substrate.NetApi.Test
             Assert.AreEqual("1213", Utils.Bytes2HexString(new byte[] { 0x12, 0x13 }, Utils.HexStringFormat.Pure));
             Assert.AreEqual("12-13", Utils.Bytes2HexString(new byte[] { 0x12, 0x13 }, Utils.HexStringFormat.Dash));
         }
+
     }
 }

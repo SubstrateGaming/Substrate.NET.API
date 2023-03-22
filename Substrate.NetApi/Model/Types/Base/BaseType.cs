@@ -45,9 +45,5 @@ namespace Substrate.NetApi.Model.Types.Base
                    (Bytes == null && baseType.Bytes == null || Bytes.SequenceEqual(baseType.Bytes));
         }
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(TypeSize, Bytes);
-        }
     }
 }

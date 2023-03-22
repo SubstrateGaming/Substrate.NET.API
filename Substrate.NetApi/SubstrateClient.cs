@@ -20,7 +20,7 @@ using Newtonsoft.Json.Linq;
 using Serilog;
 using StreamJsonRpc;
 
-[assembly: InternalsVisibleTo("AjunaNetTests")]
+[assembly: InternalsVisibleTo("Substrate.NetApi.Test")]
 
 namespace Substrate.NetApi
 {
@@ -163,9 +163,13 @@ namespace Substrate.NetApi
                 // Set RemoteCertificateValidationCallback to return true
                 if (_bypassRemoteCertificateValidation)
                 {
+#if NETSTANDARD2_0
+                    throw new NotSupportedException("Bypass remote certification validation not supported in NETStandard2.0");
+#elif NETSTANDARD2_1_OR_GREATER
                     _socket.Options.RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true;    
+#endif
                 }
-                
+
             }
 
             _connectTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));

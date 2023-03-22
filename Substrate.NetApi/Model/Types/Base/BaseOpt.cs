@@ -100,9 +100,5 @@ namespace Substrate.NetApi.Model.Types.Base
                     Bytes.SequenceEqual(baseOpt.Bytes) && Value.Equals(baseOpt.Value));
         }
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(TypeSize, Bytes, OptionFlag, Value);
-        }
     }
 }

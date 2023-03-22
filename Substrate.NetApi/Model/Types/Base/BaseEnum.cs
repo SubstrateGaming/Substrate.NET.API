@@ -63,11 +63,6 @@ namespace Substrate.NetApi.Model.Types.Base
                    (Bytes == null && baseVec.Bytes == null || Bytes.SequenceEqual(baseVec.Bytes));
         }
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(TypeSize);
-        }
-
         [JsonConverter(typeof(StringEnumConverter))]
         public T Value { get; internal set; }
     }

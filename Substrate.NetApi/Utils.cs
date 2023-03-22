@@ -6,7 +6,6 @@ using Org.BouncyCastle.Crypto.Digests;
 using Org.BouncyCastle.Crypto.Encodings;
 using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Parameters;
-using SimpleBase;
 
 namespace Substrate.NetApi
 {
@@ -214,7 +213,7 @@ namespace Substrate.NetApi
             var PREFIX_SIZE = 0;
             var pubkByteList = new List<byte>();
 
-            var bs58decoded = Base58.Bitcoin.Decode(address).ToArray();
+            var bs58decoded = Base58Local.Decode(address);
             var len = bs58decoded.Length;
 
             byte[] ssPrefixed = { 0x53, 0x53, 0x35, 0x38, 0x50, 0x52, 0x45 };
@@ -241,7 +240,7 @@ namespace Substrate.NetApi
             }
             else
             {
-                throw new ApplicationException("Unsupported address size.");
+                throw new NotSupportedException("Unsupported address size.");
             }
 
             pubkByteList.AddRange(ssPrefixed);
@@ -251,7 +250,7 @@ namespace Substrate.NetApi
             if (bs58decoded[PUBLIC_KEY_LENGTH + PREFIX_SIZE] != blake2bHashed[0] ||
                 bs58decoded[PUBLIC_KEY_LENGTH + PREFIX_SIZE + 1] != blake2bHashed[1])
             {
-                throw new ApplicationException("Address checksum is wrong.");
+                throw new NotSupportedException("Address checksum is wrong.");
             }
 
             return bs58decoded.Skip(PREFIX_SIZE).Take(PUBLIC_KEY_LENGTH).ToArray();
@@ -291,7 +290,7 @@ namespace Substrate.NetApi
                 plainAddr = new byte[36];
 
                 // parity style
-                var ident = (short)ss58Prefix & 0b00111111_11111111; // clear first two bits
+                var ident = ss58Prefix & 0b00111111_11111111; // clear first two bits
                 var first = (byte)(((ident & 0b0000_0000_1111_1100) >> 2) | 0b0100_0000);
                 var second = (byte)((ident >> 8) | (ident & 0b0000_0000_0000_0011) << 6);
 
@@ -302,7 +301,7 @@ namespace Substrate.NetApi
             }
             else
             {
-                throw new Exception("Unsupported prefix used, support only up to 16383!");
+                throw new NotSupportedException("Unsupported prefix used, support only up to 16383!");
             }
 
             var ssPrefixed = new byte[SR25519_PUBLIC_SIZE + 7 + KEY_SIZE];
@@ -314,9 +313,7 @@ namespace Substrate.NetApi
             plainAddr[0 + KEY_SIZE + PUBLIC_KEY_LENGTH] = blake2bHashed[0];
             plainAddr[1 + KEY_SIZE + PUBLIC_KEY_LENGTH] = blake2bHashed[1];
 
-            var addrCh = Base58.Bitcoin.Encode(plainAddr).ToArray();
-
-            return new string(addrCh);
+            return Base58Local.Encode(plainAddr);
         }
 
         public static byte[] RSAEncryptBouncy(byte[] dataToEncrypt, RsaKeyParameters rsaKeyParameters)

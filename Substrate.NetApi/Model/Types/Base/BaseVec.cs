@@ -94,10 +94,5 @@ namespace Substrate.NetApi.Model.Types.Base
                         Bytes.SequenceEqual(baseVec.Bytes) &&
                         (Value == null && baseVec.Value == null || Value.SequenceEqual(baseVec.Value)));
         }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(TypeSize, Bytes, Value);
-        }
     }
 }
