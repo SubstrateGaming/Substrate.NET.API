@@ -22,7 +22,7 @@ This is a substrate ecosystem project, to prepare a general Substrate Gaming SDK
 ## Other Projects
 
 ## Projects using Substrate .NET API
-- [If you intend or are using ORML, please add your project here](https://github.com/SubstrateGaming/Substrate.NetApi/edit/master/README.md)  
+- [If you intend or are using Substrate .NET API, please add your project here](https://github.com/SubstrateGaming/Substrate.NetApi/edit/master/README.md)  
   
 **In alphabetical order**  
 
