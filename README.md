@@ -1,4 +1,5 @@
 # Substrate .NET API
+![banner](https://user-images.githubusercontent.com/17710198/226969218-62428078-6af2-4a33-aef0-e4351b10f5ac.png)
 *Substrate .NET API Core for substrate-based nodes*  
 ![Build](https://github.com/SubstrateGaming/Substrate.NetApi/actions/workflows/build.yml/badge.svg)
 [![Nuget](https://img.shields.io/nuget/v/Substrate.NET.API)](https://www.nuget.org/packages/Substrate.NET.API/)
@@ -12,8 +13,6 @@ Substrate .NET API is written to to provide maximum compatibility for [Unity](ht
 - NETStandard2.0
 - NETStandard2.1
 - NET6
-
-![substrate_logo](https://user-images.githubusercontent.com/17710198/226900880-a79a0d24-5335-4a87-b198-3e9e7e3988de.png)
 
 This is a substrate ecosystem project, to prepare a general Substrate Gaming SDK, that is usable withhin the Polkadot ecosystem and beyond. The main goal is to provide an easy entry point for Web3 Game Devs using [Substrate](https://github.com/paritytech/substrate) as an infrastructure.
 
