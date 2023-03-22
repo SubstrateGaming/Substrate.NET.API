@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32811.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ajuna.NetApi.Test", "Ajuna.NetApi.Test\Ajuna.NetApi.Test.csproj", "{44F3AE7C-8392-4CE4-9EA6-3F3E3EF647FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Substrate.NetApi.Test", "Substrate.NetApi.Test\Substrate.NetApi.Test.csproj", "{44F3AE7C-8392-4CE4-9EA6-3F3E3EF647FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ajuna.NetApi", "Ajuna.NetApi\Ajuna.NetApi.csproj", "{CC805134-DE4B-44C0-A77F-630347E57848}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Substrate.NetApi", "Substrate.NetApi\Substrate.NetApi.csproj", "{CC805134-DE4B-44C0-A77F-630347E57848}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ajuna.NetApi.TestNode", "Ajuna.NetApi.TestNode\Ajuna.NetApi.TestNode.csproj", "{1866CE09-C874-4E65-A443-49DCBFC583A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Substrate.NetApi.TestNode", "Substrate.NetApi.TestNode\Substrate.NetApi.TestNode.csproj", "{1866CE09-C874-4E65-A443-49DCBFC583A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
