@@ -6,7 +6,12 @@
 [![license](https://img.shields.io/github/license/SubstrateGaming/Substrate.NetApi)](https://github.com/SubstrateGaming/Substrate.NetApi/blob/origin/LICENSE)
 [![contributors](https://img.shields.io/github/contributors/SubstrateGaming/Substrate.NetApi)](https://github.com/SubstrateGaming/Substrate.NetApi/graphs/contributors)  
 
-Substrate .NET API is written to support NETStandard2.0, NETStandard2.1 & NET6 to provide maximum compatibility for [Unity](https://unity.com/) and C# Applications. Feedback, constructive criticism, and discussions are welcome and will help us to improve the API!
+Substrate .NET API is written to to provide maximum compatibility for [Unity](https://unity.com/) and C# Applications. Feedback, constructive criticism, and discussions are welcome and will help us to improve the API!
+
+# Target Frameworks
+- NETStandard2.0
+- NETStandard2.1
+- NET6
 
 ![substrate_logo](https://user-images.githubusercontent.com/17710198/226900880-a79a0d24-5335-4a87-b198-3e9e7e3988de.png)
 
