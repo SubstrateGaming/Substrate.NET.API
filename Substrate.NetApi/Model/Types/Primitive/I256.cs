@@ -5,7 +5,9 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class I256 : BasePrim<BigInteger>
     {
-        public I256() { }
+        public I256()
+        { }
+
         public I256(BigInteger value)
         {
             Create(value);

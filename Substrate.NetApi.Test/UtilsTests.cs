@@ -1,6 +1,5 @@
 using System;
 using NUnit.Framework;
-using SimpleBase;
 
 namespace Substrate.NetApi.Test
 {

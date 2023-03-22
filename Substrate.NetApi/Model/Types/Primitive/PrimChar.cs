@@ -5,7 +5,9 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class PrimChar : BasePrim<char>
     {
-        public PrimChar() { }
+        public PrimChar()
+        { }
+
         public PrimChar(char value)
         {
             Create(value);

@@ -1,7 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
@@ -44,6 +43,5 @@ namespace Substrate.NetApi.Model.Types.Base
                    TypeName() == baseType.TypeName() &&
                    (Bytes == null && baseType.Bytes == null || Bytes.SequenceEqual(baseType.Bytes));
         }
-
     }
 }

@@ -5,7 +5,9 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class U256 : BasePrim<BigInteger>
     {
-        public U256() { }
+        public U256()
+        { }
+
         public U256(BigInteger value)
         {
             Create(value);

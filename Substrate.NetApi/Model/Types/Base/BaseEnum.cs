@@ -7,7 +7,9 @@ namespace Substrate.NetApi.Model.Types.Base
 {
     public class BaseEnum<T> : IType where T : System.Enum
     {
-        public BaseEnum() { }
+        public BaseEnum()
+        { }
+
         public BaseEnum(T t)
         {
             Create(t);

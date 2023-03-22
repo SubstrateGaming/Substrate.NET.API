@@ -1,8 +1,6 @@
-﻿using Substrate.NetApi.Model.Types.Base;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Substrate.NetApi.Model.Types.Base;
 
 namespace Substrate.NetApi.Model.Rpc
 {

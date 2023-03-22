@@ -4,7 +4,9 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class U32 : BasePrim<uint>
     {
-        public U32() { }
+        public U32()
+        { }
+
         public U32(uint value)
         {
             Create(value);

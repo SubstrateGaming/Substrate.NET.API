@@ -1,7 +1,7 @@
 ﻿using System;
+using Newtonsoft.Json;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
-using Newtonsoft.Json;
 
 namespace Substrate.NetApi.Model.Types.Metadata.V14
 {

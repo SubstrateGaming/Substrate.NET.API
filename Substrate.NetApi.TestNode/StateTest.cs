@@ -1,14 +1,10 @@
-﻿using Substrate.NetApi.Model.Meta;
-using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Primitive;
-using NUnit.Framework;
-using Org.BouncyCastle.Math.EC.Rfc7748;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NUnit.Framework;
+using Substrate.NetApi.Model.Types.Base;
+using Substrate.NetApi.Model.Types.Primitive;
 
 namespace Substrate.NetApi.TestNode
 {
@@ -29,7 +25,6 @@ namespace Substrate.NetApi.TestNode
 
             var blockHash = await _substrateClient.Chain.GetBlockHashAsync(blockNumber);
 
-
             var result = await _substrateClient.State.GetKeysPagedAtAsync(RequestGenerator.GetStorageKeyBytesHash("System", "BlockHash"), 10, null, blockHash.Bytes, CancellationToken.None);
 
             Assert.IsNotNull(result);
@@ -43,7 +38,7 @@ namespace Substrate.NetApi.TestNode
             var storageKeys = new List<byte[]>() { Utils.HexToByteArray(storageKeyHex) };
 
             var results = await _substrateClient.State.GetQueryStorageAtAsync(storageKeys, string.Empty, CancellationToken.None);
-            
+
             Assert.IsNotNull(results);
             Assert.IsNotNull(results.First());
 
@@ -87,7 +82,7 @@ namespace Substrate.NetApi.TestNode
 
             Assert.That(runtimeVersion_1, Is.Not.Null);
             Assert.That(runtimeVersion_2, Is.Not.Null);
-            
+
             Assert.That(runtimeVersion_1.ImplName, Is.EqualTo(runtimeVersion_2.ImplName));
             Assert.That(runtimeVersion_1.ImplVersion, Is.EqualTo(runtimeVersion_2.ImplVersion));
             Assert.That(runtimeVersion_1.TransactionVersion, Is.EqualTo(runtimeVersion_2.TransactionVersion));
@@ -121,7 +116,7 @@ namespace Substrate.NetApi.TestNode
         [TestCase("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000")]
         public async Task GetReadProof_ShouldWorkAsync(string storageKeyHex)
         {
-            var storageKeys = new List<byte[]>() { Utils.HexToByteArray(storageKeyHex)};
+            var storageKeys = new List<byte[]>() { Utils.HexToByteArray(storageKeyHex) };
 
             var call_1 = await _substrateClient.State.GetReadProofAsync(storageKeys);
             var call_2 = await _substrateClient.State.GetReadProofAsync(storageKeys, CancellationToken.None);
@@ -235,6 +230,5 @@ namespace Substrate.NetApi.TestNode
             Assert.That(call_1.Value, Is.EqualTo(call_2.Value));
             Assert.That(call_1.Value, Is.EqualTo((ulong)32));
         }
-
     }
 }

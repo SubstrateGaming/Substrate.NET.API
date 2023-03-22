@@ -1,7 +1,7 @@
-﻿using Substrate.NetApi.Model.Types.Base;
+﻿using Newtonsoft.Json;
+using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
 using Substrate.NetApi.TypeConverters;
-using Newtonsoft.Json;
 
 namespace Substrate.NetApi.Model.Rpc
 {

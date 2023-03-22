@@ -4,8 +4,11 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class U16 : BasePrim<ushort>
     {
-        public U16() { }
-        public U16(ushort value) {
+        public U16()
+        { }
+
+        public U16(ushort value)
+        {
             Create(value);
         }
 

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Substrate.NetApi.Model.Types.Metadata;
-using Substrate.NetApi.Model.Types.Metadata.V14;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Substrate.NetApi.Model.Types.Metadata;
+using Substrate.NetApi.Model.Types.Metadata.V14;
 
 namespace Substrate.NetApi.Model.Meta
 {

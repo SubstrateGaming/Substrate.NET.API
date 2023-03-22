@@ -2,7 +2,9 @@
 {
     public class Bool : BasePrim<bool>
     {
-        public Bool() { }
+        public Bool()
+        { }
+
         public Bool(bool value)
         {
             Create(value);

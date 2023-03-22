@@ -1,6 +1,6 @@
 ﻿using System;
-using Substrate.NetApi.Model.Types;
 using Newtonsoft.Json;
+using Substrate.NetApi.Model.Types;
 
 namespace Substrate.NetApi.Model.Extrinsics
 {

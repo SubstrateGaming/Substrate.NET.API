@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Substrate.NetApi.Model.Types.Base
+﻿namespace Substrate.NetApi.Model.Types.Base
 {
     public class BaseCom<T> : BaseType where T : IType, new()
     {
-        public BaseCom() { }
+        public BaseCom()
+        { }
+
         public BaseCom(CompactInteger compactInteger)
         {
             Create(compactInteger);

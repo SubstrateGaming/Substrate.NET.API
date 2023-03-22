@@ -7,8 +7,10 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class Str : BaseType
     {
-        public Str() { }
-        public Str(string value) 
+        public Str()
+        { }
+
+        public Str(string value)
         {
             Create(value);
         }

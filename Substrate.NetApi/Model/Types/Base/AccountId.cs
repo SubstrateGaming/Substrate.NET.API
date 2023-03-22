@@ -5,7 +5,9 @@ namespace Substrate.NetApi.Model.Types.Base
 {
     public class AccountId : BasePrim<string>
     {
-        public AccountId() { }
+        public AccountId()
+        { }
+
         public AccountId(string value)
         {
             Create(value);

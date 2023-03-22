@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Substrate.NetApi.Model.Types.Primitive;
 using Newtonsoft.Json;
+using Substrate.NetApi.Model.Types.Primitive;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
     public class BaseOpt<T> : IType where T : IType, new()
     {
-        public BaseOpt() { }
+        public BaseOpt()
+        { }
+
         public BaseOpt(T value)
         {
             Create(value);
@@ -96,9 +98,8 @@ namespace Substrate.NetApi.Model.Types.Base
             var baseOpt = (BaseOpt<T>)obj;
             return TypeSize == baseOpt.TypeSize &&
                    OptionFlag == baseOpt.OptionFlag &&
-                   (Bytes == null && baseOpt.Bytes == null || 
+                   (Bytes == null && baseOpt.Bytes == null ||
                     Bytes.SequenceEqual(baseOpt.Bytes) && Value.Equals(baseOpt.Value));
         }
-
     }
 }

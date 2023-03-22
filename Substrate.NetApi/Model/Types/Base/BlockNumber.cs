@@ -4,7 +4,9 @@ namespace Substrate.NetApi.Model.Types.Base
 {
     public class BlockNumber : BasePrim<uint>
     {
-        public BlockNumber() { }
+        public BlockNumber()
+        { }
+
         public BlockNumber(uint value)
         {
             Create(value);

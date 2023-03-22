@@ -4,7 +4,9 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class U64 : BasePrim<ulong>
     {
-        public U64() { }
+        public U64()
+        { }
+
         public U64(ulong value)
         {
             Create(value);

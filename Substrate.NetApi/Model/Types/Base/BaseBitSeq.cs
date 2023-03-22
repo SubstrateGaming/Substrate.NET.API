@@ -64,6 +64,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = Encode();
             TypeSize = CalcTypeSize();
         }
+
         protected int CalcTypeSize()
         {
             int p = 0;
@@ -115,6 +116,5 @@ namespace Substrate.NetApi.Model.Types.Base
                         Bytes.SequenceEqual(baseVec.Bytes) &&
                         (Value == null && baseVec.Value == null || Value.SequenceEqual(baseVec.Value)));
         }
-
     }
 }

@@ -2,7 +2,9 @@
 {
     public class I8 : BasePrim<sbyte>
     {
-        public I8() { }
+        public I8()
+        { }
+
         public I8(sbyte value)
         {
             Create(value);

@@ -2,7 +2,9 @@
 {
     public class Hash : BasePrim<string>
     {
-        public Hash() { }
+        public Hash()
+        { }
+
         public Hash(string value)
         {
             Create(value);

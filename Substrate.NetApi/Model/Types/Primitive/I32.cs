@@ -4,8 +4,10 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class I32 : BasePrim<int>
     {
-        public I32() { }
-        public I32(int value) 
+        public I32()
+        { }
+
+        public I32(int value)
         {
             Create(value);
         }

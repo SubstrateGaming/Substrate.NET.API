@@ -1,5 +1,5 @@
-﻿using Substrate.NetApi.Model.Types.Base;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using Substrate.NetApi.Model.Types.Base;
 
 namespace Substrate.NetApi.Model.Rpc
 {

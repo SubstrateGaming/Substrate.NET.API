@@ -2,7 +2,9 @@
 {
     public class U8 : BasePrim<byte>
     {
-        public U8() { }
+        public U8()
+        { }
+
         public U8(byte value)
         {
             Create(value);
