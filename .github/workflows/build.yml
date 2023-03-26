@@ -49,5 +49,5 @@ jobs:
       # Test
       - name: Test
         run: |
-            cd Ajuna.NetApi.Test
+            cd Substrate.NetApi.Test
             dotnet test --no-restore --verbosity normal
