@@ -4,11 +4,11 @@ using Substrate.NetApi.Model.Types.Metadata.V14;
 namespace Substrate.NetApi.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class AjunaNodeTypeAttribute : Attribute
+    public class SubstrateNodeTypeAttribute : Attribute
     {
         public TypeDefEnum NodeType { get; set; }
 
-        public AjunaNodeTypeAttribute(TypeDefEnum nodeType)
+        public SubstrateNodeTypeAttribute(TypeDefEnum nodeType)
         {
             NodeType = nodeType;
         }
