@@ -1,6 +1,6 @@
 # Substrate .NET API
 *Substrate .NET API Core for substrate-based nodes*  
-![banner](https://user-images.githubusercontent.com/17710198/226969218-62428078-6af2-4a33-aef0-e4351b10f5ac.png)
+![darkfriend77_substrate_gaming](https://user-images.githubusercontent.com/17710198/227789112-d074aa38-8785-413e-bfc7-3d8927756914.png)
 ![Build](https://github.com/SubstrateGaming/Substrate.NET.API/actions/workflows/build.yml/badge.svg)
 [![Nuget](https://img.shields.io/nuget/v/Substrate.NET.API)](https://www.nuget.org/packages/Substrate.NET.API/)
 [![GitHub issues](https://img.shields.io/github/issues/SubstrateGaming/Substrate.NetApi.svg)](https://github.com/SubstrateGaming/Substrate.NetApi/issues)
