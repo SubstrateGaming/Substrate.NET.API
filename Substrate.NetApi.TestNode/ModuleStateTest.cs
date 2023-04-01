@@ -8,7 +8,7 @@ using Substrate.NetApi.Model.Types.Primitive;
 
 namespace Substrate.NetApi.TestNode
 {
-    public class StateTest : NodeTest
+    public class ModuleStateTest : NodeTest
     {
         [Test]
         public async Task GetKeysPagedAtTestAsync()

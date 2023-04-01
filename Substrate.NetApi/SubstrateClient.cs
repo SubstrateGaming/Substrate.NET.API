@@ -69,6 +69,7 @@ namespace Substrate.NetApi
 
             System = new Modules.System(this);
             Chain = new Chain(this);
+            Payment = new Payment(this);
             State = new State(this);
             Author = new Author(this);
 
@@ -94,6 +95,10 @@ namespace Substrate.NetApi
         /// <summary> Gets the chain. </summary>
         /// <value> The chain. </value>
         public Chain Chain { get; }
+
+        /// <summary> Gets the payment. </summary>
+        /// <value> The payment. </value>
+        public Payment Payment { get; }
 
         /// <summary> Gets the state. </summary>
         /// <value> The state. </value>
