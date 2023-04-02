@@ -1,13 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
-using Substrate.NetApi.Model.Rpc;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Substrate.NetApi.Model.Rpc;
 
 namespace Substrate.NetApi.Modules.Contracts
 {
     public interface IPayment
     {
-
         /// <summary>
         /// Query the detailed fee of a given encoded extrinsic
         /// </summary>
@@ -16,7 +14,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<FeeDetails> QueryFeeDetailAsync(string extrinsic, string blockHash, CancellationToken token);
-        
+
         /// <summary>
         /// Retrieves the fee information for an encoded extrinsic
         /// </summary>
@@ -25,6 +23,5 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<RuntimeDispatchInfoV1> QueryInfoAsync(string extrinsic, string blockHash, CancellationToken token);
-    
     }
 }

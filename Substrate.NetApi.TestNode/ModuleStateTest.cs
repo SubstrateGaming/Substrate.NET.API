@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using StreamJsonRpc;
+using Substrate.NetApi.Model.Rpc;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
 
@@ -64,7 +68,7 @@ namespace Substrate.NetApi.TestNode
         [Test]
         public async Task GetMetaDataAt_ShouldWorkAsync()
         {
-            var blockHash = await givenBlockAsync();
+            var blockHash = await GivenBlockAsync();
 
             var metadata_1 = await _substrateClient.State.GetMetaDataAtAsync(blockHash, CancellationToken.None);
             var metadata_2 = await _substrateClient.State.GetMetaDataAtAsync(Utils.Bytes2HexString(blockHash), CancellationToken.None);
@@ -95,7 +99,7 @@ namespace Substrate.NetApi.TestNode
         [Test]
         public async Task GetRuntimeVersionAt_ShouldWorkAsync()
         {
-            var blockHash = await givenBlockAsync();
+            var blockHash = await GivenBlockAsync();
 
             var runtimeVersion_1 = await _substrateClient.State.GetRuntimeVersionAtAsync(blockHash, CancellationToken.None);
             var runtimeVersion_2 = await _substrateClient.State.GetRuntimeVersionAtAsync(Utils.Bytes2HexString(blockHash), CancellationToken.None);
@@ -131,7 +135,7 @@ namespace Substrate.NetApi.TestNode
         [TestCase("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000")]
         public async Task GetReadProofAt_ShouldWorkAsync(string storageKeyHex)
         {
-            var blockHash = await givenBlockAsync();
+            var blockHash = await GivenBlockAsync();
             var storageKeys = new List<byte[]>() { Utils.HexToByteArray(storageKeyHex) };
 
             var call_1 = await _substrateClient.State.GetReadProofAtAsync(storageKeys, blockHash, CancellationToken.None);
@@ -161,7 +165,7 @@ namespace Substrate.NetApi.TestNode
         [TestCase("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000")]
         public async Task GetStorageAt_ShouldWorkAsync(string storageKeyHex)
         {
-            var blockHash = await givenBlockAsync();
+            var blockHash = await GivenBlockAsync();
             var storageKeys = Utils.HexToByteArray(storageKeyHex);
 
             var call_1 = await _substrateClient.State.GetStorageAtAsync(storageKeys, blockHash, CancellationToken.None);
@@ -190,7 +194,7 @@ namespace Substrate.NetApi.TestNode
         [TestCase("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000")]
         public async Task GetStorageHashAt_ShouldWorkAsync(string storageKeyHex)
         {
-            var blockHash = await givenBlockAsync();
+            var blockHash = await GivenBlockAsync();
             var storageKeys = Utils.HexToByteArray(storageKeyHex);
 
             var call_1 = await _substrateClient.State.GetStorageHashAtAsync(storageKeys, blockHash, CancellationToken.None);
@@ -219,7 +223,7 @@ namespace Substrate.NetApi.TestNode
         [TestCase("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000")]
         public async Task GetStorageSizeAt_ShouldWorkAsync(string storageKeyHex)
         {
-            var blockHash = await givenBlockAsync();
+            var blockHash = await GivenBlockAsync();
             var storageKeys = Utils.HexToByteArray(storageKeyHex);
 
             var call_1 = await _substrateClient.State.GetStorageSizeAtAsync(storageKeys, blockHash, CancellationToken.None);
@@ -229,6 +233,36 @@ namespace Substrate.NetApi.TestNode
             Assert.That(call_2, Is.Not.Null);
             Assert.That(call_1.Value, Is.EqualTo(call_2.Value));
             Assert.That(call_1.Value, Is.EqualTo((ulong)32));
+        }
+
+        [Test]
+        [TestCase("0xf0c365c3cf59d671eb72da0e7a4113c49f1f0515f462cdcf84e0f1d6045dfcbb")]
+        public async Task SubscribeStorage_ShouldWorkAsync(string storageKeyHex)
+        {
+            Action<string, StorageChangeSet> callBack = (key, storacheChangeSet) =>
+            {
+                Assert.AreEqual("String", key.GetType().Name);
+                Assert.AreEqual(1, storacheChangeSet.Changes.Length);
+                Assert.AreEqual(2, storacheChangeSet.Changes[0].Length);
+                Assert.AreEqual(storageKeyHex, storacheChangeSet.Changes[0][0]);
+            };
+
+            var subscriptionId = await _substrateClient.State.SubscribeStorageAsync(new JArray() { storageKeyHex }, callBack, CancellationToken.None);
+
+            Thread.Sleep(20 * 1000);
+
+            await _substrateClient.State.UnsubscribeStorageAsync(subscriptionId, CancellationToken.None);
+        }
+
+        [Test]
+        public void SubscribeStorageAll_Failure()
+        {
+
+            var ex = Assert.ThrowsAsync<RemoteMethodNotFoundException>(
+                 async () => await _substrateClient.State.SubscribeStorageAsync(null, (key, storacheChangeSet) => { })
+             );
+
+            Assert.AreEqual("RPC call is unsafe to be called externally", ex.Message);
         }
     }
 }

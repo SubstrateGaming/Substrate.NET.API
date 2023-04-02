@@ -1,11 +1,11 @@
-﻿using Substrate.NetApi.Model.Rpc;
-using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Primitive;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using Substrate.NetApi.Model.Rpc;
+using Substrate.NetApi.Model.Types.Base;
+using Substrate.NetApi.Model.Types.Primitive;
 
 namespace Substrate.NetApi.Modules.Contracts
 {
@@ -40,6 +40,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, byte[] blockHash, CancellationToken token);
+
         Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, string blockHash, CancellationToken token);
 
         /// <summary>
@@ -61,6 +62,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<string> GetMetaDataAtAsync(byte[] blockHash, CancellationToken token);
+
         Task<string> GetMetaDataAtAsync(string blockHash, CancellationToken token);
 
         /// <summary>
@@ -85,6 +87,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<JArray> GetPairsAtAsync(byte[] keyPrefix, byte[] blockHash, CancellationToken token);
+
         Task<JArray> GetPairsAtAsync(byte[] keyPrefix, string blockHash, CancellationToken token);
 
         /// <summary>
@@ -94,6 +97,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<IEnumerable<StorageChangeSet>> GetQueryStorageAsync(List<byte[]> keysList, string fromBlock, string toBlock);
+
         Task<IEnumerable<StorageChangeSet>> GetQueryStorageAsync(List<byte[]> keysList, string fromBlock, string toBlock, CancellationToken token);
 
         /// <summary>
@@ -104,6 +108,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, byte[] blockHash, CancellationToken token);
+
         Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, string blockHash, CancellationToken token);
 
         /// <summary>
@@ -111,6 +116,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// </summary>
         /// <returns></returns>
         Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes);
+
         Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes, CancellationToken token);
 
         /// <summary>
@@ -118,6 +124,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// </summary>
         /// <returns></returns>
         Task<ReadProof> GetReadProofAtAsync(IEnumerable<byte[]> keyPrefixes, byte[] blockHash, CancellationToken token);
+
         Task<ReadProof> GetReadProofAtAsync(IEnumerable<byte[]> keyPrefixes, string blockHash, CancellationToken token);
 
         /// <summary>
@@ -139,6 +146,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<RuntimeVersion> GetRuntimeVersionAtAsync(byte[] blockHash, CancellationToken token);
+
         Task<RuntimeVersion> GetRuntimeVersionAtAsync(string blockHash, CancellationToken token);
 
         /// <summary>
@@ -164,6 +172,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<object> GetStorageAtAsync(byte[] parameters, byte[] blockHash, CancellationToken token);
+
         Task<object> GetStorageAtAsync(byte[] parameters, string blockHash, CancellationToken token);
 
         /// <summary>
@@ -173,6 +182,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<Hash> GetStorageHashAsync(byte[] key);
+
         Task<Hash> GetStorageHashAsync(byte[] key, CancellationToken token);
 
         /// <summary>
@@ -183,6 +193,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<Hash> GetStorageHashAtAsync(byte[] parameters, byte[] blockHash, CancellationToken token);
+
         Task<Hash> GetStorageHashAtAsync(byte[] parameters, string blockHash, CancellationToken token);
 
         /// <summary>
@@ -192,6 +203,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<U64> GetStorageSizeAsync(byte[] parameters);
+
         Task<U64> GetStorageSizeAsync(byte[] parameters, CancellationToken token);
 
         /// <summary>
@@ -201,6 +213,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<U64> GetStorageSizeAtAsync(byte[] parameters, byte[] blockHash, CancellationToken token);
+
         Task<U64> GetStorageSizeAtAsync(byte[] parameters, string blockHash, CancellationToken token);
 
         /// <summary>
@@ -210,6 +223,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<object> GetTraceBlockAsync(byte[] parameters, CancellationToken token);
+
         Task<object> GetTraceBlockAsync(byte[] parameters);
 
         /// <summary>
@@ -219,6 +233,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<object> GetTraceBlockAtAsync(byte[] parameters, byte[] blockHash, CancellationToken token);
+
         Task<object> GetTraceBlockAtAsync(byte[] parameters, string blockHash, CancellationToken token);
 
         /// <summary>
@@ -240,6 +255,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token"></param>
         /// <returns></returns>
         Task<string> SubscribeRuntimeVersionAtAsync(byte[] blockHash, CancellationToken token);
+
         Task<string> SubscribeRuntimeVersionAtAsync(string blockHash, CancellationToken token);
 
         /// <summary>

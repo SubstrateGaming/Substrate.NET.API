@@ -1,8 +1,8 @@
-﻿using Substrate.NetApi.Model.Rpc;
-using Substrate.NetApi.Model.Types.Base;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Substrate.NetApi.Model.Rpc;
+using Substrate.NetApi.Model.Types.Base;
 
 namespace Substrate.NetApi.Modules.Contracts
 {

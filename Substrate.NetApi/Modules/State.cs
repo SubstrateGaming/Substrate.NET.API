@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Substrate.NetApi.Model.Rpc;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
 using Substrate.NetApi.Modules.Contracts;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Schnorrkel.Ristretto;
 
 namespace Substrate.NetApi.Modules
 {
@@ -172,6 +170,7 @@ namespace Substrate.NetApi.Modules
 
         public Task<U64> GetStorageSizeAsync(byte[] parameters)
             => GetStorageSizeAsync(parameters, CancellationToken.None);
+
         public Task<U64> GetStorageSizeAsync(byte[] parameters, CancellationToken token)
             => GetStorageSizeAtAsync(parameters, string.Empty, token);
 
@@ -188,9 +187,9 @@ namespace Substrate.NetApi.Modules
 
             var res = await _client.InvokeAsync<string>("state_getStorageSize", fullParams.ToArray(), token);
 
-            /* 
-             * Cedric : Is it better to override GenericTypeConverter.cs in order to do :  
-             * _client.InvokeAsync<U64> ? 
+            /*
+             * Cedric : Is it better to override GenericTypeConverter.cs in order to do :
+             * _client.InvokeAsync<U64> ?
              * Because actually converter force string cast (GenericTypeConverter.cs line 36) and it fail
              */
             var resNumber = new U64(ulong.Parse(res));
@@ -217,7 +216,7 @@ namespace Substrate.NetApi.Modules
             }
             return JsonConvert.DeserializeObject<IEnumerable<StorageChangeSet>>(jArray.ToString());
         }
-        
+
         public Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, byte[] blockHash, CancellationToken token)
             => GetQueryStorageAtAsync(keysList, Utils.Bytes2HexString(blockHash), token);
 
@@ -228,7 +227,7 @@ namespace Substrate.NetApi.Modules
                 keysList.Select(p => Utils.Bytes2HexString(p)),
                 string.IsNullOrEmpty(blockHash) ? null : blockHash
             };
-            
+
             var jArray = await _client.InvokeAsync<JArray>("state_queryStorageAt", fullParams, token);
 
             if (jArray.Count != 1)

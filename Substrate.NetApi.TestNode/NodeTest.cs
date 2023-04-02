@@ -43,7 +43,7 @@ namespace Substrate.NetApi.TestNode
         /// Return the 20th hash block from now (totally arbitrary)
         /// </summary>
         /// <returns></returns>
-        protected async Task<byte[]> givenBlockAsync()
+        protected async Task<byte[]> GivenBlockAsync()
         {   
             var lastBlockData = await _substrateClient.Chain.GetBlockAsync();
             var lastBlockNumber = lastBlockData.Block.Header.Number.Value;
