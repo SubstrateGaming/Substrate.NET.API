@@ -25,9 +25,10 @@ This is a substrate ecosystem project, to prepare a general Substrate Gaming SDK
 [![Discord Banner 1](https://discordapp.com/api/guilds/849331368558198803/widget.png?style=banner2)](https://discord.gg/cE72GYcFgY)
 
 ## Projects using Substrate .NET API
-- [If you intend or are using Substrate .NET API, please add your project here](https://github.com/SubstrateGaming/Substrate.NetApi/edit/master/README.md)  
-  
+- [If you intend or are using Substrate .NET API, please add your project here](https://github.com/SubstrateGaming/Substrate.NetApi/edit/master/README.md) 
+
 **In alphabetical order**  
 
 - [Ajuna Network](https://github.com/ajuna-network/Ajuna)
+- [PlutoWallet](https://github.com/RostislavLitovkin/PlutoWallet) & [Plutonication](https://github.com/cisar2218/Plutonication)
 
