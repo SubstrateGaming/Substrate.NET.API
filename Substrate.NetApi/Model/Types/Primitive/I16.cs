@@ -2,7 +2,7 @@
 
 namespace Substrate.NetApi.Model.Types.Primitive
 {
-    public class I16 : BasePrim<short>
+    public class I16 : BasePrim<short>, IComparable, IComparable<I16>, IEquatable<I16>
     {
         public I16()
         { }
@@ -43,12 +43,84 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Value = BitConverter.ToInt16(byteArray, 0);
         }
 
-        public void Create(short value)
+        public override void Create(short value)
         {
             var bytes = new byte[TypeSize];
             BitConverter.GetBytes(value).CopyTo(bytes, 0);
             Bytes = bytes;
             Value = value;
         }
+
+        #region Compare
+        public int CompareTo(object obj)
+        {
+            if (obj is I16 validObj)
+                return CompareTo(validObj);
+
+            throw new InvalidOperationException($"{nameof(obj)} is not a valid {nameof(I16)} instance");
+        }
+
+        public int CompareTo(I16 other)
+        {
+            return Value.CompareTo(other.Value);
+        }
+
+        public bool Equals(I16 other)
+        {
+            return Value.Equals(other.Value);
+        }
+        #endregion
+
+        #region Operators
+        public static bool operator >=(I16 self, I16 value)
+        {
+            return self.Value >= value.Value;
+        }
+
+        public static bool operator <=(I16 self, I16 value)
+        {
+            return self.Value <= value.Value;
+        }
+
+        public static bool operator <(I16 self, I16 value)
+        {
+            return self.Value < value.Value;
+        }
+
+        public static bool operator >(I16 self, I16 value)
+        {
+            return self.Value > value.Value;
+        }
+
+        public static I16 operator *(I16 self, I16 value)
+        {
+            return new I16((short)(self.Value * value.Value));
+        }
+
+        public static I16 operator +(I16 self, I16 value)
+        {
+            return new I16((short)(self.Value + value.Value));
+        }
+
+        public static I16 operator -(I16 self, I16 value)
+        {
+            return new I16((short)(self.Value - value.Value));
+        }
+
+        public static I16 operator /(I16 self, I16 value)
+        {
+            return new I16((short)(self.Value / value.Value));
+        }
+
+        public static bool operator ==(I16 self, I16 value)
+        {
+            return self.Value == value.Value;
+        }
+
+        public static bool operator !=(I16 self, I16 value)
+        {
+            return self.Value != value.Value;
+        }
+        #endregion
     }
 }

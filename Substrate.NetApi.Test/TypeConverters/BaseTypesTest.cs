@@ -91,6 +91,7 @@ namespace Substrate.NetApi.Test
             var baseOptEmpty = new BaseOpt<U32>();
             Assert.That(baseOptEmpty.OptionFlag, Is.EqualTo(false));
             Assert.That(baseOptEmpty.Value, Is.Null);
+            Assert.That(baseOptEmpty.Encode(), Is.Not.Null);
 
             var expectedOutput = new U64(100);
             var baseOptFilled = new BaseOpt<U64>();

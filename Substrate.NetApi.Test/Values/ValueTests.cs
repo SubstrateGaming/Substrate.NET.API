@@ -24,7 +24,7 @@ namespace Substrate.NetApi.Test
             Value = new BigInteger(byteArray);
         }
 
-        public void Create(BigInteger value)
+        public override void Create(BigInteger value)
         {
             Bytes = value.ToByteArray();
             Value = value;

@@ -28,7 +28,7 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Value = Encoding.UTF8.GetString(byteArray)[0];
         }
 
-        public void Create(char value)
+        public override void Create(char value)
         {
             Bytes = Encoding.UTF8.GetBytes(value.ToString());
             Value = value;

@@ -8,6 +8,13 @@ namespace Substrate.NetApi.Model.Types
         protected BasePrim()
         { }
 
+        protected BasePrim(T value)
+        {
+            Create(value);
+        }
+
+        public abstract void Create(T value);
+
         public override void Decode(byte[] byteArray, ref int p)
         {
             var memory = byteArray.AsMemory();

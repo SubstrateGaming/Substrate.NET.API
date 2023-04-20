@@ -9,7 +9,10 @@ namespace Substrate.NetApi.Model.Types.Base
     public class BaseOpt<T> : IType where T : IType, new()
     {
         public BaseOpt()
-        { }
+        {
+            // OptionFlag = false by default
+            Create(new byte[] { 0 });
+        }
 
         public BaseOpt(T value)
         {
@@ -98,8 +101,16 @@ namespace Substrate.NetApi.Model.Types.Base
             var baseOpt = (BaseOpt<T>)obj;
             return TypeSize == baseOpt.TypeSize &&
                    OptionFlag == baseOpt.OptionFlag &&
-                   (Bytes == null && baseOpt.Bytes == null ||
-                    Bytes.SequenceEqual(baseOpt.Bytes) && Value.Equals(baseOpt.Value));
+                   (Bytes == null && baseOpt.Bytes == null || Bytes.SequenceEqual(baseOpt.Bytes)) &&
+                   (Value == null && baseOpt.Value == null || Value.Equals(baseOpt.Value));
+        }
+
+        public override int GetHashCode()
+        {
+            return TypeSize.GetHashCode()   ^ 
+                Bytes.GetHashCode()         ^ 
+                OptionFlag.GetHashCode()    ^ 
+                Value.GetHashCode();
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Substrate.NetApi.Model.Types.Primitive
 {
-    public class U128 : BasePrim<BigInteger>
+    public class U128 : BasePrim<BigInteger>, IComparable, IComparable<U128>, IEquatable<U128>
     {
         public U128()
         {
@@ -56,7 +56,7 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Value = new BigInteger(byteArray);
         }
 
-        public void Create(BigInteger value)
+        public override void Create(BigInteger value)
         {
             // Ensure we have a positive number
             if (value.Sign < 0)
@@ -74,5 +74,79 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Bytes = bytes;
             Value = value;
         }
+
+        #region Compare
+        public int CompareTo(object obj)
+        {
+            if (obj is U128 validObj)
+                return CompareTo(validObj);
+
+            throw new InvalidOperationException($"{nameof(obj)} is not a valid {nameof(U128)} instance");
+        }
+
+        public int CompareTo(U128 other)
+        {
+            return Value.CompareTo(other.Value);
+        }
+
+        public bool Equals(U128 other)
+        {
+            return Value.Equals(other.Value);
+        }
+        #endregion
+
+        #region Operators
+        public static bool operator >=(U128 self, U128 value)
+        {
+            return self.Value >= value.Value;
+        }
+
+        public static bool operator <=(U128 self, U128 value)
+        {
+            return self.Value <= value.Value;
+        }
+
+        public static bool operator <(U128 self, U128 value)
+        {
+            return self.Value < value.Value;
+        }
+
+        public static bool operator >(U128 self, U128 value)
+        {
+            return self.Value > value.Value;
+        }
+
+        public static U128 operator *(U128 self, U128 value)
+        {
+            return new U128(self.Value * value.Value);
+        }
+
+        public static U128 operator +(U128 self, U128 value)
+        {
+            return new U128(self.Value + value.Value);
+        }
+
+        public static U128 operator -(U128 self, U128 value)
+        {
+            if (self < value) throw new InvalidOperationException($"Error while performing {nameof(self)} - {nameof(value)} will result in negative number while should be positive");
+
+            return new U128(self.Value - value.Value);
+        }
+
+        public static U128 operator /(U128 self, U128 value)
+        {
+            return new U128(self.Value / value.Value);
+        }
+
+        public static bool operator ==(U128 self, U128 value)
+        {
+            return self.Value == value.Value;
+        }
+
+        public static bool operator !=(U128 self, U128 value)
+        {
+            return self.Value != value.Value;
+        }
+        #endregion
     }
 }

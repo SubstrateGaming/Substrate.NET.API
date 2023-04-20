@@ -5,7 +5,7 @@ using Substrate.NetApi.Model.Types.Base;
 
 namespace Substrate.NetApi.Model.Types.Primitive
 {
-    public class Str : BaseType
+    public class Str : BasePrim<string>
     {
         public Str()
         { }
@@ -45,12 +45,19 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Value = value;
         }
 
-        public string Value { get; internal set; }
-
         public override void Create(string value)
         {
             Value = value;
             Bytes = Encode();
+            TypeSize = CalcTypeSize();
+        }
+
+        protected int CalcTypeSize()
+        {
+            int p = 0;
+            _ = CompactInteger.Decode(Bytes, ref p);
+
+            return Bytes?.Length ?? 0;
         }
     }
 }

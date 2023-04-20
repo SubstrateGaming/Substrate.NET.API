@@ -29,5 +29,7 @@
             Bytes = byteArray;
             Value = Utils.Bytes2HexString(Bytes);
         }
+
+        public override void Create(string value) => Create(Utils.HexToByteArray(value));
     }
 }

@@ -8,7 +8,9 @@ namespace Substrate.NetApi.Model.Types.Base
     public class BaseVec<T> : IType where T : IType, new()
     {
         public BaseVec()
-        { }
+        {
+            Create(Array.Empty<T>());
+        }
 
         public BaseVec(T[] value)
         {

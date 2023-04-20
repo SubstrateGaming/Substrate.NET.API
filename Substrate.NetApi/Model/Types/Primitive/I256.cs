@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Substrate.NetApi.Model.Types.Primitive
 {
-    public class I256 : BasePrim<BigInteger>
+    public class I256 : BasePrim<BigInteger>, IComparable, IComparable<I256>, IEquatable<I256>
     {
         public I256()
         { }
@@ -52,7 +52,7 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Value = value;
         }
 
-        public void Create(BigInteger value)
+        public override void Create(BigInteger value)
         {
             var byteArray = value.ToByteArray();
 
@@ -66,5 +66,77 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Bytes = bytes;
             Value = value;
         }
+
+        #region Compare
+        public int CompareTo(object obj)
+        {
+            if (obj is I256 validObj)
+                return CompareTo(validObj);
+
+            throw new InvalidOperationException($"{nameof(obj)} is not a valid {nameof(I256)} instance");
+        }
+
+        public int CompareTo(I256 other)
+        {
+            return Value.CompareTo(other.Value);
+        }
+
+        public bool Equals(I256 other)
+        {
+            return Value.Equals(other.Value);
+        }
+        #endregion
+
+        #region Operators
+        public static bool operator >=(I256 self, I256 value)
+        {
+            return self.Value >= value.Value;
+        }
+
+        public static bool operator <=(I256 self, I256 value)
+        {
+            return self.Value <= value.Value;
+        }
+
+        public static bool operator <(I256 self, I256 value)
+        {
+            return self.Value < value.Value;
+        }
+
+        public static bool operator >(I256 self, I256 value)
+        {
+            return self.Value > value.Value;
+        }
+
+        public static I256 operator *(I256 self, I256 value)
+        {
+            return new I256(self.Value * value.Value);
+        }
+
+        public static I256 operator +(I256 self, I256 value)
+        {
+            return new I256(self.Value + value.Value);
+        }
+
+        public static I256 operator -(I256 self, I256 value)
+        {
+            return new I256(self.Value - value.Value);
+        }
+
+        public static I256 operator /(I256 self, I256 value)
+        {
+            return new I256(self.Value / value.Value);
+        }
+
+        public static bool operator ==(I256 self, I256 value)
+        {
+            return self.Value == value.Value;
+        }
+
+        public static bool operator !=(I256 self, I256 value)
+        {
+            return self.Value != value.Value;
+        }
+        #endregion
     }
 }

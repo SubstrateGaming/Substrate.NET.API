@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Substrate.NetApi.Model.Types.Primitive
 {
-    public class I128 : BasePrim<BigInteger>
+    public class I128 : BasePrim<BigInteger>, IComparable, IComparable<I128>, IEquatable<I128>
     {
         public I128()
         { }
@@ -52,7 +52,7 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Value = value;
         }
 
-        public void Create(BigInteger value)
+        public override void Create(BigInteger value)
         {
             var byteArray = value.ToByteArray();
 
@@ -66,5 +66,77 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Bytes = bytes;
             Value = value;
         }
+
+        #region Compare
+        public int CompareTo(object obj)
+        {
+            if (obj is I128 validObj)
+                return CompareTo(validObj);
+
+            throw new InvalidOperationException($"{nameof(obj)} is not a valid {nameof(I128)} instance");
+        }
+
+        public int CompareTo(I128 other)
+        {
+            return Value.CompareTo(other.Value);
+        }
+
+        public bool Equals(I128 other)
+        {
+            return Value.Equals(other.Value);
+        }
+        #endregion
+
+        #region Operators
+        public static bool operator >=(I128 self, I128 value)
+        {
+            return self.Value >= value.Value;
+        }
+
+        public static bool operator <=(I128 self, I128 value)
+        {
+            return self.Value <= value.Value;
+        }
+
+        public static bool operator <(I128 self, I128 value)
+        {
+            return self.Value < value.Value;
+        }
+
+        public static bool operator >(I128 self, I128 value)
+        {
+            return self.Value > value.Value;
+        }
+
+        public static I128 operator *(I128 self, I128 value)
+        {
+            return new I128(self.Value * value.Value);
+        }
+
+        public static I128 operator +(I128 self, I128 value)
+        {
+            return new I128(self.Value + value.Value);
+        }
+
+        public static I128 operator -(I128 self, I128 value)
+        {
+            return new I128(self.Value - value.Value);
+        }
+
+        public static I128 operator /(I128 self, I128 value)
+        {
+            return new I128(self.Value / value.Value);
+        }
+
+        public static bool operator ==(I128 self, I128 value)
+        {
+            return self.Value == value.Value;
+        }
+
+        public static bool operator !=(I128 self, I128 value)
+        {
+            return self.Value != value.Value;
+        }
+        #endregion
     }
 }
