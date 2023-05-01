@@ -23,6 +23,8 @@ namespace Substrate.NetApi.Model.Types
             Create(result);
         }
 
+        public override string ToString() => this.Value.ToString();
+
         public T Value { get; set; }
     }
 }
