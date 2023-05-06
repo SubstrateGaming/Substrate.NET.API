@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Substrate.NetApi.Model.Types.Primitive
 {
-    public class U256 : BasePrim<BigInteger>, IComparable, IComparable<U256>, IEquatable<U256>
+    public class U256 : BasePrim<BigInteger>
     {
         public U256()
         { }
@@ -73,22 +73,9 @@ namespace Substrate.NetApi.Model.Types.Primitive
         }
 
         #region Compare
-        public int CompareTo(object obj)
-        {
-            if (obj is U256 validObj)
-                return CompareTo(validObj);
-
-            throw new InvalidOperationException($"{nameof(obj)} is not a valid {nameof(U256)} instance");
-        }
-
         public int CompareTo(U256 other)
         {
             return Value.CompareTo(other.Value);
-        }
-
-        public bool Equals(U256 other)
-        {
-            return Value.Equals(other.Value);
         }
         #endregion
 

@@ -104,13 +104,5 @@ namespace Substrate.NetApi.Model.Types.Base
                    (Bytes == null && baseOpt.Bytes == null || Bytes.SequenceEqual(baseOpt.Bytes)) &&
                    (Value == null && baseOpt.Value == null || Value.Equals(baseOpt.Value));
         }
-
-        public override int GetHashCode()
-        {
-            return TypeSize.GetHashCode()   ^ 
-                Bytes.GetHashCode()         ^ 
-                OptionFlag.GetHashCode()    ^ 
-                Value.GetHashCode();
-        }
     }
 }

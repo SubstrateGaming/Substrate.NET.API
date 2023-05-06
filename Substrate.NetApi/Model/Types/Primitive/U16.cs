@@ -2,7 +2,7 @@
 
 namespace Substrate.NetApi.Model.Types.Primitive
 {
-    public class U16 : BasePrim<ushort>, IComparable, IComparable<U16>, IEquatable<U16>
+    public class U16 : BasePrim<ushort>
     {
         public U16()
         { }
@@ -52,23 +52,6 @@ namespace Substrate.NetApi.Model.Types.Primitive
         }
 
         #region Compare
-        public bool Equals(U16 other)
-        {
-            return Value.Equals(other.Value);
-        }
-
-        // Just to keep warning compiler happy
-        public override bool Equals(object obj) => base.Equals(obj);
-        public override int GetHashCode() => Value.GetHashCode();
-
-        public int CompareTo(object obj)
-        {
-            if(obj is U16 validObj)
-                return CompareTo(validObj);
-
-            throw new InvalidOperationException($"{nameof(obj)} is not a valid {nameof(U16)} instance");
-        }
-
         public int CompareTo(U16 other)
         {
             return Value.CompareTo(other.Value);

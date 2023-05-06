@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Substrate.NetApi.Model.Types.Primitive
 {
-    public class U128 : BasePrim<BigInteger>, IComparable, IComparable<U128>, IEquatable<U128>
+    public class U128 : BasePrim<BigInteger>
     {
         public U128()
         {
@@ -76,22 +76,9 @@ namespace Substrate.NetApi.Model.Types.Primitive
         }
 
         #region Compare
-        public int CompareTo(object obj)
-        {
-            if (obj is U128 validObj)
-                return CompareTo(validObj);
-
-            throw new InvalidOperationException($"{nameof(obj)} is not a valid {nameof(U128)} instance");
-        }
-
         public int CompareTo(U128 other)
         {
             return Value.CompareTo(other.Value);
-        }
-
-        public bool Equals(U128 other)
-        {
-            return Value.Equals(other.Value);
         }
         #endregion
 

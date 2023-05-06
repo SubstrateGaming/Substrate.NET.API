@@ -2,7 +2,7 @@
 
 namespace Substrate.NetApi.Model.Types.Primitive
 {
-    public class U32 : BasePrim<uint>, IComparable, IComparable<U32>, IEquatable<U32>
+    public class U32 : BasePrim<uint>
     {
         public U32()
         { }
@@ -52,22 +52,9 @@ namespace Substrate.NetApi.Model.Types.Primitive
         }
 
         #region Compare
-        public int CompareTo(object obj)
-        {
-            if (obj is U32 validObj)
-                return CompareTo(validObj);
-
-            throw new InvalidOperationException($"{nameof(obj)} is not a valid {nameof(U32)} instance");
-        }
-
         public int CompareTo(U32 other)
         {
             return Value.CompareTo(other.Value);
-        }
-
-        public bool Equals(U32 other)
-        {
-            return Value.Equals(other.Value);
         }
         #endregion
 

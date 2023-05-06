@@ -46,11 +46,6 @@ namespace Substrate.NetApi.Test.TypeConverters
             {
                 _ = new U8(10) / new U8(0);
             });
-
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                _ = new U8(10).CompareTo(new U64(10));
-            });
         }
 
         [Test]
@@ -88,11 +83,6 @@ namespace Substrate.NetApi.Test.TypeConverters
             {
                 _ = new U16(10) / new U16(0);
             });
-
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                _ = new U16(10).CompareTo(new U64(10));
-            });
         }
 
         [Test]
@@ -129,13 +119,7 @@ namespace Substrate.NetApi.Test.TypeConverters
             Assert.Throws<DivideByZeroException>(() =>
             {
                 _ = new U32(10) / new U32(0);
-            });
-
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                _ = new U32(10).CompareTo(new U64(10));
-            });
-            
+            });            
         }
 
         [Test]
@@ -172,11 +156,6 @@ namespace Substrate.NetApi.Test.TypeConverters
             Assert.Throws<DivideByZeroException>(() =>
             {
                 _ = new U64(10) / new U64(0);
-            });
-
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                _ = new U64(10).CompareTo(new U32(10));
             });
         }
 
@@ -215,11 +194,6 @@ namespace Substrate.NetApi.Test.TypeConverters
             {
                 _ = new U128(10) / new U128(0);
             });
-
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                _ = new U128(10).CompareTo(new U32(10));
-            });
         }
 
         [Test]
@@ -257,11 +231,6 @@ namespace Substrate.NetApi.Test.TypeConverters
             {
                 _ = new U256(10) / new U256(0);
             });
-
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                _ = new U256(10).CompareTo(new U32(10));
-            });
         }
 
         [Test]
@@ -296,11 +265,6 @@ namespace Substrate.NetApi.Test.TypeConverters
             Assert.Throws<DivideByZeroException>(() =>
             {
                _ = new I8(10) / new I8(0);
-            });
-
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                _ = new I8(10).CompareTo(new U32(10));
             });
         }
 
@@ -337,11 +301,6 @@ namespace Substrate.NetApi.Test.TypeConverters
             {
                 _ = new I16(10) / new I16(0);
             });
-
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                _ = new I16(10).CompareTo(new U32(10));
-            });
         }
 
         [Test]
@@ -376,11 +335,6 @@ namespace Substrate.NetApi.Test.TypeConverters
             Assert.Throws<DivideByZeroException>(() =>
             {
                 _ = new I32(10) / new I32(0);
-            });
-
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                _ = new I32(10).CompareTo(new U32(10));
             });
         }
 
@@ -418,11 +372,6 @@ namespace Substrate.NetApi.Test.TypeConverters
             {
                 _ = new I64(10) / new I64(0);
             });
-
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                _ = new I64(10).CompareTo(new U32(10));
-            });
         }
 
         [Test]
@@ -458,11 +407,6 @@ namespace Substrate.NetApi.Test.TypeConverters
             {
                 _ = new I128(10) / new I128(0);
             });
-
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                _ = new I128(10).CompareTo(new U32(10));
-            });
         }
 
         [Test]
@@ -497,11 +441,6 @@ namespace Substrate.NetApi.Test.TypeConverters
             Assert.Throws<DivideByZeroException>(() =>
             {
                 _ = new I256(10) / new I256(0);
-            });
-
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                _ = new I256(10).CompareTo(new U32(10));
             });
         }
     }

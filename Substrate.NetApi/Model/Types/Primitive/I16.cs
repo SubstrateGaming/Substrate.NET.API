@@ -2,7 +2,7 @@
 
 namespace Substrate.NetApi.Model.Types.Primitive
 {
-    public class I16 : BasePrim<short>, IComparable, IComparable<I16>, IEquatable<I16>
+    public class I16 : BasePrim<short>
     {
         public I16()
         { }
@@ -52,22 +52,9 @@ namespace Substrate.NetApi.Model.Types.Primitive
         }
 
         #region Compare
-        public int CompareTo(object obj)
-        {
-            if (obj is I16 validObj)
-                return CompareTo(validObj);
-
-            throw new InvalidOperationException($"{nameof(obj)} is not a valid {nameof(I16)} instance");
-        }
-
         public int CompareTo(I16 other)
         {
             return Value.CompareTo(other.Value);
-        }
-
-        public bool Equals(I16 other)
-        {
-            return Value.Equals(other.Value);
         }
         #endregion
 

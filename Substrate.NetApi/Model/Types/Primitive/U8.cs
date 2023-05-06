@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Substrate.NetApi.Model.Types.Primitive
 {
-    public class U8 : BasePrim<byte>, IComparable, IComparable<U8>, IEquatable<U8>
+    public class U8 : BasePrim<byte>
     {
         public U8()
         { }
@@ -35,29 +35,10 @@ namespace Substrate.NetApi.Model.Types.Primitive
         }
 
         #region Compare
-        public bool Equals(U8 other)
-        {
-            return Value.Equals(other.Value);
-        }
-
-        // Just to keep warning compiler happy
-        public override bool Equals(object obj) => base.Equals(obj);
-        public override int GetHashCode() => Value.GetHashCode();
-
-        public int CompareTo(object obj)
-        {
-            if (obj is U8 validObj)
-                return CompareTo(validObj);
-
-            throw new InvalidOperationException($"{nameof(obj)} is not a valid {nameof(U8)} instance");
-        }
-
         public int CompareTo(U8 other)
         {
             return Value.CompareTo(other.Value);
         }
-
-        
         #endregion
 
         #region Operators
