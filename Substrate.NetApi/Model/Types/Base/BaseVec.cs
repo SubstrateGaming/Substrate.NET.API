@@ -8,9 +8,7 @@ namespace Substrate.NetApi.Model.Types.Base
     public class BaseVec<T> : IType where T : IType, new()
     {
         public BaseVec()
-        {
-            Create(Array.Empty<T>());
-        }
+        { }
 
         public BaseVec(T[] value)
         {
@@ -63,7 +61,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Value = list;
             Bytes = Encode();
 
-            TypeSize = CalcTypeSize();
+            TypeSize = Bytes.Length;
         }
 
         protected int CalcTypeSize()
@@ -86,17 +84,5 @@ namespace Substrate.NetApi.Model.Types.Base
         public IType New() => this;
 
         public override string ToString() => JsonConvert.SerializeObject(this);
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is BaseVec<T>) || !obj.GetType().Equals(this.GetType()))
-                return false;
-
-            var baseVec = (BaseVec<T>)obj;
-            return TypeSize == baseVec.TypeSize &&
-                   (Bytes == null && baseVec.Bytes == null ||
-                        Bytes.SequenceEqual(baseVec.Bytes) &&
-                        (Value == null && baseVec.Value == null || Value.SequenceEqual(baseVec.Value)));
-        }
     }
 }

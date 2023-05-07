@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 using Substrate.NetApi.Model.Types.Primitive;
 
@@ -9,10 +8,7 @@ namespace Substrate.NetApi.Model.Types.Base
     public class BaseOpt<T> : IType where T : IType, new()
     {
         public BaseOpt()
-        {
-            // OptionFlag = false by default
-            Create(new byte[] { 0 });
-        }
+        { }
 
         public BaseOpt(T value)
         {
@@ -76,7 +72,7 @@ namespace Substrate.NetApi.Model.Types.Base
             OptionFlag = value != null;
             Value = value;
             Bytes = Encode();
-            TypeSize = (OptionFlag ? 1 : 0) + (Value != null ? Value.TypeSize : 0);
+            TypeSize = Bytes.Length;
         }
 
         public void Create(string str) => Create(Utils.HexToByteArray(str));
@@ -92,17 +88,5 @@ namespace Substrate.NetApi.Model.Types.Base
         public IType New() => this;
 
         public override string ToString() => JsonConvert.SerializeObject(this);
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is BaseOpt<T>) || !obj.GetType().Equals(this.GetType()))
-                return false;
-
-            var baseOpt = (BaseOpt<T>)obj;
-            return TypeSize == baseOpt.TypeSize &&
-                   OptionFlag == baseOpt.OptionFlag &&
-                   (Bytes == null && baseOpt.Bytes == null || Bytes.SequenceEqual(baseOpt.Bytes)) &&
-                   (Value == null && baseOpt.Value == null || Value.Equals(baseOpt.Value));
-        }
     }
 }

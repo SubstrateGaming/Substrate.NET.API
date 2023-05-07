@@ -32,16 +32,5 @@ namespace Substrate.NetApi.Model.Types.Base
         public IType New() => this;
 
         public override string ToString() => JsonConvert.SerializeObject(this);
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is BaseType) || !obj.GetType().Equals(this.GetType()))
-                return false;
-
-            var baseType = (BaseType)obj;
-            return TypeSize == baseType.TypeSize &&
-                   TypeName() == baseType.TypeName() &&
-                   (Bytes == null && baseType.Bytes == null || Bytes.SequenceEqual(baseType.Bytes));
-        }
     }
 }
