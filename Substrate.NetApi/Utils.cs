@@ -31,13 +31,13 @@ namespace Substrate.NetApi
             switch (format)
             {
                 case HexStringFormat.Pure:
-                    return BitConverter.ToString(bytes).Replace("-", string.Empty);
+                    return BitConverter.ToString(bytes).Replace("-", string.Empty).ToLower();
 
                 case HexStringFormat.Dash:
-                    return BitConverter.ToString(bytes);
+                    return BitConverter.ToString(bytes).ToLower();
 
                 case HexStringFormat.Prefixed:
-                    return $"0x{BitConverter.ToString(bytes).Replace("-", string.Empty)}";
+                    return $"0x{BitConverter.ToString(bytes).Replace("-", string.Empty)}".ToLower();
 
                 default:
                     throw new Exception($"Unimplemented hex string format '{format}'");
