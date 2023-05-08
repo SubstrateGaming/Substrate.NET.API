@@ -44,14 +44,23 @@ namespace Substrate.NetApi.Modules
 
         public async Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, string blockHash, CancellationToken token)
         {
-            var fullParams = new object[]
+            var fullParams = new List<object>(4)
             {
                 Utils.Bytes2HexString(keyPrefix),
                 pageCount,
-                startKey != null ? Utils.Bytes2HexString(startKey) : null,
-                string.IsNullOrEmpty(blockHash) ? null : blockHash
             };
-            return await _client.InvokeAsync<JArray>("state_getKeysPaged", fullParams, token);
+
+            if (startKey != null)
+            {
+                fullParams.Add(Utils.Bytes2HexString(startKey));
+            }
+
+            if (!string.IsNullOrEmpty(blockHash))
+            {
+                fullParams.Add(blockHash);
+            }
+
+            return await _client.InvokeAsync<JArray>("state_getKeysPaged", fullParams.ToArray(), token);
         }
 
         public Task<string> GetMetaDataAsync()
