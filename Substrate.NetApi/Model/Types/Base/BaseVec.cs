@@ -64,13 +64,6 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
-        protected int CalcTypeSize()
-        {
-            int p = 0;
-            _ = CompactInteger.Decode(Bytes, ref p);
-            return p + (Value != null ? Value.Sum(x => x.TypeSize) : 0);
-        }
-
         public void Create(string str) => Create(Utils.HexToByteArray(str));
 
         public void CreateFromJson(string str) => Create(Utils.HexToByteArray(str));

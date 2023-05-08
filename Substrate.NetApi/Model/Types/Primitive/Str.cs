@@ -49,15 +49,7 @@ namespace Substrate.NetApi.Model.Types.Primitive
         {
             Value = value;
             Bytes = Encode();
-            TypeSize = CalcTypeSize();
-        }
-
-        protected int CalcTypeSize()
-        {
-            int p = 0;
-            _ = CompactInteger.Decode(Bytes, ref p);
-
-            return Bytes?.Length ?? 0;
+            TypeSize = Bytes.Length;
         }
     }
 }
