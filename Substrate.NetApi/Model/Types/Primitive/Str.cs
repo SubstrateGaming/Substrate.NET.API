@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using Substrate.NetApi.Model.Types.Base;
 
 namespace Substrate.NetApi.Model.Types.Primitive
 {

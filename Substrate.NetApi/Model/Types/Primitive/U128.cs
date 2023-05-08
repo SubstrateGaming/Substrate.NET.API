@@ -74,6 +74,5 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Bytes = bytes;
             Value = value;
         }
-
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Substrate.NetApi.Model.Types.Primitive
+﻿namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class U8 : BasePrim<byte>
     {

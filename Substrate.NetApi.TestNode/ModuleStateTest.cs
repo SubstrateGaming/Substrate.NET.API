@@ -17,8 +17,6 @@ namespace Substrate.NetApi.TestNode
         [Test]
         public async Task GetKeysPagedAtTestAsync()
         {
-            await _substrateClient.ConnectAsync(false, CancellationToken.None);
-
             var parameters = RequestGenerator.GetStorage("System", "Number",
                 Model.Meta.Storage.Type.Plain);
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Substrate.NetApi.Model.Types.Primitive
+﻿namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class I8 : BasePrim<sbyte>
     {
