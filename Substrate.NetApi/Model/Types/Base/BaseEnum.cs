@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -48,22 +47,12 @@ namespace Substrate.NetApi.Model.Types.Base
         public void Create(byte[] byteArray)
         {
             Bytes = byteArray;
-            Value = (T)System.Enum.Parse(typeof(T), byteArray[0].ToString(), true);
+            Value = (T)Enum.Parse(typeof(T), byteArray[0].ToString(), true);
         }
 
         public IType New() => this;
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is BaseEnum<T>) || !obj.GetType().Equals(this.GetType()))
-                return false;
-
-            var baseVec = (BaseEnum<T>)obj;
-            return TypeSize == baseVec.TypeSize &&
-                   (Bytes == null && baseVec.Bytes == null || Bytes.SequenceEqual(baseVec.Bytes));
-        }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public T Value { get; internal set; }

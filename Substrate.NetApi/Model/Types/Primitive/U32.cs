@@ -43,7 +43,7 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Value = BitConverter.ToUInt32(byteArray, 0);
         }
 
-        public void Create(uint value)
+        public override void Create(uint value)
         {
             var bytes = new byte[TypeSize];
             BitConverter.GetBytes(value).CopyTo(bytes, 0);

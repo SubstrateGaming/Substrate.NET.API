@@ -1,4 +1,7 @@
-﻿namespace Substrate.NetApi.Model.Types.Primitive
+﻿using System;
+using System.Collections.Generic;
+
+namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class U8 : BasePrim<byte>
     {
@@ -25,7 +28,7 @@
             Value = byteArray[0];
         }
 
-        public void Create(byte value)
+        public override void Create(byte value)
         {
             Bytes = new byte[] { value };
             Value = value;

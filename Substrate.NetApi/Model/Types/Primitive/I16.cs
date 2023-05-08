@@ -43,7 +43,7 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Value = BitConverter.ToInt16(byteArray, 0);
         }
 
-        public void Create(short value)
+        public override void Create(short value)
         {
             var bytes = new byte[TypeSize];
             BitConverter.GetBytes(value).CopyTo(bytes, 0);

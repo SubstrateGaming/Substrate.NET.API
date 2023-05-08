@@ -92,6 +92,16 @@ namespace Substrate.NetApi.Test
             Assert.AreEqual("0x0100", Utils.Bytes2HexString(optionU8One.Bytes));
         }
 
+        [Test]
+        public void BaseOptClassTest()
+        {
+            var optClass = new BaseOpt<NotSoComplexClass>();
+            optClass.Create("0x010A00000014000000");
+            Assert.That(optClass.Bytes, Is.Not.Null);
+            Assert.That(optClass.Value.Bytes, Is.Not.Null);
+        }
+
+
         public enum PhaseState
         {
             None,
@@ -132,17 +142,21 @@ namespace Substrate.NetApi.Test
         {
             var u8 = new U8(1);
 
+            var vecExtEnumTypeFromCreateValue = new BaseEnumExt<PhaseState, U8>();
+            vecExtEnumTypeFromCreateValue.Create(PhaseState.None, u8);
+
             var vecExtEnumTypeFromCreateByteArray = new BaseEnumExt<PhaseState, U8>();
             vecExtEnumTypeFromCreateByteArray.Create(new byte[] { 0, 1 });
 
             var vecExtEnumTypeFromCreateHex = new BaseEnumExt<PhaseState, U8>();
             vecExtEnumTypeFromCreateHex.Create("0x0001");
 
-            var vecExtEnumTypeFromCreateValue = new BaseEnumExt<PhaseState, U8>();
-            vecExtEnumTypeFromCreateValue.Create(PhaseState.None, u8);
+            Assert.That(vecExtEnumTypeFromCreateValue.Bytes, Is.EqualTo(vecExtEnumTypeFromCreateByteArray.Bytes));
+            Assert.That(vecExtEnumTypeFromCreateValue.Value, Is.EqualTo(vecExtEnumTypeFromCreateByteArray.Value));
 
-            Assert.IsTrue(vecExtEnumTypeFromCreateByteArray.Equals(vecExtEnumTypeFromCreateHex));
-            Assert.IsTrue(vecExtEnumTypeFromCreateHex.Equals(vecExtEnumTypeFromCreateValue));
+
+            Assert.That(vecExtEnumTypeFromCreateValue.Bytes, Is.EqualTo(vecExtEnumTypeFromCreateHex.Bytes));
+            Assert.That(vecExtEnumTypeFromCreateValue.Value, Is.EqualTo(vecExtEnumTypeFromCreateHex.Value));
         }
 
         [Test]
@@ -202,8 +216,33 @@ namespace Substrate.NetApi.Test
             Assert.AreEqual(TestEnum26.T2, ext2.Value);
             Assert.AreEqual(ushort.MaxValue, ((U16)ext2.Value2).Value);
         }
+
+        [Test]
+        public void BalanceLockTest()
+        {
+            var u8 = new U8(byte.MaxValue);
+            var vec8 = new Arr4U8();
+            vec8.Create(new U8[] { u8, u8, u8, u8 });
+
+            var b1 = new BalanceLock();
+            b1.Create("0xFFFFFFFF0A000000000000000000000000000000");
+
+            var b2 = new BalanceLock();
+            b2.Create("0xFFFFFFFF0A000000000000000000000000000000");
+
+            var balancesLock1 = new BaseVec<BalanceLock>(new BalanceLock[] { b1, b2 });
+            
+            var balancesLock2 = new BaseVec<BalanceLock>();
+            balancesLock2.Create(
+                "0x08FFFFFFFF0A000000000000000000000000000000FFFFFFFF0A000000000000000000000000000000");
+
+            Assert.That(balancesLock1.Bytes, Is.EqualTo(balancesLock2.Bytes));
+            Assert.That(balancesLock1.Value[0].Bytes, Is.EqualTo(balancesLock2.Value[0].Bytes));
+            Assert.That(balancesLock1.Value[1].Bytes, Is.EqualTo(balancesLock2.Value[1].Bytes));
+        }
     }
 
+    #region Dynamic type encoding
     public sealed class Arr4U8 : BaseType
     {
         private Substrate.NetApi.Model.Types.Primitive.U8[] _value;
@@ -257,4 +296,65 @@ namespace Substrate.NetApi.Test
             Bytes = Encode();
         }
     }
+
+    public sealed class BalanceLock : BaseType
+    {
+        public Arr4U8 Id { get; set; }
+
+        public U128 Amount { get; set; }
+
+        public override string TypeName() => "BalanceLock";
+
+        public override byte[] Encode()
+        {
+            var result = new List<byte>();
+            result.AddRange(Id.Encode());
+            result.AddRange(Amount.Encode());
+            return result.ToArray();
+        }
+
+        public override void Decode(byte[] byteArray, ref int p)
+        {
+            var start = p;
+            Id = new Arr4U8();
+            Id.Decode(byteArray, ref p);
+            Amount = new U128();
+            Amount.Decode(byteArray, ref p);
+            var bytesLength = p - start;
+            TypeSize = bytesLength;
+            Bytes = new byte[bytesLength];
+            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+        }
+    }
+
+    public sealed class NotSoComplexClass : BaseType
+    {
+        public U32 Id { get; set; }
+
+        public U32 Id2 { get; set; }
+
+        public override string TypeName() => "NotSoComplex";
+
+        public override byte[] Encode()
+        {
+            var result = new List<byte>();
+            result.AddRange(Id.Encode());
+            result.AddRange(Id2.Encode());
+            return result.ToArray();
+        }
+
+        public override void Decode(byte[] byteArray, ref int p)
+        {
+            var start = p;
+            Id = new U32();
+            Id.Decode(byteArray, ref p);
+            Id2 = new U32();
+            Id2.Decode(byteArray, ref p);
+            var bytesLength = p - start;
+            TypeSize = bytesLength;
+            Bytes = new byte[bytesLength];
+            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+        }
+    }
+    #endregion
 }

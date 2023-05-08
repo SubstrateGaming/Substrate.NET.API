@@ -43,12 +43,13 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Value = BitConverter.ToUInt64(byteArray, 0);
         }
 
-        public void Create(ulong value)
+        public override void Create(ulong value)
         {
             var bytes = new byte[TypeSize];
             BitConverter.GetBytes(value).CopyTo(bytes, 0);
             Bytes = bytes;
             Value = value;
         }
+
     }
 }

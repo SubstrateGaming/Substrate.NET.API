@@ -72,8 +72,8 @@ namespace Substrate.NetApi.Model.Types.Base
 
             Value = new IType[1];
             Value[0] = t1;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -134,8 +134,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value = new IType[2];
             Value[0] = t1;
             Value[1] = t2;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -203,8 +203,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[0] = t1;
             Value[1] = t2;
             Value[2] = t3;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -279,8 +279,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[1] = t2;
             Value[2] = t3;
             Value[3] = t4;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -354,8 +354,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[2] = t3;
             Value[3] = t4;
             Value[4] = t5;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -436,8 +436,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[3] = t4;
             Value[4] = t5;
             Value[5] = t6;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -525,8 +525,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[4] = t5;
             Value[5] = t6;
             Value[6] = t7;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -621,8 +621,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[5] = t6;
             Value[6] = t7;
             Value[7] = t8;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -724,8 +724,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[6] = t7;
             Value[7] = t8;
             Value[8] = t9;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -834,8 +834,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[7] = t8;
             Value[8] = t9;
             Value[9] = t10;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -951,8 +951,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[8] = t9;
             Value[9] = t10;
             Value[10] = t11;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -1075,8 +1075,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[9] = t10;
             Value[10] = t11;
             Value[11] = t12;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -1206,8 +1206,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[10] = t11;
             Value[11] = t12;
             Value[12] = t13;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -1344,8 +1344,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[11] = t12;
             Value[12] = t13;
             Value[13] = t14;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -1489,8 +1489,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[12] = t13;
             Value[13] = t14;
             Value[14] = t15;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -1641,8 +1641,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[13] = t14;
             Value[14] = t15;
             Value[15] = t16;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -1800,8 +1800,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[14] = t15;
             Value[15] = t16;
             Value[16] = t17;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -1966,8 +1966,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[15] = t16;
             Value[16] = t17;
             Value[17] = t18;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -2139,8 +2139,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[16] = t17;
             Value[17] = t18;
             Value[18] = t19;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -2319,8 +2319,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[17] = t18;
             Value[18] = t19;
             Value[19] = t20;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -2506,8 +2506,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[18] = t19;
             Value[19] = t20;
             Value[20] = t21;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -2700,8 +2700,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[19] = t20;
             Value[20] = t21;
             Value[21] = t22;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -2901,8 +2901,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[20] = t21;
             Value[21] = t22;
             Value[22] = t23;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -3109,8 +3109,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[21] = t22;
             Value[22] = t23;
             Value[23] = t24;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -3324,8 +3324,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[22] = t23;
             Value[23] = t24;
             Value[24] = t25;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -3546,8 +3546,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[23] = t24;
             Value[24] = t25;
             Value[25] = t26;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -3775,8 +3775,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[24] = t25;
             Value[25] = t26;
             Value[26] = t27;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -4011,8 +4011,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[25] = t26;
             Value[26] = t27;
             Value[27] = t28;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -4254,8 +4254,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[26] = t27;
             Value[27] = t28;
             Value[28] = t29;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -4504,8 +4504,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[27] = t28;
             Value[28] = t29;
             Value[29] = t30;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -4761,8 +4761,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[28] = t29;
             Value[29] = t30;
             Value[30] = t31;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -5025,8 +5025,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[29] = t30;
             Value[30] = t31;
             Value[31] = t32;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -5296,8 +5296,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[30] = t31;
             Value[31] = t32;
             Value[32] = t33;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -5574,8 +5574,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[31] = t32;
             Value[32] = t33;
             Value[33] = t34;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -5859,8 +5859,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[32] = t33;
             Value[33] = t34;
             Value[34] = t35;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -6151,8 +6151,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[33] = t34;
             Value[34] = t35;
             Value[35] = t36;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -6450,8 +6450,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[34] = t35;
             Value[35] = t36;
             Value[36] = t37;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -6756,8 +6756,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[35] = t36;
             Value[36] = t37;
             Value[37] = t38;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }
@@ -7069,8 +7069,8 @@ namespace Substrate.NetApi.Model.Types.Base
             Value[36] = t37;
             Value[37] = t38;
             Value[38] = t39;
-            TypeSize = byteList.Count;
-            Bytes = byteList.ToArray();
+
+            Bytes = byteList.ToArray(); TypeSize = Bytes.Length;
         }
 
         public IType[] Value { get; internal set; }

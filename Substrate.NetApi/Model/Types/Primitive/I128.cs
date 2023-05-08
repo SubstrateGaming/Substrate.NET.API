@@ -52,7 +52,7 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Value = value;
         }
 
-        public void Create(BigInteger value)
+        public override void Create(BigInteger value)
         {
             var byteArray = value.ToByteArray();
 

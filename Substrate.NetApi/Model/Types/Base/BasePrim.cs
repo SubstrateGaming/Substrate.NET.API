@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using Substrate.NetApi.Model.Types.Base;
+using Substrate.NetApi.Model.Types.Primitive;
 
 namespace Substrate.NetApi.Model.Types
 {
@@ -8,6 +10,13 @@ namespace Substrate.NetApi.Model.Types
         protected BasePrim()
         { }
 
+        protected BasePrim(T value)
+        {
+            Create(value);
+        }
+
+        public abstract void Create(T value);
+
         public override void Decode(byte[] byteArray, ref int p)
         {
             var memory = byteArray.AsMemory();
@@ -15,6 +24,8 @@ namespace Substrate.NetApi.Model.Types
             p += TypeSize;
             Create(result);
         }
+
+        public override string ToString() => this.Value.ToString();
 
         public T Value { get; set; }
     }

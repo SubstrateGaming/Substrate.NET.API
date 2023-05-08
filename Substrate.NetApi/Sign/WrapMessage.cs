@@ -8,10 +8,8 @@ namespace Substrate.NetApi.Sign
     /// <summary>
     /// According to Polkadot JS common util (https://github.com/polkadot-js/common/blob/master/packages/util/src/u8a/wrap.ts)
     /// Message to be signed might be wrapped
-    /// 
-    /// TODO : @Darkfriend77 do you want to manage ethereum wrapping message ?
     /// </summary>
-    public class WrapMessage
+    public static class WrapMessage
     {
         private const string U8A_WRAP_PREFIX_STR = "<Bytes>";
         private const string U8A_WRAP_POSTFIX_STR = "</Bytes>";

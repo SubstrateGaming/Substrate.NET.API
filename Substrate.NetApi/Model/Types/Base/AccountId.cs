@@ -52,5 +52,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = byteArray;
             Value = Utils.GetAddressFrom(byteArray);
         }
+
+        public override void Create(string value) => Create(Utils.HexToByteArray(value));
     }
 }

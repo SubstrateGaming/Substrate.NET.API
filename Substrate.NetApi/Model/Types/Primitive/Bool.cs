@@ -25,7 +25,7 @@
             Value = byteArray[0] > 0;
         }
 
-        public void Create(bool value)
+        public override void Create(bool value)
         {
             Bytes = new byte[] { (byte)(value ? 0x01 : 0x00) };
             Value = value;

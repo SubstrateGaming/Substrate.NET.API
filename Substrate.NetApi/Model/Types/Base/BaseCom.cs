@@ -1,4 +1,6 @@
-﻿namespace Substrate.NetApi.Model.Types.Base
+﻿using System;
+
+namespace Substrate.NetApi.Model.Types.Base
 {
     public class BaseCom<T> : BaseType where T : IType, new()
     {
@@ -32,8 +34,7 @@
         {
             Value = compactInteger;
             Bytes = Encode();
-
-            TypeSize = Bytes?.Length ?? 0;
+            TypeSize = Bytes.Length;
         }
     }
 }

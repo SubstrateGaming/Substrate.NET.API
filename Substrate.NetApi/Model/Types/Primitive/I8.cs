@@ -1,4 +1,6 @@
-﻿namespace Substrate.NetApi.Model.Types.Primitive
+﻿using System;
+
+namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class I8 : BasePrim<sbyte>
     {
@@ -25,7 +27,7 @@
             Value = (sbyte)byteArray[0];
         }
 
-        public void Create(sbyte value)
+        public override void Create(sbyte value)
         {
             Bytes = new byte[] { (byte)value };
             Value = value;

@@ -53,7 +53,7 @@ namespace Substrate.NetApi.Model.Types.Primitive
             Value = new BigInteger(byteArray);
         }
 
-        public void Create(BigInteger value)
+        public override void Create(BigInteger value)
         {
             // Ensure we have a positive number
             if (value.Sign < 0)
