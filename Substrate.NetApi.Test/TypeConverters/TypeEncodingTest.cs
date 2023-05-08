@@ -142,17 +142,21 @@ namespace Substrate.NetApi.Test
         {
             var u8 = new U8(1);
 
+            var vecExtEnumTypeFromCreateValue = new BaseEnumExt<PhaseState, U8>();
+            vecExtEnumTypeFromCreateValue.Create(PhaseState.None, u8);
+
             var vecExtEnumTypeFromCreateByteArray = new BaseEnumExt<PhaseState, U8>();
             vecExtEnumTypeFromCreateByteArray.Create(new byte[] { 0, 1 });
 
             var vecExtEnumTypeFromCreateHex = new BaseEnumExt<PhaseState, U8>();
             vecExtEnumTypeFromCreateHex.Create("0x0001");
 
-            var vecExtEnumTypeFromCreateValue = new BaseEnumExt<PhaseState, U8>();
-            vecExtEnumTypeFromCreateValue.Create(PhaseState.None, u8);
+            Assert.That(vecExtEnumTypeFromCreateValue.Bytes, Is.EqualTo(vecExtEnumTypeFromCreateByteArray.Bytes));
+            Assert.That(vecExtEnumTypeFromCreateValue.Value, Is.EqualTo(vecExtEnumTypeFromCreateByteArray.Value));
 
-            Assert.IsTrue(vecExtEnumTypeFromCreateByteArray.Equals(vecExtEnumTypeFromCreateHex));
-            Assert.IsTrue(vecExtEnumTypeFromCreateHex.Equals(vecExtEnumTypeFromCreateValue));
+
+            Assert.That(vecExtEnumTypeFromCreateValue.Bytes, Is.EqualTo(vecExtEnumTypeFromCreateHex.Bytes));
+            Assert.That(vecExtEnumTypeFromCreateValue.Value, Is.EqualTo(vecExtEnumTypeFromCreateHex.Value));
         }
 
         [Test]
@@ -227,12 +231,14 @@ namespace Substrate.NetApi.Test
             b2.Create("0xFFFFFFFF0A000000000000000000000000000000");
 
             var balancesLock1 = new BaseVec<BalanceLock>(new BalanceLock[] { b1, b2 });
+            
             var balancesLock2 = new BaseVec<BalanceLock>();
-            balancesLock2.Create("0x08FFFFFFFF0A000000000000000000000000000000FFFFFFFF0A000000000000000000000000000000");
-            var balancesLock3 = new BaseVec<BalanceLock>();
-            balancesLock3.Create(Utils.HexToByteArray("0x08FFFFFFFF0A000000000000000000000000000000FFFFFFFF0A000000000000000000000000000000"));
+            balancesLock2.Create(
+                "0x08FFFFFFFF0A000000000000000000000000000000FFFFFFFF0A000000000000000000000000000000");
 
-            Assert.That(balancesLock1, Is.EqualTo(balancesLock2));
+            Assert.That(balancesLock1.Bytes, Is.EqualTo(balancesLock2.Bytes));
+            Assert.That(balancesLock1.Value[0].Bytes, Is.EqualTo(balancesLock2.Value[0].Bytes));
+            Assert.That(balancesLock1.Value[1].Bytes, Is.EqualTo(balancesLock2.Value[1].Bytes));
         }
     }
 

@@ -25,7 +25,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -60,7 +60,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
@@ -88,7 +88,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -124,7 +124,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -151,7 +151,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -188,7 +188,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
@@ -218,7 +218,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -256,7 +256,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
@@ -287,7 +287,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -326,7 +326,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
@@ -358,7 +358,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -398,7 +398,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
@@ -431,7 +431,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -472,7 +472,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
@@ -506,7 +506,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -548,7 +548,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
@@ -583,7 +583,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -626,7 +626,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -660,7 +660,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -704,7 +704,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -739,7 +739,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -784,7 +784,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -820,7 +820,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -866,7 +866,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -903,7 +903,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -950,7 +950,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -988,7 +988,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -1036,7 +1036,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1075,7 +1075,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -1124,7 +1124,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1164,7 +1164,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -1214,7 +1214,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1255,7 +1255,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -1306,7 +1306,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1348,7 +1348,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -1400,7 +1400,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1443,7 +1443,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -1496,7 +1496,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1540,7 +1540,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -1594,7 +1594,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1639,7 +1639,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -1694,7 +1694,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1740,7 +1740,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -1796,7 +1796,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1843,7 +1843,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -1900,7 +1900,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -1948,7 +1948,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -2006,7 +2006,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2055,7 +2055,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -2114,7 +2114,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2164,7 +2164,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -2224,7 +2224,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2275,7 +2275,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -2336,7 +2336,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2388,7 +2388,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -2450,7 +2450,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2503,7 +2503,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -2566,7 +2566,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2620,7 +2620,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -2684,7 +2684,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2739,7 +2739,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -2804,7 +2804,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2860,7 +2860,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -2926,7 +2926,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -2983,7 +2983,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -3050,7 +3050,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3108,7 +3108,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -3176,7 +3176,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3235,7 +3235,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -3304,7 +3304,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3364,7 +3364,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -3434,7 +3434,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3495,7 +3495,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -3566,7 +3566,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3628,7 +3628,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -3700,7 +3700,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3763,7 +3763,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -3836,7 +3836,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -3900,7 +3900,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -3974,7 +3974,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -4039,7 +4039,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -4114,7 +4114,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -4180,7 +4180,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -4256,7 +4256,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -4323,7 +4323,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -4400,7 +4400,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -4468,7 +4468,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -4546,7 +4546,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -4615,7 +4615,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -4694,7 +4694,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -4764,7 +4764,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -4844,7 +4844,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -4915,7 +4915,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -4996,7 +4996,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -5068,7 +5068,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -5150,7 +5150,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -5223,7 +5223,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -5306,7 +5306,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -5380,7 +5380,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -5464,7 +5464,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -5539,7 +5539,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -5624,7 +5624,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -5700,7 +5700,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -5786,7 +5786,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -5863,7 +5863,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -5950,7 +5950,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -6028,7 +6028,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -6116,7 +6116,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -6195,7 +6195,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -6284,7 +6284,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -6364,7 +6364,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -6454,7 +6454,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -6535,7 +6535,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -6626,7 +6626,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -6708,7 +6708,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -6800,7 +6800,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -6883,7 +6883,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -6976,7 +6976,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -7060,7 +7060,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -7154,7 +7154,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -7239,7 +7239,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -7334,7 +7334,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -7420,7 +7420,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -7516,7 +7516,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -7603,7 +7603,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -7700,7 +7700,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -7788,7 +7788,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -7886,7 +7886,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -7975,7 +7975,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -8074,7 +8074,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -8164,7 +8164,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -8264,7 +8264,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -8355,7 +8355,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -8456,7 +8456,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -8548,7 +8548,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -8650,7 +8650,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -8743,7 +8743,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -8846,7 +8846,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -8940,7 +8940,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -9044,7 +9044,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -9139,7 +9139,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -9244,7 +9244,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -9340,7 +9340,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -9446,7 +9446,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -9543,7 +9543,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -9650,7 +9650,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -9748,7 +9748,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -9856,7 +9856,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -9955,7 +9955,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -10064,7 +10064,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -10164,7 +10164,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -10274,7 +10274,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -10375,7 +10375,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -10486,7 +10486,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -10588,7 +10588,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -10700,7 +10700,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -10803,7 +10803,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -10916,7 +10916,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -11020,7 +11020,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -11134,7 +11134,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -11239,7 +11239,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -11354,7 +11354,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -11460,7 +11460,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -11576,7 +11576,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -11683,7 +11683,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -11800,7 +11800,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -11908,7 +11908,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -12026,7 +12026,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -12135,7 +12135,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -12254,7 +12254,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -12364,7 +12364,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -12484,7 +12484,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -12595,7 +12595,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -12716,7 +12716,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -12828,7 +12828,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -12950,7 +12950,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -13063,7 +13063,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -13186,7 +13186,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -13300,7 +13300,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -13424,7 +13424,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -13539,7 +13539,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -13664,7 +13664,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -13780,7 +13780,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -13906,7 +13906,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -14023,7 +14023,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -14150,7 +14150,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -14268,7 +14268,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -14396,7 +14396,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -14515,7 +14515,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -14644,7 +14644,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -14764,7 +14764,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -14894,7 +14894,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -15015,7 +15015,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -15146,7 +15146,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -15268,7 +15268,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -15400,7 +15400,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -15523,7 +15523,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -15656,7 +15656,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -15780,7 +15780,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -15914,7 +15914,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -16039,7 +16039,7 @@ namespace Substrate.NetApi.Model.Types.Base
             var start = p;
             var enumByte = byteArray[p];
 
-            Value = (T0)System.Enum.Parse(typeof(T0), enumByte.ToString(), true);
+            Value = (T0)Enum.Parse(typeof(T0), enumByte.ToString(), true);
             p += 1;
 
             Value2 = DecodeOneOf(enumByte, byteArray, ref p);
@@ -16174,7 +16174,7 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
             Value = t;
             Value2 = value2;
-            TypeSize = 1 + value2.TypeSize;
+            TypeSize = Bytes.Length;
         }
 
         [JsonConverter(typeof(StringEnumConverter))]

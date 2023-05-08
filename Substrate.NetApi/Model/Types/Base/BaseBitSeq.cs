@@ -24,8 +24,10 @@ namespace Substrate.NetApi.Model.Types.Base
 
         public byte[] Encode()
         {
-            var result = new List<byte>();
-            result.Add(Reverse((byte)Value.Length));
+            var result = new List<byte>
+            {
+                Reverse((byte)Value.Length)
+            };
             for (int i = 0; i < Value.Length; i++)
             {
                 result.AddRange(Reverse(Value[i].Encode()));
@@ -62,14 +64,7 @@ namespace Substrate.NetApi.Model.Types.Base
         {
             Value = list;
             Bytes = Encode();
-            TypeSize = CalcTypeSize();
-        }
-
-        protected int CalcTypeSize()
-        {
-            int p = 0;
-            _ = CompactInteger.Decode(Bytes, ref p);
-            return p + (Value != null ? Value.Sum(x => x.TypeSize) : 0);
+            TypeSize = Bytes.Length;
         }
 
         public void Create(string str) => Create(Utils.HexToByteArray(str));
@@ -103,18 +98,6 @@ namespace Substrate.NetApi.Model.Types.Base
                 if ((b & (1 << i)) != 0)
                     a |= 1 << (7 - i);
             return (byte)a;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is BaseBitSeq<T1, T2>) || !obj.GetType().Equals(this.GetType()))
-                return false;
-
-            var baseVec = (BaseBitSeq<T1, T2>)obj;
-            return TypeSize == baseVec.TypeSize &&
-                   (Bytes == null && baseVec.Bytes == null ||
-                        Bytes.SequenceEqual(baseVec.Bytes) &&
-                        (Value == null && baseVec.Value == null || Value.SequenceEqual(baseVec.Value)));
         }
     }
 }
