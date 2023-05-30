@@ -41,6 +41,8 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
         public IType New() => this;
 
         public CompactInteger Value { get; set; }
+
+        public byte[] Bytes => throw new NotImplementedException();
     }
 
     public class TType : CompactIntegerType

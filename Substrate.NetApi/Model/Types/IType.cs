@@ -7,6 +7,11 @@
     public interface IType
     {
         /// <summary>
+        /// Current object bytes
+        /// </summary>
+        byte[] Bytes { get; }
+
+        /// <summary>
         /// Names this instance.
         /// </summary>
         /// <returns></returns>
