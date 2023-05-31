@@ -30,7 +30,7 @@ This is a substrate ecosystem project, to prepare a general Substrate Gaming SDK
 **In alphabetical order**  
 
 - [Ajuna Network](https://github.com/ajuna-network/Ajuna)
-- [DOTMog](https://github.com/ajuna-network/pallet-dotmog))
+- [DOTMog](https://github.com/ajuna-network/pallet-dotmog)
 - [DOT4Gravity](https://github.com/ajuna-network/game-dot4-unity)
 - [Metasave](https://github.com/kilogold/Metasave)
 - [MoneyPot.NET](https://github.com/Apolixit/MoneyPot.NET)
