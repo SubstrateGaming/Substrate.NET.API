@@ -25,10 +25,14 @@ This is a substrate ecosystem project, to prepare a general Substrate Gaming SDK
 [![Discord Banner 1](https://discordapp.com/api/guilds/849331368558198803/widget.png?style=banner2)](https://discord.gg/cE72GYcFgY)
 
 ## Projects using Substrate .NET API
-- [If you intend or are using Substrate .NET API, please add your project here](https://github.com/SubstrateGaming/Substrate.NetApi/edit/master/README.md) 
+- [If you intend or are using Substrate .NET API, please add your project here](https://github.com/SubstrateGaming/Substrate.NET.API/edit/master/README.md) 
 
 **In alphabetical order**  
 
 - [Ajuna Network](https://github.com/ajuna-network/Ajuna)
-- [PlutoWallet](https://github.com/RostislavLitovkin/PlutoWallet) & [Plutonication](https://github.com/cisar2218/Plutonication)
-
+- [DOTMog](https://github.com/ajuna-network/pallet-dotmog))
+- [DOT4Gravity](https://github.com/ajuna-network/game-dot4-unity)
+- [Metasave](https://github.com/kilogold/Metasave)
+- [MoneyPot.NET](https://github.com/Apolixit/MoneyPot.NET)
+- [Plutonication](https://github.com/cisar2218/Plutonication)
+- [PlutoWallet](https://github.com/RostislavLitovkin/PlutoWallet)
