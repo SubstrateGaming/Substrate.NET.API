@@ -36,3 +36,4 @@ This is a substrate ecosystem project, to prepare a general Substrate Gaming SDK
 - [MoneyPot.NET](https://github.com/Apolixit/MoneyPot.NET)
 - [Plutonication](https://github.com/cisar2218/Plutonication)
 - [PlutoWallet](https://github.com/RostislavLitovkin/PlutoWallet)
+- [Uniquery.Net](https://github.com/RostislavLitovkin/Uniquery.Net)
