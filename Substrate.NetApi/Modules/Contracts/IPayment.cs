@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using Substrate.NetApi.Model.Rpc;
 
 namespace Substrate.NetApi.Modules.Contracts
@@ -22,6 +23,6 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="blockHash"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task<RuntimeDispatchInfoV1> QueryInfoAsync(string extrinsic, string blockHash, CancellationToken token);
+        Task<RuntimeDispatchInfo> QueryInfoAsync(string extrinsic, string blockHash, CancellationToken token);
     }
 }
