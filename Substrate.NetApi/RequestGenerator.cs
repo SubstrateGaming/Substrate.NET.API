@@ -92,20 +92,8 @@ namespace Substrate.NetApi
             /// Payloads longer than 256 bytes are going to be `blake2_256`-hashed.
             if (payload.Length > 256) payload = HashExtension.Blake2(payload, 256);
 
-            byte[] signature;
-            switch (account.KeyType)
-            {
-                case KeyType.Ed25519:
-                    signature = Ed25519.Sign(payload, account.PrivateKey);
-                    break;
-
-                case KeyType.Sr25519:
-                    signature = Sr25519v091.SignSimple(account.Bytes, account.PrivateKey, payload);
-                    break;
-
-                default:
-                    throw new Exception($"Unknown key type found '{account.KeyType}'.");
-            }
+            /// sign payload with the
+            byte[] signature = account.Sign(payload);
 
             uncheckedExtrinsic.AddPayloadSignature(signature);
 
