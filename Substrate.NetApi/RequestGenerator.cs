@@ -76,7 +76,7 @@ namespace Substrate.NetApi
         /// <param name="runtime">The runtime.</param>
         /// <returns></returns>
         /// <exception cref="UnCheckedExtrinsic">signed, account, method, era, nonce, tip, genesis, startEra</exception>
-        public static UnCheckedExtrinsic SubmitExtrinsic(bool signed, Account account, Method method, Era era,
+        public static UnCheckedExtrinsic SubmitExtrinsic(bool signed, IAccount account, Method method, Era era,
             uint nonce, ChargeType charge, Hash genesis, Hash startEra, RuntimeVersion runtime)
         {
             var uncheckedExtrinsic =
