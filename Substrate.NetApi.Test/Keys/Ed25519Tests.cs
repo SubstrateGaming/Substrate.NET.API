@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
+using Substrate.NetApi.Model.Types;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Sign;
 
@@ -110,7 +111,7 @@ namespace Substrate.NetApi.Test.Keys
 
         [Test]
         [TestCase("0xd2baabb61bcd0026e797136cb0938d55e3c3ea8825c163eb3d1738b3c79af8e8f4953ba4767dc5477202756d3fba97bc50fc3ac8355ff5acfba88a36311f2f0f")]
-        public void SignatureVerifySignedOnNodeByAccountComparePolkadotJs(string polkadotJsSignature)
+        public void Ed25519SignatureTestComparePolkadotJs(string polkadotJsSignature)
         {
             var rawSeed = "0x70f93a75dbc6ad5b0c051210704a00a9937732d0c360792b0fea24efb8ea8465";
 
@@ -131,11 +132,27 @@ namespace Substrate.NetApi.Test.Keys
         }
 
         [Test]
-        public void SignatureVerifyOnNodeSignedHereByAccount()
+        [TestCase("0xd2baabb61bcd0026e797136cb0938d55e3c3ea8825c163eb3d1738b3c79af8e8f4953ba4767dc5477202756d3fba97bc50fc3ac8355ff5acfba88a36311f2f0f")]
+        public void AccountEd25519SignatureTestComparePolkadotJs(string polkadotJsSignature)
         {
-            // https://polkadot.js.org/apps/#/signing/verify
+            var rawSeed = "0x70f93a75dbc6ad5b0c051210704a00a9937732d0c360792b0fea24efb8ea8465";
 
-            Assert.True(true);
+            byte[] pubKey, priKey;
+            Chaos.NaCl.Ed25519.KeyPairFromSeed(out pubKey, out priKey, Utils.HexToByteArray(rawSeed));
+            var account = Account.Build(KeyType.Ed25519, priKey, pubKey);
+
+
+            var message = "I test this signature!";
+            // According to https://github.com/polkadot-js/apps/blob/master/packages/page-signing/src/Sign.tsx#L93
+            var messageBytes = WrapMessage.Wrap(message);
+
+            var signature = account.Sign(messageBytes);
+            var singatureHexString = Utils.Bytes2HexString(signature);
+
+            // SIGn C#: 0x679FA7BC8B2A7C40B5ECD50CA041E961DB8971D2B454DB7DE64E543B3C1892A6D3F223DDA01C66B9878C149CFCC8B86ECF2B20F11F7610596F51479405776907
+
+            // SIGn PolkaJS:0xd2baabb61bcd0026e797136cb0938d55e3c3ea8825c163eb3d1738b3c79af8e8f4953ba4767dc5477202756d3fba97bc50fc3ac8355ff5acfba88a36311f2f0f
+            Assert.True(account.Verify(Utils.HexToByteArray(polkadotJsSignature), account.Bytes, messageBytes));
         }
     }
 }
