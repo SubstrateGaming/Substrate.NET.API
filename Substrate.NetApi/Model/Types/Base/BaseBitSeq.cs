@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using Substrate.NetApi.Model.Types.Base.Abstraction;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
@@ -11,7 +12,7 @@ namespace Substrate.NetApi.Model.Types.Base
     /// </summary>
     /// <typeparam name="T1"></typeparam>
     /// <typeparam name="T2"></typeparam>
-    public class BaseBitSeq<T1, T2> : IType
+    public class BaseBitSeq<T1, T2> : IBaseBitSeq
         where T1 : IType, new()
         where T2 : IType, new()
     {
@@ -59,6 +60,8 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public virtual T1[] Value { get; internal set; }
+
+        public IType[] GetValues() => Value.Select(x => (IType)x).ToArray();
 
         public void Create(T1[] list)
         {

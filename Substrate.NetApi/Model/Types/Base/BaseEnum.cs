@@ -1,10 +1,11 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Substrate.NetApi.Model.Types.Base.Abstraction;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
-    public class BaseEnum<T> : IType where T : System.Enum
+    public class BaseEnum<T> : IBaseEnum where T : System.Enum
     {
         public BaseEnum()
         { }
@@ -53,6 +54,16 @@ namespace Substrate.NetApi.Model.Types.Base
         public IType New() => this;
 
         public override string ToString() => JsonConvert.SerializeObject(Value);
+
+        public Enum GetEnum()
+        {
+            return (Enum)Enum.Parse(typeof(T), Bytes[0].ToString(), true);
+        }
+
+        public IType GetAssociatedData()
+        {
+            return new BaseVoid();
+        }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public T Value { get; internal set; }

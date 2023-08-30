@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Substrate.NetApi.Model.Types.Base.Abstraction;
+using System;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
-    public class BaseCom<T> : BaseType where T : IType, new()
+    public class BaseCom<T> : BaseType, IBaseCom where T : IType, new()
     {
         public BaseCom()
         { }

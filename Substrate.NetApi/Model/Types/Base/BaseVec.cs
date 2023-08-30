@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using Substrate.NetApi.Model.Types.Base.Abstraction;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
-    public class BaseVec<T> : IType where T : IType, new()
+    public class BaseVec<T> : IBaseEnumerable where T : IType, new()
     {
         public BaseVec()
         { }
@@ -55,6 +56,8 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public virtual T[] Value { get; internal set; }
+
+        public IType[] GetValues() => Value.Select(x => (IType)x).ToArray();
 
         public void Create(T[] list)
         {

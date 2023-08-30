@@ -35,7 +35,15 @@ namespace Substrate.NetApi.Test
     {
         public override string TypeName() => "AccountData<T::Balance>";
 
-        public override byte[] Encode() => null;
+        public override byte[] Encode()
+        {
+            var result = new List<byte>();
+            result.AddRange(Free.Encode());
+            result.AddRange(Reserved.Encode());
+            result.AddRange(MiscFrozen.Encode());
+            result.AddRange(FeeFrozen.Encode());
+            return result.ToArray();
+        }
 
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -62,11 +70,63 @@ namespace Substrate.NetApi.Test
         public Balance FeeFrozen { get; private set; }
     }
 
+    public class AccountDataWithCharity : AccountData
+    {
+        public override string TypeName() => "AccountDataNewVersion<T::Balance>";
+
+        public override byte[] Encode()
+        {
+            var result = new List<byte>();
+            result.AddRange(Free.Encode());
+            result.AddRange(Reserved.Encode());
+            result.AddRange(MiscFrozen.Encode());
+            result.AddRange(FeeFrozen.Encode());
+            result.AddRange(Charity.Encode());
+            return result.ToArray();
+        }
+
+        public override void Decode(byte[] byteArray, ref int p)
+        {
+            var start = p;
+
+            Free = new Balance();
+            Free.Decode(byteArray, ref p);
+
+            Reserved = new Balance();
+            Reserved.Decode(byteArray, ref p);
+
+            MiscFrozen = new Balance();
+            MiscFrozen.Decode(byteArray, ref p);
+
+            FeeFrozen = new Balance();
+            FeeFrozen.Decode(byteArray, ref p);
+
+            Charity = new Balance();
+            Charity.Decode(byteArray, ref p);
+
+            TypeSize = p - start;
+        }
+
+        public Balance Free { get; private set; }
+        public Balance Reserved { get; private set; }
+        public Balance MiscFrozen { get; private set; }
+        public Balance FeeFrozen { get; private set; }
+        public Balance Charity { get; private set; }
+    }
+
     public class AccountInfo : BaseType
     {
         public override string TypeName() => "AccountInfo<T::Index, T::AccountData>";
 
-        public override byte[] Encode() => null;
+        public override byte[] Encode()
+        {
+            var result = new List<byte>();
+            result.AddRange(Nonce.Encode());
+            result.AddRange(Consumers.Encode());
+            result.AddRange(Providers.Encode());
+            result.AddRange(AccountData.Encode());
+            return result.ToArray();
+        }
 
         public override void Decode(byte[] byteArray, ref int p)
         {

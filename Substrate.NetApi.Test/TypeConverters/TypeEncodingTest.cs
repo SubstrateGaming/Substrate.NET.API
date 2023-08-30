@@ -154,9 +154,16 @@ namespace Substrate.NetApi.Test
             Assert.That(vecExtEnumTypeFromCreateValue.Bytes, Is.EqualTo(vecExtEnumTypeFromCreateByteArray.Bytes));
             Assert.That(vecExtEnumTypeFromCreateValue.Value, Is.EqualTo(vecExtEnumTypeFromCreateByteArray.Value));
 
-
             Assert.That(vecExtEnumTypeFromCreateValue.Bytes, Is.EqualTo(vecExtEnumTypeFromCreateHex.Bytes));
             Assert.That(vecExtEnumTypeFromCreateValue.Value, Is.EqualTo(vecExtEnumTypeFromCreateHex.Value));
+
+            var eventEnum = vecExtEnumTypeFromCreateValue.GetEnum();
+            Assert.That(eventEnum, Is.EqualTo(PhaseState.None));
+            Assert.That(eventEnum, Is.Not.EqualTo(Substrate.NetApi.Test.BaseTypesTest.PartialBalanceEvents.Endowed));
+
+            var eventData = vecExtEnumTypeFromCreateValue.GetAssociatedData();
+            Assert.IsInstanceOf<U8>(eventData);
+            Assert.That(((U8)eventData).Value, Is.EqualTo(1));
         }
 
         [Test]

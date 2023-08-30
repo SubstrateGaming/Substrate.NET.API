@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Substrate.NetApi.Model.Types.Base.Abstraction;
 using Substrate.NetApi.Model.Types.Primitive;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
-    public class BaseOpt<T> : IType where T : IType, new()
+    public class BaseOpt<T> : IBaseValue where T : IType, new()
     {
         public BaseOpt()
         { }
@@ -66,6 +67,8 @@ namespace Substrate.NetApi.Model.Types.Base
         public bool OptionFlag { get; set; }
 
         public T Value { get; internal set; }
+
+        public IType GetValue() => Value;
 
         public void Create(T value)
         {

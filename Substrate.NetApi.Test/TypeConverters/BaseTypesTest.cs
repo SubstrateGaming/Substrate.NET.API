@@ -3,6 +3,7 @@ using System.Linq;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
 using NUnit.Framework;
+using Substrate.NetApi.Model.Types.Base.Abstraction;
 
 namespace Substrate.NetApi.Test
 {
@@ -28,6 +29,10 @@ namespace Substrate.NetApi.Test
             Assert.AreEqual(((U16)t2.Value[0]).Value, ((U16)new BaseTuple<U16, U16>(u16Param, u16Param).Value[0]).Value);
             Assert.AreEqual(((U16)t2.Value[1]).Value, ((U16)new BaseTuple<U16, U16>(u16Param, u16Param).Value[1]).Value);
             Assert.AreEqual(t2.TypeSize, new BaseTuple<U16, U16>(u16Param, u16Param).TypeSize);
+
+            var t2Generic = t2.GetValues();
+            Assert.AreEqual(2, t2Generic.Length);
+            Assert.IsTrue(t2Generic.All(x => x is U16));
 
             var t3 = new BaseTuple<U16, U16, U16>();
             t3.Create("0x2a002a002a00");
@@ -69,6 +74,26 @@ namespace Substrate.NetApi.Test
             Assert.AreEqual(((U32)tupleOfTwo_1.Value[1]).Value, ((U32)tupleOfTwo_2.Value[1]).Value);
         }
 
+        /// <summary>
+        /// Based on <see cref="ValueTests.AccountDataTest"/> and <see cref="ValueTests.AccountInfoTest"/>
+        /// </summary>
+        [Test]
+        public void BaseTupleInheritenceTest()
+        {
+            var accountDataWithCharity = new AccountDataWithCharity();
+            accountDataWithCharity.Create("518fd3f9a8503a4f7e0000000000000000c040b571e8030000000000000000000000c16ff286230000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+
+            var accountInfo = new AccountInfo();
+            accountInfo.Create(Utils.HexToByteArray(
+                "0500000000000000010000001d58857016a4755a6c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"));
+
+            IBaseEnumerable tuple = new BaseTuple<AccountDataWithCharity, AccountInfo>(accountDataWithCharity, accountInfo);
+
+            Assert.That(tuple.GetValues().Count(), Is.EqualTo(2));
+            Assert.That(tuple.GetValues()[0], Is.EqualTo(accountDataWithCharity));
+            Assert.That(tuple.GetValues()[1], Is.EqualTo(accountInfo));
+        }
+
         [Test]
         public void BaseVecTest()
         {
@@ -90,6 +115,11 @@ namespace Substrate.NetApi.Test
             var baseVecCtor_2 = new BaseVec<U16>(
                 new uint[] { 4, 8, 15, 16, 23, 42, 100 }.Select(x => new U16((ushort)x)).ToArray());
             Assert.IsFalse(baseVecCtor.Equals(baseVecCtor_2));
+
+            var genericValues = baseVec.GetValues();
+            Assert.AreEqual(genericValues.Length, baseVec.Value.Length);
+            Assert.IsInstanceOf<U16>(genericValues.First());
+            Assert.That(((U16)genericValues.First()).Value, Is.EqualTo(4));
         }
 
         [Test]
@@ -160,6 +190,11 @@ namespace Substrate.NetApi.Test
                 Assert.AreEqual(bitSeqTest2[i], baseBitSeq2.Value[i].Value);
             }
             Assert.AreEqual("0xa04141140000", Utils.Bytes2HexString(baseBitSeq2.Encode()).ToLower());
+
+            var baseBitSeqInterfaceResult = baseBitSeq1_1.GetValues();
+            Assert.That(baseBitSeqInterfaceResult.Count(), Is.EqualTo(baseBitSeq1_1.Value.Count()));
+            Assert.IsInstanceOf<U8>(baseBitSeqInterfaceResult.First());
+            Assert.That((U8)baseBitSeqInterfaceResult.First(), Is.EqualTo(baseBitSeq1_1.Value.First()));
         }
 
         private byte[] FromBitString(string str)
@@ -238,6 +273,12 @@ namespace Substrate.NetApi.Test
 
             Assert.AreNotEqual(baseEnumFromValue.Bytes, new BaseEnum<PartialBalanceEvents>(PartialBalanceEvents.BalanceSet).Bytes);
             Assert.AreNotEqual(baseEnumFromValue.Bytes, new BaseEnum<PartialBalanceEvents>(PartialBalanceEvents.BalanceSet).Value);
+
+            var eventEnum = baseEnumFromHex.GetEnum();
+            var eventData = baseEnumFromHex.GetAssociatedData();
+
+            Assert.IsInstanceOf<PartialBalanceEvents>(eventEnum);
+            Assert.That(((BaseVoid)eventData).Bytes, Is.Null);
         }
 
         [Test]

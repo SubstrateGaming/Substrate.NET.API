@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Substrate.NetApi.Model.Types.Base.Abstraction;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
-    public class BaseTuple : BaseType
+    public class BaseTuple : BaseType, IBaseEnumerable
     {
         public override string TypeName()
         {
@@ -22,9 +23,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1> : BaseType
+    public class BaseTuple<T1> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
     {
         public BaseTuple()
@@ -78,9 +80,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2> : BaseType
+    public class BaseTuple<T1, T2> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
     {
@@ -141,9 +144,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3> : BaseType
+    public class BaseTuple<T1, T2, T3> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -211,9 +215,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4> : BaseType
+    public class BaseTuple<T1, T2, T3, T4> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -288,9 +293,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -364,9 +370,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -447,9 +454,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -537,9 +545,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -634,9 +643,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -738,9 +748,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -849,9 +860,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -967,9 +979,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -1092,9 +1105,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -1224,9 +1238,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -1363,9 +1378,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -1509,9 +1525,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -1662,9 +1679,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -1822,9 +1840,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -1989,9 +2008,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -2163,9 +2183,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -2344,9 +2365,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -2532,9 +2554,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -2727,9 +2750,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -2929,9 +2953,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -3138,9 +3163,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -3354,9 +3380,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -3577,9 +3604,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -3807,9 +3835,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -4044,9 +4073,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -4288,9 +4318,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -4539,9 +4570,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -4797,9 +4829,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -5062,9 +5095,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -5334,9 +5368,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -5613,9 +5648,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -5899,9 +5935,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -6192,9 +6229,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -6492,9 +6530,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -6799,9 +6838,10 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 
-    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39> : BaseType
+    public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39> : BaseType, IBaseEnumerable
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
@@ -7113,5 +7153,6 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         public IType[] Value { get; internal set; }
+        public IType[] GetValues() => Value;
     }
 }
