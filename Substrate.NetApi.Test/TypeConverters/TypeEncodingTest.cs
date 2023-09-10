@@ -161,7 +161,7 @@ namespace Substrate.NetApi.Test
             Assert.That(eventEnum, Is.EqualTo(PhaseState.None));
             Assert.That(eventEnum, Is.Not.EqualTo(Substrate.NetApi.Test.BaseTypesTest.PartialBalanceEvents.Endowed));
 
-            var eventData = vecExtEnumTypeFromCreateValue.GetAssociatedData();
+            var eventData = vecExtEnumTypeFromCreateValue.GetValues();
             Assert.IsInstanceOf<U8>(eventData);
             Assert.That(((U8)eventData).Value, Is.EqualTo(1));
         }

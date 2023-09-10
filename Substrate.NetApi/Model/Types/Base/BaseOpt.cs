@@ -68,7 +68,7 @@ namespace Substrate.NetApi.Model.Types.Base
 
         public T Value { get; internal set; }
 
-        public IType GetValue() => Value;
+        public IType GetValues() => Value;
 
         public void Create(T value)
         {

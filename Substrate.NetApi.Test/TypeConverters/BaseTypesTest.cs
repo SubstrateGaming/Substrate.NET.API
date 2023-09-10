@@ -275,7 +275,7 @@ namespace Substrate.NetApi.Test
             Assert.AreNotEqual(baseEnumFromValue.Bytes, new BaseEnum<PartialBalanceEvents>(PartialBalanceEvents.BalanceSet).Value);
 
             var eventEnum = baseEnumFromHex.GetEnum();
-            var eventData = baseEnumFromHex.GetAssociatedData();
+            var eventData = baseEnumFromHex.GetValues();
 
             Assert.IsInstanceOf<PartialBalanceEvents>(eventEnum);
             Assert.That(((BaseVoid)eventData).Bytes, Is.Null);

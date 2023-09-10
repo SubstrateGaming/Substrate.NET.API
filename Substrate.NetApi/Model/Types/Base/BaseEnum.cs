@@ -60,7 +60,7 @@ namespace Substrate.NetApi.Model.Types.Base
             return (Enum)Enum.Parse(typeof(T), Bytes[0].ToString(), true);
         }
 
-        public IType GetAssociatedData()
+        public IType GetValues()
         {
             return new BaseVoid();
         }

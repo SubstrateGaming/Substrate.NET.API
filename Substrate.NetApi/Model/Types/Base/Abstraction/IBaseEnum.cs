@@ -7,6 +7,6 @@ namespace Substrate.NetApi.Model.Types.Base.Abstraction
     public interface IBaseEnum : IType
     {
         Enum GetEnum();
-        IType GetAssociatedData();
+        IType GetValues();
     }
 }

@@ -6,6 +6,6 @@ namespace Substrate.NetApi.Model.Types.Base.Abstraction
 {
     public interface IBaseValue : IType
     {
-        IType GetValue();
+        IType GetValues();
     }
 }
