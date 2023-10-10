@@ -19,6 +19,13 @@ namespace Substrate.NetApi
             Prefixed
         }
 
+        public static bool IsHex(string value)
+        {
+            if(string.IsNullOrEmpty(value)) return false;
+
+            return value.ToLower().StartsWith("0x");
+        }
+
         /// <summary>
         /// Convert bytes to the hexadecimal string.
         /// </summary>
@@ -310,6 +317,25 @@ namespace Substrate.NetApi
             plainAddr[1 + KEY_SIZE + PUBLIC_KEY_LENGTH] = blake2bHashed[1];
 
             return Base58Local.Encode(plainAddr);
+        }
+
+        public static byte[] BytesFixLength(byte[] value, int bitLength = -1, bool atStart = false)
+        {
+            int byteLength = (int)Math.Ceiling((double)bitLength / 8);
+
+            if (bitLength == -1 || value.Length == byteLength)
+                return value;
+            else if (value.Length > byteLength)
+                return value.Take(byteLength).ToArray();
+
+            byte[] result = new byte[byteLength];
+
+            if(atStart)
+                Array.Copy(value, 0, result, 0, value.Length);
+            else
+                Array.Copy(value, 0, result, byteLength - value.Length, value.Length);
+
+            return result;
         }
 
     }

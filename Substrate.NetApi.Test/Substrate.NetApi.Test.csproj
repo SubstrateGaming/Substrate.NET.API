@@ -17,4 +17,10 @@
 		<ProjectReference Include="..\Substrate.NetApi\Substrate.NetApi.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="Keyring\MockAccounts\Mock_1.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>
