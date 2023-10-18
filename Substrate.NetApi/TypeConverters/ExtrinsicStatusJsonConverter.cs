@@ -57,42 +57,37 @@ namespace Substrate.NetApi.TypeConverters
 
                                             extrinsicStatus.Broadcast = broadcastList.ToArray();
                                         }
-
+                                        extrinsicStatus.ExtrinsicState = ExtrinsicState.Broadcast;
                                         break;
 
                                     case "inBlock":
                                         reader.Read();
-                                        var inBlock = new Hash();
-                                        inBlock.Create((string)reader.Value);
-                                        extrinsicStatus.InBlock = inBlock;
+                                        extrinsicStatus.Hash = new Hash((string)reader.Value);
+                                        extrinsicStatus.ExtrinsicState = ExtrinsicState.InBlock;
                                         break;
 
                                     case "finalized":
                                         reader.Read();
-                                        var finalized = new Hash();
-                                        finalized.Create((string)reader.Value);
-                                        extrinsicStatus.Finalized = finalized;
+                                        extrinsicStatus.Hash = new Hash((string)reader.Value);
+                                        extrinsicStatus.ExtrinsicState = ExtrinsicState.Finalized;
                                         break;
 
                                     case "finalityTimeout":
                                         reader.Read();
-                                        var finalityTimeout = new Hash();
-                                        finalityTimeout.Create((string)reader.Value);
-                                        extrinsicStatus.FinalityTimeout = finalityTimeout;
+                                        extrinsicStatus.Hash = new Hash((string)reader.Value);
+                                        extrinsicStatus.ExtrinsicState = ExtrinsicState.FinalityTimeout;
                                         break;
 
                                     case "retracted":
                                         reader.Read();
-                                        var retracted = new Hash();
-                                        retracted.Create((string)reader.Value);
-                                        extrinsicStatus.Retracted = retracted;
+                                        extrinsicStatus.Hash = new Hash((string)reader.Value);
+                                        extrinsicStatus.ExtrinsicState = ExtrinsicState.Retracted;
                                         break;
 
                                     case "usurped":
                                         reader.Read();
-                                        var usurped = new Hash();
-                                        usurped.Create((string)reader.Value);
-                                        extrinsicStatus.Usurped = usurped;
+                                        extrinsicStatus.Hash = new Hash((string)reader.Value);
+                                        extrinsicStatus.ExtrinsicState = ExtrinsicState.Usurped;
                                         break;
 
                                     default:

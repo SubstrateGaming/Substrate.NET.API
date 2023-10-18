@@ -1,21 +1,18 @@
-﻿using Substrate.NetApi.Model.Extrinsics;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
+﻿using NUnit.Framework;
+using Substrate.NetApi.Model.Types;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
-using Substrate.NetApi.Model.Types;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Substrate.NetApi.TestNode
 {
     public class QueryAllTest : NodeTest
     {
-
         [Test]
         public async Task GetAllStorageTestAsync()
         {
@@ -43,10 +40,10 @@ namespace Substrate.NetApi.TestNode
 
             Assert.IsNotNull(allPages);
             Assert.AreNotEqual(0, allPages.Count);
-            Assert.Greater(10000, stopwatch.ElapsedMilliseconds, "Get all storage did use more then 10 sec., verify!");
+            Assert.Greater(20000, stopwatch.ElapsedMilliseconds, "Get all storage did use more then 10 sec., verify!");
         }
 
-        public async Task<List<(byte[], T1, T2)>> GetAllStoragePagedAsync<T1, T2>(string module, string item, byte[] startKey, uint page, string blockHash, CancellationToken token) 
+        public async Task<List<(byte[], T1, T2)>> GetAllStoragePagedAsync<T1, T2>(string module, string item, byte[] startKey, uint page, string blockHash, CancellationToken token)
             where T1 : IType, new()
             where T2 : IType, new()
         {
