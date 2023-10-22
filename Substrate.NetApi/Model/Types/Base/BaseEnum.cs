@@ -10,7 +10,6 @@ namespace Substrate.NetApi.Model.Types.Base
 
         public static implicit operator T(BaseEnum<T> p) => p.Value;
 
-
         public BaseEnum()
         { }
 
