@@ -10,7 +10,7 @@
 		<Description>Substrate Core .NET API</Description>
 		<PackageProjectUrl>https://github.com/SubstrateGaming</PackageProjectUrl>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<RepositoryUrl>https://github.com/SubstrateGaming/Substrate.NetApi</RepositoryUrl>
+		<RepositoryUrl>https://github.com/SubstrateGaming/Substrate.NET.API</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
