@@ -146,38 +146,6 @@ namespace Substrate.NetApi.TestNode
         }
 
         /// <summary>
-        /// Simple extrinsic tester
-        /// </summary>
-        /// <param name="subscriptionId"></param>
-        /// <param name="extrinsicUpdate"></param>
-        private static void ActionExtrinsicUpdate(string subscriptionId, ExtrinsicStatus extrinsicUpdate)
-        {
-            switch (extrinsicUpdate.ExtrinsicState)
-            {
-                case ExtrinsicState.None:
-                    Assert.IsTrue(true);
-                    Assert.IsTrue(extrinsicUpdate.InBlock.Value.Length > 0 || extrinsicUpdate.Finalized.Value.Length > 0);
-                    break;
-
-                case ExtrinsicState.Future:
-                    Assert.IsTrue(false);
-                    break;
-
-                case ExtrinsicState.Ready:
-                    Assert.IsTrue(true);
-                    break;
-
-                case ExtrinsicState.Dropped:
-                    Assert.IsTrue(false);
-                    break;
-
-                case ExtrinsicState.Invalid:
-                    Assert.IsTrue(false);
-                    break;
-            }
-        }
-
-        /// <summary>
         /// >> 1 - Array
         /// </summary>
         public sealed class Arr32U8 : BaseType

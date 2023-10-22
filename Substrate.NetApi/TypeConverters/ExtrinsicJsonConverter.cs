@@ -1,19 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using Substrate.NetApi.Model.Extrinsics;
-using Newtonsoft.Json;
-using Serilog;
+using System;
 
 namespace Substrate.NetApi.TypeConverters
 {
     /// <summary>
-    ///   <br />
+    /// Extrinsic Json Converter
     /// </summary>
     internal class ExtrinsicJsonConverter : JsonConverter<Extrinsic>
     {
-        /// <summary> The logger. </summary>
-        private static readonly ILogger Logger = new LoggerConfiguration().CreateLogger();
-
-        private ChargeType _chargeType;
+        private readonly ChargeType _chargeType;
 
         public ExtrinsicJsonConverter(ChargeType chargeType)
         {

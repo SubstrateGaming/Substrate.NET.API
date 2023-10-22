@@ -92,7 +92,7 @@ namespace Substrate.NetApi.Model.Extrinsics
                 // nonce
                 Nonce = CompactInteger.Decode(memory.ToArray(), ref p);
 
-                // chargeAssetTxPayment
+                // charge type
                 Charge = chargeType;
                 Charge.Decode(memory.ToArray(), ref p);
             }
