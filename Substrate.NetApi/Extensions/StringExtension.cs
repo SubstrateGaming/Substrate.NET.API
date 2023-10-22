@@ -16,7 +16,7 @@ namespace Substrate.NetApi.Extensions
             if (string.IsNullOrEmpty(value))
                 return false;
 
-            if (value.ToUpper().StartsWith("0x".ToUpper()))
+            if (value.ToLower().StartsWith("0x"))
                 value = value.Remove(0, 2);
 
             return value.Length % 2 == 0 && IsHexCharacters(value);
