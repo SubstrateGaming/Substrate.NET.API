@@ -20,7 +20,7 @@ namespace Substrate.NetApi.TestNode
         public MiniSecret MiniSecretBob => new MiniSecret(Utils.HexToByteArray("0x398f0c28f98885e046333d4a41c19cee4c37368a9832c6502f6cfd182e2aef89"), ExpandMode.Ed25519);
         public Account Bob => Account.Build(KeyType.Sr25519, MiniSecretBob.ExpandToSecret().ToBytes(), MiniSecretBob.GetPair().Public.Key);
 
-        protected const string WebSocketUrl = "wss://aaa-node-test.bajun.network"; //"ws://127.0.0.1:9944";
+        protected const string WebSocketUrl = "ws://127.0.0.1:9944";
 
         protected SubstrateClient _substrateClient;
 
@@ -91,12 +91,13 @@ namespace Substrate.NetApi.TestNode
         /// <param name="extrinsicUpdate"></param>
         private static void ActionExtrinsicUpdate(string subscriptionId, ExtrinsicStatus extrinsicUpdate)
         {
+            if (subscriptionId == null || subscriptionId.Length == 0)
+            {
+                Assert.IsTrue(false);
+            }
+
             switch (extrinsicUpdate.ExtrinsicState)
             {
-                case ExtrinsicState.None:
-                    Assert.IsTrue(true);
-                    break;
-
                 case ExtrinsicState.Future:
                     Assert.IsTrue(false);
                     break;
@@ -136,6 +137,11 @@ namespace Substrate.NetApi.TestNode
                 case ExtrinsicState.Usurped:
                     Assert.IsTrue(extrinsicUpdate.Hash.Value.Length > 0);
                     break;
+
+                default:
+                    Assert.IsTrue(false);
+                    break;
+
             }
         }
     }
