@@ -39,16 +39,30 @@ namespace Substrate.NetApi.TestNode
         }
 
         [OneTimeSetUp]
-        public void CreateClient()
+        public async Task SetupAsync()
         {
             _chargeType = ChargeAssetTxPayment.Default();
             _substrateClient = new SubstrateClient(new Uri(WebSocketUrl), _chargeType);
+
+            try
+            {
+                await _substrateClient.ConnectAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to connect to Substrate node: {ex.Message}");
+                Assert.Ignore("Skipped test because no active Substrate node was found on 127.0.0.1:9944");
+            }
         }
 
         [OneTimeTearDown]
-        public void DisposeClient()
+        public async Task TearDownAsync()
         {
-            _substrateClient.Dispose();
+            if (_substrateClient != null)
+            {
+                await _substrateClient.CloseAsync();
+                _substrateClient.Dispose();
+            }
         }
 
         /// <summary>
