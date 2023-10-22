@@ -5,6 +5,10 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class I128 : BasePrim<BigInteger>
     {
+        public static explicit operator I128(BigInteger p) => new I128(p);
+
+        public static implicit operator BigInteger(I128 p) => p.Value;
+
         public I128()
         { }
 

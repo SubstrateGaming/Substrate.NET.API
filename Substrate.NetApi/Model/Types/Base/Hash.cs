@@ -1,7 +1,14 @@
-﻿namespace Substrate.NetApi.Model.Types.Base
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Substrate.NetApi.Model.Types.Base
 {
     public class Hash : BasePrim<string>
     {
+        public static explicit operator Hash(byte[] p) => new Hash(p);
+
+        public static implicit operator byte[](Hash p) => p.Bytes;
+
         public Hash()
         { }
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
@@ -20,14 +18,14 @@ namespace Substrate.NetApi.Model.Types.Base
 
         public virtual void Create(string str) => Create(Utils.HexToByteArray(str));
 
-        public virtual void CreateFromJson(string str) => Create(Utils.HexToByteArray(str));
-
         public virtual void Create(byte[] byteArray)
         {
             var p = 0;
             Bytes = byteArray;
             Decode(byteArray, ref p);
         }
+
+        public virtual void CreateFromJson(string str) => Create(Utils.HexToByteArray(str));
 
         public IType New() => this;
 

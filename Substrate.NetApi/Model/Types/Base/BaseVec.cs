@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
     public class BaseVec<T> : IType where T : IType, new()
     {
+        public static explicit operator BaseVec<T>(T[] p) => new BaseVec<T>(p);
+
+        public static implicit operator T[](BaseVec<T> p) => p.Value;
+
         public BaseVec()
         { }
 

@@ -4,6 +4,10 @@ namespace Substrate.NetApi.Model.Types.Base
 {
     public class BlockNumber : BasePrim<uint>
     {
+        public static explicit operator BlockNumber(uint p) => new BlockNumber(p);
+
+        public static implicit operator uint(BlockNumber p) => p.Value;
+
         public BlockNumber()
         { }
 

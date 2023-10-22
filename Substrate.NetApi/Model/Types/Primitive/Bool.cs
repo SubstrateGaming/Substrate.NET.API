@@ -2,6 +2,10 @@
 {
     public class Bool : BasePrim<bool>
     {
+        public static explicit operator Bool(bool p) => new Bool(p);
+
+        public static implicit operator bool(Bool p) => p.Value;
+
         public Bool()
         { }
 

@@ -3,6 +3,8 @@ using System.Linq;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
 using NUnit.Framework;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace Substrate.NetApi.Test
 {
@@ -90,6 +92,20 @@ namespace Substrate.NetApi.Test
             var baseVecCtor_2 = new BaseVec<U16>(
                 new uint[] { 4, 8, 15, 16, 23, 42, 100 }.Select(x => new U16((ushort)x)).ToArray());
             Assert.IsFalse(baseVecCtor.Equals(baseVecCtor_2));
+
+            U16[] arrayFromBaseVec = baseVec;
+            for (int i = 0; i < vecUInt16.Length; i++)
+            {
+                Assert.AreEqual(vecUInt16[i], arrayFromBaseVec[i].Value);
+            }
+
+            BaseVec<U16> baseVecFromU16Array = (BaseVec<U16>) arrayFromBaseVec;
+            for (int i = 0; i < vecUInt16.Length; i++)
+            {
+                Assert.AreEqual(vecUInt16[i], baseVecFromU16Array.Value[i].Value);
+            }
+            Assert.AreEqual(baseVec.Bytes, baseVecFromU16Array.Bytes);
+            Assert.AreEqual(baseVec.TypeSize, baseVecFromU16Array.TypeSize);
         }
 
         [Test]
@@ -130,6 +146,45 @@ namespace Substrate.NetApi.Test
             Assert.That(baseOptFilledError.OptionFlag, Is.EqualTo(false));
             Assert.That(baseOptFilledError.Bytes, Is.Not.Null);
             Assert.That(baseOptFilledError.Bytes.Length, Is.EqualTo(1));
+
+            ulong value = 100;
+
+            // Testing implicit operator
+            BaseOpt<U64> implicitOpt = (U64)value;
+            Assert.AreEqual(value, implicitOpt.Value.Value);
+
+            // Testing explicit operator with a filled BaseOpt
+            BaseOpt<U64> explicitOptFilled = new BaseOpt<U64>((U64)value);
+            ulong explicitValueFilled = (U64)explicitOptFilled;
+            Assert.AreEqual(value, explicitValueFilled);
+
+            // Testing explicit operator with an empty BaseOpt
+            BaseOpt<U64> explicitOptEmpty = new BaseOpt<U64>(null);
+            bool exceptionThrown = false;
+            try
+            {
+                _ = (U64)explicitOptEmpty;
+            }
+            catch (InvalidOperationException ex)
+            {
+                exceptionThrown = true;
+                Assert.AreEqual("Option is None", ex.Message);
+            }
+            Assert.IsTrue(exceptionThrown, "Exception not thrown for explicit cast of empty BaseOpt");
+
+            // Testing explicit operator with a filled BaseOpt but OptionFlag = false (this is an unusual case)
+            explicitOptFilled.OptionFlag = false;
+            exceptionThrown = false;
+            try
+            {
+                _ = (U64)explicitOptFilled;
+            }
+            catch (InvalidOperationException ex)
+            {
+                exceptionThrown = true;
+                Assert.AreEqual("Option is None", ex.Message);
+            }
+            Assert.IsTrue(exceptionThrown, "Exception not thrown for explicit cast with OptionFlag = false");
         }
 
         [Test]
@@ -206,6 +261,18 @@ namespace Substrate.NetApi.Test
             Assert.AreEqual(baseComFromValue.Bytes, new BaseCom<U128>(new CompactInteger(new U128(10))).Bytes);
             Assert.AreEqual(baseComFromValue.Value, new BaseCom<U128>(new CompactInteger(new U128(10))).Value);
             Assert.AreEqual(baseComFromValue.TypeSize, new BaseCom<U128>(new CompactInteger(new U128(10))).TypeSize);
+
+            // Test explicit conversion from CompactInteger to BaseCom
+            var compactInt = new CompactInteger(new U64(10));
+            var baseComFromExplicitConversion = (BaseCom<U64>)compactInt;
+            Assert.AreEqual(baseComFromValue.Bytes, baseComFromExplicitConversion.Bytes);
+            Assert.AreEqual(baseComFromValue.Value, baseComFromExplicitConversion.Value);
+            Assert.AreEqual(baseComFromValue.TypeSize, baseComFromExplicitConversion.TypeSize);
+
+            // Test implicit conversion from BaseCom to CompactInteger
+            CompactInteger compactIntFromImplicitConversion = baseComFromValue;
+            Assert.AreEqual(compactInt.Value, compactIntFromImplicitConversion.Value);
+            Assert.AreEqual(compactInt.Encode(), compactIntFromImplicitConversion.Encode());
         }
 
         public enum PartialBalanceEvents
@@ -238,6 +305,16 @@ namespace Substrate.NetApi.Test
 
             Assert.AreNotEqual(baseEnumFromValue.Bytes, new BaseEnum<PartialBalanceEvents>(PartialBalanceEvents.BalanceSet).Bytes);
             Assert.AreNotEqual(baseEnumFromValue.Bytes, new BaseEnum<PartialBalanceEvents>(PartialBalanceEvents.BalanceSet).Value);
+
+            // Test explicit conversion from Enum to BaseEnum
+            BaseEnum<PartialBalanceEvents> baseEnumFromImplicitConversion = (BaseEnum<PartialBalanceEvents>)PartialBalanceEvents.Transfer;
+            Assert.AreEqual(baseEnumFromValue.Bytes, baseEnumFromImplicitConversion.Bytes);
+            Assert.AreEqual(baseEnumFromValue.Value, baseEnumFromImplicitConversion.Value);
+            Assert.AreEqual(baseEnumFromValue.TypeSize, baseEnumFromImplicitConversion.TypeSize);
+
+            // Test implicit conversion from BaseEnum to Enum
+            PartialBalanceEvents enumValueFromImplicitConversion = baseEnumFromValue;
+            Assert.AreEqual(PartialBalanceEvents.Transfer, enumValueFromImplicitConversion);
         }
 
         [Test]
@@ -254,14 +331,29 @@ namespace Substrate.NetApi.Test
         [Test]
         public void HashTest()
         {
-            var blockHash = new byte[]
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+            // Use a more meaningful byte array as test data
+            var value = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32 };
+            var hexValue = Utils.Bytes2HexString(value);
+
+            // Create Hash object using Create method
             var hash = new Hash();
-            hash.Create(blockHash);
+            hash.Create(value);
+            Assert.AreEqual(value, hash.Bytes);
+            Assert.AreEqual(hexValue, hash.Value);
 
-            var hashPrim = new Hash(blockHash);
+            // Create Hash object using constructor
+            var hashPrim = new Hash(value);
+            Assert.AreEqual(value, hashPrim.Bytes);
+            Assert.AreEqual(hexValue, hashPrim.Value);
 
-            Assert.AreEqual(hash.Bytes, hashPrim.Bytes);
+            // Test explicit conversion from byte[] to Hash
+            Hash hashExplicit = (Hash)value;
+            Assert.AreEqual(value, hashExplicit.Bytes);
+            Assert.AreEqual(hexValue, hashExplicit.Value);
+
+            // Test implicit conversion from Hash to byte[]
+            byte[] bytesImplicit = hash;
+            Assert.AreEqual(value, bytesImplicit);
         }
 
         [Test]

@@ -4,6 +4,10 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class U32 : BasePrim<uint>
     {
+        public static explicit operator U32(uint p) => new U32(p);
+
+        public static implicit operator uint(U32 p) => p.Value;
+
         public U32()
         { }
 
