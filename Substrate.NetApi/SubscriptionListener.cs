@@ -142,5 +142,11 @@ namespace Substrate.NetApi
         {
             GenericCallBack(subscription, result);
         }
+
+        [JsonRpcMethod("transaction_unstable_submitExtrinsic")]
+        public void TransactionUnstableSubmitExtrinsic(string subscription, TransactionEventInfo result)
+        {
+            GenericCallBack(subscription, result);
+        }
     }
 }

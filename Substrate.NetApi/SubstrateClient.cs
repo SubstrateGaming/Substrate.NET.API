@@ -36,6 +36,8 @@ namespace Substrate.NetApi
 
         private readonly ExtrinsicStatusJsonConverter _extrinsicStatusJsonConverter;
 
+        private readonly TransactionEventJsonConverter _transactionEventJsonConverter;
+
         /// <summary> The request token sources. </summary>
         private readonly ConcurrentDictionary<CancellationTokenSource, string> _requestTokenSourceDict;
 
@@ -66,12 +68,14 @@ namespace Substrate.NetApi
 
             _extrinsicJsonConverter = new ExtrinsicJsonConverter(chargeType);
             _extrinsicStatusJsonConverter = new ExtrinsicStatusJsonConverter();
+            _transactionEventJsonConverter = new TransactionEventJsonConverter();
 
             System = new Modules.System(this);
             Chain = new Chain(this);
             Payment = new Payment(this);
             State = new State(this);
             Author = new Author(this);
+            Unstable = new UnstableCalls(this);
 
             _requestTokenSourceDict = new ConcurrentDictionary<CancellationTokenSource, string>();
         }
@@ -107,6 +111,11 @@ namespace Substrate.NetApi
         /// <summary> Gets the author. </summary>
         /// <value> The author. </value>
         public Author Author { get; }
+
+        /// <summary>
+        /// New Api 2
+        /// </summary>
+        public UnstableCalls Unstable { get; }
 
         public SubscriptionListener Listener { get; } = new SubscriptionListener();
 
@@ -195,6 +204,7 @@ namespace Substrate.NetApi
             formatter.JsonSerializer.Converters.Add(new GenericTypeConverter<Hash>());
             formatter.JsonSerializer.Converters.Add(_extrinsicJsonConverter);
             formatter.JsonSerializer.Converters.Add(_extrinsicStatusJsonConverter);
+            formatter.JsonSerializer.Converters.Add(_transactionEventJsonConverter);
 
             _jsonRpc = new JsonRpc(new WebSocketMessageHandler(_socket, formatter));
             _jsonRpc.TraceSource.Listeners.Add(new SerilogTraceListener.SerilogTraceListener());
