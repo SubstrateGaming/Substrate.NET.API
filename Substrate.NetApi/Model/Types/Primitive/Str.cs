@@ -6,6 +6,10 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class Str : BasePrim<string>
     {
+        public static explicit operator Str(string p) => new Str(p);
+
+        public static implicit operator string(Str p) => p.Value;
+
         public Str()
         { }
 

@@ -5,6 +5,10 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class PrimChar : BasePrim<char>
     {
+        public static explicit operator PrimChar(char p) => new PrimChar(p);
+
+        public static implicit operator char(PrimChar p) => p.Value;
+
         public PrimChar()
         { }
 

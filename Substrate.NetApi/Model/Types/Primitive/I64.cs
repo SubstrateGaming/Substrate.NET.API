@@ -4,6 +4,10 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class I64 : BasePrim<long>
     {
+        public static explicit operator I64(long p) => new I64(p);
+
+        public static implicit operator long(I64 p) => p.Value;
+
         public I64()
         { }
 

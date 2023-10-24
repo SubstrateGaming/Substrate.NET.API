@@ -4,6 +4,10 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class U64 : BasePrim<ulong>
     {
+        public static explicit operator U64(ulong p) => new U64(p);
+
+        public static implicit operator ulong(U64 p) => p.Value;
+
         public U64()
         { }
 

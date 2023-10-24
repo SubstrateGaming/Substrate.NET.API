@@ -5,6 +5,10 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class U256 : BasePrim<BigInteger>
     {
+        public static explicit operator U256(BigInteger p) => new U256(p);
+
+        public static implicit operator BigInteger(U256 p) => p.Value;
+
         public U256()
         { }
 

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
-using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Primitive;
+﻿using Substrate.NetApi.Model.Types.Base;
+using System;
 
 namespace Substrate.NetApi.Model.Types
 {

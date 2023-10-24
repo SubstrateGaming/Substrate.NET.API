@@ -1,11 +1,15 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
     public class BaseEnum<T> : IType where T : System.Enum
     {
+        public static explicit operator BaseEnum<T>(T p) => new BaseEnum<T>(p);
+
+        public static implicit operator T(BaseEnum<T> p) => p.Value;
+
         public BaseEnum()
         { }
 

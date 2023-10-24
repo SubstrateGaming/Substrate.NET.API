@@ -4,6 +4,10 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class U16 : BasePrim<ushort>
     {
+        public static explicit operator U16(ushort p) => new U16(p);
+
+        public static implicit operator ushort(U16 p) => p.Value;
+
         public U16()
         { }
 

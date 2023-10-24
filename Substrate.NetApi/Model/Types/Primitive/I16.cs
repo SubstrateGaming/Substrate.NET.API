@@ -4,6 +4,10 @@ namespace Substrate.NetApi.Model.Types.Primitive
 {
     public class I16 : BasePrim<short>
     {
+        public static explicit operator I16(short p) => new I16(p);
+
+        public static implicit operator short(I16 p) => p.Value;
+
         public I16()
         { }
 

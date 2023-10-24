@@ -2,6 +2,10 @@
 {
     public class U8 : BasePrim<byte>
     {
+        public static explicit operator U8(byte p) => new U8(p);
+
+        public static implicit operator byte(U8 p) => p.Value;
+
         public U8()
         { }
 

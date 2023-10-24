@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Substrate.NetApi.Model.Types.Primitive;
+using System;
+using System.Collections.Generic;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
     public class BaseOpt<T> : IType where T : IType, new()
     {
+        public static implicit operator BaseOpt<T>(T p) => new BaseOpt<T>(p);
+
+        public static explicit operator T(BaseOpt<T> p) => p.OptionFlag ? p.Value : throw new InvalidOperationException("Option is None");
+
         public BaseOpt()
         { }
 
