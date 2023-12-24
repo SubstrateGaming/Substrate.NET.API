@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serilog;
 using Substrate.NetApi.Model.Rpc;
 using Substrate.NetApi.Model.Types.Base;
 using System;
@@ -30,50 +31,51 @@ namespace Substrate.NetApi.TypeConverters
             var eventName = jObject["event"]?.ToString();
             if (Enum.TryParse(eventName, true, out TransactionEvent transactionEvent))
             {
-                transactionEventStatus.TransactionEvent = transactionEvent;
-
-                switch (transactionEvent)
+                try
                 {
-                    case TransactionEvent.Validated:
-                        break;
+                    transactionEventStatus.TransactionEvent = transactionEvent;
 
-                    case TransactionEvent.Broadcasted:
-                        transactionEventStatus.NumPeers = uint.Parse(jObject["numPeers"].ToString());
-                        break;
+                    switch (transactionEvent)
+                    {
+                        case TransactionEvent.Validated:
+                            break;
 
-                    case TransactionEvent.BestChainBlockIncluded:
-                        var bestChainBlock = jObject["block"];
-                        if (bestChainBlock != null)
-                        {
-                            transactionEventStatus.Hash = new Hash(jObject["block"]["hash"].ToString());
-                            transactionEventStatus.Index = uint.Parse(jObject["block"]["index"].ToString());
-                        }
-                        break;
+                        case TransactionEvent.Broadcasted:
+                            transactionEventStatus.NumPeers = uint.Parse(jObject["numPeers"].ToString());
+                            break;
 
-                    case TransactionEvent.Finalized:
-                        transactionEventStatus.Hash = new Hash(jObject["block"]["hash"].ToString());
-                        transactionEventStatus.Index = uint.Parse(jObject["block"]["index"].ToString());
-                        break;
+                        case TransactionEvent.BestChainBlockIncluded:
+                        case TransactionEvent.Finalized:
+                            transactionEventStatus.Hash = null;
+                            transactionEventStatus.Index = null;
+                            if (jObject["block"] != null)
+                            {
+                                transactionEventStatus.Hash = new Hash(jObject["block"]["hash"].ToString());
+                                transactionEventStatus.Index = uint.Parse(jObject["block"]["index"].ToString());
+                            }
+                            break;
 
-                    case TransactionEvent.Error:
-                        transactionEventStatus.Error = jObject["error"].ToString();
-                        break;
+                        case TransactionEvent.Error:
+                            transactionEventStatus.Error = jObject["error"].ToString();
+                            break;
 
-                    case TransactionEvent.Invalid:
-                        transactionEventStatus.Error = jObject["error"].ToString();
-                        break;
+                        case TransactionEvent.Invalid:
+                            transactionEventStatus.Error = jObject["error"].ToString();
+                            break;
 
-                    case TransactionEvent.Dropped:
-                        // TODO, check if this works broadcassted boolean
-                        //transactionEventStatus.Broadcasted = bool.Parse(jObject["broadcasted"].ToString());
-                        transactionEventStatus.Error = jObject["error"].ToString();
-                        break;
+                        case TransactionEvent.Dropped:
+                            transactionEventStatus.Broadcasted = bool.Parse(jObject["broadcasted"].ToString());
+                            transactionEventStatus.Error = jObject["error"].ToString();
+                            break;
 
-                    default:
-                        throw new NotImplementedException(
-                            $"Unimplemented state {transactionEvent} with value '{reader.Value}'.");
-
-
+                        default:
+                            throw new NotImplementedException(
+                                $"Unimplemented state {transactionEvent} with value '{reader.Value}'.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Warning("TransactionEventInfo[{eventEnum}]: JObject: {jobject} - {error}", jObject.ToString(), transactionEvent, ex);
                 }
             }
 
