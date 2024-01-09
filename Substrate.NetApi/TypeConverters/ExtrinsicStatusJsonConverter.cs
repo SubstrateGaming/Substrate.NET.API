@@ -1,81 +1,76 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Serilog;
+﻿using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Substrate.NetApi.Model.Rpc;
 using Substrate.NetApi.Model.Types.Base;
-using System;
+using Serilog;
 using System.Collections.Generic;
 
 namespace Substrate.NetApi.TypeConverters
 {
     public class TransactionEventJsonConverter : JsonConverter<TransactionEventInfo>
     {
-        /// <summary>Reads the JSON representation of the object.</summary>
-        /// <param name="reader">The <see cref="T:Newtonsoft.Json.JsonReader" /> to read from.</param>
-        /// <param name="objectType">Type of the object.</param>
-        /// <param name="existingValue">The existing value of object being read. If there is no existing value then <c>null</c> will be used.</param>
-        /// <param name="hasExistingValue">The existing value has a value.</param>
-        /// <param name="serializer">The calling serializer.</param>
-        /// <returns>The object value.</returns>
-        /// <exception cref="NotImplementedException">
-        /// Unimplemented {reader.TokenType} of type '{reader.ValueType}' and value '{reader.Value}'.
-        /// or
-        /// Unimplemented {reader.TokenType} of type '{reader.ValueType}' and value '{reader.Value}'.
-        /// </exception>
-        public override TransactionEventInfo ReadJson(JsonReader reader, Type objectType, TransactionEventInfo existingValue, bool hasExistingValue, JsonSerializer serializer)
+        /// <summary>
+        /// Reads the JSON representation of the object.
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="typeToConvert"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public override TransactionEventInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            var transactionEventStatus = hasExistingValue ? existingValue : new TransactionEventInfo();
+            var transactionEventStatus = new TransactionEventInfo();
 
-            var jObject = JObject.Load(reader);
-
-            var eventName = jObject["event"]?.ToString();
-            if (Enum.TryParse(eventName, true, out TransactionEvent transactionEvent))
+            using (var jsonDoc = JsonDocument.ParseValue(ref reader))
             {
-                try
+                var root = jsonDoc.RootElement;
+
+                var eventName = root.GetProperty("event").GetString();
+                if (Enum.TryParse(eventName, true, out TransactionEvent transactionEvent))
                 {
                     transactionEventStatus.TransactionEvent = transactionEvent;
 
-                    switch (transactionEvent)
+                    try
                     {
-                        case TransactionEvent.Validated:
-                            break;
+                        switch (transactionEvent)
+                        {
+                            case TransactionEvent.Validated:
+                                break;
 
-                        case TransactionEvent.Broadcasted:
-                            transactionEventStatus.NumPeers = uint.Parse(jObject["numPeers"].ToString());
-                            break;
+                            case TransactionEvent.Broadcasted:
+                                transactionEventStatus.NumPeers = root.GetProperty("numPeers").GetUInt32();
+                                break;
 
-                        case TransactionEvent.BestChainBlockIncluded:
-                        case TransactionEvent.Finalized:
-                            transactionEventStatus.Hash = null;
-                            transactionEventStatus.Index = null;
-                            if (jObject["block"] != null)
-                            {
-                                transactionEventStatus.Hash = new Hash(jObject["block"]["hash"].ToString());
-                                transactionEventStatus.Index = uint.Parse(jObject["block"]["index"].ToString());
-                            }
-                            break;
+                            case TransactionEvent.BestChainBlockIncluded:
+                            case TransactionEvent.Finalized:
+                                transactionEventStatus.Hash = null;
+                                transactionEventStatus.Index = null;
+                                if (root.TryGetProperty("block", out JsonElement blockElement))
+                                {
+                                    transactionEventStatus.Hash = new Hash(blockElement.GetProperty("hash").GetString());
+                                    transactionEventStatus.Index = blockElement.GetProperty("index").GetUInt32();
+                                }
+                                break;
 
-                        case TransactionEvent.Error:
-                            transactionEventStatus.Error = jObject["error"].ToString();
-                            break;
+                            case TransactionEvent.Error:
+                            case TransactionEvent.Invalid:
+                                transactionEventStatus.Error = root.GetProperty("error").GetString();
+                                break;
 
-                        case TransactionEvent.Invalid:
-                            transactionEventStatus.Error = jObject["error"].ToString();
-                            break;
+                            case TransactionEvent.Dropped:
+                                transactionEventStatus.Broadcasted = root.GetProperty("broadcasted").GetBoolean();
+                                transactionEventStatus.Error = root.GetProperty("error").GetString();
+                                break;
 
-                        case TransactionEvent.Dropped:
-                            transactionEventStatus.Broadcasted = bool.Parse(jObject["broadcasted"].ToString());
-                            transactionEventStatus.Error = jObject["error"].ToString();
-                            break;
-
-                        default:
-                            throw new NotImplementedException(
-                                $"Unimplemented state {transactionEvent} with value '{reader.Value}'.");
+                            default:
+                                throw new NotImplementedException(
+                                    $"Unimplemented state {transactionEvent} with value '{eventName}'.");
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    Log.Warning("TransactionEventInfo[{eventEnum}]: JObject: {jobject} - {error}", jObject.ToString(), transactionEvent, ex);
+                    catch (Exception ex)
+                    {
+                        Log.Warning("TransactionEventInfo[{eventEnum}]: JSON: {json} - {error}", root.ToString(), transactionEvent, ex);
+                    }
                 }
             }
 
@@ -87,61 +82,58 @@ namespace Substrate.NetApi.TypeConverters
         /// </summary>
         /// <param name="writer"></param>
         /// <param name="value"></param>
-        /// <param name="serializer"></param>
+        /// <param name="options"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public override void WriteJson(JsonWriter writer, TransactionEventInfo value, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, TransactionEventInfo value, JsonSerializerOptions options)
         {
+            // Implement serialization logic here using Utf8JsonWriter
             throw new NotImplementedException();
         }
     }
 
     public class ExtrinsicStatusJsonConverter : JsonConverter<ExtrinsicStatus>
     {
-        /// <summary>Reads the JSON representation of the object.</summary>
-        /// <param name="reader">The <see cref="T:Newtonsoft.Json.JsonReader" /> to read from.</param>
-        /// <param name="objectType">Type of the object.</param>
-        /// <param name="existingValue">The existing value of object being read. If there is no existing value then <c>null</c> will be used.</param>
-        /// <param name="hasExistingValue">The existing value has a value.</param>
-        /// <param name="serializer">The calling serializer.</param>
-        /// <returns>The object value.</returns>
-        /// <exception cref="NotImplementedException">
-        /// Unimplemented {reader.TokenType} of type '{reader.ValueType}' and value '{reader.Value}'.
-        /// or
-        /// Unimplemented {reader.TokenType} of type '{reader.ValueType}' and value '{reader.Value}'.
-        /// </exception>
-        public override ExtrinsicStatus ReadJson(JsonReader reader, Type objectType, ExtrinsicStatus existingValue,
-            bool hasExistingValue, JsonSerializer serializer)
+        /// <summary>
+        /// Reads the JSON representation of the object.
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="typeToConvert"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public override ExtrinsicStatus Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            var extrinsicStatus = hasExistingValue ? existingValue : new ExtrinsicStatus();
+            var extrinsicStatus = new ExtrinsicStatus();
 
-            if (reader.TokenType == JsonToken.String &&
-                Enum.TryParse((string)reader.Value, true, out ExtrinsicState extrinsicState))
+            using (var jsonDoc = JsonDocument.ParseValue(ref reader))
             {
-                extrinsicStatus.ExtrinsicState = extrinsicState;
-            }
-            else if (reader.TokenType == JsonToken.StartObject)
-            {
-                while (reader.Read())
+                var root = jsonDoc.RootElement;
+
+                if (root.ValueKind == JsonValueKind.String)
                 {
-                    if (reader.TokenType == JsonToken.EndObject)
-                        break;
-
-                    if (reader.TokenType == JsonToken.PropertyName)
+                    if (Enum.TryParse(root.GetString(), true, out ExtrinsicState extrinsicState))
                     {
-                        var propertyName = reader.Value.ToString();
-                        if (Enum.TryParse(propertyName, true, out extrinsicState))
+                        extrinsicStatus.ExtrinsicState = extrinsicState;
+                    }
+                }
+                else if (root.ValueKind == JsonValueKind.Object)
+                {
+                    foreach (var property in root.EnumerateObject())
+                    {
+                        if (Enum.TryParse(property.Name, true, out ExtrinsicState extrinsicState))
                         {
                             extrinsicStatus.ExtrinsicState = extrinsicState;
-                            reader.Read();
 
                             switch (extrinsicState)
                             {
                                 case ExtrinsicState.Broadcast:
                                     var broadcastList = new List<string>();
-                                    while (reader.Read() && reader.TokenType != JsonToken.EndArray)
+                                    foreach (var item in property.Value.EnumerateArray())
                                     {
-                                        if (reader.TokenType == JsonToken.String)
-                                            broadcastList.Add(reader.Value.ToString());
+                                        if (item.ValueKind == JsonValueKind.String)
+                                        {
+                                            broadcastList.Add(item.GetString());
+                                        }
                                     }
                                     extrinsicStatus.Broadcast = broadcastList.ToArray();
                                     break;
@@ -151,13 +143,15 @@ namespace Substrate.NetApi.TypeConverters
                                 case ExtrinsicState.FinalityTimeout:
                                 case ExtrinsicState.Retracted:
                                 case ExtrinsicState.Usurped:
-                                    if (reader.TokenType == JsonToken.String)
-                                        extrinsicStatus.Hash = new Hash(reader.Value.ToString());
+                                    if (property.Value.ValueKind == JsonValueKind.String)
+                                    {
+                                        extrinsicStatus.Hash = new Hash(property.Value.GetString());
+                                    }
                                     break;
 
                                 default:
                                     throw new NotImplementedException(
-                                        $"Unimplemented state {extrinsicState} with value '{reader.Value}'.");
+                                        $"Unimplemented state {extrinsicState} with value '{property.Value}'.");
                             }
                         }
                     }
@@ -167,13 +161,16 @@ namespace Substrate.NetApi.TypeConverters
             return extrinsicStatus;
         }
 
-        /// <summary>Writes the JSON representation of the object.</summary>
-        /// <param name="writer">The <see cref="T:Newtonsoft.Json.JsonWriter" /> to write to.</param>
-        /// <param name="value">The value.</param>
-        /// <param name="serializer">The calling serializer.</param>
+        /// <summary>
+        /// Writes the JSON representation of the object.
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="value"></param>
+        /// <param name="options"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public override void WriteJson(JsonWriter writer, ExtrinsicStatus value, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, ExtrinsicStatus value, JsonSerializerOptions options)
         {
+            // Serialization logic for ExtrinsicStatus
             throw new NotImplementedException();
         }
     }

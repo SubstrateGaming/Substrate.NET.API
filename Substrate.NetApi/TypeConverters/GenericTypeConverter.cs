@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Substrate.NetApi.Model.Types;
-using Newtonsoft.Json;
 
 namespace Substrate.NetApi.TypeConverters
 {
-    public class GenericTypeConverter<T> : JsonConverter<T>, ITypeConverter where T : IType, new()
+    public class GenericTypeConverter<T> : JsonConverter<T> where T : IType, new()
     {
         /// <summary>Gets the name of the type.</summary>
         /// <value>The name of the type.</value>
@@ -23,27 +24,24 @@ namespace Substrate.NetApi.TypeConverters
         }
 
         /// <summary>Reads the JSON representation of the object.</summary>
-        /// <param name="reader">The <see cref="T:Newtonsoft.Json.JsonReader" /> to read from.</param>
-        /// <param name="objectType">Type of the object.</param>
-        /// <param name="existingValue">The existing value of object being read. If there is no existing value then <c>null</c> will be used.</param>
-        /// <param name="hasExistingValue">The existing value has a value.</param>
-        /// <param name="serializer">The calling serializer.</param>
+        /// <param name="reader">The <see cref="T:System.Text.Json.Utf8JsonReader" /> to read from.</param>
+        /// <param name="typeToConvert">Type of the object.</param>
+        /// <param name="options">The serializer options.</param>
         /// <returns>The object value.</returns>
-        public override T ReadJson(JsonReader reader, Type objectType, T existingValue, bool hasExistingValue,
-            JsonSerializer serializer)
+        public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var baseType = new T();
-            baseType.CreateFromJson((string)reader.Value);
+            baseType.CreateFromJson(reader.GetString());
             return baseType;
         }
 
         /// <summary>Writes the JSON representation of the object.</summary>
-        /// <param name="writer">The <see cref="T:Newtonsoft.Json.JsonWriter" /> to write to.</param>
+        /// <param name="writer">The <see cref="T:System.Text.Json.Utf8JsonWriter" /> to write to.</param>
         /// <param name="value">The value.</param>
-        /// <param name="serializer">The calling serializer.</param>
-        public override void WriteJson(JsonWriter writer, T value, JsonSerializer serializer)
+        /// <param name="options">The serializer options.</param>
+        public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
         {
-            writer.WriteValue(value.ToString());
+            writer.WriteStringValue(value.ToString());
         }
     }
 }

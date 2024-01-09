@@ -12,13 +12,12 @@ using Substrate.NetApi.Model.Rpc;
 using Substrate.NetApi.Model.Types;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Metadata;
-using Substrate.NetApi.Model.Types.Primitive;
 using Substrate.NetApi.Modules;
 using Substrate.NetApi.TypeConverters;
 using Microsoft.VisualStudio.Threading;
-using Newtonsoft.Json.Linq;
 using Serilog;
 using StreamJsonRpc;
+using System.Text.Json;
 
 [assembly: InternalsVisibleTo("Substrate.NetApi.Test")]
 
@@ -31,12 +30,6 @@ namespace Substrate.NetApi
     {
         /// <summary> The logger. </summary>
         private static readonly ILogger Logger = new LoggerConfiguration().CreateLogger();
-
-        private readonly ExtrinsicJsonConverter _extrinsicJsonConverter;
-
-        private readonly ExtrinsicStatusJsonConverter _extrinsicStatusJsonConverter;
-
-        private readonly TransactionEventJsonConverter _transactionEventJsonConverter;
 
         /// <summary> The request token sources. </summary>
         private readonly ConcurrentDictionary<CancellationTokenSource, string> _requestTokenSourceDict;
@@ -56,7 +49,12 @@ namespace Substrate.NetApi
         /// <summary>
         /// Bypass Remote Certificate Validation. Useful when testing with self-signed SSL certificates. 
         /// </summary>
-        private bool _bypassRemoteCertificateValidation;
+        private readonly bool _bypassRemoteCertificateValidation;
+
+        /// <summary>
+        /// Charge Type
+        /// </summary>
+        public ChargeType ChargeType { get; private set; }
 
         /// <summary> Constructor. </summary>
         /// <remarks> 19.09.2020. </remarks>
@@ -66,9 +64,7 @@ namespace Substrate.NetApi
             _uri = uri;
             _bypassRemoteCertificateValidation = bypassRemoteCertificateValidation;
 
-            _extrinsicJsonConverter = new ExtrinsicJsonConverter(chargeType);
-            _extrinsicStatusJsonConverter = new ExtrinsicStatusJsonConverter();
-            _transactionEventJsonConverter = new TransactionEventJsonConverter();
+            ChargeType = chargeType;
 
             System = new Modules.System(this);
             Chain = new Chain(this);
@@ -194,17 +190,8 @@ namespace Substrate.NetApi
             _connectTokenSource = null;
             Logger.Debug("Connected to Websocket.");
 
-            var formatter = new JsonMessageFormatter();
-
-            // adding converters to the formatter
-            formatter.JsonSerializer.Converters.Add(new GenericTypeConverter<U8>());
-            formatter.JsonSerializer.Converters.Add(new GenericTypeConverter<U16>());
-            formatter.JsonSerializer.Converters.Add(new GenericTypeConverter<U32>());
-            formatter.JsonSerializer.Converters.Add(new GenericTypeConverter<U64>());
-            formatter.JsonSerializer.Converters.Add(new GenericTypeConverter<Hash>());
-            formatter.JsonSerializer.Converters.Add(_extrinsicJsonConverter);
-            formatter.JsonSerializer.Converters.Add(_extrinsicStatusJsonConverter);
-            formatter.JsonSerializer.Converters.Add(_transactionEventJsonConverter);
+            var formatter = new SystemTextJsonMessageFormatter(ChargeType);
+            _jsonRpc = new JsonRpc(new WebSocketMessageHandler(_socket, formatter));
 
             _jsonRpc = new JsonRpc(new WebSocketMessageHandler(_socket, formatter));
             _jsonRpc.TraceSource.Listeners.Add(new SerilogTraceListener.SerilogTraceListener());
@@ -285,8 +272,11 @@ namespace Substrate.NetApi
             if (_socket?.State != WebSocketState.Open)
                 throw new ClientNotConnectedException($"WebSocketState is not open! Currently {_socket?.State}!");
 
-            var subscriptionId =
-                await InvokeAsync<string>("state_subscribeStorage", new object[] { new JArray { storageParams } }, token);
+            // Using System.Text.Json to create the parameters array
+            var storageParamsArray = new string[] { storageParams };
+            var storageParamsJson = JsonSerializer.Serialize(storageParamsArray);
+
+            var subscriptionId = await InvokeAsync<string>("state_subscribeStorage", new object[] { storageParamsJson }, token);
 
             Listener.RegisterCallBackHandler(subscriptionId, callback);
 

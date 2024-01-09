@@ -10,7 +10,7 @@ namespace Substrate.NetApi.TestNode
 {
     public abstract class NodeTest
     {
-        protected const string WebSocketUrl = "ws://rpc-parachain.bajun.network";
+        protected const string WebSocketUrl = "wss://rpc-parachain.bajun.network";
 
         protected SubstrateClient _substrateClient;
 
