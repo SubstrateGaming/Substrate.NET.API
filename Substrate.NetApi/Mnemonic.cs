@@ -240,6 +240,14 @@ namespace Substrate.NetApi
             }
         }
 
+        /// <summary>
+        /// Get entropy from mnemonic
+        /// </summary>
+        /// <param name="mnemonic"></param>
+        /// <param name="wordlistType"></param>
+        /// <returns></returns>
+        /// <exception cref="FormatException"></exception>
+        /// <exception cref="NotSupportedException"></exception>
         public static string MnemonicToEntropy(string mnemonic, BIP39Wordlist wordlistType)
         {
             var wordlist = GetWordlist(wordlistType);

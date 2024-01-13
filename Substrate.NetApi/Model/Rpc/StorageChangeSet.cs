@@ -20,8 +20,6 @@ namespace Substrate.NetApi.Model.Rpc
         /// Changes
         /// </summary>
         public string[][] Changes { get; set; }
-        //[JsonConverter(typeof(GenericTypeConverter<Vec<RustTuple<StorageKey, StorageData>>>))]
-        //public Vec<RustTuple<StorageKey, StorageData>> Changes { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

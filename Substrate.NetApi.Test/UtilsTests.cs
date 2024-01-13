@@ -121,7 +121,7 @@ namespace Substrate.NetApi.Test
         [Test]
         public void StringValueArrayBytesArrayFailedTest()
         {
-            Assert.Throws<Exception>(delegate { Utils.StringValueArrayBytesArray("Test"); });
+            Assert.Throws<NotSupportedException>(delegate { Utils.StringValueArrayBytesArray("Test"); });
         }
 
         [Test]
@@ -138,7 +138,7 @@ namespace Substrate.NetApi.Test
 
             Assert.AreEqual(0x1312, Utils.Bytes2Value(new byte[] { 0x13, 0x12 }, false));
 
-            Assert.Throws<Exception>(delegate
+            Assert.Throws<NotSupportedException>(delegate
             {
                 Utils.Bytes2Value(new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF });
             });
@@ -147,7 +147,7 @@ namespace Substrate.NetApi.Test
         [Test]
         public void HexToByteArrayFailedTest()
         {
-            Assert.Throws<Exception>(delegate { Utils.HexToByteArray("111"); });
+            Assert.Throws<NotSupportedException>(delegate { Utils.HexToByteArray("111"); });
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace Substrate.NetApi.Test
             Assert.AreEqual(new byte[] { 0x15, 0x14, 0x13, 0x12 }, Utils.Value2Bytes((uint)0x12131415));
             Assert.AreEqual(new byte[] { 0x15, 0x14, 0x13, 0x12, 0x11, 0x10, 0x09, 0x08 }, Utils.Value2Bytes((ulong)0x0809101112131415));
             Assert.AreEqual(new byte[] { 0x11, 0x12 }, Utils.Value2Bytes((ushort)0x1112, false));
-            Assert.Throws<Exception>(delegate { Utils.Value2Bytes(1.4); });
+            Assert.Throws<NotSupportedException>(delegate { Utils.Value2Bytes(1.4); });
         }
 
         [Test]

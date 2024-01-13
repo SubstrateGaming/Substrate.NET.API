@@ -11,13 +11,13 @@ namespace Substrate.NetApi.BIP39
         /// <summary>
         /// The words in the wordlist
         /// </summary>
-        private readonly String[] _words;
+        private readonly string[] _words;
 
         /// <summary>
         /// Constructor used by inheritence only
         /// </summary>
         /// <param name="words">The words to be used in the wordlist</param>
-        public Wordlist(String[] words)
+        protected Wordlist(string[] words)
         {
             _words = words;
         }
@@ -26,6 +26,7 @@ namespace Substrate.NetApi.BIP39
         /// Method to determine if word exists in word list, great for auto language detection
         /// </summary>
         /// <param name="word">The word to check for existence</param>
+        /// <param name="index"></param>
         /// <returns>Exists (true/false)</returns>
         public bool WordExists(string word, out int index)
         {

@@ -4,14 +4,31 @@ using Substrate.NetApi.Model.Types;
 
 namespace Substrate.NetApi.Model.Extrinsics
 {
+    /// <summary>
+    /// Era
+    /// </summary>
     public class Era : IEncodable
     {
+        /// <summary>
+        /// Is Immortal
+        /// </summary>
         public bool IsImmortal { get; }
 
+        /// <summary>
+        /// Period
+        /// </summary>
         public ulong Period { get; }
 
+        /// <summary>
+        /// Phase
+        /// </summary>
         public ulong Phase { get; }
 
+        /// <summary>
+        /// Era Start
+        /// </summary>
+        /// <param name="currentBlockNumber"></param>
+        /// <returns></returns>
         public ulong EraStart(ulong currentBlockNumber) => IsImmortal ? 0 : (Math.Max(currentBlockNumber, Phase) - Phase) / Period * Period + Phase;
 
         /// <summary>
@@ -27,6 +44,7 @@ namespace Substrate.NetApi.Model.Extrinsics
             IsImmortal = isImmortal;
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
@@ -47,17 +65,6 @@ namespace Substrate.NetApi.Model.Extrinsics
 
             // NODE: { "IsImmortal":false,"Period":64,"Phase":49}
             // API: { "IsImmortal":false,"Period":64,"Phase":61}
-
-            // RUST Implementation
-            //let period = period.checked_next_power_of_two()
-            //    .unwrap_or(1 << 16)
-            //    .max(4)
-            //    .min(1 << 16);
-            //let phase = current % period;
-            //let quantize_factor = (period >> 12).max(1);
-            //let quantized_phase = phase / quantize_factor * quantize_factor;
-            //Era::Mortal(period, quantized_phase)
-
             ulong period = (ulong)Math.Pow(2, Math.Round(Math.Log(lifeTime, 2)));
             period = Math.Max(period, 4);
             period = Math.Min(period, 65536);
@@ -80,13 +87,6 @@ namespace Substrate.NetApi.Model.Extrinsics
             }
             var quantizeFactor = Math.Max(1, Period / 4096);
             var lastBit = Period & (ulong)-(long)Period;
-            //var rest = _period;
-            //var lastBit = 1;
-            //while (rest % 2 == 0 && rest != 0)
-            //{
-            //    rest /= 2;
-            //    lastBit *= 2;
-            //}
             var logOf2 = lastBit != 0 ? Math.Log(lastBit, 2) : 64;
             var low = (ushort)Math.Min(15, Math.Max(1, logOf2 - 1));
             var high = (ushort)(Phase / quantizeFactor << 4);
@@ -127,7 +127,7 @@ namespace Substrate.NetApi.Model.Extrinsics
             }
             else
             {
-                throw new Exception("Invalid byte array to get era.");
+                throw new NotSupportedException("Invalid byte array to get era.");
             }
         }
     }

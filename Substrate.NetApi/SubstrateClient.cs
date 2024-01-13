@@ -56,11 +56,14 @@ namespace Substrate.NetApi
         /// <summary>
         /// Bypass Remote Certificate Validation. Useful when testing with self-signed SSL certificates. 
         /// </summary>
-        private bool _bypassRemoteCertificateValidation;
+        private readonly bool _bypassRemoteCertificateValidation;
 
-        /// <summary> Constructor. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <param name="uri"> URI of the resource. </param>
+        /// <summary>
+        /// Substrate client
+        /// </summary>
+        /// <param name="uri">Uri of the node</param>
+        /// <param name="chargeType">Charge type</param>
+        /// <param name="bypassRemoteCertificateValidation">By default, the client will validate the SSL certificate of the node. Set this to true to bypass this validation.</param>
         public SubstrateClient(Uri uri, ChargeType chargeType, bool bypassRemoteCertificateValidation = false)
         {
             _uri = uri;
@@ -453,9 +456,6 @@ namespace Substrate.NetApi
                     Logger.Debug("Client disposed.");
                 }
 
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
                 _disposedValue = true;
             }
         }
@@ -466,8 +466,6 @@ namespace Substrate.NetApi
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
         }
 
         #endregion IDisposable Support

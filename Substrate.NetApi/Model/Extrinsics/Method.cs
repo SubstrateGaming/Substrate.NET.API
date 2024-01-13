@@ -3,17 +3,35 @@ using Newtonsoft.Json;
 
 namespace Substrate.NetApi.Model.Extrinsics
 {
+    /// <summary>
+    /// Method
+    /// </summary>
     public class Method
     {
-        public string ModuleName;
+        /// <summary>
+        /// Module Name
+        /// </summary>
+        public string ModuleName { get; set; }
 
-        public byte ModuleIndex;
+        /// <summary>
+        /// Module Index
+        /// </summary>
+        public byte ModuleIndex { get; set; }
 
-        public string CallName;
+        /// <summary>
+        /// Call Name
+        /// </summary>
+        public string CallName { get; set; }
 
-        public byte CallIndex;
+        /// <summary>
+        /// Call Index
+        /// </summary>
+        public byte CallIndex { get; set; }
 
-        public byte[] Parameters;
+        /// <summary>
+        /// Parameters
+        /// </summary>
+        public byte[] Parameters { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Method"/> class.
@@ -43,8 +61,10 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <summary>
         /// Initializes a new instance of the <see cref="Method"/> class.
         /// </summary>
-        /// <param name="module">The module.</param>
-        /// <param name="call">The call.</param>
+        /// <param name="moduleIndex">Index of the module.</param>
+        /// <param name="moduleName">Name of the module.</param>
+        /// <param name="callIndex">Index of the call.</param>
+        /// <param name="callName">Name of the call.</param>
         /// <param name="parameters">The parameters.</param>
         public Method(byte moduleIndex, string moduleName, byte callIndex, string callName, byte[] parameters)
         {
@@ -68,6 +88,7 @@ namespace Substrate.NetApi.Model.Extrinsics
             return result.ToArray();
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);

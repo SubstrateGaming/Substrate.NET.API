@@ -98,6 +98,9 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
         public U8 Version { get; private set; }
     }
 
+    /// <summary>
+    /// Palette Metadata
+    /// </summary>
     public class PalletMetadata : BaseType
     {
         /// <inheritdoc/>
@@ -171,13 +174,18 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
         public U8 Index { get; private set; }
     }
 
+    /// <summary>
+    /// Storage Metadata
+    /// </summary>
     public class StorageMetadata : BaseType
     {
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -191,17 +199,29 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
             TypeSize = p - start;
         }
 
+        /// <summary>
+        /// Prefix
+        /// </summary>
         public Str Prefix { get; private set; }
+        
+        /// <summary>
+        /// Entries
+        /// </summary>
         public BaseVec<StorageEntryMetadata> Entries { get; private set; }
     }
 
+    /// <summary>
+    /// Storage Entry Metadata
+    /// </summary>
     public class StorageEntryMetadata : BaseType
     {
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -224,24 +244,51 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
             TypeSize = p - start;
         }
 
+        /// <summary>
+        /// Storage Name
+        /// </summary>
         public Str StorageName { get; private set; }
+
+        /// <summary>
+        /// Storage Modifier
+        /// </summary>
         public BaseEnum<Modifier> StorageModifier { get; private set; }
+
+        /// <summary>
+        /// Storage Type
+        /// </summary>
         public BaseEnumExt<Storage.Type, TType, StorageEntryTypeMap> StorageType { get; private set; }
+
+        /// <summary>
+        /// Storage Default
+        /// </summary>
         public ByteGetter StorageDefault { get; private set; }
+
+        /// <summary>
+        /// Documentation
+        /// </summary>
         public BaseVec<Str> Documentation { get; private set; }
     }
 
+    /// <summary>
+    /// Byte Getter
+    /// </summary>
     public class ByteGetter : BaseVec<U8>
     {
     }
 
+    /// <summary>
+    /// Storage Entry Type Map
+    /// </summary>
     public class StorageEntryTypeMap : BaseType
     {
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -258,18 +305,34 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
             TypeSize = p - start;
         }
 
+        /// <summary>
+        /// Hashers
+        /// </summary>
         public BaseVec<BaseEnum<Hasher>> Hashers { get; private set; }
+
+        /// <summary>
+        /// Key
+        /// </summary>
         public TType Key { get; private set; }
+        
+        /// <summary>
+        /// Value
+        /// </summary>
         public TType Value { get; private set; }
     }
 
+    /// <summary>
+    /// Pallet Call Metadata
+    /// </summary>
     public class PalletCallMetadata : BaseType
     {
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -280,16 +343,24 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
             TypeSize = p - start;
         }
 
+        /// <summary>
+        /// Call Type
+        /// </summary>
         public TType CallType { get; private set; }
     }
 
+    /// <summary>
+    /// Palette Event Metadata
+    /// </summary>
     public class PalletEventMetadata : BaseType
     {
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -300,16 +371,32 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
             TypeSize = p - start;
         }
 
+        /// <summary>
+        /// Event Type
+        /// </summary>
         public TType EventType { get; private set; }
     }
 
+    /// <summary>
+    /// Pallet Constant Metadata
+    /// </summary>
     public class PalletConstantMetadata : BaseType
     {
+        /// <summary>
+        /// Encode to Bytes
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public override byte[] Encode()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Decode from a byte array at certain position
+        /// </summary>
+        /// <param name="byteArray"></param>
+        /// <param name="p"></param>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -329,19 +416,39 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
             TypeSize = p - start;
         }
 
+        /// <summary>
+        /// Constant Name
+        /// </summary>
         public Str ConstantName { get; private set; }
+
+        /// <summary>
+        /// Constant Type
+        /// </summary>
         public TType ConstantType { get; private set; }
+
+        /// <summary>
+        /// Constant Value
+        /// </summary>
         public ByteGetter ConstantValue { get; private set; }
+
+        /// <summary>
+        /// Documentation
+        /// </summary>
         public BaseVec<Str> Documentation { get; private set; }
     }
 
+    /// <summary>
+    /// Error Metadata
+    /// </summary>
     public class ErrorMetadata : BaseType
     {
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -352,16 +459,24 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
             TypeSize = p - start;
         }
 
+        /// <summary>
+        /// Error Type
+        /// </summary>
         public TType ErrorType { get; private set; }
     }
 
+    /// <summary>
+    /// Extrinsic Metadata Struct
+    /// </summary>
     public class ExtrinsicMetadataStruct : BaseType
     {
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -378,18 +493,34 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
             TypeSize = p - start;
         }
 
+        /// <summary>
+        /// Extrinsic Type
+        /// </summary>
         public TType ExtrinsicType { get; private set; }
+        
+        /// <summary>
+        /// Version
+        /// </summary>
         public U8 Version { get; private set; }
+        
+        /// <summary>
+        /// Signed Extensions
+        /// </summary>
         public BaseVec<SignedExtensionMetadataStruct> SignedExtensions { get; private set; }
     }
 
+    /// <summary>
+    /// Signed Extension Metadata Struct
+    /// </summary>
     public class SignedExtensionMetadataStruct : BaseType
     {
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -406,8 +537,19 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
             TypeSize = p - start;
         }
 
+        /// <summary>
+        /// Signed Identifier
+        /// </summary>
         public Str SignedIdentifier { get; private set; }
+        
+        /// <summary>
+        /// Signed Extension Type
+        /// </summary>
         public TType SignedExtType { get; private set; }
+        
+        /// <summary>
+        /// Add Signed Extension Type
+        /// </summary>
         public TType AddSignedExtType { get; private set; }
     }
 }

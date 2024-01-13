@@ -83,12 +83,6 @@ namespace Substrate.NetApi.Model.Types.Base
         public virtual void Create(string str) => Create(Utils.HexToByteArray(str));
 
         /// <summary>
-        /// Virtual Create From Json
-        /// </summary>
-        /// <param name="str"></param>
-        public virtual void CreateFromJson(string str) => Create(Utils.HexToByteArray(str));
-
-        /// <summary>
         /// Create
         /// </summary>
         /// <param name="t"></param>
@@ -97,7 +91,6 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = new byte[1] { Convert.ToByte(t) };
             Value = t;
         }
-
 
         /// <summary>
         /// Create
@@ -108,6 +101,12 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = byteArray;
             Value = (T)Enum.Parse(typeof(T), byteArray[0].ToString(), true);
         }
+
+        /// <summary>
+        /// Virtual Create From Json
+        /// </summary>
+        /// <param name="str"></param>
+        public virtual void CreateFromJson(string str) => Create(Utils.HexToByteArray(str));
 
         /// <summary>
         /// New

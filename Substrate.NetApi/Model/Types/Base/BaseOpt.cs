@@ -12,13 +12,13 @@ namespace Substrate.NetApi.Model.Types.Base
     public class BaseOpt<T> : IType where T : IType, new()
     {
         /// <summary>
-        /// Explicit conversion from T to BaseOpt<T>
+        /// Explicit conversion from T to BaseOpt
         /// </summary>
         /// <param name="p"></param>
         public static implicit operator BaseOpt<T>(T p) => new BaseOpt<T>(p);
 
         /// <summary>
-        /// Implicit conversion from BaseOpt<T> to T
+        /// Explicit conversion from BaseOpt to T
         /// </summary>
         /// <param name="p"></param>
         public static explicit operator T(BaseOpt<T> p) => p.OptionFlag ? p.Value : throw new InvalidOperationException("Option is None");

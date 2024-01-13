@@ -119,7 +119,7 @@ namespace Substrate.NetApi
         /// </returns>
         public static byte[] Twox64Concat(byte[] bytes)
         {
-            return BitConverter.GetBytes(XXHash.XXH64(bytes)).Concat(bytes).ToArray().ToArray();
+            return BitConverter.GetBytes(XXHash.XXH64(bytes)).Concat(bytes).ToArray();
         }
     }
 }
