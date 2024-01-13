@@ -8,6 +8,9 @@ using System.Collections.Generic;
 
 namespace Substrate.NetApi.TypeConverters
 {
+    /// <summary>
+    /// TransactionEventInfo JsonConverter
+    /// </summary>
     public class TransactionEventJsonConverter : JsonConverter<TransactionEventInfo>
     {
         /// <summary>Reads the JSON representation of the object.</summary>
@@ -95,6 +98,9 @@ namespace Substrate.NetApi.TypeConverters
         }
     }
 
+    /// <summary>
+    /// ExtrinsicStatus JsonConverter
+    /// </summary>
     public class ExtrinsicStatusJsonConverter : JsonConverter<ExtrinsicStatus>
     {
         /// <summary>Reads the JSON representation of the object.</summary>

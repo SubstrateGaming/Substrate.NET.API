@@ -84,18 +84,21 @@ namespace Substrate.NetApi.Modules
             return result;
         }
 
-        /// <summary> Gets block hash asynchronous. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <returns> The block hash. </returns>
+        /// <summary>
+        /// Gets the block hash asynchronous.
+        /// </summary>
+        /// <returns></returns>
         public async Task<Hash> GetBlockHashAsync()
         {
             return await GetBlockHashAsync(CancellationToken.None);
         }
 
-        /// <summary> Gets block hash asynchronous. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <param name="BlockNumber"> The block number. </param>
-        /// <returns> The block hash. </returns>
+
+        /// <summary>
+        /// Gets the block hash asynchronous.
+        /// </summary>
+        /// <param name="blockNumber"></param>
+        /// <returns></returns>
         public async Task<Hash> GetBlockHashAsync(BlockNumber blockNumber)
         {
             return await GetBlockHashAsync(blockNumber, CancellationToken.None);

@@ -327,11 +327,11 @@ namespace Substrate.NetApi
         }
 
         /// <summary>
-        /// Get an unchecked extrinsic.
+        /// Get extrinsic parameters
         /// </summary>
-        /// <param name="callArguments"></param>
+        /// <param name="method"></param>
         /// <param name="account"></param>
-        /// <param name="tip"></param>
+        /// <param name="charge"></param>
         /// <param name="lifeTime"></param>
         /// <param name="signed"></param>
         /// <param name="token"></param>

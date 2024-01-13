@@ -27,7 +27,7 @@ namespace Substrate.NetApi.TestNode
 
             var blockHash = await _substrateClient.Chain.GetBlockHashAsync(blockNumber);
 
-            var result = await _substrateClient.State.GetKeysPagedAtAsync(RequestGenerator.GetStorageKeyBytesHash("System", "BlockHash"), 10, null, blockHash.Bytes, CancellationToken.None);
+            var result = await _substrateClient.State.GetKeysPagedAsync(RequestGenerator.GetStorageKeyBytesHash("System", "BlockHash"), 10, null, blockHash.Bytes, CancellationToken.None);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(10, result.Count);
@@ -68,8 +68,8 @@ namespace Substrate.NetApi.TestNode
         {
             var blockHash = await GivenBlockAsync();
 
-            var metadata_1 = await _substrateClient.State.GetMetaDataAtAsync(blockHash, CancellationToken.None);
-            var metadata_2 = await _substrateClient.State.GetMetaDataAtAsync(Utils.Bytes2HexString(blockHash), CancellationToken.None);
+            var metadata_1 = await _substrateClient.State.GetMetaDataAsync(blockHash, CancellationToken.None);
+            var metadata_2 = await _substrateClient.State.GetMetaDataAsync(Utils.Bytes2HexString(blockHash), CancellationToken.None);
 
             Assert.That(metadata_1, Is.Not.Null);
             Assert.That(metadata_2, Is.Not.Null);
@@ -99,8 +99,8 @@ namespace Substrate.NetApi.TestNode
         {
             var blockHash = await GivenBlockAsync();
 
-            var runtimeVersion_1 = await _substrateClient.State.GetRuntimeVersionAtAsync(blockHash, CancellationToken.None);
-            var runtimeVersion_2 = await _substrateClient.State.GetRuntimeVersionAtAsync(Utils.Bytes2HexString(blockHash), CancellationToken.None);
+            var runtimeVersion_1 = await _substrateClient.State.GetRuntimeVersionAsync(blockHash, CancellationToken.None);
+            var runtimeVersion_2 = await _substrateClient.State.GetRuntimeVersionAsync(Utils.Bytes2HexString(blockHash), CancellationToken.None);
 
             Assert.That(runtimeVersion_1, Is.Not.Null);
             Assert.That(runtimeVersion_2, Is.Not.Null);
@@ -136,8 +136,8 @@ namespace Substrate.NetApi.TestNode
             var blockHash = await GivenBlockAsync();
             var storageKeys = new List<byte[]>() { Utils.HexToByteArray(storageKeyHex) };
 
-            var call_1 = await _substrateClient.State.GetReadProofAtAsync(storageKeys, blockHash, CancellationToken.None);
-            var call_2 = await _substrateClient.State.GetReadProofAtAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
+            var call_1 = await _substrateClient.State.GetReadProofAsync(storageKeys, blockHash, CancellationToken.None);
+            var call_2 = await _substrateClient.State.GetReadProofAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
 
             Assert.That(call_1, Is.Not.Null);
             Assert.That(call_2, Is.Not.Null);
@@ -166,8 +166,8 @@ namespace Substrate.NetApi.TestNode
             var blockHash = await GivenBlockAsync();
             var storageKeys = Utils.HexToByteArray(storageKeyHex);
 
-            var call_1 = await _substrateClient.State.GetStorageAtAsync(storageKeys, blockHash, CancellationToken.None);
-            var call_2 = await _substrateClient.State.GetStorageAtAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
+            var call_1 = await _substrateClient.State.GetStorageAsync(storageKeys, blockHash, CancellationToken.None);
+            var call_2 = await _substrateClient.State.GetStorageAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
 
             Assert.That(call_1, Is.Not.Null);
             Assert.That(call_2, Is.Not.Null);
@@ -195,8 +195,8 @@ namespace Substrate.NetApi.TestNode
             var blockHash = await GivenBlockAsync();
             var storageKeys = Utils.HexToByteArray(storageKeyHex);
 
-            var call_1 = await _substrateClient.State.GetStorageHashAtAsync(storageKeys, blockHash, CancellationToken.None);
-            var call_2 = await _substrateClient.State.GetStorageHashAtAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
+            var call_1 = await _substrateClient.State.GetStorageHashAsync(storageKeys, blockHash, CancellationToken.None);
+            var call_2 = await _substrateClient.State.GetStorageHashAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
 
             Assert.That(call_1, Is.Not.Null);
             Assert.That(call_2, Is.Not.Null);
@@ -224,8 +224,8 @@ namespace Substrate.NetApi.TestNode
             var blockHash = await GivenBlockAsync();
             var storageKeys = Utils.HexToByteArray(storageKeyHex);
 
-            var call_1 = await _substrateClient.State.GetStorageSizeAtAsync(storageKeys, blockHash, CancellationToken.None);
-            var call_2 = await _substrateClient.State.GetStorageSizeAtAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
+            var call_1 = await _substrateClient.State.GetStorageSizeAsync(storageKeys, blockHash, CancellationToken.None);
+            var call_2 = await _substrateClient.State.GetStorageSizeAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
 
             Assert.That(call_1, Is.Not.Null);
             Assert.That(call_2, Is.Not.Null);
