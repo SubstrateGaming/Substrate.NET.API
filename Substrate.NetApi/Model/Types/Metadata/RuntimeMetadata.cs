@@ -4,15 +4,21 @@ using Substrate.NetApi.Model.Types.Metadata.V14;
 
 namespace Substrate.NetApi.Model.Types.Metadata
 {
+    /// <summary>
+    /// Runtime Metadata Type
+    /// </summary>
     public class RuntimeMetadata : BaseType
     {
+        /// <inheritdoc/>
         public override string TypeName() => "RuntimeMetadata";
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -26,7 +32,14 @@ namespace Substrate.NetApi.Model.Types.Metadata
             TypeSize = p - start;
         }
 
+        /// <summary>
+        /// Meta Data Info
+        /// </summary>
         public MetaDataInfo MetaDataInfo { get; private set; }
+        
+        /// <summary>
+        /// Runtime Metadata Data
+        /// </summary>
         public RuntimeMetadataV14 RuntimeMetadataData { get; private set; }
     }
 }

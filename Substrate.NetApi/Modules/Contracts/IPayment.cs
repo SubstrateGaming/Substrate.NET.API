@@ -5,6 +5,9 @@ using Substrate.NetApi.Model.Rpc;
 
 namespace Substrate.NetApi.Modules.Contracts
 {
+    /// <summary>
+    /// Payment Module Interface
+    /// </summary>
     public interface IPayment
     {
         /// <summary>

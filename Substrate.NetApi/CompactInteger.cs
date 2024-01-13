@@ -9,33 +9,82 @@ namespace Substrate.NetApi
     /// <remarks> 19.09.2020. </remarks>
     public struct CompactInteger : IEncodable
     {
-        /// <summary> Constructor. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <param name="value"> The value. </param>
+        /// <summary>
+        /// Value
+        /// </summary>
+        /// <param name="value"></param>
         public CompactInteger(BigInteger value) => Value = value;
 
+        /// <summary>
+        /// Value
+        /// </summary>
+        /// <param name="value"></param>
         public CompactInteger(I8 value) => Value = value.Value;
 
+        /// <summary>
+        /// Value
+        /// </summary>
+        /// <param name="value"></param>
         public CompactInteger(I16 value) => Value = value.Value;
 
+        /// <summary>
+        /// Value
+        /// </summary>
+        /// <param name="value"></param>
         public CompactInteger(I32 value) => Value = value.Value;
 
+        /// <summary>
+        /// Value
+        /// </summary>
+        /// <param name="value"></param>
         public CompactInteger(I64 value) => Value = value.Value;
 
+        /// <summary>
+        /// Value
+        /// </summary>
+        /// <param name="value"></param>
         public CompactInteger(I128 value) => Value = value.Value;
 
+        /// <summary>
+        /// Value
+        /// </summary>
+        /// <param name="value"></param>
         public CompactInteger(I256 value) => Value = value.Value;
 
+        /// <summary>
+        /// Value
+        /// </summary>
+        /// <param name="value"></param>
         public CompactInteger(U8 value) => Value = value.Value;
 
+        /// <summary>
+        /// Value
+        /// </summary>
+        /// <param name="value"></param>
         public CompactInteger(U16 value) => Value = value.Value;
 
+        /// <summary>
+        /// Value
+        /// </summary>
+        /// <param name="value"></param>
         public CompactInteger(U32 value) => Value = value.Value;
 
+        /// <summary>
+        /// Value
+        /// </summary>
+        /// <param name="value"></param>
         public CompactInteger(U64 value) => Value = value.Value;
 
+        /// <summary>
+        /// Value
+        /// </summary>
+        /// <param name="value"></param>
         public CompactInteger(U128 value) => Value = value.Value;
 
+        /// <summary>
+        /// Value
+        /// </summary>
+        /// <param name="value"></param>
         public CompactInteger(U256 value) => Value = value.Value;
 
         /// <summary> Indicates whether this instance and a specified object are equal. </summary>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Substrate.NetApi.Modules
 {
     /// <summary>
-    /// New Api 2
+    /// UnstableCalls Module
     /// </summary>
     public class UnstableCalls : IUnstableCalls
     {
@@ -17,7 +17,7 @@ namespace Substrate.NetApi.Modules
         private readonly SubstrateClient _client;
 
         /// <summary>
-        /// New Api 2
+        /// UnstableCalls Module Constructor
         /// </summary>
         /// <param name="client"></param>
         internal UnstableCalls(SubstrateClient client)
@@ -25,15 +25,7 @@ namespace Substrate.NetApi.Modules
             _client = client;
         }
 
-        /// <summary>
-        /// Transaction Unstable Submit And Watch Async
-        /// </summary>
-        /// <param name="callback"></param>
-        /// <param name="method"></param>
-        /// <param name="account"></param>
-        /// <param name="charge"></param>
-        /// <param name="lifeTime"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public async Task<string> TransactionUnstableSubmitAndWatchAsync(Action<string, TransactionEventInfo> callback, Method method, Account account, ChargeType charge, uint lifeTime)
         {
             var extrinsic = await _client.GetExtrinsicParametersAsync(method, account, charge, lifeTime, signed: true, CancellationToken.None);
@@ -41,16 +33,7 @@ namespace Substrate.NetApi.Modules
             return await TransactionUnstableSubmitAndWatchAsync(callback, Utils.Bytes2HexString(extrinsic.Encode()));
         }
 
-        /// <summary>
-        /// Transaction Unstable Submit And Watch Async
-        /// </summary>
-        /// <param name="callback"></param>
-        /// <param name="method"></param>
-        /// <param name="account"></param>
-        /// <param name="charge"></param>
-        /// <param name="lifeTime"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public async Task<string> TransactionUnstableSubmitAndWatchAsync(Action<string, TransactionEventInfo> callback, Method method, Account account, ChargeType charge, uint lifeTime, CancellationToken token)
         {
             var extrinsic = await _client.GetExtrinsicParametersAsync(method, account, charge, lifeTime, signed: true, token);
@@ -58,24 +41,13 @@ namespace Substrate.NetApi.Modules
             return await TransactionUnstableSubmitAndWatchAsync(callback, extrinsicHex);
         }
 
-        /// <summary>
-        /// Transaction Unstable Submit And Watch Async
-        /// </summary>
-        /// <param name="callback"></param>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public async Task<string> TransactionUnstableSubmitAndWatchAsync(Action<string, TransactionEventInfo> callback, string parameters)
         {
             return await TransactionUnstableSubmitAndWatchAsync(callback, parameters, CancellationToken.None);
         }
 
-        /// <summary>
-        /// Transaction Unstable Submit And Watch Async
-        /// </summary>
-        /// <param name="callback"></param>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public async Task<string> TransactionUnstableSubmitAndWatchAsync(Action<string, TransactionEventInfo> callback, string parameters, CancellationToken token)
         {
             var subscriptionId =
@@ -84,22 +56,13 @@ namespace Substrate.NetApi.Modules
             return subscriptionId;
         }
 
-        /// <summary>
-        /// Transaction Unstable Unwatch Async
-        /// </summary>
-        /// <param name="subscriptionId"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public async Task<bool> TransactionUnstableUnwatchAsync(string subscriptionId)
         {
             return await TransactionUnstableUnwatchAsync(subscriptionId, CancellationToken.None);
         }
 
-        /// <summary>
-        /// Transaction Unstable Unwatch Async
-        /// </summary>
-        /// <param name="subscriptionId"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public async Task<bool> TransactionUnstableUnwatchAsync(string subscriptionId, CancellationToken token)
         {
             var result =

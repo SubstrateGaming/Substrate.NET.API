@@ -3,21 +3,24 @@ using Substrate.NetApi.Model.Types.Base;
 
 namespace Substrate.NetApi.Model.Extrinsics
 {
+    /// <summary>
+    /// Signed Extensions
+    /// </summary>
     public class SignedExtensions
     {
-        private uint _specVersion;
+        private readonly uint _specVersion;
 
-        private uint _txVersion;
+        private readonly uint _txVersion;
 
-        private Hash _genesis;
+        private readonly Hash _genesis;
 
-        private Hash _startEra;
+        private readonly Hash _startEra;
 
-        private Era _mortality;
+        private readonly Era _mortality;
 
-        private CompactInteger _nonce;
+        private readonly CompactInteger _nonce;
 
-        private ChargeType _charge;
+        private readonly ChargeType _charge;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SignedExtensions"/> class.

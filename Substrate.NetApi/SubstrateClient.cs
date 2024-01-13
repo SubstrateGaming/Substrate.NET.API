@@ -56,11 +56,14 @@ namespace Substrate.NetApi
         /// <summary>
         /// Bypass Remote Certificate Validation. Useful when testing with self-signed SSL certificates. 
         /// </summary>
-        private bool _bypassRemoteCertificateValidation;
+        private readonly bool _bypassRemoteCertificateValidation;
 
-        /// <summary> Constructor. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <param name="uri"> URI of the resource. </param>
+        /// <summary>
+        /// Substrate client
+        /// </summary>
+        /// <param name="uri">Uri of the node</param>
+        /// <param name="chargeType">Charge type</param>
+        /// <param name="bypassRemoteCertificateValidation">By default, the client will validate the SSL certificate of the node. Set this to true to bypass this validation.</param>
         public SubstrateClient(Uri uri, ChargeType chargeType, bool bypassRemoteCertificateValidation = false)
         {
             _uri = uri;
@@ -254,6 +257,7 @@ namespace Substrate.NetApi
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="parameters"></param>
+        /// <param name="blockhash"></param>
         /// <param name="token"></param>
         /// <returns></returns>
         public virtual async Task<T> GetStorageAsync<T>(string parameters, string blockhash, CancellationToken token) where T : IType, new()
@@ -272,14 +276,13 @@ namespace Substrate.NetApi
         }
 
         /// <summary>
-        /// Subscribe Storage Key Async
+        /// Subscribe to storage changes
         /// </summary>
-        /// <param name="moduleName"></param>
-        /// <param name="itemName"></param>
-        /// <param name="parameter"></param>
+        /// <param name="storageParams"></param>
         /// <param name="callback"></param>
         /// <param name="token"></param>
         /// <returns></returns>
+        /// <exception cref="ClientNotConnectedException"></exception>
         public virtual async Task<string> SubscribeStorageKeyAsync(string storageParams, Action<string, StorageChangeSet> callback, CancellationToken token)
         {
             if (_socket?.State != WebSocketState.Open)
@@ -293,11 +296,12 @@ namespace Substrate.NetApi
             return subscriptionId;
         }
 
-        /// <summary> Gets method asynchronous. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="method"> The method. </param>
-        /// <returns> The method async&lt; t&gt; </returns>
+        /// <summary>
+        /// Get method
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="method"></param>
+        /// <returns></returns>
         public async Task<T> GetMethodAsync<T>(string method)
         {
             return await GetMethodAsync<T>(method, CancellationToken.None);
@@ -327,11 +331,11 @@ namespace Substrate.NetApi
         }
 
         /// <summary>
-        /// Get an unchecked extrinsic.
+        /// Get extrinsic parameters
         /// </summary>
-        /// <param name="callArguments"></param>
+        /// <param name="method"></param>
         /// <param name="account"></param>
-        /// <param name="tip"></param>
+        /// <param name="charge"></param>
         /// <param name="lifeTime"></param>
         /// <param name="signed"></param>
         /// <param name="token"></param>
@@ -452,19 +456,9 @@ namespace Substrate.NetApi
                     Logger.Debug("Client disposed.");
                 }
 
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
                 _disposedValue = true;
             }
         }
-
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~SubstrateClient()
-        // {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
 
         /// <summary> This code added to correctly implement the disposable pattern. </summary>
         /// <remarks> 19.09.2020. </remarks>
@@ -472,8 +466,6 @@ namespace Substrate.NetApi
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
         }
 
         #endregion IDisposable Support

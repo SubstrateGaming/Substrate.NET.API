@@ -3,27 +3,42 @@ using System.Collections.Generic;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
+    /// <summary>
+    /// Account Id
+    /// </summary>
     public class AccountId : BasePrim<string>
     {
+        /// <summary>
+        /// Account Id Constructor
+        /// </summary>
         public AccountId()
         { }
 
+        /// <summary>
+        /// Account Id Constructor
+        /// </summary>
+        /// <param name="value"></param>
         public AccountId(string value)
         {
             Create(value);
         }
 
+        /// <summary>
+        /// Account Id Constructor
+        /// </summary>
+        /// <param name="value"></param>
         public AccountId(byte[] value)
         {
             Create(value);
         }
 
-        // TODO: <T::Lookup as StaticLookup>::Source -- RawAccountId is unprefixed Address
+        /// <inheritdoc/>
         public override string TypeName() => "T::AccountId";
 
-        // TODO: might have to change this based on the address type.
+        /// <inheritdoc/>
         public override int TypeSize => 32;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var bytes = new List<byte>();
@@ -47,12 +62,14 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <inheritdoc/>
         public override void Create(byte[] byteArray)
         {
             Bytes = byteArray;
             Value = Utils.GetAddressFrom(byteArray);
         }
 
+        /// <inheritdoc/>
         public override void Create(string value) => Create(Utils.HexToByteArray(value));
     }
 }

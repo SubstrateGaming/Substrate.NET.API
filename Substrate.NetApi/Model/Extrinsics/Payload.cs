@@ -2,10 +2,14 @@
 
 namespace Substrate.NetApi.Model.Extrinsics
 {
+    /// <summary>
+    /// Payload
+    /// </summary>
     public class Payload
     {
-        private Method _call;
-        private SignedExtensions _signedExtension;
+        private readonly Method _call;
+        
+        private readonly SignedExtensions _signedExtension;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Payload"/> class.

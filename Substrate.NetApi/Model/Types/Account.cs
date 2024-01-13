@@ -12,7 +12,14 @@ namespace Substrate.NetApi.Model.Types
     /// </summary>
     public enum KeyType
     {
+        /// <summary>
+        /// Ed25519
+        /// </summary>
         Ed25519,
+
+        /// <summary>
+        /// Sr25519
+        /// </summary>
         Sr25519
     }
 
@@ -21,8 +28,20 @@ namespace Substrate.NetApi.Model.Types
     /// </summary>
     public interface IAccount
     {
+        /// <summary>
+        /// Sign the specified message.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         byte[] Sign(byte[] message);
 
+        /// <summary>
+        /// Verifies a signature from this account.
+        /// </summary>
+        /// <param name="signature"></param>
+        /// <param name="publicKey"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         bool Verify(byte[] signature, byte[] publicKey, byte[] message);
     }
 
@@ -31,8 +50,14 @@ namespace Substrate.NetApi.Model.Types
     /// </summary>
     public class Account : AccountId, IAccount
     {
+        /// <summary>
+        /// Key Type
+        /// </summary>
         public KeyType KeyType { get; private set; }
 
+        /// <summary>
+        /// Key Type Byte
+        /// </summary>
         [JsonIgnore]
         public byte KeyTypeByte
         {
@@ -52,7 +77,11 @@ namespace Substrate.NetApi.Model.Types
             }
         }
 
-        [JsonIgnore] public byte[] PrivateKey { get; private set; }
+        /// <summary>
+        /// Private Key
+        /// </summary>
+        [JsonIgnore] 
+        public byte[] PrivateKey { get; private set; }
 
         /// <summary>
         /// Creates the specified key type with private key.

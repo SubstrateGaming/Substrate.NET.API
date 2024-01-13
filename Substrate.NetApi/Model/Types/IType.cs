@@ -38,16 +38,16 @@
         void Create(string str);
 
         /// <summary>
-        /// Creates from json.
-        /// </summary>
-        /// <param name="str">The string.</param>
-        void CreateFromJson(string str);
-
-        /// <summary>
         /// Creates the specified byte array.
         /// </summary>
         /// <param name="byteArray">The byte array.</param>
         void Create(byte[] byteArray);
+
+        /// <summary>
+        /// Creates from json.
+        /// </summary>
+        /// <param name="str">The string.</param>
+        void CreateFromJson(string str);
 
         /// <summary>
         /// News this instance.

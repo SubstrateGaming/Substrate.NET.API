@@ -7,8 +7,12 @@ using StreamJsonRpc;
 
 namespace Substrate.NetApi
 {
+    /// <summary>
+    /// Subscription Listener
+    /// </summary>
     public class SubscriptionListener
     {
+
         /// <summary> The logger. </summary>
         private static readonly ILogger Logger = new LoggerConfiguration().CreateLogger();
 

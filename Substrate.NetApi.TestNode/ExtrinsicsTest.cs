@@ -127,11 +127,9 @@ namespace Substrate.NetApi.TestNode
             var subscriptionId = await _substrateClient.Unstable.TransactionUnstableSubmitAndWatchAsync(
                 (subscriptionId, extrinsicUpdate) =>
                 {
+                    if (extrinsicUpdate.TransactionEvent != TransactionEvent.Validated)
                     {
-                        if (extrinsicUpdate.TransactionEvent != TransactionEvent.Validated)
-                        {
-                            taskCompletionSource.SetResult(true);
-                        }
+                        taskCompletionSource.SetResult(true);
                     }
                 },
                 method, Alice, _chargeType, 64, cancellationTokenSource.Token);

@@ -8,6 +8,9 @@ using Substrate.NetApi.Model.Types.Base;
 
 namespace Substrate.NetApi.Modules.Contracts
 {
+    /// <summary>
+    /// UnstableCalls Module Interface
+    /// </summary>
     public interface IUnstableCalls
     {
         /// <summary>

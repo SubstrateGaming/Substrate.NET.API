@@ -20,7 +20,7 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <param name="method">The method.</param>
         /// <param name="era">The era.</param>
         /// <param name="nonce">The nonce.</param>
-        /// <param name="tip">The tip.</param>
+        /// <param name="charge"></param>
         /// <param name="genesis">The genesis.</param>
         /// <param name="startEra">The start era.</param>
         public UnCheckedExtrinsic(bool signed, Account account, Method method, Era era, CompactInteger nonce, ChargeType charge, Hash genesis, Hash startEra)
@@ -58,7 +58,7 @@ namespace Substrate.NetApi.Model.Extrinsics
         {
             if (Signed && Signature == null)
             {
-                throw new Exception("Missing payload signature for signed transaction.");
+                throw new NotSupportedException("Missing payload signature for signed transaction.");
             }
 
             var list = new List<byte>();
@@ -76,9 +76,6 @@ namespace Substrate.NetApi.Model.Extrinsics
             if (Signature != null)
             {
                 list.AddRange(Signature);
-            }
-            else
-            {
             }
 
             list.AddRange(Era.Encode());
