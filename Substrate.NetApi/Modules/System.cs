@@ -6,16 +6,18 @@ using Substrate.NetApi.Modules.Contracts;
 
 namespace Substrate.NetApi.Modules
 {
-    /// <summary> A system. </summary>
-    /// <remarks> 19.09.2020. </remarks>
+    /// <summary>
+    /// System Module
+    /// </summary>
     public class System : ISystem
     {
-        /// <summary> The client. </summary>
+
         private readonly SubstrateClient _client;
 
-        /// <summary> Constructor. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <param name="client"> The client. </param>
+        /// <summary>
+        /// System Module Constructor
+        /// </summary>
+        /// <param name="client"></param>
         internal System(SubstrateClient client)
         {
             _client = client;

@@ -254,6 +254,7 @@ namespace Substrate.NetApi
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="parameters"></param>
+        /// <param name="blockhash"></param>
         /// <param name="token"></param>
         /// <returns></returns>
         public virtual async Task<T> GetStorageAsync<T>(string parameters, string blockhash, CancellationToken token) where T : IType, new()
@@ -272,14 +273,13 @@ namespace Substrate.NetApi
         }
 
         /// <summary>
-        /// Subscribe Storage Key Async
+        /// Subscribe to storage changes
         /// </summary>
-        /// <param name="moduleName"></param>
-        /// <param name="itemName"></param>
-        /// <param name="parameter"></param>
+        /// <param name="storageParams"></param>
         /// <param name="callback"></param>
         /// <param name="token"></param>
         /// <returns></returns>
+        /// <exception cref="ClientNotConnectedException"></exception>
         public virtual async Task<string> SubscribeStorageKeyAsync(string storageParams, Action<string, StorageChangeSet> callback, CancellationToken token)
         {
             if (_socket?.State != WebSocketState.Open)
@@ -293,11 +293,12 @@ namespace Substrate.NetApi
             return subscriptionId;
         }
 
-        /// <summary> Gets method asynchronous. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="method"> The method. </param>
-        /// <returns> The method async&lt; t&gt; </returns>
+        /// <summary>
+        /// Get method
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="method"></param>
+        /// <returns></returns>
         public async Task<T> GetMethodAsync<T>(string method)
         {
             return await GetMethodAsync<T>(method, CancellationToken.None);
@@ -458,13 +459,6 @@ namespace Substrate.NetApi
                 _disposedValue = true;
             }
         }
-
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~SubstrateClient()
-        // {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
 
         /// <summary> This code added to correctly implement the disposable pattern. </summary>
         /// <remarks> 19.09.2020. </remarks>

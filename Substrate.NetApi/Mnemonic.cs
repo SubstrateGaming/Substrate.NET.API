@@ -11,19 +11,64 @@ using Substrate.NetApi.Extensions;
 
 namespace Substrate.NetApi
 {
+    /// <summary>
+    /// Mnemonic
+    /// </summary>
     public static class Mnemonic
     {
+        /// <summary>
+        /// BIP39 Wordlist
+        /// </summary>
         public enum BIP39Wordlist
         {
+            /// <summary>
+            /// English
+            /// </summary>
             English,
+
+            /// <summary>
+            /// Japanese
+            /// </summary>
             Japanese,
+
+            /// <summary>
+            /// Korean
+            /// </summary>
             Korean,
+
+            /// <summary>
+            /// Spanish
+            /// </summary>
             Spanish,
+
+            /// <summary>
+            /// Chinese Simplified
+            /// </summary>
             ChineseSimplified,
+
+            /// <summary>
+            /// Chinese Traditional
+            /// </summary>
             ChineseTraditional,
+
+            /// <summary>
+            /// French
+            /// </summary>
             French,
+
+            /// <summary>
+            /// Italian
+            /// </summary>
             Italian,
+
+            /// <summary>
+            /// Czech
+            /// </summary>
             Czech,
+
+            /// <summary>
+            /// Portuguese
+            /// </summary>
             Portuguese
         }
 
@@ -234,7 +279,7 @@ namespace Substrate.NetApi
             var newChecksum = DeriveChecksumBits(entropyBytes);
 
             if (newChecksum != checksumBits)
-                throw new Exception("InvalidChecksum");
+                throw new NotSupportedException("InvalidChecksum");
 
             var result = BitConverter
                 .ToString(entropyBytes)
@@ -259,7 +304,7 @@ namespace Substrate.NetApi
         private static string DeriveChecksumBits(byte[] entropyBytes)
         {
             var ent = entropyBytes.Length * 8;
-            var cs = (int)ent / 32;
+            var cs = ent / 32;
 
             var sha256Provider = SHA256.Create();
             var hash = sha256Provider.ComputeHash(entropyBytes);
@@ -302,16 +347,38 @@ namespace Substrate.NetApi
                     return new Portuguese();
 
                 default:
-                    throw new Exception($"Unknown {language} in BIP39 implementation!");
+                    throw new NotSupportedException($"Unknown {language} in BIP39 implementation!");
             }
         }
 
+        /// <summary>
+        /// Mnemonic size
+        /// </summary>
         public enum MnemonicSize
         {
+            /// <summary>
+            /// Words 12
+            /// </summary>
             Words12,
+
+            /// <summary>
+            /// Words 15
+            /// </summary>
             Words15,
+
+            /// <summary>
+            /// Words 18 
+            /// </summary>
             Words18,
+
+            /// <summary>
+            /// Words 21
+            /// </summary>
             Words21,
+
+            /// <summary>
+            /// Words 24
+            /// </summary>
             Words24
         }
 
@@ -340,16 +407,12 @@ namespace Substrate.NetApi
             throw new InvalidOperationException("Invalid mnemonic size");
         }
 
-        //public static byte[] MnemonicToMiniSecret(string mnemonic, string password, BIP39Wordlist bIP39Wordlist = BIP39Wordlist.English)
-        //{
-        //    if (!ValidateMnemonic(mnemonic, bIP39Wordlist))
-        //    {
-        //        throw new InvalidOperationException("Invalid bip39 mnemonic specified");
-        //    }
-
-        //    return GetSecretKeyFromMnemonic(mnemonic, password, bIP39Wordlist);
-        //}
-
+        /// <summary>
+        /// Validate mnemonic
+        /// </summary>
+        /// <param name="mnemonic"></param>
+        /// <param name="bIP39Wordlist"></param>
+        /// <returns></returns>
         public static bool ValidateMnemonic(string mnemonic, BIP39Wordlist bIP39Wordlist = BIP39Wordlist.English)
         {
             try

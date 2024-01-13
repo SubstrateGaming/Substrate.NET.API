@@ -6,6 +6,9 @@ using Substrate.NetApi.Model.Types.Base;
 
 namespace Substrate.NetApi.Modules.Contracts
 {
+    /// <summary>
+    /// Chain Module Interface
+    /// </summary>
     public interface IChain
     {
         /// <summary>

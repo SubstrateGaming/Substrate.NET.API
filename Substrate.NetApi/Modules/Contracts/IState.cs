@@ -9,6 +9,9 @@ using Substrate.NetApi.Model.Types.Primitive;
 
 namespace Substrate.NetApi.Modules.Contracts
 {
+    /// <summary>
+    /// State Module Interface
+    /// </summary>
     public interface IState
     {
         /// <summary>

@@ -12,8 +12,9 @@ using Substrate.NetApi.Modules.Contracts;
 
 namespace Substrate.NetApi.Modules
 {
-    /// <summary> A state. </summary>
-    /// <remarks> 19.09.2020. </remarks>
+    /// <summary>
+    /// State Module
+    /// </summary>
     public class State : IState
     {
         /// <summary>

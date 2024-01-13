@@ -6,13 +6,18 @@ using static Substrate.NetApi.Model.Meta.Storage;
 
 namespace Substrate.NetApi.Model.Types.Metadata.V14
 {
+    /// <summary>
+    /// Runtime Metadata V14
+    /// </summary>
     public class RuntimeMetadataV14 : BaseType
     {
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -32,22 +37,43 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
             TypeSize = p - start;
         }
 
+        /// <summary>
+        /// Types
+        /// </summary>
         public PortableRegistry Types { get; private set; }
 
+        /// <summary>
+        /// Modules
+        /// </summary>
         public BaseVec<PalletMetadata> Modules { get; private set; }
 
+        /// <summary>
+        /// Extrinsic
+        /// </summary>
         public ExtrinsicMetadataStruct Extrinsic { get; private set; }
 
+        /// <summary>
+        /// Type Id
+        /// </summary>
         public TType TypeId { get; private set; }
     }
 
+    /// <summary>
+    /// Meta Data Info Type
+    /// </summary>
     public class MetaDataInfo : BaseType
     {
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Decode from byte array
+        /// </summary>
+        /// <param name="byteArray"></param>
+        /// <param name="p"></param>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -61,17 +87,26 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
             TypeSize = p - start;
         }
 
+        /// <summary>
+        /// Magic
+        /// </summary>
         public U32 Magic { get; private set; }
+
+        /// <summary>
+        /// Version
+        /// </summary>
         public U8 Version { get; private set; }
     }
 
     public class PalletMetadata : BaseType
     {
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -100,12 +135,39 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
             TypeSize = p - start;
         }
 
+        /// <summary>
+        /// Palette Name
+        /// </summary>
         public Str PalletName { get; private set; }
+
+        /// <summary>
+        /// Palette Storage
+        /// </summary>
         public BaseOpt<StorageMetadata> PalletStorage { get; private set; }
+
+        /// <summary>
+        /// Palette Calls
+        /// </summary>
         public BaseOpt<PalletCallMetadata> PalletCalls { get; private set; }
+
+        /// <summary>
+        /// Palette Events
+        /// </summary>
         public BaseOpt<PalletEventMetadata> PalletEvents { get; private set; }
+
+        /// <summary>
+        /// Palette Constants
+        /// </summary>
         public BaseVec<PalletConstantMetadata> PalletConstants { get; private set; }
+
+        /// <summary>
+        /// Palette Errors
+        /// </summary>
         public BaseOpt<ErrorMetadata> PalletErrors { get; private set; }
+
+        /// <summary>
+        /// Index
+        /// </summary>
         public U8 Index { get; private set; }
     }
 

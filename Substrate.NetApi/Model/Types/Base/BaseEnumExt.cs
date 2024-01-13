@@ -5,8 +5,18 @@ using System.Collections.Generic;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
+    /// <summary>
+    /// Base Enum Extended Type
+    /// </summary>
     public abstract class BaseEnumType : BaseType
     {
+        /// <summary>
+        /// Decode Type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="byteArray"></param>
+        /// <param name="p"></param>
+        /// <returns></returns>
         public static IType DecodeType<T>(byte[] byteArray, ref int p) where T : IType, new()
         {
             if (typeof(T) == typeof(BaseVoid))
@@ -17,17 +27,21 @@ namespace Substrate.NetApi.Model.Types.Base
         }
     }
 
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -44,6 +58,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -54,6 +71,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -65,26 +85,36 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
        where T2 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -101,6 +131,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -112,6 +145,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -123,27 +159,37 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
        where T2 : IType, new()
        where T3 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -160,6 +206,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -172,6 +221,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -183,14 +235,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -198,13 +257,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T3 : IType, new()
        where T4 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -221,6 +283,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -234,6 +299,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -245,14 +313,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -261,13 +336,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T4 : IType, new()
        where T5 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -284,6 +362,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -298,6 +379,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -309,14 +393,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -326,13 +417,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T5 : IType, new()
        where T6 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -349,6 +443,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -364,6 +461,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -375,14 +475,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -393,13 +500,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T6 : IType, new()
        where T7 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -416,6 +526,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -432,6 +545,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -443,14 +559,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -462,13 +585,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T7 : IType, new()
        where T8 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -485,6 +611,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -502,6 +631,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -513,14 +645,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -533,13 +672,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T8 : IType, new()
        where T9 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -556,6 +698,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -574,6 +719,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -585,14 +733,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -606,13 +761,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T9 : IType, new()
        where T10 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -629,6 +787,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -648,6 +809,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -659,14 +823,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -681,13 +852,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T10 : IType, new()
        where T11 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -704,6 +878,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -724,6 +901,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -735,14 +915,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -758,13 +945,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T11 : IType, new()
        where T12 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -781,6 +971,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -802,6 +995,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -813,14 +1009,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -837,13 +1040,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T12 : IType, new()
        where T13 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -860,6 +1066,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -882,6 +1091,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -893,14 +1105,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -918,13 +1137,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T13 : IType, new()
        where T14 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -941,6 +1163,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -964,6 +1189,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -975,14 +1203,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -1001,13 +1236,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T14 : IType, new()
        where T15 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1024,6 +1262,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -1048,6 +1289,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -1059,14 +1303,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -1086,13 +1337,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T15 : IType, new()
        where T16 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1109,6 +1363,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -1134,6 +1391,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -1145,14 +1405,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -1173,13 +1440,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T16 : IType, new()
        where T17 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1196,6 +1466,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -1222,6 +1495,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -1233,14 +1509,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -1262,13 +1545,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T17 : IType, new()
        where T18 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1285,6 +1571,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -1312,6 +1601,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -1323,14 +1615,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -1353,13 +1652,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T18 : IType, new()
        where T19 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1376,6 +1678,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -1404,6 +1709,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -1415,14 +1723,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -1446,13 +1761,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T19 : IType, new()
        where T20 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1469,6 +1787,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -1498,6 +1819,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -1509,14 +1833,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -1541,13 +1872,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T20 : IType, new()
        where T21 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1564,6 +1898,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -1594,6 +1931,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -1605,14 +1945,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -1638,13 +1985,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T21 : IType, new()
        where T22 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1661,6 +2011,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -1692,6 +2045,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -1703,14 +2059,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -1737,13 +2100,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T22 : IType, new()
        where T23 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1760,6 +2126,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -1792,6 +2161,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -1803,14 +2175,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -1838,13 +2217,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T23 : IType, new()
        where T24 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1861,6 +2243,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -1894,6 +2279,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -1905,14 +2293,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -1941,13 +2336,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T24 : IType, new()
        where T25 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1964,6 +2362,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -1998,6 +2399,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -2009,14 +2413,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -2046,13 +2457,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T25 : IType, new()
        where T26 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -2069,6 +2483,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -2104,6 +2521,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -2115,14 +2535,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -2153,13 +2580,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T26 : IType, new()
        where T27 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -2176,6 +2606,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -2212,6 +2645,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -2223,14 +2659,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -2262,13 +2705,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T27 : IType, new()
        where T28 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -2285,6 +2731,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -2322,6 +2771,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -2333,14 +2785,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -2373,13 +2832,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T28 : IType, new()
        where T29 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -2396,6 +2858,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -2434,6 +2899,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -2445,14 +2913,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -2486,13 +2961,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T29 : IType, new()
        where T30 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -2509,6 +2987,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -2548,6 +3029,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -2559,14 +3043,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -2601,13 +3092,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T30 : IType, new()
        where T31 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -2624,6 +3118,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -2664,6 +3161,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -2675,14 +3175,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -2718,13 +3225,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T31 : IType, new()
        where T32 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -2741,6 +3251,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -2782,6 +3295,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -2793,14 +3309,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -2837,13 +3360,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T32 : IType, new()
        where T33 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -2860,6 +3386,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -2902,6 +3431,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -2913,14 +3445,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -2958,13 +3497,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T33 : IType, new()
        where T34 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -2981,6 +3523,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -3024,6 +3569,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -3035,14 +3583,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -3081,13 +3636,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T34 : IType, new()
        where T35 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -3104,6 +3662,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -3148,6 +3709,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -3159,14 +3723,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -3206,13 +3777,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T35 : IType, new()
        where T36 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -3229,6 +3803,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -3274,6 +3851,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -3285,14 +3865,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -3333,13 +3920,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T36 : IType, new()
        where T37 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -3356,6 +3946,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -3402,6 +3995,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -3413,14 +4009,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -3462,13 +4065,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T37 : IType, new()
        where T38 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -3485,6 +4091,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -3532,6 +4141,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -3543,14 +4155,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -3593,13 +4212,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T38 : IType, new()
        where T39 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -3616,6 +4238,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -3664,6 +4289,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -3675,14 +4303,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -3726,13 +4361,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T39 : IType, new()
        where T40 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -3749,6 +4387,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -3798,6 +4439,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -3809,14 +4453,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -3861,13 +4512,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T40 : IType, new()
        where T41 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -3884,6 +4538,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -3934,6 +4591,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -3945,14 +4605,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -3998,13 +4665,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T41 : IType, new()
        where T42 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -4021,6 +4691,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -4072,6 +4745,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -4083,14 +4759,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -4137,13 +4820,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T42 : IType, new()
        where T43 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -4160,6 +4846,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -4212,6 +4901,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -4223,14 +4915,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -4278,13 +4977,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T43 : IType, new()
        where T44 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -4301,6 +5003,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -4354,6 +5059,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -4365,14 +5073,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -4421,13 +5136,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T44 : IType, new()
        where T45 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -4444,6 +5162,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -4498,6 +5219,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -4509,14 +5233,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -4566,13 +5297,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T45 : IType, new()
        where T46 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -4589,6 +5323,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -4644,6 +5381,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -4655,14 +5395,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -4713,13 +5460,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T46 : IType, new()
        where T47 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -4736,6 +5486,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -4792,6 +5545,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -4803,14 +5559,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -4862,13 +5625,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T47 : IType, new()
        where T48 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -4885,6 +5651,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -4942,6 +5711,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -4953,14 +5725,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -5013,13 +5792,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T48 : IType, new()
        where T49 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -5036,6 +5818,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -5094,6 +5879,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -5105,14 +5893,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -5166,13 +5961,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T49 : IType, new()
        where T50 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -5189,6 +5987,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -5248,6 +6049,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -5259,14 +6063,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -5321,13 +6132,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T50 : IType, new()
        where T51 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -5344,6 +6158,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -5404,6 +6221,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -5415,14 +6235,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -5478,13 +6305,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T51 : IType, new()
        where T52 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -5501,6 +6331,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -5562,6 +6395,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -5573,14 +6409,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -5637,13 +6480,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T52 : IType, new()
        where T53 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -5660,6 +6506,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -5722,6 +6571,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -5733,14 +6585,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -5798,13 +6657,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T53 : IType, new()
        where T54 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -5821,6 +6683,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -5884,6 +6749,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -5895,14 +6763,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -5961,13 +6836,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T54 : IType, new()
        where T55 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -5984,6 +6862,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -6048,6 +6929,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -6059,14 +6943,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -6126,13 +7017,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T55 : IType, new()
        where T56 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -6149,6 +7043,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -6214,6 +7111,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -6225,14 +7125,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -6293,13 +7200,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T56 : IType, new()
        where T57 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -6316,6 +7226,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -6382,6 +7295,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -6393,14 +7309,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -6462,13 +7385,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T57 : IType, new()
        where T58 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -6485,6 +7411,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -6552,6 +7481,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -6563,14 +7495,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -6633,13 +7572,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T58 : IType, new()
        where T59 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -6656,6 +7598,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -6724,6 +7669,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -6735,14 +7683,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -6806,13 +7761,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T59 : IType, new()
        where T60 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -6829,6 +7787,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -6898,6 +7859,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -6909,14 +7873,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -6981,13 +7952,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T60 : IType, new()
        where T61 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -7004,6 +7978,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -7074,6 +8051,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -7085,14 +8065,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -7158,13 +8145,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T61 : IType, new()
        where T62 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -7181,6 +8171,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -7252,6 +8245,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -7263,14 +8259,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -7337,13 +8340,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T62 : IType, new()
        where T63 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -7360,6 +8366,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -7432,6 +8441,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -7443,14 +8455,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -7518,13 +8537,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T63 : IType, new()
        where T64 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -7541,6 +8563,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -7614,6 +8639,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -7625,14 +8653,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -7701,13 +8736,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T64 : IType, new()
        where T65 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -7724,6 +8762,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -7798,6 +8839,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -7809,14 +8853,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -7886,13 +8937,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T65 : IType, new()
        where T66 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -7909,6 +8963,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -7984,6 +9041,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -7995,14 +9055,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -8073,13 +9140,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T66 : IType, new()
        where T67 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -8096,6 +9166,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -8172,6 +9245,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -8183,14 +9259,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -8262,13 +9345,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T67 : IType, new()
        where T68 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -8285,6 +9371,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -8362,6 +9451,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -8373,14 +9465,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -8453,13 +9552,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T68 : IType, new()
        where T69 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -8476,6 +9578,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -8554,6 +9659,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -8565,14 +9673,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -8646,13 +9761,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T69 : IType, new()
        where T70 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -8669,6 +9787,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -8748,6 +9869,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -8759,14 +9883,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -8841,13 +9972,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T70 : IType, new()
        where T71 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -8864,6 +9998,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -8944,6 +10081,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -8955,14 +10095,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -9038,13 +10185,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T71 : IType, new()
        where T72 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -9061,6 +10211,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -9142,6 +10295,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -9153,14 +10309,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -9237,13 +10400,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T72 : IType, new()
        where T73 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -9260,6 +10426,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -9342,6 +10511,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -9353,14 +10525,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -9438,13 +10617,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T73 : IType, new()
        where T74 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -9461,6 +10643,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -9544,6 +10729,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -9555,14 +10743,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -9641,13 +10836,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T74 : IType, new()
        where T75 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -9664,6 +10862,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -9748,6 +10949,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -9759,14 +10963,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -9846,13 +11057,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T75 : IType, new()
        where T76 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -9869,6 +11083,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -9954,6 +11171,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -9965,14 +11185,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -10053,13 +11280,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T76 : IType, new()
        where T77 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -10076,6 +11306,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -10162,6 +11395,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -10173,14 +11409,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -10262,13 +11505,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T77 : IType, new()
        where T78 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -10285,6 +11531,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -10372,6 +11621,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -10383,14 +11635,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -10473,13 +11732,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T78 : IType, new()
        where T79 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -10496,6 +11758,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -10584,6 +11849,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -10595,14 +11863,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -10686,13 +11961,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T79 : IType, new()
        where T80 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -10709,6 +11987,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -10798,6 +12079,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -10809,14 +12093,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -10901,13 +12192,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T80 : IType, new()
        where T81 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -10924,6 +12218,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -11014,6 +12311,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -11025,14 +12325,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -11118,13 +12425,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T81 : IType, new()
        where T82 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -11141,6 +12451,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -11232,6 +12545,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -11243,14 +12559,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -11337,13 +12660,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T82 : IType, new()
        where T83 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -11360,6 +12686,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -11452,6 +12781,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -11463,14 +12795,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -11558,13 +12897,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T83 : IType, new()
        where T84 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -11581,6 +12923,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -11674,6 +13019,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -11685,14 +13033,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -11781,13 +13136,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T84 : IType, new()
        where T85 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -11804,6 +13162,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -11898,6 +13259,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -11909,14 +13273,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -12006,13 +13377,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T85 : IType, new()
        where T86 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -12029,6 +13403,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -12124,6 +13501,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -12135,14 +13515,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -12233,13 +13620,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T86 : IType, new()
        where T87 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -12256,6 +13646,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -12352,6 +13745,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -12363,14 +13759,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -12462,13 +13865,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T87 : IType, new()
        where T88 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -12485,6 +13891,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -12582,6 +13991,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -12593,14 +14005,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -12693,13 +14112,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T88 : IType, new()
        where T89 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -12716,6 +14138,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -12814,6 +14239,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -12825,14 +14253,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -12926,13 +14361,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T89 : IType, new()
        where T90 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -12949,6 +14387,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -13048,6 +14489,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -13059,14 +14503,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -13161,13 +14612,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T90 : IType, new()
        where T91 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -13184,6 +14638,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -13284,6 +14741,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -13295,14 +14755,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -13398,13 +14865,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T91 : IType, new()
        where T92 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -13421,6 +14891,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -13522,6 +14995,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -13533,14 +15009,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -13637,13 +15120,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T92 : IType, new()
        where T93 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -13660,6 +15146,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -13762,6 +15251,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -13773,14 +15265,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -13878,13 +15377,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T93 : IType, new()
        where T94 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -13901,6 +15403,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -14004,6 +15509,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -14015,14 +15523,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94, T95> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -14121,13 +15636,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T94 : IType, new()
        where T95 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -14144,6 +15662,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -14248,6 +15769,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -14259,14 +15783,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94, T95, T96> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -14366,13 +15897,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T95 : IType, new()
        where T96 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -14389,6 +15923,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -14494,6 +16031,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -14505,14 +16045,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94, T95, T96, T97> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -14613,13 +16160,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T96 : IType, new()
        where T97 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -14636,6 +16186,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -14742,6 +16295,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -14753,14 +16309,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94, T95, T96, T97, T98> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -14862,13 +16425,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T97 : IType, new()
        where T98 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -14885,6 +16451,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -14992,6 +16561,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -15003,14 +16575,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94, T95, T96, T97, T98, T99> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -15113,13 +16692,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T98 : IType, new()
        where T99 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -15136,6 +16718,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -15244,6 +16829,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -15255,14 +16843,21 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
-
+    /// <inheritdoc/>
     public class BaseEnumExt<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75, T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89, T90, T91, T92, T93, T94, T95, T96, T97, T98, T99, T100> : BaseEnumType
        where T0 : Enum
        where T1 : IType, new()
@@ -15366,13 +16961,16 @@ namespace Substrate.NetApi.Model.Types.Base
        where T99 : IType, new()
        where T100 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName() => typeof(T0).Name;
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return Bytes;
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -15389,6 +16987,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// BaseEnumExt DecodeOneOf
+        /// </summary>
         private IType DecodeOneOf(byte value, byte[] byteArray, ref int p)
         {
             switch (value)
@@ -15498,6 +17099,9 @@ namespace Substrate.NetApi.Model.Types.Base
             }
         }
 
+        /// <summary>
+        /// BaseEnumExt Create
+        /// </summary>
         public void Create(T0 t, IType value2)
         {
             List<byte> bytes = new List<byte>();
@@ -15509,11 +17113,19 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(Value);
 
+        /// <summary>
+        /// BaseEnumExt Enumeration Value
+        /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public T0 Value { get; set; }
 
+        /// <summary>
+        /// BaseEnumExt Type Value
+        /// </summary>
         public IType Value2 { get; set; }
     }
+
 }

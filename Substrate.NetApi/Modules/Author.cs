@@ -10,47 +10,34 @@ using Substrate.NetApi.Modules.Contracts;
 namespace Substrate.NetApi.Modules
 {
     /// <summary>
-    ///   <br />
+    /// Author Module
     /// </summary>
     public class Author : IAuthor
     {
-        /// <summary>The client</summary>
         private readonly SubstrateClient _client;
 
-        /// <summary>Initializes a new instance of the <see cref="Author" /> class.</summary>
-        /// <param name="client">The client.</param>
+        /// <summary>
+        /// Author Module Constructor
+        /// </summary>
+        /// <param name="client"></param>
         internal Author(SubstrateClient client)
         {
             _client = client;
         }
 
-        /// <summary>Pendings the extrinsic asynchronous.</summary>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <inheritdoc/>
         public async Task<Extrinsic[]> PendingExtrinsicAsync()
         {
             return await PendingExtrinsicAsync(CancellationToken.None);
         }
 
-        /// <summary>Pendings the extrinsic asynchronous.</summary>
-        /// <param name="token">The token.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <inheritdoc/>
         public async Task<Extrinsic[]> PendingExtrinsicAsync(CancellationToken token)
         {
             return await _client.InvokeAsync<Extrinsic[]>("author_pendingExtrinsics", null, token);
         }
 
-        /// <summary>Submits the extrinsic asynchronous.</summary>
-        /// <param name="callArguments">The call arguments.</param>
-        /// <param name="account">The account.</param>
-        /// <param name="tip">The tip.</param>
-        /// <param name="lifeTime">The life time.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <inheritdoc/>
         public async Task<Hash> SubmitExtrinsicAsync(Method method, Account account, ChargeType charge, uint lifeTime)
         {
             var extrinsic = await _client.GetExtrinsicParametersAsync(method, account, charge, lifeTime, signed: true, CancellationToken.None);
@@ -58,6 +45,7 @@ namespace Substrate.NetApi.Modules
             return await SubmitExtrinsicAsync(Utils.Bytes2HexString(extrinsic.Encode()));
         }
 
+        /// <inheritdoc/>
         public async Task<Hash> SubmitExtrinsicAsync(Method method, Account account, ChargeType charge, uint lifeTime, CancellationToken token)
         {
             var extrinsic = await _client.GetExtrinsicParametersAsync(method, account, charge, lifeTime, signed: true, token);
@@ -65,36 +53,19 @@ namespace Substrate.NetApi.Modules
             return await SubmitExtrinsicAsync(Utils.Bytes2HexString(extrinsic.Encode()), token);
         }
 
-        /// <summary>Submits the extrinsic asynchronous.</summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <inheritdoc/>
         public async Task<Hash> SubmitExtrinsicAsync(string parameters)
         {
             return await SubmitExtrinsicAsync(parameters, CancellationToken.None);
         }
 
-        /// <summary>Submits the extrinsic asynchronous.</summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="token">The token.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <inheritdoc/>
         public async Task<Hash> SubmitExtrinsicAsync(string parameters, CancellationToken token)
         {
             return await _client.InvokeAsync<Hash>("author_submitExtrinsic", new object[] { parameters }, token);
         }
 
-        /// <summary>Submits the and watch extrinsic asynchronous.</summary>
-        /// <param name="callback">The callback.</param>
-        /// <param name="callArguments">The call arguments.</param>
-        /// <param name="account">The account.</param>
-        /// <param name="tip">The tip.</param>
-        /// <param name="lifeTime">The life time.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <inheritdoc/>
         public async Task<string> SubmitAndWatchExtrinsicAsync(Action<string, ExtrinsicStatus> callback,
             Method method, Account account, ChargeType charge, uint lifeTime)
         {
@@ -103,15 +74,7 @@ namespace Substrate.NetApi.Modules
             return await SubmitAndWatchExtrinsicAsync(callback, Utils.Bytes2HexString(extrinsic.Encode()));
         }
 
-        /// <summary>Submits the and watch extrinsic asynchronous.</summary>
-        /// <param name="callback">The callback.</param>
-        /// <param name="callArguments">The call arguments.</param>
-        /// <param name="account">The account.</param>
-        /// <param name="tip">The tip.</param>
-        /// <param name="lifeTime">The life time.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <inheritdoc/>
         public async Task<string> SubmitAndWatchExtrinsicAsync(Action<string, ExtrinsicStatus> callback,
             Method method, Account account, ChargeType charge, uint lifeTime, CancellationToken token)
         {
@@ -120,25 +83,14 @@ namespace Substrate.NetApi.Modules
             return await SubmitAndWatchExtrinsicAsync(callback, extrinsicHex);
         }
 
-        /// <summary>Submits the and watch extrinsic asynchronous.</summary>
-        /// <param name="callback">The callback.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <inheritdoc/>
         public async Task<string> SubmitAndWatchExtrinsicAsync(Action<string, ExtrinsicStatus> callback,
             string parameters)
         {
             return await SubmitAndWatchExtrinsicAsync(callback, parameters, CancellationToken.None);
         }
 
-        /// <summary>Submits the and watch extrinsic asynchronous.</summary>
-        /// <param name="callback">The callback.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="token">The token.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <inheritdoc/>
         public async Task<string> SubmitAndWatchExtrinsicAsync(Action<string, ExtrinsicStatus> callback,
             string parameters, CancellationToken token)
         {
@@ -148,22 +100,13 @@ namespace Substrate.NetApi.Modules
             return subscriptionId;
         }
 
-        /// <summary>Unwatches the extrinsic asynchronous.</summary>
-        /// <param name="subscriptionId">The subscription identifier.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <inheritdoc/>
         public async Task<bool> UnwatchExtrinsicAsync(string subscriptionId)
         {
             return await UnwatchExtrinsicAsync(subscriptionId, CancellationToken.None);
         }
 
-        /// <summary>Unwatches the extrinsic asynchronous.</summary>
-        /// <param name="subscriptionId">The subscription identifier.</param>
-        /// <param name="token">The token.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <inheritdoc/>
         public async Task<bool> UnwatchExtrinsicAsync(string subscriptionId, CancellationToken token)
         {
             var result =

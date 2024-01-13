@@ -6,21 +6,23 @@ using Substrate.NetApi.Modules.Contracts;
 
 namespace Substrate.NetApi.Modules
 {
-    /// <summary> A system. </summary>
-    /// <remarks> 19.09.2020. </remarks>
+    /// <summary>
+    /// Payment Module
+    /// </summary>
     public class Payment : IPayment
     {
-        /// <summary> The client. </summary>
         private readonly SubstrateClient _client;
 
-        /// <summary> Constructor. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <param name="client"> The client. </param>
+        /// <summary>
+        /// Payment Module Constructor
+        /// </summary>
+        /// <param name="client"></param>
         internal Payment(SubstrateClient client)
         {
             _client = client;
         }
 
+        /// <inheritdoc/>
         public async Task<FeeDetails> QueryFeeDetailAsync(string extrinsic, string blockHash, CancellationToken token)
         {
             var fullParams = new object[]
@@ -31,6 +33,7 @@ namespace Substrate.NetApi.Modules
             return await _client.InvokeAsync<FeeDetails>("payment_queryFeeDetails", fullParams, token);
         }
 
+        /// <inheritdoc/>
         public async Task<RuntimeDispatchInfo> QueryInfoAsync(string extrinsic, string blockHash, CancellationToken token)
         {
             var fullParams = new object[]

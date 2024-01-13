@@ -3,9 +3,15 @@ using System.Linq;
 
 namespace Substrate.NetApi.BIP39
 {
+    /// <summary>
+    /// Base class for all wordlists
+    /// </summary>
     public abstract class Wordlist
     {
-        private String[] _words;
+        /// <summary>
+        /// The words in the wordlist
+        /// </summary>
+        private readonly String[] _words;
 
         /// <summary>
         /// Constructor used by inheritence only
@@ -55,6 +61,10 @@ namespace Substrate.NetApi.BIP39
             }
         }
 
+        /// <summary>
+        /// Returns all the words in the wordlist
+        /// </summary>
+        /// <returns></returns>
         public string[] GetWords()
         {
             return _words;

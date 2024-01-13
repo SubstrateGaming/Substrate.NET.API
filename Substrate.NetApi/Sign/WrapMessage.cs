@@ -55,6 +55,12 @@ namespace Substrate.NetApi.Sign
                     .ToArray() :
                 data;
         }
+
+        /// <summary>
+        /// Unwrap data from <see cref="U8A_WRAP_PREFIX_STR"/> and <see cref="U8A_WRAP_POSTFIX_STR"/>
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static byte[] Unwrap(string data) => Unwrap(Encoding.UTF8.GetBytes(data));
 
         /// <summary>
@@ -76,6 +82,12 @@ namespace Substrate.NetApi.Sign
                 .Concat(U8A_WRAP_POSTFIX)
                 .ToArray();
         }
+
+        /// <summary>
+        /// Wrap data with <see cref="U8A_WRAP_PREFIX_STR"/> and <see cref="U8A_WRAP_POSTFIX_STR"/>
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static byte[] Wrap(string data) => Wrap(Encoding.UTF8.GetBytes(data));
     }
 }

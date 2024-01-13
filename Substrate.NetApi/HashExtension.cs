@@ -7,6 +7,9 @@ using Extensions.Data;
 
 namespace Substrate.NetApi
 {
+    /// <summary>
+    /// Hash extension.
+    /// </summary>
     public class HashExtension
     {
         /// <summary>
