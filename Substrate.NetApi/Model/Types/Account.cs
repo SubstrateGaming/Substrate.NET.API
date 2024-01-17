@@ -8,17 +8,22 @@ using System.Security.Cryptography.X509Certificates;
 namespace Substrate.NetApi.Model.Types
 {
     /// <summary>
-    /// Represents a key type.
+    /// Enum KeyType represents the type of cryptographic keys used in digital signatures.
     /// </summary>
     public enum KeyType
     {
         /// <summary>
-        /// Ed25519
+        /// Ed25519: Elliptic Curve Digital Signature Algorithm using SHA-512 and Curve25519.
+        /// Preferred for its balance of security and performance, suitable for scenarios
+        /// requiring fast signature verification. Commonly used in secure communication,
+        /// authentication, and blockchain applications.
         /// </summary>
         Ed25519,
 
         /// <summary>
-        /// Sr25519
+        /// Sr25519: Schnorr signature scheme using SHA-512 and Curve25519, implemented in Schnorrkel.
+        /// Offers advantages in complex cryptographic constructions and potentially better performance.
+        /// Frequently used in decentralized systems and advanced cryptographic protocols.
         /// </summary>
         Sr25519
     }
@@ -104,6 +109,12 @@ namespace Substrate.NetApi.Model.Types
         public void Create(KeyType keyType, byte[] publicKey)
         {
             Create(keyType, null, publicKey);
+        }
+
+        /// <inheritdoc/>
+        public override void CreateFromJson(string str)
+        {
+            throw new NotSupportedException("CreateFromJson is not supported for Account.");
         }
 
         /// <summary>

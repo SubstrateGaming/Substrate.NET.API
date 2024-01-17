@@ -56,13 +56,13 @@ namespace Substrate.NetApi.Model.Types.Base
         }
 
         /// <summary>
-        /// Create from a json string
+        /// Create from JSON is used to deserialize in GenericTypeConverters, to automatically convert scale encoded JSON Rust types to C# types.
         /// </summary>
         /// <param name="str"></param>
         public virtual void CreateFromJson(string str) => Create(Utils.HexToByteArray(str));
 
         /// <summary>
-        /// New
+        /// Create a new instance of the type, this uses the default constructor.
         /// </summary>
         /// <returns></returns>
         public IType New() => this;
