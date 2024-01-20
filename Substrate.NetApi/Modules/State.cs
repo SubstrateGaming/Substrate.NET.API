@@ -115,10 +115,10 @@ namespace Substrate.NetApi.Modules
         public Task<RuntimeVersion> GetRuntimeVersionAsync(CancellationToken token)
             => GetRuntimeVersionAtAsync(string.Empty, token);
 
-        public Task<RuntimeVersion> GetRuntimeVersionAtAsync(byte[] blockHash, CancellationToken token)
+        public virtual Task<RuntimeVersion> GetRuntimeVersionAtAsync(byte[] blockHash, CancellationToken token)
             => GetRuntimeVersionAtAsync(Utils.Bytes2HexString(blockHash), token);
 
-        public async Task<RuntimeVersion> GetRuntimeVersionAtAsync(string blockHash, CancellationToken token)
+        public virtual async Task<RuntimeVersion> GetRuntimeVersionAtAsync(string blockHash, CancellationToken token)
         {
             var fullParams = new object[]
             {
