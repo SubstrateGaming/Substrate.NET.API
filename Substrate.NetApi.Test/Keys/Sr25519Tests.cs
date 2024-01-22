@@ -92,7 +92,7 @@ namespace Substrate.NetApi.Test.Keys
         {
             var miniSecretAlice = new MiniSecret(Utils.HexToByteArray("0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a"), ExpandMode.Ed25519);
 
-            var account = Account.Build(KeyType.Sr25519, miniSecretAlice.ExpandToSecret().ToBytes(), miniSecretAlice.GetPair().Public.Key);
+            var account = Account.Build(KeyType.Sr25519, miniSecretAlice.ExpandToSecret().ToEd25519Bytes(), miniSecretAlice.GetPair().Public.Key);
 
             var message = "I test this signature!";
             var messageBytes = WrapMessage.Wrap(message);

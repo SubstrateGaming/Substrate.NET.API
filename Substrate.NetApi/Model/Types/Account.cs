@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using Schnorrkel;
 using Substrate.NetApi.Model.Types.Base;
 using System;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Substrate.NetApi.Model.Types
 {
