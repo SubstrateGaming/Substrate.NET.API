@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<PackageId>Substrate.NET.API</PackageId>
 		<TargetFrameworks>netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
-		<Version>0.9.15</Version>
+		<Version>0.9.16</Version>
 		<Company>Substrate Gaming</Company>
 		<Authors>Substrate Gaming</Authors>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>

@@ -1,11 +1,12 @@
-﻿using System.Linq;
+﻿using Substrate.NetApi.Model.Types;
+using System.Linq;
 
 namespace Substrate.NetApi.Model.Extrinsics
 {
     /// <summary>
     /// Payload
     /// </summary>
-    public class Payload
+    public class Payload : IEncodable
     {
         private readonly Method _call;
         
@@ -23,12 +24,20 @@ namespace Substrate.NetApi.Model.Extrinsics
         }
 
         /// <summary>
-        /// Encodes this instance.
+        /// Encodes this instance, returns the encoded bytes. Additionally, if
+        /// the encoded bytes are longer than 256 bytes, they are hashed using `blake2_256`.
         /// </summary>
         /// <returns></returns>
         public byte[] Encode()
         {
             byte[] bytes = _call.Encode().Concat(_signedExtension.Encode()).ToArray();
+
+            // Payloads longer than 256 bytes are going to be `blake2_256`-hashed.
+            if (bytes.Length > 256)
+            {
+                bytes = HashExtension.Blake2(bytes, 256);
+            }
+
             return bytes;
         }
     }

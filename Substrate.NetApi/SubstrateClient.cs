@@ -359,7 +359,9 @@ namespace Substrate.NetApi
                 era = Era.Create(lifeTime, finalizedHeader.Number.Value);
             }
 
-            return RequestGenerator.SubmitExtrinsic(signed, account, method, era, nonce, charge, GenesisHash, startEra, RuntimeVersion);
+            var uncheckedExtrinsic = await RequestGenerator.SubmitExtrinsicAsync(signed, account, method, era, nonce, charge, GenesisHash, startEra, RuntimeVersion); ;
+
+            return uncheckedExtrinsic;
         }
 
         /// <summary>

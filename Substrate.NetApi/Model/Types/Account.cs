@@ -1,9 +1,11 @@
 ﻿using Chaos.NaCl;
 using Newtonsoft.Json;
 using Schnorrkel;
+using Substrate.NetApi.Model.Extrinsics;
 using Substrate.NetApi.Model.Types.Base;
 using System;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 namespace Substrate.NetApi.Model.Types
 {
@@ -36,9 +38,16 @@ namespace Substrate.NetApi.Model.Types
         /// <summary>
         /// Sign the specified message.
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">The message bytes.</param>
         /// <returns></returns>
-        byte[] Sign(byte[] message);
+        Task<byte[]> SignRawAsync(byte[] message);
+
+        /// <summary>
+        /// Sign the specified payload.
+        /// </summary>
+        /// <param name="payload">The payload.</param>
+        /// <returns></returns>
+        Task<byte[]> SignPayloadAsync(Payload payload);
 
         /// <summary>
         /// Verifies a signature from this account.
@@ -131,25 +140,37 @@ namespace Substrate.NetApi.Model.Types
             return account;
         }
 
+
         /// <summary>
-        /// Signs the specified message.
+        /// Asynchronously signs the specified message.
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
-        public byte[] Sign(byte[] message)
+        public async Task<byte[]> SignRawAsync(byte[] message)
         {
             switch (KeyType)
             {
                 case KeyType.Ed25519:
-                    return Ed25519.Sign(message, PrivateKey);
+                    return await Task.Run(() => Ed25519.Sign(message, PrivateKey));
 
                 case KeyType.Sr25519:
-                    return Sr25519v091.SignSimple(Bytes, PrivateKey, message);
+                    return await Task.Run(() => Sr25519v091.SignSimple(Bytes, PrivateKey, message));
 
                 default:
                     throw new NotSupportedException($"Unknown key type found '{KeyType}'.");
             }
+        }
+
+        /// <summary>
+        /// Asynchronously signs the specified payload.
+        /// </summary>
+        /// <param name="payload"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<byte[]> SignPayloadAsync(Payload payload)
+        {
+            return await SignRawAsync(payload.Encode());
         }
 
         /// <summary>
@@ -185,5 +206,6 @@ namespace Substrate.NetApi.Model.Types
                     throw new NotSupportedException($"Unknown key type found '{KeyType}'.");
             }
         }
+
     }
 }

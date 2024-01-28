@@ -8,6 +8,7 @@ using Substrate.NetApi.Model.Types;
 using Substrate.NetApi.Model.Types.Base;
 using Chaos.NaCl;
 using Schnorrkel;
+using System.Threading.Tasks;
 
 namespace Substrate.NetApi
 {
@@ -70,13 +71,13 @@ namespace Substrate.NetApi
         /// <param name="method">The method.</param>
         /// <param name="era">The era.</param>
         /// <param name="nonce">The nonce.</param>
-        /// <param name="tip">The tip.</param>
+        /// <param name="charge">The charge.</param>
         /// <param name="genesis">The genesis.</param>
         /// <param name="startEra">The start era.</param>
         /// <param name="runtime">The runtime.</param>
         /// <returns></returns>
         /// <exception cref="UnCheckedExtrinsic">signed, account, method, era, nonce, tip, genesis, startEra</exception>
-        public static UnCheckedExtrinsic SubmitExtrinsic(bool signed, Account account, Method method, Era era,
+        public static async Task<UnCheckedExtrinsic> SubmitExtrinsicAsync(bool signed, Account account, Method method, Era era,
             uint nonce, ChargeType charge, Hash genesis, Hash startEra, RuntimeVersion runtime)
         {
             var uncheckedExtrinsic =
@@ -87,13 +88,10 @@ namespace Substrate.NetApi
                 return uncheckedExtrinsic;
             }
 
-            var payload = uncheckedExtrinsic.GetPayload(runtime).Encode();
+            Payload payload = uncheckedExtrinsic.GetPayload(runtime);
 
-            /// Payloads longer than 256 bytes are going to be `blake2_256`-hashed.
-            if (payload.Length > 256) payload = HashExtension.Blake2(payload, 256);
-
-            /// sign payload with the
-            byte[] signature = account.Sign(payload);
+            // sign payload with the, Payloads longer than 256 bytes are going to be `blake2_256`-hashed. 
+            byte[] signature = await account.SignPayloadAsync(payload);
 
             uncheckedExtrinsic.AddPayloadSignature(signature);
 
