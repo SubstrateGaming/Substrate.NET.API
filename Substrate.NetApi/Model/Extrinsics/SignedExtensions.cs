@@ -8,19 +8,19 @@ namespace Substrate.NetApi.Model.Extrinsics
     /// </summary>
     public class SignedExtensions
     {
-        private readonly uint _specVersion;
+        public readonly uint SpecVersion;
 
-        private readonly uint _txVersion;
+        public readonly uint TxVersion;
 
-        private readonly Hash _genesis;
+        public readonly Hash Genesis;
 
-        private readonly Hash _startEra;
+        public readonly Hash StartEra;
 
-        private readonly Era _mortality;
+        public readonly Era Mortality;
 
-        private readonly CompactInteger _nonce;
+        public readonly CompactInteger Nonce;
 
-        private readonly ChargeType _charge;
+        public readonly ChargeType Charge;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SignedExtensions"/> class.
@@ -34,13 +34,13 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <param name="chargeTransactionPayment">The charge transaction payment.</param>
         public SignedExtensions(uint specVersion, uint txVersion, Hash genesis, Hash startEra, Era mortality, CompactInteger nonce, ChargeType charge)
         {
-            _specVersion = specVersion;
-            _txVersion = txVersion;
-            _genesis = genesis;
-            _startEra = startEra;
-            _mortality = mortality;
-            _nonce = nonce;
-            _charge = charge;
+            SpecVersion = specVersion;
+            TxVersion = txVersion;
+            Genesis = genesis;
+            StartEra = startEra;
+            Mortality = mortality;
+            Nonce = nonce;
+            Charge = charge;
         }
 
         /// <summary>
@@ -52,13 +52,13 @@ namespace Substrate.NetApi.Model.Extrinsics
             var bytes = new List<byte>();
 
             // CheckMortality
-            bytes.AddRange(_mortality.Encode());
+            bytes.AddRange(Mortality.Encode());
 
             // CheckNonce
-            bytes.AddRange(_nonce.Encode());
+            bytes.AddRange(Nonce.Encode());
 
             // ChargeType
-            bytes.AddRange(_charge.Encode());
+            bytes.AddRange(Charge.Encode());
 
             return bytes.ToArray();
         }
@@ -72,16 +72,16 @@ namespace Substrate.NetApi.Model.Extrinsics
             var bytes = new List<byte>();
 
             // CheckSpecVersion
-            bytes.AddRange(Utils.Value2Bytes(_specVersion));
+            bytes.AddRange(Utils.Value2Bytes(SpecVersion));
 
             // CheckTxVersion
-            bytes.AddRange(Utils.Value2Bytes(_txVersion));
+            bytes.AddRange(Utils.Value2Bytes(TxVersion));
 
             // CheckGenesis
-            bytes.AddRange(_genesis.Bytes);
+            bytes.AddRange(Genesis.Bytes);
 
             // CheckMortality, Additional Blockhash check. Immortal = genesis_hash, Mortal = logic
-            bytes.AddRange(_startEra.Bytes);
+            bytes.AddRange(StartEra.Bytes);
 
             return bytes.ToArray();
         }

@@ -8,9 +8,9 @@ namespace Substrate.NetApi.Model.Extrinsics
     /// </summary>
     public class Payload : IEncodable
     {
-        private readonly Method _call;
+        public readonly Method Call;
         
-        private readonly SignedExtensions _signedExtension;
+        public readonly SignedExtensions SignedExtension;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Payload"/> class.
@@ -19,8 +19,8 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <param name="signedExtensions">The signed extensions.</param>
         public Payload(Method call, SignedExtensions signedExtensions)
         {
-            _call = call;
-            _signedExtension = signedExtensions;
+            Call = call;
+            SignedExtension = signedExtensions;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <returns></returns>
         public byte[] Encode()
         {
-            byte[] bytes = _call.Encode().Concat(_signedExtension.Encode()).ToArray();
+            byte[] bytes = Call.Encode().Concat(SignedExtension.Encode()).ToArray();
 
             // Payloads longer than 256 bytes are going to be `blake2_256`-hashed.
             if (bytes.Length > 256)
