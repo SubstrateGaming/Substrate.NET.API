@@ -18,15 +18,15 @@ namespace Substrate.NetApi
     public class RequestGenerator
     {
         /// <summary>
-        /// Create a request for a storage call, for generated code.
+        /// Get the storage key.
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="hashers"></param>
-        /// <param name="module"></param>
-        /// <param name="item"></param>
-        /// <param name="key1Param"></param>
-        /// <param name="key2Param"></param>
+        /// <param name="module">The module name.</param>
+        /// <param name="item">The item name.</param>
+        /// <param name="type">The storage type.</param>
+        /// <param name="hashers">The hashers.</param>
+        /// <param name="keys">The keys.</param>
         /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
         public static string GetStorage(string module, string item, Storage.Type type, Storage.Hasher[] hashers = null, IType[] keys = null)
         {
             var keybytes = GetStorageKeyBytesHash(module, item);

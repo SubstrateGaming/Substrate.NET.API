@@ -141,31 +141,43 @@ namespace Substrate.NetApi
             return true;
         }
 
-        /// <summary> Connects an asynchronous. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <returns> An asynchronous result. </returns>
+        /// <summary>
+        /// Asynchronously connects to the node.
+        /// </summary>
+        /// <returns></returns>
         public async Task ConnectAsync()
         {
             await ConnectAsync(true, CancellationToken.None);
         }
 
-        /// <summary> Connects an asynchronous. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <returns> An asynchronous result. </returns>
+        /// <summary>
+        /// Asynchronously connects to the node.
+        /// </summary>
+        /// <param name="token">Cancellation token.</param>
+        /// <returns></returns>
         public async Task ConnectAsync(CancellationToken token)
         {
             await ConnectAsync(true, token);
         }
 
+        /// <summary>
+        /// Asynchronously connects to the node.
+        /// </summary>
+        /// <param name="useMetaData">Parse metadata on connect.</param>
+        /// <param name="token">Cancellation token.</param>
+        /// <returns></returns>
         public async Task ConnectAsync(bool useMetaData, CancellationToken token)
         {
             await ConnectAsync(useMetaData, true, token);
         }
 
-        /// <summary> Connects an asynchronous. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <param name="token"> A token that allows processing to be cancelled. </param>
-        /// <returns> An asynchronous result. </returns>
+        /// <summary>
+        /// Asynchronously connects to the node.
+        /// </summary>
+        /// <param name="useMetaData">Parse metadata on connect.</param>
+        /// <param name="standardSubstrate">Get blocknumber and runtime information from standard susbtrate node.</param>
+        /// <param name="token">Cancellation token.</param>
+        /// <returns></returns>
         public async Task ConnectAsync(bool useMetaData, bool standardSubstrate, CancellationToken token)
         {
             if (_socket != null && _socket.State == WebSocketState.Open)
@@ -186,7 +198,6 @@ namespace Substrate.NetApi
                     _socket.Options.RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true;    
 #endif
                 }
-
             }
 
             _connectTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));

@@ -62,14 +62,15 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <summary>
         /// Initializes a new instance of the <see cref="Extrinsic"/> class.
         /// </summary>
-        /// <param name="memory">The memory.</param>
+        /// <param name="memory"></param>
+        /// <param name="chargeType"></param>
         internal Extrinsic(Memory<byte> memory, ChargeType chargeType)
         {
             int p = 0;
             int m;
 
             // length
-            var length = CompactInteger.Decode(memory.ToArray(), ref p);
+            _ = CompactInteger.Decode(memory.ToArray(), ref p);
 
             // signature version
             m = 1;
