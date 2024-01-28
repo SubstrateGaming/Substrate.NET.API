@@ -140,14 +140,13 @@ namespace Substrate.NetApi.Model.Types
             return account;
         }
 
-
         /// <summary>
         /// Asynchronously signs the specified message.
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
-        public async Task<byte[]> SignRawAsync(byte[] message)
+        public virtual async Task<byte[]> SignRawAsync(byte[] message)
         {
             switch (KeyType)
             {
@@ -168,7 +167,7 @@ namespace Substrate.NetApi.Model.Types
         /// <param name="payload"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<byte[]> SignPayloadAsync(Payload payload)
+        public virtual async Task<byte[]> SignPayloadAsync(Payload payload)
         {
             return await SignRawAsync(payload.Encode());
         }
