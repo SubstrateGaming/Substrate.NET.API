@@ -8,9 +8,15 @@ namespace Substrate.NetApi.Model.Extrinsics
     /// </summary>
     public class Payload : IEncodable
     {
-        public readonly Method Call;
-        
-        public readonly SignedExtensions SignedExtension;
+        /// <summary>
+        /// The call
+        /// </summary>
+        public Method Call { get; }
+
+        /// <summary>
+        /// Signed extension
+        /// </summary>
+        public SignedExtensions SignedExtension { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Payload"/> class.

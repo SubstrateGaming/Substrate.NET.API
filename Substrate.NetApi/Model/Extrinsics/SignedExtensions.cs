@@ -8,19 +8,40 @@ namespace Substrate.NetApi.Model.Extrinsics
     /// </summary>
     public class SignedExtensions
     {
-        public readonly uint SpecVersion;
+        /// <summary>
+        /// Specification Version
+        /// </summary>
+        public uint SpecVersion { get; }
 
-        public readonly uint TxVersion;
+        /// <summary>
+        /// Transaction Version
+        /// </summary>
+        public uint TxVersion { get; }
 
-        public readonly Hash Genesis;
+        /// <summary>
+        /// Genesis Hash
+        /// </summary>
+        public Hash Genesis { get; }
 
-        public readonly Hash StartEra;
+        /// <summary>
+        /// Start Era
+        /// </summary>
+        public Hash StartEra { get; }
 
-        public readonly Era Mortality;
+        /// <summary>
+        /// Mortality
+        /// </summary>
+        public Era Mortality { get; }
 
-        public readonly CompactInteger Nonce;
+        /// <summary>
+        /// Nonce
+        /// </summary>
+        public CompactInteger Nonce { get; }
 
-        public readonly ChargeType Charge;
+        /// <summary>
+        /// Charge
+        /// </summary>
+        public ChargeType Charge { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SignedExtensions"/> class.
@@ -31,7 +52,7 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <param name="startEra">The start era.</param>
         /// <param name="mortality">The mortality.</param>
         /// <param name="nonce">The nonce.</param>
-        /// <param name="chargeTransactionPayment">The charge transaction payment.</param>
+        /// <param name="charge">The charge transaction payment.</param>
         public SignedExtensions(uint specVersion, uint txVersion, Hash genesis, Hash startEra, Era mortality, CompactInteger nonce, ChargeType charge)
         {
             SpecVersion = specVersion;

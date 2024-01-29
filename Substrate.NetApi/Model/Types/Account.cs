@@ -38,12 +38,19 @@ namespace Substrate.NetApi.Model.Types
         /// <summary>
         /// Sign the specified message.
         /// </summary>
-        /// <param name="message">The message bytes.</param>
+        /// <param name="message"></param>
         /// <returns></returns>
-        Task<byte[]> SignRawAsync(byte[] message);
+        byte[] Sign(byte[] message);
 
         /// <summary>
-        /// Sign the specified payload.
+        /// Asynchronouslys sign the specified message.
+        /// </summary>
+        /// <param name="message">The message bytes.</param>
+        /// <returns></returns>
+        Task<byte[]> SignAsync(byte[] message);
+
+        /// <summary>
+        /// Asynchronouslys sign the specified payload.
         /// </summary>
         /// <param name="payload">The payload.</param>
         /// <returns></returns>
@@ -146,15 +153,26 @@ namespace Substrate.NetApi.Model.Types
         /// <param name="message"></param>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
-        public virtual async Task<byte[]> SignRawAsync(byte[] message)
+        public virtual async Task<byte[]> SignAsync(byte[] message)
+        {
+            return await Task.Run(() => Sign(message));
+        }
+
+        /// <summary>
+        /// Signs the specified message.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
+        public byte[] Sign(byte[] message)
         {
             switch (KeyType)
             {
                 case KeyType.Ed25519:
-                    return await Task.Run(() => Ed25519.Sign(message, PrivateKey));
+                    return Ed25519.Sign(message, PrivateKey);
 
                 case KeyType.Sr25519:
-                    return await Task.Run(() => Sr25519v091.SignSimple(Bytes, PrivateKey, message));
+                    return Sr25519v091.SignSimple(Bytes, PrivateKey, message);
 
                 default:
                     throw new NotSupportedException($"Unknown key type found '{KeyType}'.");
@@ -169,7 +187,7 @@ namespace Substrate.NetApi.Model.Types
         /// <exception cref="NotImplementedException"></exception>
         public virtual async Task<byte[]> SignPayloadAsync(Payload payload)
         {
-            return await SignRawAsync(payload.Encode());
+            return await SignAsync(payload.Encode());
         }
 
         /// <summary>

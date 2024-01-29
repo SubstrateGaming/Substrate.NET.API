@@ -87,9 +87,15 @@ namespace Substrate.NetApi
         /// <value> Information describing the meta. </value>
         public MetaData MetaData { get; private set; }
 
-        /// <summary> Gets or sets information describing the runtime version. </summary>
-        /// <value> Information describing the runtime version. </value>
+        /// <summary> 
+        /// Network runtime version
+        /// </summary>
         public RuntimeVersion RuntimeVersion { get; private set; }
+
+        /// <summary>
+        /// Network propoerties
+        /// </summary>
+        public Properties Properties { get; private set; }
 
         /// <summary> Gets or sets the genesis hash. </summary>
         /// <value> The genesis hash. </value>
@@ -246,6 +252,9 @@ namespace Substrate.NetApi
 
                 RuntimeVersion = await State.GetRuntimeVersionAsync(token);
                 Logger.Debug("Runtime version parsed.");
+
+                Properties = await System.PropertiesAsync(token);
+                Logger.Debug("Properties parsed.");
             }
 
             //_jsonRpc.TraceSource.Switch.Level = SourceLevels.All;

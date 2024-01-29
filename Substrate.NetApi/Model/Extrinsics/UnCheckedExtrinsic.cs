@@ -6,11 +6,20 @@ using Substrate.NetApi.Model.Types.Base;
 
 namespace Substrate.NetApi.Model.Extrinsics
 {
+    /// <summary>
+    /// Unchecked Extrinsic
+    /// </summary>
     public class UnCheckedExtrinsic : Extrinsic
     {
-        private readonly Hash _genesis;
+        /// <summary>
+        /// Genesis Hash
+        /// </summary>
+        private Hash Genesis { get; }
 
-        private readonly Hash _startEra;
+        /// <summary>
+        /// Start Era
+        /// </summary>
+        private Hash StartEra { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UnCheckedExtrinsic"/> class.
@@ -26,8 +35,8 @@ namespace Substrate.NetApi.Model.Extrinsics
         public UnCheckedExtrinsic(bool signed, Account account, Method method, Era era, CompactInteger nonce, ChargeType charge, Hash genesis, Hash startEra)
              : base(signed, account, nonce, method, era, charge)
         {
-            _genesis = genesis;
-            _startEra = startEra;
+            Genesis = genesis;
+            StartEra = startEra;
         }
 
         /// <summary>
@@ -37,7 +46,7 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <returns></returns>
         public Payload GetPayload(RuntimeVersion runtime)
         {
-            return new Payload(Method, new SignedExtensions(runtime.SpecVersion, runtime.TransactionVersion, _genesis, _startEra, Era, Nonce, Charge));
+            return new Payload(Method, new SignedExtensions(runtime.SpecVersion, runtime.TransactionVersion, Genesis, StartEra, Era, Nonce, Charge));
         }
 
         /// <summary>
@@ -50,11 +59,11 @@ namespace Substrate.NetApi.Model.Extrinsics
         }
 
         /// <summary>
-        /// Encodes this instance.
+        /// Encode this instance, returns the encoded bytes.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="Exception">Missing payload signature for signed transaction.</exception>
-        public byte[] Encode()
+        /// <exception cref="NotSupportedException"></exception>
+        public new byte[] Encode()
         {
             if (Signed && Signature == null)
             {

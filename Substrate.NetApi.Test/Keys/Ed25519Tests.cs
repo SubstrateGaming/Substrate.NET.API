@@ -147,12 +147,14 @@ namespace Substrate.NetApi.Test.Keys
             // According to https://github.com/polkadot-js/apps/blob/master/packages/page-signing/src/Sign.tsx#L93
             var messageBytes = WrapMessage.Wrap(message);
 
-            var signature = await account.SignRawAsync(messageBytes);
-            var singatureHexString = Utils.Bytes2HexString(signature);
+            var signature1 = await Task.Run(() => account.Sign(messageBytes));
+            var signature2 = await account.SignAsync(messageBytes);
 
-            // SIGn C#: 0x679FA7BC8B2A7C40B5ECD50CA041E961DB8971D2B454DB7DE64E543B3C1892A6D3F223DDA01C66B9878C149CFCC8B86ECF2B20F11F7610596F51479405776907
+            Assert.IsTrue(signature1.SequenceEqual(signature2));
 
-            // SIGn PolkaJS:0xd2baabb61bcd0026e797136cb0938d55e3c3ea8825c163eb3d1738b3c79af8e8f4953ba4767dc5477202756d3fba97bc50fc3ac8355ff5acfba88a36311f2f0f
+            Assert.True(account.Verify(signature1, account.Bytes, messageBytes));
+            Assert.True(account.Verify(signature2, account.Bytes, messageBytes));
+
             Assert.True(account.Verify(Utils.HexToByteArray(polkadotJsSignature), account.Bytes, messageBytes));
         }
     }

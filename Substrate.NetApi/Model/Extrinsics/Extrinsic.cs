@@ -55,7 +55,8 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// </summary>
         /// <param name="str">The string.</param>
         /// <param name="chargeType"></param>
-        public Extrinsic(string str, ChargeType chargeType) : this(Utils.HexToByteArray(str).AsMemory(), chargeType)
+        public Extrinsic(string str, ChargeType chargeType) 
+            : this(Utils.HexToByteArray(str).AsMemory(), chargeType)
         {
         }
 
@@ -84,7 +85,7 @@ namespace Substrate.NetApi.Model.Extrinsics
             {
                 // start bytes
                 m = 1;
-                var _startBytes = memory.Slice(p, m).ToArray()[0];
+                _ = memory.Slice(p, m).ToArray()[0];
                 p += m;
 
                 // sender public key
