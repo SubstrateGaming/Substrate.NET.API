@@ -40,6 +40,7 @@ namespace Substrate.NetApi.Model.Types
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
+        [Obsolete("Sign is deprecated, please use SignAsync instead.")]
         byte[] Sign(byte[] message);
 
         /// <summary>
@@ -163,7 +164,8 @@ namespace Substrate.NetApi.Model.Types
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        /// <exception cref="NotSupportedException"></exception>
+        /// <exception cref="NotSupportedException"></exception>)
+        [Obsolete("Sign is deprecated, please use SignAsync instead.")]
         public byte[] Sign(byte[] message)
         {
             switch (KeyType)
