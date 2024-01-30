@@ -36,14 +36,6 @@ namespace Substrate.NetApi.Model.Types
     public interface IAccount
     {
         /// <summary>
-        /// Sign the specified message.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        [Obsolete("Sign is deprecated, please use SignAsync instead.")]
-        byte[] Sign(byte[] message);
-
-        /// <summary>
         /// Asynchronouslys sign the specified message.
         /// </summary>
         /// <param name="message">The message bytes.</param>
@@ -58,13 +50,13 @@ namespace Substrate.NetApi.Model.Types
         Task<byte[]> SignPayloadAsync(Payload payload);
 
         /// <summary>
-        /// Verifies a signature from this account.
+        /// Asynchronouslys verifies a signature from this account.
         /// </summary>
-        /// <param name="signature"></param>
-        /// <param name="publicKey"></param>
-        /// <param name="message"></param>
+        /// <param name="signature">The signature to verify.</param>
+        /// <param name="publicKey">The public key to verify the signature with.</param>
+        /// <param name="message">The message to verify the signature with.</param>
         /// <returns></returns>
-        bool Verify(byte[] signature, byte[] publicKey, byte[] message);
+        Task<bool> VerifyAsync(byte[] signature, byte[] publicKey, byte[] message);
     }
 
     /// <summary>
@@ -148,12 +140,7 @@ namespace Substrate.NetApi.Model.Types
             return account;
         }
 
-        /// <summary>
-        /// Asynchronously signs the specified message.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        /// <exception cref="NotSupportedException"></exception>
+        /// <inheritdoc/>
         public virtual async Task<byte[]> SignAsync(byte[] message)
         {
             return await Task.Run(() => Sign(message));
@@ -165,7 +152,6 @@ namespace Substrate.NetApi.Model.Types
         /// <param name="message"></param>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>)
-        [Obsolete("Sign is deprecated, please use SignAsync instead.")]
         public byte[] Sign(byte[] message)
         {
             switch (KeyType)
@@ -181,12 +167,7 @@ namespace Substrate.NetApi.Model.Types
             }
         }
 
-        /// <summary>
-        /// Asynchronously signs the specified payload.
-        /// </summary>
-        /// <param name="payload"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <inheritdoc/>
         public virtual async Task<byte[]> SignPayloadAsync(Payload payload)
         {
             return await SignAsync(payload.Encode());
@@ -226,5 +207,10 @@ namespace Substrate.NetApi.Model.Types
             }
         }
 
+        /// <inheritdoc/>
+        public async Task<bool> VerifyAsync(byte[] signature, byte[] publicKey, byte[] message)
+        {
+            return await Task.Run(() => Verify(signature, publicKey, message));
+        }
     }
 }
