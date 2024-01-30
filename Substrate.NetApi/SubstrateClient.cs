@@ -87,9 +87,15 @@ namespace Substrate.NetApi
         /// <value> Information describing the meta. </value>
         public MetaData MetaData { get; private set; }
 
-        /// <summary> Gets or sets information describing the runtime version. </summary>
-        /// <value> Information describing the runtime version. </value>
+        /// <summary> 
+        /// Network runtime version
+        /// </summary>
         public RuntimeVersion RuntimeVersion { get; private set; }
+
+        /// <summary>
+        /// Network propoerties
+        /// </summary>
+        public Properties Properties { get; private set; }
 
         /// <summary> Gets or sets the genesis hash. </summary>
         /// <value> The genesis hash. </value>
@@ -141,31 +147,43 @@ namespace Substrate.NetApi
             return true;
         }
 
-        /// <summary> Connects an asynchronous. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <returns> An asynchronous result. </returns>
+        /// <summary>
+        /// Asynchronously connects to the node.
+        /// </summary>
+        /// <returns></returns>
         public async Task ConnectAsync()
         {
             await ConnectAsync(true, CancellationToken.None);
         }
 
-        /// <summary> Connects an asynchronous. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <returns> An asynchronous result. </returns>
+        /// <summary>
+        /// Asynchronously connects to the node.
+        /// </summary>
+        /// <param name="token">Cancellation token.</param>
+        /// <returns></returns>
         public async Task ConnectAsync(CancellationToken token)
         {
             await ConnectAsync(true, token);
         }
 
+        /// <summary>
+        /// Asynchronously connects to the node.
+        /// </summary>
+        /// <param name="useMetaData">Parse metadata on connect.</param>
+        /// <param name="token">Cancellation token.</param>
+        /// <returns></returns>
         public async Task ConnectAsync(bool useMetaData, CancellationToken token)
         {
             await ConnectAsync(useMetaData, true, token);
         }
 
-        /// <summary> Connects an asynchronous. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <param name="token"> A token that allows processing to be cancelled. </param>
-        /// <returns> An asynchronous result. </returns>
+        /// <summary>
+        /// Asynchronously connects to the node.
+        /// </summary>
+        /// <param name="useMetaData">Parse metadata on connect.</param>
+        /// <param name="standardSubstrate">Get blocknumber and runtime information from standard susbtrate node.</param>
+        /// <param name="token">Cancellation token.</param>
+        /// <returns></returns>
         public async Task ConnectAsync(bool useMetaData, bool standardSubstrate, CancellationToken token)
         {
             if (_socket != null && _socket.State == WebSocketState.Open)
@@ -186,7 +204,6 @@ namespace Substrate.NetApi
                     _socket.Options.RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true;    
 #endif
                 }
-
             }
 
             _connectTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
@@ -235,6 +252,9 @@ namespace Substrate.NetApi
 
                 RuntimeVersion = await State.GetRuntimeVersionAsync(token);
                 Logger.Debug("Runtime version parsed.");
+
+                Properties = await System.PropertiesAsync(token);
+                Logger.Debug("Properties parsed.");
             }
 
             //_jsonRpc.TraceSource.Switch.Level = SourceLevels.All;
@@ -359,7 +379,9 @@ namespace Substrate.NetApi
                 era = Era.Create(lifeTime, finalizedHeader.Number.Value);
             }
 
-            return RequestGenerator.SubmitExtrinsic(signed, account, method, era, nonce, charge, GenesisHash, startEra, RuntimeVersion);
+            var uncheckedExtrinsic = await RequestGenerator.SubmitExtrinsicAsync(signed, account, method, era, nonce, charge, GenesisHash, startEra, RuntimeVersion); ;
+
+            return uncheckedExtrinsic;
         }
 
         /// <summary>

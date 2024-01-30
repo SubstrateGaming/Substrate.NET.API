@@ -1,24 +1,31 @@
 ﻿using Chaos.NaCl;
 using Newtonsoft.Json;
 using Schnorrkel;
+using Substrate.NetApi.Model.Extrinsics;
 using Substrate.NetApi.Model.Types.Base;
 using System;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 namespace Substrate.NetApi.Model.Types
 {
     /// <summary>
-    /// Represents a key type.
+    /// Enum KeyType represents the type of cryptographic keys used in digital signatures.
     /// </summary>
     public enum KeyType
     {
         /// <summary>
-        /// Ed25519
+        /// Ed25519: Elliptic Curve Digital Signature Algorithm using SHA-512 and Curve25519.
+        /// Preferred for its balance of security and performance, suitable for scenarios
+        /// requiring fast signature verification. Commonly used in secure communication,
+        /// authentication, and blockchain applications.
         /// </summary>
         Ed25519,
 
         /// <summary>
-        /// Sr25519
+        /// Sr25519: Schnorr signature scheme using SHA-512 and Curve25519, implemented in Schnorrkel.
+        /// Offers advantages in complex cryptographic constructions and potentially better performance.
+        /// Frequently used in decentralized systems and advanced cryptographic protocols.
         /// </summary>
         Sr25519
     }
@@ -29,20 +36,27 @@ namespace Substrate.NetApi.Model.Types
     public interface IAccount
     {
         /// <summary>
-        /// Sign the specified message.
+        /// Asynchronouslys sign the specified message.
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">The message bytes.</param>
         /// <returns></returns>
-        byte[] Sign(byte[] message);
+        Task<byte[]> SignAsync(byte[] message);
 
         /// <summary>
-        /// Verifies a signature from this account.
+        /// Asynchronouslys sign the specified payload.
         /// </summary>
-        /// <param name="signature"></param>
-        /// <param name="publicKey"></param>
-        /// <param name="message"></param>
+        /// <param name="payload">The payload.</param>
         /// <returns></returns>
-        bool Verify(byte[] signature, byte[] publicKey, byte[] message);
+        Task<byte[]> SignPayloadAsync(Payload payload);
+
+        /// <summary>
+        /// Asynchronouslys verifies a signature from this account.
+        /// </summary>
+        /// <param name="signature">The signature to verify.</param>
+        /// <param name="publicKey">The public key to verify the signature with.</param>
+        /// <param name="message">The message to verify the signature with.</param>
+        /// <returns></returns>
+        Task<bool> VerifyAsync(byte[] signature, byte[] publicKey, byte[] message);
     }
 
     /// <summary>
@@ -106,6 +120,12 @@ namespace Substrate.NetApi.Model.Types
             Create(keyType, null, publicKey);
         }
 
+        /// <inheritdoc/>
+        public override void CreateFromJson(string str)
+        {
+            throw new NotSupportedException("CreateFromJson is not supported for Account.");
+        }
+
         /// <summary>
         /// Builds the specified key type.
         /// </summary>
@@ -120,12 +140,18 @@ namespace Substrate.NetApi.Model.Types
             return account;
         }
 
+        /// <inheritdoc/>
+        public virtual async Task<byte[]> SignAsync(byte[] message)
+        {
+            return await Task.Run(() => Sign(message));
+        }
+
         /// <summary>
         /// Signs the specified message.
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        /// <exception cref="NotSupportedException"></exception>
+        /// <exception cref="NotSupportedException"></exception>)
         public byte[] Sign(byte[] message)
         {
             switch (KeyType)
@@ -139,6 +165,12 @@ namespace Substrate.NetApi.Model.Types
                 default:
                     throw new NotSupportedException($"Unknown key type found '{KeyType}'.");
             }
+        }
+
+        /// <inheritdoc/>
+        public virtual async Task<byte[]> SignPayloadAsync(Payload payload)
+        {
+            return await SignAsync(payload.Encode());
         }
 
         /// <summary>
@@ -173,6 +205,12 @@ namespace Substrate.NetApi.Model.Types
                 default:
                     throw new NotSupportedException($"Unknown key type found '{KeyType}'.");
             }
+        }
+
+        /// <inheritdoc/>
+        public async Task<bool> VerifyAsync(byte[] signature, byte[] publicKey, byte[] message)
+        {
+            return await Task.Run(() => Verify(signature, publicKey, message));
         }
     }
 }
