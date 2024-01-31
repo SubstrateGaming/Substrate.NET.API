@@ -8,8 +8,16 @@ using Substrate.NetApi.Model.Types.Metadata.V14;
 
 namespace Substrate.NetApi.Model.Meta
 {
+    /// <summary>
+    /// Meta Data
+    /// </summary>
     public class MetaData
     {
+        /// <summary>
+        /// Meta Data Constructor
+        /// </summary>
+        /// <param name="rtmd"></param>
+        /// <param name="origin"></param>
         public MetaData(RuntimeMetadata rtmd, string origin = "unknown")
         {
             Origin = origin;
@@ -24,16 +32,40 @@ namespace Substrate.NetApi.Model.Meta
             };
         }
 
+        /// <summary>
+        /// Origin
+        /// </summary>
         public string Origin { get; set; }
+        
+        /// <summary>
+        /// Magic
+        /// </summary>
         public string Magic { get; set; }
+        
+        /// <summary>
+        /// Version
+        /// </summary>
         public byte Version { get; set; }
+
+        /// <summary>
+        /// Node Metadata
+        /// </summary>
         public NodeMetadataV14 NodeMetadata { get; set; }
 
+        /// <summary>
+        /// Serialize
+        /// </summary>
+        /// <returns></returns>
         public string Serialize()
         {
             return JsonConvert.SerializeObject(this, new StringEnumConverter());
         }
 
+        /// <summary>
+        /// Create Node Type Dictionary
+        /// </summary>
+        /// <param name="types"></param>
+        /// <returns></returns>
         public static Dictionary<uint, NodeType> CreateNodeTypeDict(PortableType[] types)
         {
             var result = new Dictionary<uint, NodeType>();
@@ -217,6 +249,12 @@ namespace Substrate.NetApi.Model.Meta
             return result;
         }
 
+        /// <summary>
+        /// Create Module Dictionary
+        /// </summary>
+        /// <param name="modules"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public static Dictionary<uint, PalletModule> CreateModuleDict(PalletMetadata[] modules)
         {
             var result = new Dictionary<uint, PalletModule>();
@@ -318,6 +356,11 @@ namespace Substrate.NetApi.Model.Meta
             return result;
         }
 
+        /// <summary>
+        /// Create Extrinsic
+        /// </summary>
+        /// <param name="extrinsic"></param>
+        /// <returns></returns>
         private static ExtrinsicMetadata CreateExtrinsic(ExtrinsicMetadataStruct extrinsic)
         {
             return new ExtrinsicMetadata()

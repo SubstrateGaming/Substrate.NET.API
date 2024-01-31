@@ -36,6 +36,8 @@ namespace Substrate.NetApi
 
         private readonly ExtrinsicStatusJsonConverter _extrinsicStatusJsonConverter;
 
+        private readonly TransactionEventJsonConverter _transactionEventJsonConverter;
+
         /// <summary> The request token sources. </summary>
         private readonly ConcurrentDictionary<CancellationTokenSource, string> _requestTokenSourceDict;
 
@@ -54,11 +56,14 @@ namespace Substrate.NetApi
         /// <summary>
         /// Bypass Remote Certificate Validation. Useful when testing with self-signed SSL certificates. 
         /// </summary>
-        private bool _bypassRemoteCertificateValidation;
+        private readonly bool _bypassRemoteCertificateValidation;
 
-        /// <summary> Constructor. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <param name="uri"> URI of the resource. </param>
+        /// <summary>
+        /// Substrate client
+        /// </summary>
+        /// <param name="uri">Uri of the node</param>
+        /// <param name="chargeType">Charge type</param>
+        /// <param name="bypassRemoteCertificateValidation">By default, the client will validate the SSL certificate of the node. Set this to true to bypass this validation.</param>
         public SubstrateClient(Uri uri, ChargeType chargeType, bool bypassRemoteCertificateValidation = false)
         {
             _uri = uri;
@@ -66,12 +71,14 @@ namespace Substrate.NetApi
 
             _extrinsicJsonConverter = new ExtrinsicJsonConverter(chargeType);
             _extrinsicStatusJsonConverter = new ExtrinsicStatusJsonConverter();
+            _transactionEventJsonConverter = new TransactionEventJsonConverter();
 
             System = new Modules.System(this);
             Chain = new Chain(this);
             Payment = new Payment(this);
             State = new State(this);
             Author = new Author(this);
+            Unstable = new UnstableCalls(this);
 
             _requestTokenSourceDict = new ConcurrentDictionary<CancellationTokenSource, string>();
         }
@@ -80,9 +87,15 @@ namespace Substrate.NetApi
         /// <value> Information describing the meta. </value>
         public MetaData MetaData { get; private set; }
 
-        /// <summary> Gets or sets information describing the runtime version. </summary>
-        /// <value> Information describing the runtime version. </value>
+        /// <summary> 
+        /// Network runtime version
+        /// </summary>
         public RuntimeVersion RuntimeVersion { get; private set; }
+
+        /// <summary>
+        /// Network propoerties
+        /// </summary>
+        public Properties Properties { get; private set; }
 
         /// <summary> Gets or sets the genesis hash. </summary>
         /// <value> The genesis hash. </value>
@@ -108,6 +121,11 @@ namespace Substrate.NetApi
         /// <value> The author. </value>
         public Author Author { get; }
 
+        /// <summary>
+        /// New Api 2
+        /// </summary>
+        public UnstableCalls Unstable { get; }
+
         public SubscriptionListener Listener { get; } = new SubscriptionListener();
 
         /// <summary> Gets a value indicating whether this object is connected. </summary>
@@ -129,31 +147,43 @@ namespace Substrate.NetApi
             return true;
         }
 
-        /// <summary> Connects an asynchronous. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <returns> An asynchronous result. </returns>
+        /// <summary>
+        /// Asynchronously connects to the node.
+        /// </summary>
+        /// <returns></returns>
         public async Task ConnectAsync()
         {
             await ConnectAsync(true, CancellationToken.None);
         }
 
-        /// <summary> Connects an asynchronous. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <returns> An asynchronous result. </returns>
+        /// <summary>
+        /// Asynchronously connects to the node.
+        /// </summary>
+        /// <param name="token">Cancellation token.</param>
+        /// <returns></returns>
         public async Task ConnectAsync(CancellationToken token)
         {
             await ConnectAsync(true, token);
         }
 
+        /// <summary>
+        /// Asynchronously connects to the node.
+        /// </summary>
+        /// <param name="useMetaData">Parse metadata on connect.</param>
+        /// <param name="token">Cancellation token.</param>
+        /// <returns></returns>
         public async Task ConnectAsync(bool useMetaData, CancellationToken token)
         {
             await ConnectAsync(useMetaData, true, token);
         }
 
-        /// <summary> Connects an asynchronous. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <param name="token"> A token that allows processing to be cancelled. </param>
-        /// <returns> An asynchronous result. </returns>
+        /// <summary>
+        /// Asynchronously connects to the node.
+        /// </summary>
+        /// <param name="useMetaData">Parse metadata on connect.</param>
+        /// <param name="standardSubstrate">Get blocknumber and runtime information from standard susbtrate node.</param>
+        /// <param name="token">Cancellation token.</param>
+        /// <returns></returns>
         public async Task ConnectAsync(bool useMetaData, bool standardSubstrate, CancellationToken token)
         {
             if (_socket != null && _socket.State == WebSocketState.Open)
@@ -174,7 +204,6 @@ namespace Substrate.NetApi
                     _socket.Options.RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true;    
 #endif
                 }
-
             }
 
             _connectTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
@@ -195,6 +224,7 @@ namespace Substrate.NetApi
             formatter.JsonSerializer.Converters.Add(new GenericTypeConverter<Hash>());
             formatter.JsonSerializer.Converters.Add(_extrinsicJsonConverter);
             formatter.JsonSerializer.Converters.Add(_extrinsicStatusJsonConverter);
+            formatter.JsonSerializer.Converters.Add(_transactionEventJsonConverter);
 
             _jsonRpc = new JsonRpc(new WebSocketMessageHandler(_socket, formatter));
             _jsonRpc.TraceSource.Listeners.Add(new SerilogTraceListener.SerilogTraceListener());
@@ -222,6 +252,9 @@ namespace Substrate.NetApi
 
                 RuntimeVersion = await State.GetRuntimeVersionAsync(token);
                 Logger.Debug("Runtime version parsed.");
+
+                Properties = await System.PropertiesAsync(token);
+                Logger.Debug("Properties parsed.");
             }
 
             //_jsonRpc.TraceSource.Switch.Level = SourceLevels.All;
@@ -244,6 +277,7 @@ namespace Substrate.NetApi
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="parameters"></param>
+        /// <param name="blockhash"></param>
         /// <param name="token"></param>
         /// <returns></returns>
         public virtual async Task<T> GetStorageAsync<T>(string parameters, string blockhash, CancellationToken token) where T : IType, new()
@@ -262,14 +296,13 @@ namespace Substrate.NetApi
         }
 
         /// <summary>
-        /// Subscribe Storage Key Async
+        /// Subscribe to storage changes
         /// </summary>
-        /// <param name="moduleName"></param>
-        /// <param name="itemName"></param>
-        /// <param name="parameter"></param>
+        /// <param name="storageParams"></param>
         /// <param name="callback"></param>
         /// <param name="token"></param>
         /// <returns></returns>
+        /// <exception cref="ClientNotConnectedException"></exception>
         public virtual async Task<string> SubscribeStorageKeyAsync(string storageParams, Action<string, StorageChangeSet> callback, CancellationToken token)
         {
             if (_socket?.State != WebSocketState.Open)
@@ -283,11 +316,12 @@ namespace Substrate.NetApi
             return subscriptionId;
         }
 
-        /// <summary> Gets method asynchronous. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="method"> The method. </param>
-        /// <returns> The method async&lt; t&gt; </returns>
+        /// <summary>
+        /// Get method
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="method"></param>
+        /// <returns></returns>
         public async Task<T> GetMethodAsync<T>(string method)
         {
             return await GetMethodAsync<T>(method, CancellationToken.None);
@@ -317,11 +351,11 @@ namespace Substrate.NetApi
         }
 
         /// <summary>
-        /// Get an unchecked extrinsic.
+        /// Get extrinsic parameters
         /// </summary>
-        /// <param name="callArguments"></param>
+        /// <param name="method"></param>
         /// <param name="account"></param>
-        /// <param name="tip"></param>
+        /// <param name="charge"></param>
         /// <param name="lifeTime"></param>
         /// <param name="signed"></param>
         /// <param name="token"></param>
@@ -345,7 +379,9 @@ namespace Substrate.NetApi
                 era = Era.Create(lifeTime, finalizedHeader.Number.Value);
             }
 
-            return RequestGenerator.SubmitExtrinsic(signed, account, method, era, nonce, charge, GenesisHash, startEra, RuntimeVersion);
+            var uncheckedExtrinsic = await RequestGenerator.SubmitExtrinsicAsync(signed, account, method, era, nonce, charge, GenesisHash, startEra, RuntimeVersion); ;
+
+            return uncheckedExtrinsic;
         }
 
         /// <summary>
@@ -442,19 +478,9 @@ namespace Substrate.NetApi
                     Logger.Debug("Client disposed.");
                 }
 
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
                 _disposedValue = true;
             }
         }
-
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~SubstrateClient()
-        // {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
 
         /// <summary> This code added to correctly implement the disposable pattern. </summary>
         /// <remarks> 19.09.2020. </remarks>
@@ -462,8 +488,6 @@ namespace Substrate.NetApi
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
         }
 
         #endregion IDisposable Support

@@ -3,44 +3,60 @@ using System.Collections.Generic;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple : BaseType
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             return new byte[0];
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             TypeSize = 0;
             Bytes = new byte[0];
         }
 
+        /// <summary>
+        /// Value
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1> : BaseType
                             where T1 : IType, new()
     {
+        /// <summary>
+        /// Base Tuple constructor
+        /// </summary>
         public BaseTuple()
         { }
 
+        /// <summary>
+        /// Base Tuple constructor
+        /// </summary>
         public BaseTuple(T1 t1)
         {
             Create(t1);
         }
-
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
                 new T1().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -50,7 +66,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -65,6 +81,10 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
+        /// <param name="t1"></param>
         public void Create(T1 t1)
         {
             var byteList = new List<byte>();
@@ -77,28 +97,40 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
     {
+        /// <summary>
+        /// Base Tuple constructor
+        /// </summary>
         public BaseTuple()
         { }
 
+        /// <summary>
+        /// Base Tuple constructor
+        /// </summary>
         public BaseTuple(T1 t1, T2 t2)
         {
             Create(t1, t2);
         }
-
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
                 new T1().TypeName() + "," +
                 new T2().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -108,7 +140,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -126,6 +158,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2)
         {
             var byteList = new List<byte>();
@@ -140,22 +175,34 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
     {
+        /// <summary>
+        /// Base Tuple constructor
+        /// </summary>
         public BaseTuple()
         { }
 
+        /// <summary>
+        /// Base Tuple constructor
+        /// </summary>
         public BaseTuple(T1 t1, T2 t2, T3 t3)
         {
             Create(t1, t2, t3);
         }
-
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -163,7 +210,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T2().TypeName() + "," +
                 new T3().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -173,7 +220,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -194,6 +241,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3)
         {
             var byteList = new List<byte>();
@@ -210,23 +260,36 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
                             where T3 : IType, new()
                             where T4 : IType, new()
     {
+        /// <summary>
+        /// Base Tuple constructor
+        /// </summary>
         public BaseTuple()
         { }
 
+        /// <summary>
+        /// Base Tuple constructor
+        /// </summary>
         public BaseTuple(T1 t1, T2 t2, T3 t3, T4 t4)
         {
             Create(t1, t2, t3, t4);
         }
 
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -236,6 +299,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T4().TypeName() + ")";
         }
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -245,7 +309,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -269,6 +333,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4)
         {
             var byteList = new List<byte>();
@@ -287,9 +354,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -297,6 +370,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T4 : IType, new()
                             where T5 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -306,7 +380,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T4().TypeName() + "," +
                 new T5().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -316,7 +390,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -343,6 +417,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5)
         {
             var byteList = new List<byte>();
@@ -363,9 +440,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -374,6 +457,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T5 : IType, new()
                             where T6 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -384,7 +468,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T5().TypeName() + "," +
                 new T6().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -394,7 +478,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -424,6 +508,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6)
         {
             var byteList = new List<byte>();
@@ -446,9 +533,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -458,6 +551,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T6 : IType, new()
                             where T7 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -469,7 +563,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T6().TypeName() + "," +
                 new T7().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -479,7 +573,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -512,6 +606,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7)
         {
             var byteList = new List<byte>();
@@ -536,9 +633,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -549,6 +652,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T7 : IType, new()
                             where T8 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -561,7 +665,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T7().TypeName() + "," +
                 new T8().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -571,7 +675,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -607,6 +711,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8)
         {
             var byteList = new List<byte>();
@@ -633,9 +740,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -647,6 +760,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T8 : IType, new()
                             where T9 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -660,7 +774,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T8().TypeName() + "," +
                 new T9().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -670,7 +784,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -709,6 +823,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9)
         {
             var byteList = new List<byte>();
@@ -737,9 +854,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -752,6 +875,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T9 : IType, new()
                             where T10 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -766,7 +890,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T9().TypeName() + "," +
                 new T10().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -776,7 +900,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -818,6 +942,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10)
         {
             var byteList = new List<byte>();
@@ -848,9 +975,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -864,6 +997,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T10 : IType, new()
                             where T11 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -880,6 +1014,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T11().TypeName() + ")";
         }
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -890,6 +1025,7 @@ namespace Substrate.NetApi.Model.Types.Base
             return result.ToArray();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -934,6 +1070,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11)
         {
             var byteList = new List<byte>();
@@ -966,9 +1105,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -983,6 +1128,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T11 : IType, new()
                             where T12 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -1000,6 +1146,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T12().TypeName() + ")";
         }
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -1010,6 +1157,7 @@ namespace Substrate.NetApi.Model.Types.Base
             return result.ToArray();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1057,6 +1205,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12)
         {
             var byteList = new List<byte>();
@@ -1091,9 +1242,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -1109,6 +1266,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T12 : IType, new()
                             where T13 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -1127,6 +1285,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T13().TypeName() + ")";
         }
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -1137,6 +1296,7 @@ namespace Substrate.NetApi.Model.Types.Base
             return result.ToArray();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1187,6 +1347,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13)
         {
             var byteList = new List<byte>();
@@ -1223,9 +1386,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -1242,6 +1411,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T13 : IType, new()
                             where T14 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -1261,6 +1431,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T14().TypeName() + ")";
         }
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -1271,6 +1442,7 @@ namespace Substrate.NetApi.Model.Types.Base
             return result.ToArray();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1324,6 +1496,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14)
         {
             var byteList = new List<byte>();
@@ -1362,9 +1537,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -1382,6 +1563,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T14 : IType, new()
                             where T15 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -1402,6 +1584,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T15().TypeName() + ")";
         }
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -1412,6 +1595,7 @@ namespace Substrate.NetApi.Model.Types.Base
             return result.ToArray();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1468,6 +1652,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15)
         {
             var byteList = new List<byte>();
@@ -1508,9 +1695,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -1529,6 +1722,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T15 : IType, new()
                             where T16 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -1550,6 +1744,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T16().TypeName() + ")";
         }
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -1560,6 +1755,7 @@ namespace Substrate.NetApi.Model.Types.Base
             return result.ToArray();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1619,6 +1815,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16)
         {
             var byteList = new List<byte>();
@@ -1661,9 +1860,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -1683,6 +1888,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T16 : IType, new()
                             where T17 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -1705,6 +1911,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T17().TypeName() + ")";
         }
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -1715,6 +1922,7 @@ namespace Substrate.NetApi.Model.Types.Base
             return result.ToArray();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1777,6 +1985,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17)
         {
             var byteList = new List<byte>();
@@ -1821,9 +2032,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -1844,6 +2061,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T17 : IType, new()
                             where T18 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -1867,6 +2085,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T18().TypeName() + ")";
         }
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -1877,6 +2096,7 @@ namespace Substrate.NetApi.Model.Types.Base
             return result.ToArray();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -1942,6 +2162,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18)
         {
             var byteList = new List<byte>();
@@ -1988,9 +2211,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -2012,6 +2241,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T18 : IType, new()
                             where T19 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -2036,6 +2266,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T19().TypeName() + ")";
         }
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -2046,6 +2277,7 @@ namespace Substrate.NetApi.Model.Types.Base
             return result.ToArray();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -2114,6 +2346,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19)
         {
             var byteList = new List<byte>();
@@ -2162,9 +2397,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -2187,6 +2428,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T19 : IType, new()
                             where T20 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -2212,6 +2454,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T20().TypeName() + ")";
         }
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -2222,6 +2465,7 @@ namespace Substrate.NetApi.Model.Types.Base
             return result.ToArray();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -2293,6 +2537,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20)
         {
             var byteList = new List<byte>();
@@ -2343,9 +2590,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
-
+    
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -2369,6 +2622,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T20 : IType, new()
                             where T21 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -2395,6 +2649,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T21().TypeName() + ")";
         }
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -2405,6 +2660,7 @@ namespace Substrate.NetApi.Model.Types.Base
             return result.ToArray();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -2479,6 +2735,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21)
         {
             var byteList = new List<byte>();
@@ -2531,9 +2790,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -2558,6 +2823,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T21 : IType, new()
                             where T22 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -2585,6 +2851,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T22().TypeName() + ")";
         }
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -2595,6 +2862,7 @@ namespace Substrate.NetApi.Model.Types.Base
             return result.ToArray();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -2672,6 +2940,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22)
         {
             var byteList = new List<byte>();
@@ -2726,9 +2997,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -2754,6 +3031,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T22 : IType, new()
                             where T23 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -2781,7 +3059,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T22().TypeName() + "," +
                 new T23().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -2791,7 +3069,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -2872,6 +3150,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23)
         {
             var byteList = new List<byte>();
@@ -2928,9 +3209,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -2957,6 +3244,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T23 : IType, new()
                             where T24 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -2985,7 +3273,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T23().TypeName() + "," +
                 new T24().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -2995,7 +3283,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -3079,6 +3367,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24)
         {
             var byteList = new List<byte>();
@@ -3137,9 +3428,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -3167,6 +3464,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T24 : IType, new()
                             where T25 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -3196,7 +3494,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T24().TypeName() + "," +
                 new T25().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -3206,7 +3504,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -3293,6 +3591,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25)
         {
             var byteList = new List<byte>();
@@ -3353,9 +3654,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -3384,6 +3691,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T25 : IType, new()
                             where T26 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -3414,7 +3722,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T25().TypeName() + "," +
                 new T26().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -3424,7 +3732,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -3514,6 +3822,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25, T26 t26)
         {
             var byteList = new List<byte>();
@@ -3576,9 +3887,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -3608,6 +3925,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T26 : IType, new()
                             where T27 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -3639,7 +3957,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T26().TypeName() + "," +
                 new T27().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -3649,7 +3967,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -3742,6 +4060,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25, T26 t26, T27 t27)
         {
             var byteList = new List<byte>();
@@ -3806,9 +4127,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -3839,6 +4166,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T27 : IType, new()
                             where T28 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -3871,7 +4199,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T27().TypeName() + "," +
                 new T28().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -3881,7 +4209,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -3977,6 +4305,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25, T26 t26, T27 t27, T28 t28)
         {
             var byteList = new List<byte>();
@@ -4043,9 +4374,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -4077,6 +4414,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T28 : IType, new()
                             where T29 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -4110,7 +4448,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T28().TypeName() + "," +
                 new T29().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -4120,7 +4458,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -4219,6 +4557,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25, T26 t26, T27 t27, T28 t28, T29 t29)
         {
             var byteList = new List<byte>();
@@ -4287,9 +4628,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -4322,6 +4669,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T29 : IType, new()
                             where T30 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -4356,8 +4704,9 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T29().TypeName() + "," +
                 new T30().TypeName() + ")";
         }
-
-        public override byte[] Encode()
+        
+       /// <inheritdoc/>
+       public override byte[] Encode()
         {
             var result = new List<byte>();
             foreach (var v in Value)
@@ -4366,7 +4715,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -4468,6 +4817,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25, T26 t26, T27 t27, T28 t28, T29 t29, T30 t30)
         {
             var byteList = new List<byte>();
@@ -4538,9 +4890,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -4574,6 +4932,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T30 : IType, new()
                             where T31 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -4609,7 +4968,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T30().TypeName() + "," +
                 new T31().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -4619,7 +4978,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -4724,6 +5083,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25, T26 t26, T27 t27, T28 t28, T29 t29, T30 t30, T31 t31)
         {
             var byteList = new List<byte>();
@@ -4796,9 +5158,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -4833,6 +5201,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T31 : IType, new()
                             where T32 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -4869,7 +5238,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T31().TypeName() + "," +
                 new T32().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -4879,7 +5248,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -4987,6 +5356,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25, T26 t26, T27 t27, T28 t28, T29 t29, T30 t30, T31 t31, T32 t32)
         {
             var byteList = new List<byte>();
@@ -5061,9 +5433,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -5099,6 +5477,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T32 : IType, new()
                             where T33 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -5136,7 +5515,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T32().TypeName() + "," +
                 new T33().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -5146,7 +5525,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -5257,6 +5636,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25, T26 t26, T27 t27, T28 t28, T29 t29, T30 t30, T31 t31, T32 t32, T33 t33)
         {
             var byteList = new List<byte>();
@@ -5333,9 +5715,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -5372,6 +5760,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T33 : IType, new()
                             where T34 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -5410,7 +5799,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T33().TypeName() + "," +
                 new T34().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -5420,7 +5809,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -5534,6 +5923,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25, T26 t26, T27 t27, T28 t28, T29 t29, T30 t30, T31 t31, T32 t32, T33 t33, T34 t34)
         {
             var byteList = new List<byte>();
@@ -5612,9 +6004,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -5652,6 +6050,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T34 : IType, new()
                             where T35 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -5691,7 +6090,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T34().TypeName() + "," +
                 new T35().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -5701,7 +6100,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -5818,6 +6217,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25, T26 t26, T27 t27, T28 t28, T29 t29, T30 t30, T31 t31, T32 t32, T33 t33, T34 t34, T35 t35)
         {
             var byteList = new List<byte>();
@@ -5898,9 +6300,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -5939,6 +6347,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T35 : IType, new()
                             where T36 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -5979,7 +6388,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T35().TypeName() + "," +
                 new T36().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -5989,7 +6398,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -6109,6 +6518,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25, T26 t26, T27 t27, T28 t28, T29 t29, T30 t30, T31 t31, T32 t32, T33 t33, T34 t34, T35 t35, T36 t36)
         {
             var byteList = new List<byte>();
@@ -6191,9 +6603,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -6233,6 +6651,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T36 : IType, new()
                             where T37 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -6274,7 +6693,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T36().TypeName() + "," +
                 new T37().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -6284,7 +6703,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -6407,6 +6826,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25, T26 t26, T27 t27, T28 t28, T29 t29, T30 t30, T31 t31, T32 t32, T33 t33, T34 t34, T35 t35, T36 t36, T37 t37)
         {
             var byteList = new List<byte>();
@@ -6491,9 +6913,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -6534,6 +6962,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T37 : IType, new()
                             where T38 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -6576,7 +7005,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T37().TypeName() + "," +
                 new T38().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -6586,7 +7015,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -6712,6 +7141,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25, T26 t26, T27 t27, T28 t28, T29 t29, T30 t30, T31 t31, T32 t32, T33 t33, T34 t34, T35 t35, T36 t36, T37 t37, T38 t38)
         {
             var byteList = new List<byte>();
@@ -6798,9 +7230,15 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 
+    /// <summary>
+    /// Base class for multiple tuples type
+    /// </summary>
     public class BaseTuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39> : BaseType
                             where T1 : IType, new()
                             where T2 : IType, new()
@@ -6842,6 +7280,7 @@ namespace Substrate.NetApi.Model.Types.Base
                             where T38 : IType, new()
                             where T39 : IType, new()
     {
+        /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
@@ -6885,7 +7324,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T38().TypeName() + "," +
                 new T39().TypeName() + ")";
         }
-
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
@@ -6895,7 +7334,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
-
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -7024,6 +7463,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
         }
 
+        /// <summary>
+        /// Create tuple
+        /// </summary>
         public void Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22, T23 t23, T24 t24, T25 t25, T26 t26, T27 t27, T28 t28, T29 t29, T30 t30, T31 t31, T32 t32, T33 t33, T34 t34, T35 t35, T36 t36, T37 t37, T38 t38, T39 t39)
         {
             var byteList = new List<byte>();
@@ -7112,6 +7554,9 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Value of tuple
+        /// </summary>
         public IType[] Value { get; internal set; }
     }
 }

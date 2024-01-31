@@ -5,44 +5,73 @@ using Substrate.NetApi.Model.Types;
 
 namespace Substrate.NetApi.Model.Extrinsics
 {
+    /// <summary>
+    /// Extrinsic
+    /// </summary>
     public class Extrinsic
     {
-        public bool Signed;
+        /// <summary>
+        /// Signed
+        /// </summary>
+        public bool Signed { get; set; }
 
-        public byte TransactionVersion;
+        /// <summary>
+        /// Transaction Version
+        /// </summary>
+        public byte TransactionVersion { get; set; }
 
-        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public Account Account;
+        /// <summary>
+        /// Account
+        /// </summary>
+        public Account Account { get; set; }
 
-        public Era Era;
+        /// <summary>
+        /// Era
+        /// </summary>
+        public Era Era { get; set; }
 
-        public CompactInteger Nonce;
+        /// <summary>
+        /// Nonce
+        /// </summary>
+        public CompactInteger Nonce { get; set; }
 
-        public ChargeType Charge;
+        /// <summary>
+        /// Charge
+        /// </summary>
+        public ChargeType Charge { get; set; }
 
-        public Method Method;
+        /// <summary>
+        /// Method
+        /// </summary>
+        public Method Method { get; set; }
 
-        public byte[] Signature;
+        /// <summary>
+        /// Signature
+        /// </summary>
+        public byte[] Signature { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Extrinsic"/> class.
         /// </summary>
         /// <param name="str">The string.</param>
-        public Extrinsic(string str, ChargeType chargeType) : this(Utils.HexToByteArray(str).AsMemory(), chargeType)
+        /// <param name="chargeType"></param>
+        public Extrinsic(string str, ChargeType chargeType) 
+            : this(Utils.HexToByteArray(str).AsMemory(), chargeType)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Extrinsic"/> class.
         /// </summary>
-        /// <param name="memory">The memory.</param>
+        /// <param name="memory"></param>
+        /// <param name="chargeType"></param>
         internal Extrinsic(Memory<byte> memory, ChargeType chargeType)
         {
             int p = 0;
             int m;
 
             // length
-            var length = CompactInteger.Decode(memory.ToArray(), ref p);
+            _ = CompactInteger.Decode(memory.ToArray(), ref p);
 
             // signature version
             m = 1;
@@ -56,7 +85,7 @@ namespace Substrate.NetApi.Model.Extrinsics
             {
                 // start bytes
                 m = 1;
-                var _startBytes = memory.Slice(p, m).ToArray()[0];
+                _ = memory.Slice(p, m).ToArray()[0];
                 p += m;
 
                 // sender public key
@@ -116,7 +145,7 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <param name="nonce">The nonce.</param>
         /// <param name="method">The method.</param>
         /// <param name="era">The era.</param>
-        /// <param name="tip">The tip.</param>
+        /// <param name="charge"></param>
         public Extrinsic(bool signed, Account account, CompactInteger nonce, Method method, Era era, ChargeType charge)
         {
             Signed = signed;
@@ -128,6 +157,10 @@ namespace Substrate.NetApi.Model.Extrinsics
             Method = method;
         }
 
+        /// <summary>
+        /// Encodes this instance.
+        /// </summary>
+        /// <returns></returns>
         public byte[] Encode()
         {
             var result = new List<byte>();
@@ -153,6 +186,7 @@ namespace Substrate.NetApi.Model.Extrinsics
             return result.ToArray();
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);

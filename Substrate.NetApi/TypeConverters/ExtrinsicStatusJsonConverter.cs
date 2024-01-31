@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Serilog;
 using Substrate.NetApi.Model.Rpc;
 using Substrate.NetApi.Model.Types.Base;
 using System;
@@ -6,6 +8,99 @@ using System.Collections.Generic;
 
 namespace Substrate.NetApi.TypeConverters
 {
+    /// <summary>
+    /// TransactionEventInfo JsonConverter
+    /// </summary>
+    public class TransactionEventJsonConverter : JsonConverter<TransactionEventInfo>
+    {
+        /// <summary>Reads the JSON representation of the object.</summary>
+        /// <param name="reader">The <see cref="T:Newtonsoft.Json.JsonReader" /> to read from.</param>
+        /// <param name="objectType">Type of the object.</param>
+        /// <param name="existingValue">The existing value of object being read. If there is no existing value then <c>null</c> will be used.</param>
+        /// <param name="hasExistingValue">The existing value has a value.</param>
+        /// <param name="serializer">The calling serializer.</param>
+        /// <returns>The object value.</returns>
+        /// <exception cref="NotImplementedException">
+        /// Unimplemented {reader.TokenType} of type '{reader.ValueType}' and value '{reader.Value}'.
+        /// or
+        /// Unimplemented {reader.TokenType} of type '{reader.ValueType}' and value '{reader.Value}'.
+        /// </exception>
+        public override TransactionEventInfo ReadJson(JsonReader reader, Type objectType, TransactionEventInfo existingValue, bool hasExistingValue, JsonSerializer serializer)
+        {
+            var transactionEventStatus = hasExistingValue ? existingValue : new TransactionEventInfo();
+
+            var jObject = JObject.Load(reader);
+
+            var eventName = jObject["event"]?.ToString();
+            if (Enum.TryParse(eventName, true, out TransactionEvent transactionEvent))
+            {
+                try
+                {
+                    transactionEventStatus.TransactionEvent = transactionEvent;
+
+                    switch (transactionEvent)
+                    {
+                        case TransactionEvent.Validated:
+                            break;
+
+                        case TransactionEvent.Broadcasted:
+                            transactionEventStatus.NumPeers = uint.Parse(jObject["numPeers"].ToString());
+                            break;
+
+                        case TransactionEvent.BestChainBlockIncluded:
+                        case TransactionEvent.Finalized:
+                            transactionEventStatus.Hash = null;
+                            transactionEventStatus.Index = null;
+                            if (jObject["block"] != null)
+                            {
+                                transactionEventStatus.Hash = new Hash(jObject["block"]["hash"].ToString());
+                                transactionEventStatus.Index = uint.Parse(jObject["block"]["index"].ToString());
+                            }
+                            break;
+
+                        case TransactionEvent.Error:
+                            transactionEventStatus.Error = jObject["error"].ToString();
+                            break;
+
+                        case TransactionEvent.Invalid:
+                            transactionEventStatus.Error = jObject["error"].ToString();
+                            break;
+
+                        case TransactionEvent.Dropped:
+                            transactionEventStatus.Broadcasted = bool.Parse(jObject["broadcasted"].ToString());
+                            transactionEventStatus.Error = jObject["error"].ToString();
+                            break;
+
+                        default:
+                            throw new NotImplementedException(
+                                $"Unimplemented state {transactionEvent} with value '{reader.Value}'.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Warning("TransactionEventInfo[{eventEnum}]: JObject: {jobject} - {error}", jObject.ToString(), transactionEvent, ex);
+                }
+            }
+
+            return transactionEventStatus;
+        }
+
+        /// <summary>
+        /// Writes the JSON representation of the object.
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="value"></param>
+        /// <param name="serializer"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public override void WriteJson(JsonWriter writer, TransactionEventInfo value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// ExtrinsicStatus JsonConverter
+    /// </summary>
     public class ExtrinsicStatusJsonConverter : JsonConverter<ExtrinsicStatus>
     {
         /// <summary>Reads the JSON representation of the object.</summary>

@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
@@ -15,13 +14,27 @@ namespace Substrate.NetApi.Model.Types.Base
         where T1 : IType, new()
         where T2 : IType, new()
     {
+        /// <summary>
+        /// Type Name
+        /// </summary>
+        /// <returns></returns>
         public virtual string TypeName() => $"BitSequence<{new T1().TypeName()},{new T2().TypeName()}>";
 
+        /// <summary>
+        /// Type Size
+        /// </summary>
         public int TypeSize { get; set; }
 
+        /// <summary>
+        /// Bytes
+        /// </summary>
         [JsonIgnore]
         public byte[] Bytes { get; internal set; }
 
+        /// <summary>
+        /// Encode to Bytes
+        /// </summary>
+        /// <returns></returns>
         public byte[] Encode()
         {
             var result = new List<byte>
@@ -35,6 +48,11 @@ namespace Substrate.NetApi.Model.Types.Base
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Decode from a byte array at certain position
+        /// </summary>
+        /// <param name="byteArray"></param>
+        /// <param name="p"></param>
         public void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -58,8 +76,15 @@ namespace Substrate.NetApi.Model.Types.Base
             Value = array;
         }
 
+        /// <summary>
+        /// Value
+        /// </summary>
         public virtual T1[] Value { get; internal set; }
 
+        /// <summary>
+        /// Create from a string
+        /// </summary>
+        /// <param name="list"></param>
         public void Create(T1[] list)
         {
             Value = list;
@@ -67,20 +92,42 @@ namespace Substrate.NetApi.Model.Types.Base
             TypeSize = Bytes.Length;
         }
 
+        /// <summary>
+        /// Create from a string
+        /// </summary>
+        /// <param name="str"></param>
         public void Create(string str) => Create(Utils.HexToByteArray(str));
 
+        /// <summary>
+        /// Create from a json string
+        /// </summary>
+        /// <param name="str"></param>
         public void CreateFromJson(string str) => Create(Utils.HexToByteArray(str));
 
+        /// <summary>
+        /// Create from a byte array
+        /// </summary>
+        /// <param name="byteArray"></param>
         public void Create(byte[] byteArray)
         {
             var p = 0;
             Decode(byteArray, ref p);
         }
 
+        /// <summary>
+        /// New
+        /// </summary>
+        /// <returns></returns>
         public IType New() => this;
 
+        /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(this);
 
+        /// <summary>
+        /// Reverse
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public byte[] Reverse(byte[] b)
         {
             byte[] p = new byte[b.Length];
@@ -91,6 +138,11 @@ namespace Substrate.NetApi.Model.Types.Base
             return p;
         }
 
+        /// <summary>
+        /// Reverse
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public byte Reverse(byte b)
         {
             int a = 0;

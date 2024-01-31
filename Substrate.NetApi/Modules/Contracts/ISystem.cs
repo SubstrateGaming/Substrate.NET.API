@@ -4,6 +4,9 @@ using Substrate.NetApi.Model.Rpc;
 
 namespace Substrate.NetApi.Modules.Contracts
 {
+    /// <summary>
+    /// System Module Interface
+    /// </summary>
     public interface ISystem
     {
         /// <summary>

@@ -150,8 +150,6 @@ namespace Substrate.NetApi.TestNode
         /// </summary>
         public sealed class Arr32U8 : BaseType
         {
-            private U8[] _value;
-
             public override int TypeSize
             {
                 get
@@ -160,17 +158,7 @@ namespace Substrate.NetApi.TestNode
                 }
             }
 
-            public U8[] Value
-            {
-                get
-                {
-                    return this._value;
-                }
-                set
-                {
-                    this._value = value;
-                }
-            }
+            public U8[] Value { get; set; }
 
             public override string TypeName()
             {
@@ -180,7 +168,7 @@ namespace Substrate.NetApi.TestNode
             public override byte[] Encode()
             {
                 var result = new List<byte>();
-                foreach (var v in Value) { result.AddRange(v.Encode()); };
+                foreach (var v in Value) { result.AddRange(v.Encode()); }
                 return result.ToArray();
             }
 
@@ -188,7 +176,7 @@ namespace Substrate.NetApi.TestNode
             {
                 var start = p;
                 var array = new U8[TypeSize];
-                for (var i = 0; i < array.Length; i++) { var t = new U8(); t.Decode(byteArray, ref p); array[i] = t; };
+                for (var i = 0; i < array.Length; i++) { var t = new U8(); t.Decode(byteArray, ref p); array[i] = t; }
                 var bytesLength = p - start;
                 Bytes = new byte[bytesLength];
                 System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);

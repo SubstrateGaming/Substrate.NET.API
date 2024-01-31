@@ -5,12 +5,27 @@ using System.Security.Cryptography;
 
 namespace Substrate.NetApi
 {
+    /// <summary>
+    /// Base58 Functions
+    /// </summary>
     public static class Base58Local
     {
+        /// <summary>
+        /// The alphabet used in the Base58 encoding.
+        /// </summary>
         private const string AlphaNumerics = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
+        /// <summary>
+        /// The size of a Base58 check sum in bytes.
+        /// </summary>
         public const int CheckSumSizeInBytes = 4;
 
+        /// <summary>
+        /// Adds a check sum to the given data.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static byte[] AddCheckSum(byte[] data)
         {
             if (data == null)
@@ -28,6 +43,12 @@ namespace Substrate.NetApi
             return result;
         }
 
+        /// <summary>
+        /// Verifies the check sum of the given data and removes the check sum bytes.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static byte[] VerifyAndRemoveCheckSum(byte[] data)
         {
             if (data == null)
@@ -51,6 +72,12 @@ namespace Substrate.NetApi
             return givenCheckSum.SequenceEqual(correctCheckSum) ? result : null;
         }
 
+        /// <summary>
+        /// Encodes the given data bytes as a Base58 string.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static string Encode(byte[] data)
         {
             if (data == null)
@@ -73,6 +100,12 @@ namespace Substrate.NetApi
             return new string('1', leadingZeros) + result;
         }
 
+        /// <summary>
+        /// Encodes the given data bytes as a Base58 string with a check sum.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static string EncodeWithCheckSum(byte[] data)
         {
             if (data == null)
@@ -83,6 +116,13 @@ namespace Substrate.NetApi
             return Encode(AddCheckSum(data));
         }
 
+        /// <summary>
+        /// Decodes the given Base58 string into the original data bytes.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="FormatException"></exception>
         public static byte[] Decode(string str)
         {
             if (str == null)
@@ -114,6 +154,13 @@ namespace Substrate.NetApi
             return result;
         }
 
+        /// <summary>
+        /// Decodes the given Base58 string with a check sum into the original data bytes.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="FormatException"></exception>
         public static byte[] DecodeWithCheckSum(string str)
         {
             if (str == null)
@@ -127,6 +174,12 @@ namespace Substrate.NetApi
             return dataWithoutCheckSum ?? throw new FormatException("Base58 checksum is invalid");
         }
 
+        /// <summary>
+        /// Get Check Sum
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         private static byte[] GetCheckSum(byte[] data)
         {
             if (data == null)

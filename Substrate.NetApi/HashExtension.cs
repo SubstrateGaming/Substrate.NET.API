@@ -7,6 +7,9 @@ using Extensions.Data;
 
 namespace Substrate.NetApi
 {
+    /// <summary>
+    /// Hash extension.
+    /// </summary>
     public class HashExtension
     {
         /// <summary>
@@ -116,7 +119,7 @@ namespace Substrate.NetApi
         /// </returns>
         public static byte[] Twox64Concat(byte[] bytes)
         {
-            return BitConverter.GetBytes(XXHash.XXH64(bytes)).Concat(bytes).ToArray().ToArray();
+            return BitConverter.GetBytes(XXHash.XXH64(bytes)).Concat(bytes).ToArray();
         }
     }
 }

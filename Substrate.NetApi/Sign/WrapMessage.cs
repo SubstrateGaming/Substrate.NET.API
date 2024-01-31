@@ -34,6 +34,12 @@ namespace Substrate.NetApi.Sign
                 (data.Take(U8A_WRAP_PREFIX.Length).SequenceEqual(U8A_WRAP_PREFIX) &&
                 data.Skip(data.Length - U8A_WRAP_POSTFIX.Length).Take(U8A_WRAP_POSTFIX.Length).SequenceEqual(U8A_WRAP_POSTFIX));
         }
+
+        /// <summary>
+        /// Check if data is wrapped by <see cref="U8A_WRAP_PREFIX_STR"/> and <see cref="U8A_WRAP_POSTFIX_STR"/>
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static bool IsWrapped(string data) => IsWrapped(Encoding.UTF8.GetBytes(data));
 
         /// <summary>
@@ -55,6 +61,12 @@ namespace Substrate.NetApi.Sign
                     .ToArray() :
                 data;
         }
+
+        /// <summary>
+        /// Unwrap data from <see cref="U8A_WRAP_PREFIX_STR"/> and <see cref="U8A_WRAP_POSTFIX_STR"/>
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static byte[] Unwrap(string data) => Unwrap(Encoding.UTF8.GetBytes(data));
 
         /// <summary>
@@ -76,6 +88,12 @@ namespace Substrate.NetApi.Sign
                 .Concat(U8A_WRAP_POSTFIX)
                 .ToArray();
         }
+
+        /// <summary>
+        /// Wrap data with <see cref="U8A_WRAP_PREFIX_STR"/> and <see cref="U8A_WRAP_POSTFIX_STR"/>
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static byte[] Wrap(string data) => Wrap(Encoding.UTF8.GetBytes(data));
     }
 }

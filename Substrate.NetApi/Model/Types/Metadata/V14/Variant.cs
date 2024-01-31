@@ -4,15 +4,21 @@ using Substrate.NetApi.Model.Types.Primitive;
 
 namespace Substrate.NetApi.Model.Types.Metadata.V14
 {
+    /// <summary>
+    /// Variant Type
+    /// </summary>
     public class Variant : BaseType
     {
+        /// <inheritdoc/>
         public override string TypeName() => "Variant<T: Form = MetaForm>";
 
+        /// <inheritdoc/>
         public override byte[] Encode()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
@@ -32,9 +38,24 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
             TypeSize = p - start;
         }
 
+        /// <summary>
+        /// Variant Name
+        /// </summary>
         public Str VariantName { get; private set; }
+
+        /// <summary>
+        /// Variant Fields
+        /// </summary>
         public BaseVec<Field> VariantFields { get; private set; }
+
+        /// <summary>
+        /// Index
+        /// </summary>
         public U8 Index { get; private set; }
+
+        /// <summary>
+        /// Docs
+        /// </summary>
         public BaseVec<Str> Docs { get; private set; }
     }
 }

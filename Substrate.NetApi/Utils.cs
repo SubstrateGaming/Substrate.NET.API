@@ -14,8 +14,19 @@ namespace Substrate.NetApi
         /// </summary>
         public enum HexStringFormat
         {
+            /// <summary>
+            /// Pure hex string without any separators.
+            /// </summary>
             Pure,
+
+            /// <summary>
+            /// Hex string with dash separators.
+            /// </summary>
             Dash,
+
+            /// <summary>
+            /// Hex string with 0x prefix.
+            /// </summary>
             Prefixed
         }
 
@@ -40,7 +51,7 @@ namespace Substrate.NetApi
                     return $"0x{BitConverter.ToString(bytes).Replace("-", string.Empty)}";
 
                 default:
-                    throw new Exception($"Unimplemented hex string format '{format}'");
+                    throw new NotSupportedException($"Unimplemented hex string format '{format}'");
             }
         }
 
@@ -64,7 +75,7 @@ namespace Substrate.NetApi
                 if (byte.TryParse(strArray[i], out var parsedByte))
                     result[i] = parsedByte;
                 else
-                    throw new Exception(
+                    throw new NotSupportedException(
                         "Not valid string array for byte array conversion. Format should be [ 0-255, 0-255, ...]");
 
             return result;
@@ -82,7 +93,7 @@ namespace Substrate.NetApi
             if (hex.Equals("0x0")) return new byte[] { 0x00 };
 
             if (hex.Length % 2 == 1 && !evenLeftZeroPad)
-                throw new Exception("The binary key cannot have an odd number of digits");
+                throw new NotSupportedException("The binary key cannot have an odd number of digits");
 
             if (hex.StartsWith("0x")) hex = hex.Substring(2);
 
@@ -119,7 +130,7 @@ namespace Substrate.NetApi
                     return BitConverter.ToUInt64(value, 0);
 
                 default:
-                    throw new Exception($"Unhandled byte size {value.Length} for this method!");
+                    throw new NotSupportedException($"Unhandled byte size {value.Length} for this method!");
             }
         }
 
@@ -160,7 +171,7 @@ namespace Substrate.NetApi
                     break;
 
                 default:
-                    throw new Exception("Unhandled byte size for this method!");
+                    throw new NotSupportedException("Unhandled byte size for this method!");
             }
 
             if (!littleEndian) Array.Reverse(result);
@@ -175,11 +186,6 @@ namespace Substrate.NetApi
         public static int GetHexVal(char hex)
         {
             int val = hex;
-            //For uppercase A-F letters:
-            //return val - (val < 58 ? 48 : 55);
-            //For lowercase a-f letters:
-            //return val - (val < 58 ? 48 : 87);
-            //Or the two combined, but a bit slower:
             return val - (val < 58 ? 48 : val < 97 ? 55 : 87);
         }
 
@@ -205,8 +211,7 @@ namespace Substrate.NetApi
         public static byte[] GetPublicKeyFrom(string address, out short network)
         {
             network = 42;
-            var PUBLIC_KEY_LENGTH = 32;
-            var PREFIX_SIZE = 0;
+            var publicKeyLength = 32;
             var pubkByteList = new List<byte>();
 
             var bs58decoded = Base58Local.Decode(address);
@@ -214,24 +219,24 @@ namespace Substrate.NetApi
 
             byte[] ssPrefixed = { 0x53, 0x53, 0x35, 0x38, 0x50, 0x52, 0x45 };
 
+            int prefixSize;
             // 00000000b..=00111111b (0..=63 inclusive): Simple account/address/network identifier.
             if (len == 35)
             {
-                PREFIX_SIZE = 1;
+                prefixSize = 1;
                 // set network
                 network = bs58decoded[0];
             }
-            else
             // 01000000b..=01111111b (64..=127 inclusive)
-            if (len == 36)
+            else if (len == 36)
             {
-                PREFIX_SIZE = 2;
+                prefixSize = 2;
                 // set network
                 byte b2up = (byte)((bs58decoded[0] << 2) & 0b1111_1100);
                 byte b2lo = (byte)((bs58decoded[1] >> 6) & 0b0000_0011);
                 byte b2 = (byte)(b2up | b2lo);
                 byte b1 = (byte)(bs58decoded[1] & 0b0011_1111);
-                network = (short)BitConverter.ToInt16(
+                network = BitConverter.ToInt16(
                     new byte[] { b2, b1 }, 0); // big endian, for BitConverter
             }
             else
@@ -240,16 +245,16 @@ namespace Substrate.NetApi
             }
 
             pubkByteList.AddRange(ssPrefixed);
-            pubkByteList.AddRange(bs58decoded.Take(PUBLIC_KEY_LENGTH + PREFIX_SIZE));
+            pubkByteList.AddRange(bs58decoded.Take(publicKeyLength + prefixSize));
 
             var blake2bHashed = HashExtension.Blake2(pubkByteList.ToArray(), 512);
-            if (bs58decoded[PUBLIC_KEY_LENGTH + PREFIX_SIZE] != blake2bHashed[0] ||
-                bs58decoded[PUBLIC_KEY_LENGTH + PREFIX_SIZE + 1] != blake2bHashed[1])
+            if (bs58decoded[publicKeyLength + prefixSize] != blake2bHashed[0] ||
+                bs58decoded[publicKeyLength + prefixSize + 1] != blake2bHashed[1])
             {
                 throw new NotSupportedException("Address checksum is wrong.");
             }
 
-            return bs58decoded.Skip(PREFIX_SIZE).Take(PUBLIC_KEY_LENGTH).ToArray();
+            return bs58decoded.Skip(prefixSize).Take(publicKeyLength).ToArray();
         }
 
         /// <summary>
@@ -265,7 +270,7 @@ namespace Substrate.NetApi
             var PUBLIC_KEY_LENGTH = 32;
             var KEY_SIZE = 0;
 
-            byte[] plainAddr = new byte[0];
+            byte[] plainAddr;
             // 00000000b..=00111111b (0..=63 inclusive): Simple account/address/network identifier.
             // The byte can be interpreted directly as such an identifier.
             if (ss58Prefix < 64)
@@ -275,12 +280,11 @@ namespace Substrate.NetApi
                 plainAddr[0] = (byte)ss58Prefix;
                 bytes.CopyTo(plainAddr.AsMemory(1));
             }
-            else
             // 01000000b..=01111111b (64..=127 inclusive): Full address/address/network identifier.
             // The lower 6 bits of this byte should be treated as the upper 6 bits of a 14 bit identifier
             // value, with the lower 8 bits defined by the following byte. This works for all identifiers
             // up to 2**14 (16,383).
-            if (ss58Prefix < 16384)
+            else if (ss58Prefix < 16384)
             {
                 KEY_SIZE = 2;
                 plainAddr = new byte[36];

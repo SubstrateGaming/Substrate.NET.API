@@ -9,300 +9,334 @@ using Substrate.NetApi.Model.Types.Primitive;
 
 namespace Substrate.NetApi.Modules.Contracts
 {
+    /// <summary>
+    /// State Module Interface
+    /// </summary>
     public interface IState
     {
         /// <summary>
-        /// Returns the keys with prefix from a child storage with pagination support
+        /// Asynchronously retrieves a paged list of keys from the state with a specified prefix.
         /// </summary>
-        /// <param name="keyPrefix"></param>
-        /// <param name="pageCount"></param>
-        /// <param name="startKey"></param>
-        /// <returns></returns>
+        /// <param name="keyPrefix">The byte array representing the key prefix to query.</param>
+        /// <param name="pageCount">The number of pages to retrieve.</param>
+        /// <param name="startKey">The starting key for pagination, if any.</param>
+        /// <returns>A task that represents the asynchronous operation and returns a JArray of keys.</returns>
         Task<JArray> GetKeysPagedAsync(byte[] keyPrefix, uint pageCount, byte[] startKey);
 
         /// <summary>
-        /// Returns the keys with prefix from a child storage with pagination support
+        /// Asynchronously retrieves a paged list of keys from the state with a specified prefix, using a cancellation token.
         /// </summary>
-        /// <param name="keyPrefix"></param>
-        /// <param name="pageCount"></param>
-        /// <param name="startKey"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <param name="keyPrefix">The byte array representing the key prefix to query.</param>
+        /// <param name="pageCount">The number of pages to retrieve.</param>
+        /// <param name="startKey">The starting key for pagination, if any.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns a JArray of keys.</returns>
         Task<JArray> GetKeysPagedAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, CancellationToken token);
 
         /// <summary>
-        /// Returns the keys with prefix from a child storage with pagination support at specific block
+        /// Asynchronously retrieves a paged list of keys from the state with a specified prefix at a specific block hash.
         /// </summary>
-        /// <param name="keyPrefix"></param>
-        /// <param name="blockHash"></param>
-        /// <param name="pageCount"></param>
-        /// <param name="startKey"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, byte[] blockHash, CancellationToken token);
-
-        Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, string blockHash, CancellationToken token);
+        /// <param name="keyPrefix">The byte array representing the key prefix to query.</param>
+        /// <param name="pageCount">The number of pages to retrieve.</param>
+        /// <param name="startKey">The starting key for pagination, if any.</param>
+        /// <param name="blockHash">The block hash to query at.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns a JArray of keys at the specified block.</returns>
+        Task<JArray> GetKeysPagedAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, byte[] blockHash, CancellationToken token);
 
         /// <summary>
-        /// Returns the runtime metadata
+        /// Asynchronously retrieves the metadata of the blockchain state.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A task that represents the asynchronous operation and returns the metadata as a string.</returns>
         Task<string> GetMetaDataAsync();
 
         /// <summary>
-        /// Returns the runtime metadata
+        /// Asynchronously retrieves the metadata of the blockchain state with a cancellation token.
         /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the metadata as a string.</returns>
         Task<string> GetMetaDataAsync(CancellationToken token);
 
         /// <summary>
-        /// Returns the runtime metadata at specific block
+        /// Asynchronously retrieves the metadata of the blockchain state at a specific block hash.
         /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        Task<string> GetMetaDataAtAsync(byte[] blockHash, CancellationToken token);
+        /// <param name="blockHash">The block hash to query the metadata at.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the metadata as a string at the specified block.</returns>
+        Task<string> GetMetaDataAsync(byte[] blockHash, CancellationToken token);
 
-        Task<string> GetMetaDataAtAsync(string blockHash, CancellationToken token);
 
         /// <summary>
-        /// Returns the keys with prefix, leave empty to get all the keys
+        /// Asynchronously retrieves key-value pairs from the state with a specified prefix.
         /// </summary>
-        /// <param name="keyPrefix"></param>
-        /// <returns></returns>
+        /// <param name="keyPrefix">The byte array representing the key prefix.</param>
+        /// <returns>A task that represents the asynchronous operation and returns a JArray of key-value pairs.</returns>
         Task<JArray> GetPairsAsync(byte[] keyPrefix);
 
         /// <summary>
-        /// Returns the keys with prefix, leave empty to get all the keys
+        /// Asynchronously retrieves key-value pairs from the state with a specified prefix and a cancellation token.
         /// </summary>
-        /// <param name="keyPrefix"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <param name="keyPrefix">The byte array representing the key prefix.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns a JArray of key-value pairs.</returns>
         Task<JArray> GetPairsAsync(byte[] keyPrefix, CancellationToken token);
 
         /// <summary>
-        /// Returns the keys with prefix, leave empty to get all the keys at specific block
+        /// Asynchronously retrieves key-value pairs from the state with a specified prefix at a specific block hash.
         /// </summary>
-        /// <param name="keyPrefix"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        Task<JArray> GetPairsAtAsync(byte[] keyPrefix, byte[] blockHash, CancellationToken token);
+        /// <param name="keyPrefix">The byte array representing the key prefix.</param>
+        /// <param name="blockHash">The block hash to query at.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns a JArray of key-value pairs at the specified block.</returns>
+        Task<JArray> GetPairsAsync(byte[] keyPrefix, byte[] blockHash, CancellationToken token);
 
-        Task<JArray> GetPairsAtAsync(byte[] keyPrefix, string blockHash, CancellationToken token);
 
         /// <summary>
-        /// Get storage from given parameter
+        /// Asynchronously retrieves a read-proof for a set of keys in the state.
         /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        Task<IEnumerable<StorageChangeSet>> GetQueryStorageAsync(List<byte[]> keysList, string fromBlock, string toBlock);
-
-        Task<IEnumerable<StorageChangeSet>> GetQueryStorageAsync(List<byte[]> keysList, string fromBlock, string toBlock, CancellationToken token);
-
-        /// <summary>
-        /// Get storage from given parameter at specific block
-        /// </summary>
-        /// <param name="keysList"></param>
-        /// <param name="blockHash"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, byte[] blockHash, CancellationToken token);
-
-        Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, string blockHash, CancellationToken token);
-
-        /// <summary>
-        /// Returns proof of storage entries
-        /// </summary>
-        /// <returns></returns>
+        /// <param name="keyPrefixes">A collection of byte arrays representing the keys for which the read-proof is requested.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the read-proof.</returns>
         Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes);
 
+        /// <summary>
+        /// Asynchronously retrieves a read-proof for a set of keys in the state with a cancellation token.
+        /// </summary>
+        /// <param name="keyPrefixes">A collection of byte arrays representing the keys for which the read-proof is requested.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the read-proof.</returns>
         Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes, CancellationToken token);
 
         /// <summary>
-        /// Returns proof of storage entries at a specific block state
+        /// Asynchronously retrieves a read-proof for a set of keys in the state at a specific block hash.
         /// </summary>
-        /// <returns></returns>
-        Task<ReadProof> GetReadProofAtAsync(IEnumerable<byte[]> keyPrefixes, byte[] blockHash, CancellationToken token);
+        /// <param name="keyPrefixes">A collection of byte arrays representing the keys for which the read-proof is requested.</param>
+        /// <param name="blockHash">The block hash to query the read-proof at.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the read-proof at the specified block.</returns>
+        Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes, byte[] blockHash, CancellationToken token);
 
-        Task<ReadProof> GetReadProofAtAsync(IEnumerable<byte[]> keyPrefixes, string blockHash, CancellationToken token);
 
         /// <summary>
-        /// Get the runtime version
+        /// Asynchronously retrieves the current runtime version of the blockchain.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A task that represents the asynchronous operation and returns the current runtime version.</returns>
         Task<RuntimeVersion> GetRuntimeVersionAsync();
 
         /// <summary>
-        /// Get the runtime version
+        /// Asynchronously retrieves the current runtime version of the blockchain with a cancellation token.
         /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the current runtime version.</returns>
         Task<RuntimeVersion> GetRuntimeVersionAsync(CancellationToken token);
 
         /// <summary>
-        /// Get the runtime version at specific block
+        /// Asynchronously retrieves the runtime version of the blockchain at a specific block hash.
         /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        Task<RuntimeVersion> GetRuntimeVersionAtAsync(byte[] blockHash, CancellationToken token);
+        /// <param name="blockHash">The block hash to query the runtime version at.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the runtime version at the specified block.</returns>
+        Task<RuntimeVersion> GetRuntimeVersionAsync(byte[] blockHash, CancellationToken token);
 
-        Task<RuntimeVersion> GetRuntimeVersionAtAsync(string blockHash, CancellationToken token);
 
         /// <summary>
-        /// Retrieves the storage for a key
+        /// Asynchronously retrieves the storage data for given parameters.
         /// </summary>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
+        /// <param name="parameters">The parameters for which the storage data is requested.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the storage data.</returns>
         Task<object> GetStorageAsync(byte[] parameters);
 
         /// <summary>
-        /// Retrieves the storage for a key
+        /// Asynchronously retrieves the storage data for given parameters with a cancellation token.
         /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <param name="parameters">The parameters for which the storage data is requested.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the storage data.</returns>
         Task<object> GetStorageAsync(byte[] parameters, CancellationToken token);
 
         /// <summary>
-        /// Retrieves the storage for a key at specific block
+        /// Asynchronously retrieves the storage data for given parameters at a specific block hash.
         /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="blockHash"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        Task<object> GetStorageAtAsync(byte[] parameters, byte[] blockHash, CancellationToken token);
-
-        Task<object> GetStorageAtAsync(byte[] parameters, string blockHash, CancellationToken token);
+        /// <param name="parameters">The parameters for which the storage data is requested.</param>
+        /// <param name="blockHash">The block hash to query at.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the storage data.</returns>
+        Task<object> GetStorageAsync(byte[] parameters, byte[] blockHash, CancellationToken token);
 
         /// <summary>
-        /// Retrieves the storage hash
+        /// Asynchronously retrieves the hash of the storage data for a given key.
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <param name="key">The key for which the storage hash is requested.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the storage hash.</returns>
         Task<Hash> GetStorageHashAsync(byte[] key);
 
+        /// <summary>
+        /// Asynchronously retrieves the hash of the storage data for a given key with a cancellation token.
+        /// </summary>
+        /// <param name="key">The key for which the storage hash is requested.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the storage hash.</returns>
         Task<Hash> GetStorageHashAsync(byte[] key, CancellationToken token);
 
         /// <summary>
-        /// Retrieves the storage hash at specific block
+        /// Asynchronously retrieves the hash of the storage data for a given key at a specific block hash.
         /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="blockHash"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        Task<Hash> GetStorageHashAtAsync(byte[] parameters, byte[] blockHash, CancellationToken token);
+        /// <param name="key">The key for which the storage hash is requested.</param>
+        /// <param name="blockHash">The block hash to query at.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the storage hash.</returns>
+        Task<Hash> GetStorageHashAsync(byte[] key, byte[] blockHash, CancellationToken token);
 
-        Task<Hash> GetStorageHashAtAsync(byte[] parameters, string blockHash, CancellationToken token);
 
         /// <summary>
-        /// Retrieves the storage size
+        /// Asynchronously retrieves the storage size for given parameters.
         /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <param name="parameters">The parameters for which the storage size is requested.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the storage size.</returns>
         Task<U64> GetStorageSizeAsync(byte[] parameters);
 
+        /// <summary>
+        /// Asynchronously retrieves the storage size for given parameters with a cancellation token.
+        /// </summary>
+        /// <param name="parameters">The parameters for which the storage size is requested.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the storage size.</returns>
         Task<U64> GetStorageSizeAsync(byte[] parameters, CancellationToken token);
 
         /// <summary>
-        /// Retrieves the storage size at specific block
+        /// Asynchronously retrieves the storage size for given parameters at a specific block hash.
         /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        Task<U64> GetStorageSizeAtAsync(byte[] parameters, byte[] blockHash, CancellationToken token);
-
-        Task<U64> GetStorageSizeAtAsync(byte[] parameters, string blockHash, CancellationToken token);
+        /// <param name="parameters">The parameters for which the storage size is requested.</param>
+        /// <param name="blockHash">The block hash to query at.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns the storage size.</returns>
+        Task<U64> GetStorageSizeAsync(byte[] parameters, byte[] blockHash, CancellationToken token);
 
         /// <summary>
-        /// Provides a way to trace the re-execution of a single block
+        /// Asynchronously queries storage changes for a given set of keys within a specified block range.
         /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        Task<object> GetTraceBlockAsync(byte[] parameters, CancellationToken token);
-
-        Task<object> GetTraceBlockAsync(byte[] parameters);
+        /// <param name="keysList">List of keys to query for changes.</param>
+        /// <param name="fromBlock">The starting block hash for the query range.</param>
+        /// <param name="toBlock">The ending block hash for the query range.</param>
+        /// <returns>A task that represents the asynchronous operation and returns a collection of storage change sets.</returns>
+        Task<IEnumerable<StorageChangeSet>> GetQueryStorageAsync(List<byte[]> keysList, string fromBlock, string toBlock);
 
         /// <summary>
-        /// Provides a way to trace the re-execution of a single block at specific block
+        /// Asynchronously queries storage changes for a given set of keys within a specified block range, with a cancellation token.
         /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        Task<object> GetTraceBlockAtAsync(byte[] parameters, byte[] blockHash, CancellationToken token);
-
-        Task<object> GetTraceBlockAtAsync(byte[] parameters, string blockHash, CancellationToken token);
+        /// <param name="keysList">List of keys to query for changes.</param>
+        /// <param name="fromBlock">The starting block hash for the query range.</param>
+        /// <param name="toBlock">The ending block hash for the query range.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns a collection of storage change sets.</returns>
+        Task<IEnumerable<StorageChangeSet>> GetQueryStorageAsync(List<byte[]> keysList, string fromBlock, string toBlock, CancellationToken token);
 
         /// <summary>
-        /// Retrieves the runtime version via subscription
+        /// Asynchronously queries storage changes for a given set of keys at a specific block hash.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="keysList">List of keys to query for changes.</param>
+        /// <param name="blockHash">The block hash to query at.</param>
+        /// <returns>A task that represents the asynchronous operation and returns a collection of storage change sets at the specified block.</returns>
+        Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, byte[] blockHash);
+
+        /// <summary>
+        /// Asynchronously queries storage changes for a given set of keys at a specific block hash, with a cancellation token.
+        /// </summary>
+        /// <param name="keysList">List of keys to query for changes.</param>
+        /// <param name="blockHash">The block hash to query at.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation and returns a collection of storage change sets at the specified block.</returns>
+        Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, string blockHash, CancellationToken token);
+
+        /// <summary>
+        /// Asynchronously subscribes to updates of the runtime version.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation, returning a subscription ID as a string.</returns>
         Task<string> SubscribeRuntimeVersionAsync();
 
         /// <summary>
-        /// Retrieves the runtime version via subscription
+        /// Asynchronously subscribes to updates of the runtime version with a cancellation token.
         /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task representing the asynchronous operation, returning a subscription ID as a string.</returns>
         Task<string> SubscribeRuntimeVersionAsync(CancellationToken token);
 
         /// <summary>
-        /// Retrieves the runtime version via subscription at specific block
+        /// Asynchronously subscribes to updates of the runtime version at a specific block hash.
         /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        Task<string> SubscribeRuntimeVersionAtAsync(byte[] blockHash, CancellationToken token);
-
-        Task<string> SubscribeRuntimeVersionAtAsync(string blockHash, CancellationToken token);
+        /// <param name="blockHash">The block hash to subscribe to.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task representing the asynchronous operation, returning a subscription ID as a string.</returns>
+        Task<string> SubscribeRuntimeVersionAsync(byte[] blockHash, CancellationToken token);
 
         /// <summary>
-        /// Subscribes to storage changes for the provided keys
+        /// Asynchronously subscribes to changes in the storage for specified keys.
         /// </summary>
-        /// <param name="keys"></param>
-        /// <param name="callback"></param>
-        /// <returns></returns>
+        /// <param name="keys">A collection of keys to subscribe to.</param>
+        /// <param name="callback">The callback action to invoke on each storage change.</param>
+        /// <returns>A task representing the asynchronous operation, returning a subscription ID as a string.</returns>
         Task<string> SubscribeStorageAsync(JArray keys, Action<string, StorageChangeSet> callback);
 
         /// <summary>
-        /// Subscribes to storage changes for the provided keys
+        /// Asynchronously subscribes to changes in the storage for specified keys, with a cancellation token.
         /// </summary>
-        /// <param name="keys"></param>
-        /// <param name="callback"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <param name="keys">A collection of keys to subscribe to.</param>
+        /// <param name="callback">The callback action to invoke on each storage change.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task representing the asynchronous operation, returning a subscription ID as a string.</returns>
         Task<string> SubscribeStorageAsync(JArray keys, Action<string, StorageChangeSet> callback, CancellationToken token);
 
         /// <summary>
-        /// Unsuscribe to given subscription id
+        /// Asynchronously traces a block.
         /// </summary>
-        /// <param name="subscriptionId"></param>
-        /// <returns></returns>
+        /// <param name="parameters">The parameters specifying the block to trace.</param>
+        /// <returns>A task representing the asynchronous operation, returning trace data.</returns>
+        Task<object> GetTraceBlockAsync(byte[] parameters);
+
+        /// <summary>
+        /// Asynchronously traces a block with a cancellation token.
+        /// </summary>
+        /// <param name="parameters">The parameters specifying the block to trace.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task representing the asynchronous operation, returning trace data.</returns>
+        Task<object> GetTraceBlockAsync(byte[] parameters, CancellationToken token);
+
+        /// <summary>
+        /// Asynchronously traces a block at a specific block hash.
+        /// </summary>
+        /// <param name="parameters">The parameters specifying the block to trace.</param>
+        /// <param name="blockHash">The block hash to trace.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task representing the asynchronous operation, returning trace data at the specified block hash.</returns>
+        Task<object> GetTraceBlockAsync(byte[] parameters, byte[] blockHash, CancellationToken token);
+
+        /// <summary>
+        /// Asynchronously unsubscribes from updates of the runtime version.
+        /// </summary>
+        /// <param name="subscriptionId">The subscription ID to cancel.</param>
+        /// <returns>A task representing the asynchronous operation, returning a boolean indicating success or failure.</returns>
         Task<bool> UnsubscribeRuntimeVersionAsync(string subscriptionId);
 
         /// <summary>
-        /// Unsuscribe to given subscription id
+        /// Asynchronously unsubscribes from updates of the runtime version with a cancellation token.
         /// </summary>
-        /// <param name="subscriptionId"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <param name="subscriptionId">The subscription ID to cancel.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task representing the asynchronous operation, returning a boolean indicating success or failure.</returns>
         Task<bool> UnsubscribeRuntimeVersionAsync(string subscriptionId, CancellationToken token);
 
         /// <summary>
-        /// Unsuscribe to given subscription id
+        /// Asynchronously unsubscribes from changes in the storage.
         /// </summary>
-        /// <param name="subscriptionId"></param>
-        /// <returns></returns>
+        /// <param name="subscriptionId">The subscription ID to cancel.</param>
+        /// <returns>A task representing the asynchronous operation, returning a boolean indicating success or failure.</returns>
         Task<bool> UnsubscribeStorageAsync(string subscriptionId);
 
         /// <summary>
-        /// Unsuscribe to given subscription id
+        /// Asynchronously unsubscribes from changes in the storage with a cancellation token.
         /// </summary>
-        /// <param name="subscriptionId"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <param name="subscriptionId">The subscription ID to cancel.</param>
+        /// <param name="token">A cancellation token.</param>
+        /// <returns>A task representing the asynchronous operation, returning a boolean indicating success or failure.</returns>
         Task<bool> UnsubscribeStorageAsync(string subscriptionId, CancellationToken token);
     }
 }

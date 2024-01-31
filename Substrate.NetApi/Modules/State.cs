@@ -12,16 +12,20 @@ using Substrate.NetApi.Modules.Contracts;
 
 namespace Substrate.NetApi.Modules
 {
-    /// <summary> A state. </summary>
-    /// <remarks> 19.09.2020. </remarks>
+    /// <summary>
+    /// State Module
+    /// </summary>
     public class State : IState
     {
-        /// <summary> The client. </summary>
+        /// <summary>
+        /// Substrate client.
+        /// </summary>
         private readonly SubstrateClient _client;
 
-        /// <summary> Constructor. </summary>
-        /// <remarks> 19.09.2020. </remarks>
-        /// <param name="client"> The client. </param>
+        /// <summary>
+        /// The state module allows you to interact with the storage of the runtime.
+        /// </summary>
+        /// <param name="client"></param>
         internal State(SubstrateClient client)
         {
             _client = client;
@@ -32,17 +36,21 @@ namespace Substrate.NetApi.Modules
         //state_getChildReadProof
         //state_getKeys
 
+        /// <inheritdoc/>
         public Task<JArray> GetKeysPagedAsync(byte[] keyPrefix, uint pageCount, byte[] startKey)
             => GetKeysPagedAsync(keyPrefix, pageCount, startKey, CancellationToken.None);
 
+        /// <inheritdoc/>
         public Task<JArray> GetKeysPagedAsync(byte[] keyPrefix, uint pageCount, byte[] startKey,
             CancellationToken token)
-            => GetKeysPagedAtAsync(keyPrefix, pageCount, startKey, string.Empty, token);
+            => GetKeysPagedAsync(keyPrefix, pageCount, startKey, string.Empty, token);
 
-        public Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, byte[] blockHash, CancellationToken token)
-            => GetKeysPagedAtAsync(keyPrefix, pageCount, startKey, Utils.Bytes2HexString(blockHash), token);
+        /// <inheritdoc/>
+        public Task<JArray> GetKeysPagedAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, byte[] blockHash, CancellationToken token)
+            => GetKeysPagedAsync(keyPrefix, pageCount, startKey, Utils.Bytes2HexString(blockHash), token);
 
-        public async Task<JArray> GetKeysPagedAtAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, string blockHash, CancellationToken token)
+        /// <inheritdoc/>
+        public async Task<JArray> GetKeysPagedAsync(byte[] keyPrefix, uint pageCount, byte[] startKey, string blockHash, CancellationToken token)
         {
             var fullParams = new object[]
             {
@@ -54,31 +62,39 @@ namespace Substrate.NetApi.Modules
             return await _client.InvokeAsync<JArray>("state_getKeysPaged", fullParams, token);
         }
 
+        /// <inheritdoc/>
         public Task<string> GetMetaDataAsync()
             => GetMetaDataAsync(CancellationToken.None);
 
+        /// <inheritdoc/>
         public Task<string> GetMetaDataAsync(CancellationToken token)
-            => GetMetaDataAtAsync(string.Empty, token);
+            => GetMetaDataAsync(string.Empty, token);
 
-        public Task<string> GetMetaDataAtAsync(byte[] blockHash, CancellationToken token)
-            => GetMetaDataAtAsync(Utils.Bytes2HexString(blockHash), token);
+        /// <inheritdoc/>
+        public Task<string> GetMetaDataAsync(byte[] blockHash, CancellationToken token)
+            => GetMetaDataAsync(Utils.Bytes2HexString(blockHash), token);
 
-        public async Task<string> GetMetaDataAtAsync(string blockHash, CancellationToken token)
+        /// <inheritdoc/>
+        public async Task<string> GetMetaDataAsync(string blockHash, CancellationToken token)
         {
             var fullParams = new object[] { string.IsNullOrEmpty(blockHash) ? null : blockHash };
             return await _client.InvokeAsync<string>("state_getMetadata", fullParams, token);
         }
 
+        /// <inheritdoc/>
         public Task<JArray> GetPairsAsync(byte[] keyPrefix)
             => GetPairsAsync(keyPrefix, CancellationToken.None);
 
+        /// <inheritdoc/>
         public Task<JArray> GetPairsAsync(byte[] keyPrefix, CancellationToken token)
-            => GetPairsAtAsync(keyPrefix, string.Empty, token);
+            => GetPairsAsync(keyPrefix, string.Empty, token);
 
-        public Task<JArray> GetPairsAtAsync(byte[] keyPrefix, byte[] blockHash, CancellationToken token)
-            => GetPairsAtAsync(keyPrefix, Utils.Bytes2HexString(blockHash), token);
+        /// <inheritdoc/>
+        public Task<JArray> GetPairsAsync(byte[] keyPrefix, byte[] blockHash, CancellationToken token)
+            => GetPairsAsync(keyPrefix, Utils.Bytes2HexString(blockHash), token);
 
-        public async Task<JArray> GetPairsAtAsync(byte[] keyPrefix, string blockHash, CancellationToken token)
+        /// <inheritdoc/>
+        public async Task<JArray> GetPairsAsync(byte[] keyPrefix, string blockHash, CancellationToken token)
         {
             var fullParams = new object[]
             {
@@ -89,16 +105,24 @@ namespace Substrate.NetApi.Modules
             return await _client.InvokeAsync<JArray>("state_getPairs", fullParams, token);
         }
 
+
+        /// <inheritdoc/>
         public Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes)
          => GetReadProofAsync(keyPrefixes, CancellationToken.None);
 
+
+        /// <inheritdoc/>
         public Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes, CancellationToken token)
-            => GetReadProofAtAsync(keyPrefixes, string.Empty, token);
+            => GetReadProofAsync(keyPrefixes, string.Empty, token);
 
-        public Task<ReadProof> GetReadProofAtAsync(IEnumerable<byte[]> keyPrefixes, byte[] blockHash, CancellationToken token)
-            => GetReadProofAtAsync(keyPrefixes, Utils.Bytes2HexString(blockHash), token);
 
-        public async Task<ReadProof> GetReadProofAtAsync(IEnumerable<byte[]> keyPrefixes, string blockHash, CancellationToken token)
+        /// <inheritdoc/>
+        public Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes, byte[] blockHash, CancellationToken token)
+            => GetReadProofAsync(keyPrefixes, Utils.Bytes2HexString(blockHash), token);
+
+
+        /// <inheritdoc/>
+        public async Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes, string blockHash, CancellationToken token)
         {
             var fullParams = new object[]
             {
@@ -109,16 +133,20 @@ namespace Substrate.NetApi.Modules
             return await _client.InvokeAsync<ReadProof>("state_getReadProof", fullParams, token);
         }
 
+        /// <inheritdoc/>
         public Task<RuntimeVersion> GetRuntimeVersionAsync()
             => GetRuntimeVersionAsync(CancellationToken.None);
 
+        /// <inheritdoc/>
         public Task<RuntimeVersion> GetRuntimeVersionAsync(CancellationToken token)
-            => GetRuntimeVersionAtAsync(string.Empty, token);
+            => GetRuntimeVersionAsync(string.Empty, token);
 
-        public Task<RuntimeVersion> GetRuntimeVersionAtAsync(byte[] blockHash, CancellationToken token)
-            => GetRuntimeVersionAtAsync(Utils.Bytes2HexString(blockHash), token);
+        /// <inheritdoc/>
+        public Task<RuntimeVersion> GetRuntimeVersionAsync(byte[] blockHash, CancellationToken token)
+            => GetRuntimeVersionAsync(Utils.Bytes2HexString(blockHash), token);
 
-        public async Task<RuntimeVersion> GetRuntimeVersionAtAsync(string blockHash, CancellationToken token)
+        /// <inheritdoc/>
+        public async Task<RuntimeVersion> GetRuntimeVersionAsync(string blockHash, CancellationToken token)
         {
             var fullParams = new object[]
             {
@@ -128,16 +156,20 @@ namespace Substrate.NetApi.Modules
             return await _client.InvokeAsync<RuntimeVersion>("state_getRuntimeVersion", fullParams, token);
         }
 
+        /// <inheritdoc/>
         public Task<object> GetStorageAsync(byte[] parameters)
             => GetStorageAsync(parameters, CancellationToken.None);
 
+        /// <inheritdoc/>
         public Task<object> GetStorageAsync(byte[] parameters, CancellationToken token)
-            => GetStorageAtAsync(parameters, string.Empty, token);
+            => GetStorageAsync(parameters, string.Empty, token);
 
-        public Task<object> GetStorageAtAsync(byte[] parameters, byte[] blockHash, CancellationToken token)
-            => GetStorageAtAsync(parameters, Utils.Bytes2HexString(blockHash), token);
+        /// <inheritdoc/>
+        public Task<object> GetStorageAsync(byte[] parameters, byte[] blockHash, CancellationToken token)
+            => GetStorageAsync(parameters, Utils.Bytes2HexString(blockHash), token);
 
-        public async Task<object> GetStorageAtAsync(byte[] parameters, string blockHash, CancellationToken token)
+        /// <inheritdoc/>
+        public async Task<object> GetStorageAsync(byte[] parameters, string blockHash, CancellationToken token)
         {
             var fullParams = new object[]
             {
@@ -148,16 +180,20 @@ namespace Substrate.NetApi.Modules
             return await _client.InvokeAsync<object>("state_getStorage", fullParams.ToArray(), token);
         }
 
+        /// <inheritdoc/>
         public Task<Hash> GetStorageHashAsync(byte[] key)
             => GetStorageHashAsync(key, CancellationToken.None);
 
+        /// <inheritdoc/>
         public Task<Hash> GetStorageHashAsync(byte[] key, CancellationToken token)
-            => GetStorageHashAtAsync(key, string.Empty, token);
+            => GetStorageHashAsync(key, string.Empty, token);
 
-        public Task<Hash> GetStorageHashAtAsync(byte[] key, byte[] blockHash, CancellationToken token)
-            => GetStorageHashAtAsync(key, Utils.Bytes2HexString(blockHash), token);
+        /// <inheritdoc/>
+        public Task<Hash> GetStorageHashAsync(byte[] key, byte[] blockHash, CancellationToken token)
+            => GetStorageHashAsync(key, Utils.Bytes2HexString(blockHash), token);
 
-        public async Task<Hash> GetStorageHashAtAsync(byte[] parameters, string blockHash, CancellationToken token)
+        /// <inheritdoc/>
+        public async Task<Hash> GetStorageHashAsync(byte[] parameters, string blockHash, CancellationToken token)
         {
             var fullParams = new object[]
             {
@@ -168,16 +204,20 @@ namespace Substrate.NetApi.Modules
             return await _client.InvokeAsync<Hash>("state_getStorageHash", fullParams, token);
         }
 
+        /// <inheritdoc/>
         public Task<U64> GetStorageSizeAsync(byte[] parameters)
             => GetStorageSizeAsync(parameters, CancellationToken.None);
 
+        /// <inheritdoc/>
         public Task<U64> GetStorageSizeAsync(byte[] parameters, CancellationToken token)
-            => GetStorageSizeAtAsync(parameters, string.Empty, token);
+            => GetStorageSizeAsync(parameters, string.Empty, token);
 
-        public Task<U64> GetStorageSizeAtAsync(byte[] parameters, byte[] blockHash, CancellationToken token)
-            => GetStorageSizeAtAsync(parameters, Utils.Bytes2HexString(blockHash), token);
+        /// <inheritdoc/>
+        public Task<U64> GetStorageSizeAsync(byte[] parameters, byte[] blockHash, CancellationToken token)
+            => GetStorageSizeAsync(parameters, Utils.Bytes2HexString(blockHash), token);
 
-        public async Task<U64> GetStorageSizeAtAsync(byte[] parameters, string blockHash, CancellationToken token)
+        /// <inheritdoc/>
+        public async Task<U64> GetStorageSizeAsync(byte[] parameters, string blockHash, CancellationToken token)
         {
             var fullParams = new object[]
             {
@@ -196,9 +236,11 @@ namespace Substrate.NetApi.Modules
             return resNumber;
         }
 
+        /// <inheritdoc/>
         public Task<IEnumerable<StorageChangeSet>> GetQueryStorageAsync(List<byte[]> keysList, string fromBlock, string toBlock)
             => GetQueryStorageAsync(keysList, fromBlock, toBlock, CancellationToken.None);
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<StorageChangeSet>> GetQueryStorageAsync(List<byte[]> keysList, string fromBlock, string toBlock, CancellationToken token)
         {
             var fullParams = new object[]
@@ -217,9 +259,16 @@ namespace Substrate.NetApi.Modules
             return JsonConvert.DeserializeObject<IEnumerable<StorageChangeSet>>(jArray.ToString());
         }
 
-        public Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, byte[] blockHash, CancellationToken token)
-            => GetQueryStorageAtAsync(keysList, Utils.Bytes2HexString(blockHash), token);
+        /// <inheritdoc/>
+        public Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, byte[] blockHash)
+            => GetQueryStorageAtAsync(keysList, Utils.Bytes2HexString(blockHash));
 
+        /// <inheritdoc/>
+        public Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, string blockHash)
+            => GetQueryStorageAtAsync(keysList, blockHash, CancellationToken.None);
+
+
+        /// <inheritdoc/>
         public async Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, string blockHash, CancellationToken token)
         {
             var fullParams = new object[]
@@ -237,16 +286,20 @@ namespace Substrate.NetApi.Modules
             return JsonConvert.DeserializeObject<IEnumerable<StorageChangeSet>>(jArray.ToString());
         }
 
+        /// <inheritdoc/>
         public Task<string> SubscribeRuntimeVersionAsync()
             => SubscribeRuntimeVersionAsync(CancellationToken.None);
 
+        /// <inheritdoc/>
         public Task<string> SubscribeRuntimeVersionAsync(CancellationToken token)
-            => SubscribeRuntimeVersionAtAsync(string.Empty, token);
+            => SubscribeRuntimeVersionAsync(string.Empty, token);
 
-        public Task<string> SubscribeRuntimeVersionAtAsync(byte[] blockHash, CancellationToken token)
-            => SubscribeRuntimeVersionAtAsync(Utils.Bytes2HexString(blockHash), token);
+        /// <inheritdoc/>
+        public Task<string> SubscribeRuntimeVersionAsync(byte[] blockHash, CancellationToken token)
+            => SubscribeRuntimeVersionAsync(Utils.Bytes2HexString(blockHash), token);
 
-        public async Task<string> SubscribeRuntimeVersionAtAsync(string blockHash, CancellationToken token)
+        /// <inheritdoc/>
+        public async Task<string> SubscribeRuntimeVersionAsync(string blockHash, CancellationToken token)
         {
             var fullParams = new object[]
             {
@@ -256,11 +309,13 @@ namespace Substrate.NetApi.Modules
             return await _client.InvokeAsync<string>("state_subscribeRuntimeVersion", fullParams, token);
         }
 
+        /// <inheritdoc/>
         public async Task<string> SubscribeStorageAsync(JArray keys, Action<string, StorageChangeSet> callback)
         {
             return await SubscribeStorageAsync(keys, callback, CancellationToken.None);
         }
 
+        /// <inheritdoc/>
         public async Task<string> SubscribeStorageAsync(JArray keys, Action<string, StorageChangeSet> callback,
             CancellationToken token)
         {
@@ -270,16 +325,20 @@ namespace Substrate.NetApi.Modules
             return subscriptionId;
         }
 
+        /// <inheritdoc/>
         public Task<object> GetTraceBlockAsync(byte[] parameters)
             => GetTraceBlockAsync(parameters, CancellationToken.None);
 
+        /// <inheritdoc/>
         public Task<object> GetTraceBlockAsync(byte[] parameters, CancellationToken token)
-            => GetTraceBlockAtAsync(parameters, string.Empty, token);
+            => GetTraceBlockAsync(parameters, string.Empty, token);
 
-        public Task<object> GetTraceBlockAtAsync(byte[] parameters, byte[] blockHash, CancellationToken token)
-            => GetTraceBlockAtAsync(parameters, Utils.Bytes2HexString(blockHash), token);
+        /// <inheritdoc/>
+        public Task<object> GetTraceBlockAsync(byte[] parameters, byte[] blockHash, CancellationToken token)
+            => GetTraceBlockAsync(parameters, Utils.Bytes2HexString(blockHash), token);
 
-        public async Task<object> GetTraceBlockAtAsync(byte[] parameters, string blockHash, CancellationToken token)
+        /// <inheritdoc/>
+        public async Task<object> GetTraceBlockAsync(byte[] parameters, string blockHash, CancellationToken token)
         {
             var fullParams = new object[]
             {
@@ -290,22 +349,26 @@ namespace Substrate.NetApi.Modules
             return await _client.InvokeAsync<object>("state_traceBlock", fullParams, token);
         }
 
+        /// <inheritdoc/>
         public async Task<bool> UnsubscribeRuntimeVersionAsync(string subscriptionId)
         {
             return await UnsubscribeRuntimeVersionAsync(subscriptionId, CancellationToken.None);
         }
 
+        /// <inheritdoc/>
         public async Task<bool> UnsubscribeRuntimeVersionAsync(string subscriptionId, CancellationToken token)
         {
             return await _client.InvokeAsync<bool>("state_unsubscribeRuntimeVersion", new object[] { subscriptionId },
                 token);
         }
 
+        /// <inheritdoc/>
         public async Task<bool> UnsubscribeStorageAsync(string subscriptionId)
         {
             return await UnsubscribeStorageAsync(subscriptionId, CancellationToken.None);
         }
 
+        /// <inheritdoc/>
         public async Task<bool> UnsubscribeStorageAsync(string subscriptionId, CancellationToken token)
         {
             return await _client.InvokeAsync<bool>("state_unsubscribeStorage", new object[] { subscriptionId }, token);

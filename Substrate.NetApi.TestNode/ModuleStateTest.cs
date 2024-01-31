@@ -27,7 +27,7 @@ namespace Substrate.NetApi.TestNode
 
             var blockHash = await _substrateClient.Chain.GetBlockHashAsync(blockNumber);
 
-            var result = await _substrateClient.State.GetKeysPagedAtAsync(RequestGenerator.GetStorageKeyBytesHash("System", "BlockHash"), 10, null, blockHash.Bytes, CancellationToken.None);
+            var result = await _substrateClient.State.GetKeysPagedAsync(RequestGenerator.GetStorageKeyBytesHash("System", "BlockHash"), 10, null, blockHash.Bytes, CancellationToken.None);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(10, result.Count);
@@ -68,8 +68,8 @@ namespace Substrate.NetApi.TestNode
         {
             var blockHash = await GivenBlockAsync();
 
-            var metadata_1 = await _substrateClient.State.GetMetaDataAtAsync(blockHash, CancellationToken.None);
-            var metadata_2 = await _substrateClient.State.GetMetaDataAtAsync(Utils.Bytes2HexString(blockHash), CancellationToken.None);
+            var metadata_1 = await _substrateClient.State.GetMetaDataAsync(blockHash, CancellationToken.None);
+            var metadata_2 = await _substrateClient.State.GetMetaDataAsync(Utils.Bytes2HexString(blockHash), CancellationToken.None);
 
             Assert.That(metadata_1, Is.Not.Null);
             Assert.That(metadata_2, Is.Not.Null);
@@ -99,8 +99,8 @@ namespace Substrate.NetApi.TestNode
         {
             var blockHash = await GivenBlockAsync();
 
-            var runtimeVersion_1 = await _substrateClient.State.GetRuntimeVersionAtAsync(blockHash, CancellationToken.None);
-            var runtimeVersion_2 = await _substrateClient.State.GetRuntimeVersionAtAsync(Utils.Bytes2HexString(blockHash), CancellationToken.None);
+            var runtimeVersion_1 = await _substrateClient.State.GetRuntimeVersionAsync(blockHash, CancellationToken.None);
+            var runtimeVersion_2 = await _substrateClient.State.GetRuntimeVersionAsync(Utils.Bytes2HexString(blockHash), CancellationToken.None);
 
             Assert.That(runtimeVersion_1, Is.Not.Null);
             Assert.That(runtimeVersion_2, Is.Not.Null);
@@ -136,8 +136,8 @@ namespace Substrate.NetApi.TestNode
             var blockHash = await GivenBlockAsync();
             var storageKeys = new List<byte[]>() { Utils.HexToByteArray(storageKeyHex) };
 
-            var call_1 = await _substrateClient.State.GetReadProofAtAsync(storageKeys, blockHash, CancellationToken.None);
-            var call_2 = await _substrateClient.State.GetReadProofAtAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
+            var call_1 = await _substrateClient.State.GetReadProofAsync(storageKeys, blockHash, CancellationToken.None);
+            var call_2 = await _substrateClient.State.GetReadProofAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
 
             Assert.That(call_1, Is.Not.Null);
             Assert.That(call_2, Is.Not.Null);
@@ -166,8 +166,8 @@ namespace Substrate.NetApi.TestNode
             var blockHash = await GivenBlockAsync();
             var storageKeys = Utils.HexToByteArray(storageKeyHex);
 
-            var call_1 = await _substrateClient.State.GetStorageAtAsync(storageKeys, blockHash, CancellationToken.None);
-            var call_2 = await _substrateClient.State.GetStorageAtAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
+            var call_1 = await _substrateClient.State.GetStorageAsync(storageKeys, blockHash, CancellationToken.None);
+            var call_2 = await _substrateClient.State.GetStorageAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
 
             Assert.That(call_1, Is.Not.Null);
             Assert.That(call_2, Is.Not.Null);
@@ -195,8 +195,8 @@ namespace Substrate.NetApi.TestNode
             var blockHash = await GivenBlockAsync();
             var storageKeys = Utils.HexToByteArray(storageKeyHex);
 
-            var call_1 = await _substrateClient.State.GetStorageHashAtAsync(storageKeys, blockHash, CancellationToken.None);
-            var call_2 = await _substrateClient.State.GetStorageHashAtAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
+            var call_1 = await _substrateClient.State.GetStorageHashAsync(storageKeys, blockHash, CancellationToken.None);
+            var call_2 = await _substrateClient.State.GetStorageHashAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
 
             Assert.That(call_1, Is.Not.Null);
             Assert.That(call_2, Is.Not.Null);
@@ -224,8 +224,8 @@ namespace Substrate.NetApi.TestNode
             var blockHash = await GivenBlockAsync();
             var storageKeys = Utils.HexToByteArray(storageKeyHex);
 
-            var call_1 = await _substrateClient.State.GetStorageSizeAtAsync(storageKeys, blockHash, CancellationToken.None);
-            var call_2 = await _substrateClient.State.GetStorageSizeAtAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
+            var call_1 = await _substrateClient.State.GetStorageSizeAsync(storageKeys, blockHash, CancellationToken.None);
+            var call_2 = await _substrateClient.State.GetStorageSizeAsync(storageKeys, Utils.Bytes2HexString(blockHash), CancellationToken.None);
 
             Assert.That(call_1, Is.Not.Null);
             Assert.That(call_2, Is.Not.Null);
@@ -237,20 +237,42 @@ namespace Substrate.NetApi.TestNode
         [TestCase("0xf0c365c3cf59d671eb72da0e7a4113c49f1f0515f462cdcf84e0f1d6045dfcbb")]
         public async Task SubscribeStorage_ShouldWorkAsync(string storageKeyHex)
         {
-            Action<string, StorageChangeSet> callBack = (key, storacheChangeSet) =>
+            var tcs = new TaskCompletionSource<bool>();
+
+            Action<string, StorageChangeSet> callBack = (key, storageChangeSet) =>
             {
-                Assert.AreEqual("String", key.GetType().Name);
-                Assert.AreEqual(1, storacheChangeSet.Changes.Length);
-                Assert.AreEqual(2, storacheChangeSet.Changes[0].Length);
-                Assert.AreEqual(storageKeyHex, storacheChangeSet.Changes[0][0]);
+                try
+                {
+                    Assert.AreEqual("String", key.GetType().Name);
+                    Assert.AreEqual(1, storageChangeSet.Changes.Length);
+                    Assert.AreEqual(2, storageChangeSet.Changes[0].Length);
+                    Assert.AreEqual(storageKeyHex, storageChangeSet.Changes[0][0]);
+
+                    tcs.SetResult(true); // Signal that the test can continue
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex); // Propagate the exception to the awaiting test
+                }
             };
 
             var subscriptionId = await _substrateClient.State.SubscribeStorageAsync(new JArray() { storageKeyHex }, callBack, CancellationToken.None);
 
-            Thread.Sleep(20 * 1000);
+            // Wait for the callback to complete or timeout after 20 seconds
+            if (await Task.WhenAny(tcs.Task, Task.Delay(20000)) == tcs.Task)
+            {
+                // The callback completed within 20 seconds
+                await tcs.Task; // Rethrow exception if the test failed
+            }
+            else
+            {
+                // The test timed out
+                Assert.Fail("Test timed out.");
+            }
 
             await _substrateClient.State.UnsubscribeStorageAsync(subscriptionId, CancellationToken.None);
         }
+
 
         [Test]
         public void SubscribeStorageAll_Failure()

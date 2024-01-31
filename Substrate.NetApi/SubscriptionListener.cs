@@ -7,8 +7,12 @@ using StreamJsonRpc;
 
 namespace Substrate.NetApi
 {
+    /// <summary>
+    /// Subscription Listener
+    /// </summary>
     public class SubscriptionListener
     {
+
         /// <summary> The logger. </summary>
         private static readonly ILogger Logger = new LoggerConfiguration().CreateLogger();
 
@@ -139,6 +143,28 @@ namespace Substrate.NetApi
         /// <returns></returns>
         [JsonRpcMethod("author_extrinsicUpdate")]
         public void AuthorSubmitAndWatchExtrinsic(string subscription, ExtrinsicStatus result)
+        {
+            GenericCallBack(subscription, result);
+        }
+
+        /// <summary>
+        /// TODO: Probablly deprecated, Authors the submit and watch extrinsic.
+        /// </summary>
+        /// <param name="subscription"></param>
+        /// <param name="result"></param>
+        [JsonRpcMethod("transaction_unstable_submitExtrinsic")]
+        public void TransactionUnstableSubmitExtrinsic(string subscription, TransactionEventInfo result)
+        {
+            GenericCallBack(subscription, result);
+        }
+
+        /// <summary>
+        /// Transaction unstable watch eventc.
+        /// </summary>
+        /// <param name="subscription"></param>
+        /// <param name="result"></param>
+        [JsonRpcMethod("transaction_unstable_watchEvent")]
+        public void TransactionUnstableWatchEventc(string subscription, TransactionEventInfo result)
         {
             GenericCallBack(subscription, result);
         }
