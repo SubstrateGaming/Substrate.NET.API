@@ -9,7 +9,7 @@ using Substrate.NetApi.Model.Types;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
 using NUnit.Framework;
-using Schnorrkel.Keys;
+using Substrate.NET.Schnorrkel.Keys;
 
 namespace Substrate.NetApi.TestNode
 {

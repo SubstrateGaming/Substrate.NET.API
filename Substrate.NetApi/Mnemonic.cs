@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Substrate.NetApi.BIP39;
 using Substrate.NetApi.Model.Types;
-using Schnorrkel.Keys;
+using Substrate.NET.Schnorrkel.Keys;
 using Substrate.NetApi.Extensions;
 
 namespace Substrate.NetApi
