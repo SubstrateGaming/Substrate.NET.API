@@ -234,7 +234,7 @@ namespace Substrate.NetApi
             var newChecksum = DeriveChecksumBits(entropyBytes);
 
             if (newChecksum != checksumBits)
-                throw new Exception("InvalidChecksum");
+                throw new InvalidOperationException("InvalidChecksum");
 
             var result = BitConverter
                 .ToString(entropyBytes)
@@ -259,7 +259,7 @@ namespace Substrate.NetApi
         private static string DeriveChecksumBits(byte[] entropyBytes)
         {
             var ent = entropyBytes.Length * 8;
-            var cs = (int)ent / 32;
+            var cs = ent / 32;
 
             var sha256Provider = SHA256.Create();
             var hash = sha256Provider.ComputeHash(entropyBytes);
@@ -302,7 +302,7 @@ namespace Substrate.NetApi
                     return new Portuguese();
 
                 default:
-                    throw new Exception($"Unknown {language} in BIP39 implementation!");
+                    throw new InvalidOperationException($"Unknown {language} in BIP39 implementation!");
             }
         }
 
