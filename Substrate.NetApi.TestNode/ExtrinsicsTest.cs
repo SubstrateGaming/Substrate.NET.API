@@ -1,13 +1,13 @@
 using NUnit.Framework;
 using NUnit.Framework.Internal;
-using Schnorrkel.Keys;
+using Substrate.NET.Schnorrkel.Keys;
 using Substrate.NetApi.Model.Extrinsics;
 using Substrate.NetApi.Model.Rpc;
 using Substrate.NetApi.Model.Types;
 using Substrate.NetApi.Model.Types.Base;
 using System;
 using System.Threading;
-using Substrate.NET.System.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace Substrate.NetApi.TestNode
 {

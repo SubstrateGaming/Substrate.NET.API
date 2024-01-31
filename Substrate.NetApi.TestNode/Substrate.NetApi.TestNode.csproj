@@ -14,6 +14,7 @@
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Substrate.NET.Schnorrkel" Version="1.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>
