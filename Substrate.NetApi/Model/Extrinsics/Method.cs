@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using Substrate.NetApi.Model.Types;
 
 namespace Substrate.NetApi.Model.Extrinsics
 {
@@ -29,9 +30,14 @@ namespace Substrate.NetApi.Model.Extrinsics
         public byte CallIndex { get; set; }
 
         /// <summary>
+        /// Parameters unencoded
+        /// </summary>
+        public IEncodable Parameters { get; set; }
+
+        /// <summary>
         /// Parameters
         /// </summary>
-        public byte[] Parameters { get; set; }
+        public byte[] ParametersBytes { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Method"/> class.
@@ -43,7 +49,7 @@ namespace Substrate.NetApi.Model.Extrinsics
         {
             ModuleIndex = moduleIndex;
             CallIndex = callIndex;
-            Parameters = parameters ?? new byte[0];
+            ParametersBytes = parameters ?? new byte[0];
         }
 
         /// <summary>
@@ -55,7 +61,7 @@ namespace Substrate.NetApi.Model.Extrinsics
         {
             ModuleIndex = moduleIndex;
             CallIndex = callIndex;
-            Parameters = new byte[0];
+            ParametersBytes = new byte[0];
         }
 
         /// <summary>
@@ -72,8 +78,20 @@ namespace Substrate.NetApi.Model.Extrinsics
             ModuleIndex = moduleIndex;
             CallName = callName;
             CallIndex = callIndex;
-            Parameters = parameters;
+            ParametersBytes = parameters;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Method"/> class.
+        /// </summary>
+        /// <param name="moduleIndex"></param>
+        /// <param name="moduleName"></param>
+        /// <param name="callIndex"></param>
+        /// <param name="callName"></param>
+        /// <param name="parameters"></param>
+        public Method(byte moduleIndex, string moduleName, byte callIndex, string callName, IEncodable parameters) 
+            : this(moduleIndex, moduleName, callIndex, callName, parameters.Encode())
+        { }
 
         /// <summary>
         /// Encodes this instance.
@@ -84,7 +102,7 @@ namespace Substrate.NetApi.Model.Extrinsics
             var result = new List<byte>();
             result.Add(ModuleIndex);
             result.Add(CallIndex);
-            result.AddRange(Parameters);
+            result.AddRange(ParametersBytes);
             return result.ToArray();
         }
 
