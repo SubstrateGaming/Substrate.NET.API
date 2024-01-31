@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Linq;
 using Substrate.NetApi.Model.Types;
 
 namespace Substrate.NetApi.Model.Extrinsics
 {
     /// <summary>
-    /// Method
+    /// Represents a method call in a blockchain transaction, encapsulating module and call information along with parameters.
     /// </summary>
     public class Method
     {
@@ -32,7 +32,7 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <summary>
         /// Parameters unencoded
         /// </summary>
-        public IEncodable Parameters { get; set; }
+        public IType[] Parameters { get; set; }
 
         /// <summary>
         /// Parameters
@@ -45,11 +45,9 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <param name="moduleIndex">Index of the module.</param>
         /// <param name="callIndex">Index of the call.</param>
         /// <param name="parameters">The parameters.</param>
-        public Method(byte moduleIndex, byte callIndex, byte[] parameters)
-        {
-            ModuleIndex = moduleIndex;
-            CallIndex = callIndex;
-            ParametersBytes = parameters ?? new byte[0];
+        public Method(byte moduleIndex, byte callIndex, byte[] parameters) 
+            : this(moduleIndex, null, callIndex, null, parameters)
+        { 
         }
 
         /// <summary>
@@ -58,11 +56,8 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <param name="moduleIndex">Index of the module.</param>
         /// <param name="callIndex">Index of the call.</param>
         public Method(byte moduleIndex, byte callIndex)
-        {
-            ModuleIndex = moduleIndex;
-            CallIndex = callIndex;
-            ParametersBytes = new byte[0];
-        }
+            : this(moduleIndex, callIndex, null)
+        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Method"/> class.
@@ -78,20 +73,27 @@ namespace Substrate.NetApi.Model.Extrinsics
             ModuleIndex = moduleIndex;
             CallName = callName;
             CallIndex = callIndex;
-            ParametersBytes = parameters;
+            Parameters = null;
+            ParametersBytes = parameters ?? new byte[0];
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Method"/> class.
         /// </summary>
-        /// <param name="moduleIndex"></param>
-        /// <param name="moduleName"></param>
-        /// <param name="callIndex"></param>
-        /// <param name="callName"></param>
-        /// <param name="parameters"></param>
-        public Method(byte moduleIndex, string moduleName, byte callIndex, string callName, IEncodable parameters) 
-            : this(moduleIndex, moduleName, callIndex, callName, parameters.Encode())
-        { }
+        /// <param name="moduleIndex">Index of the module.</param>
+        /// <param name="moduleName">Name of the module.</param>
+        /// <param name="callIndex">Index of the call.</param>
+        /// <param name="callName">Name of the call.</param>
+        /// <param name="iTypes">The ITypes array.</param>
+        public Method(byte moduleIndex, string moduleName, byte callIndex, string callName, IType[] iTypes)
+        {
+            ModuleName = moduleName;
+            ModuleIndex = moduleIndex;
+            CallName = callName;
+            CallIndex = callIndex;
+            Parameters = iTypes;
+            ParametersBytes = iTypes.SelectMany(param => param.Encode()).ToArray();
+        }
 
         /// <summary>
         /// Encodes this instance.
@@ -99,9 +101,11 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <returns></returns>
         public byte[] Encode()
         {
-            var result = new List<byte>();
-            result.Add(ModuleIndex);
-            result.Add(CallIndex);
+            var result = new List<byte>
+            {
+                ModuleIndex,
+                CallIndex
+            };
             result.AddRange(ParametersBytes);
             return result.ToArray();
         }
@@ -109,7 +113,7 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this);
+            return $"Module: {ModuleName}, Call: {CallName}, Indexes: [{ModuleIndex}, {CallIndex}]";
         }
     }
 }

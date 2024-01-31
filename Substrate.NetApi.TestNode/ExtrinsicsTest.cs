@@ -5,6 +5,7 @@ using Substrate.NetApi.Model.Extrinsics;
 using Substrate.NetApi.Model.Rpc;
 using Substrate.NetApi.Model.Types;
 using Substrate.NetApi.Model.Types.Base;
+using Substrate.NetApi.Model.Types.Primitive;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -71,7 +72,9 @@ namespace Substrate.NetApi.TestNode
         [Test]
         public async Task Extrinsic_SubmitAndWatchExtrinsicAsync()
         {
-            var method = new Method(0, "System", 0, "remark", new byte[] { 0x04, 0xFF });
+            var iType = new BaseVec<U8>(new U8[] { (U8) 0x04, (U8) 0xFF });
+
+            var method = new Method(0, "System", 0, "remark", new IType[] { iType });
 
             var taskCompletionSource = new TaskCompletionSource<(bool, Hash)>();
             await _substrateClient.Author.SubmitAndWatchExtrinsicAsync((string subscriptionId, ExtrinsicStatus extrinsicUpdate) =>
