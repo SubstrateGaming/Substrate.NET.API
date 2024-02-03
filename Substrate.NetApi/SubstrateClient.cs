@@ -19,6 +19,7 @@ using Microsoft.VisualStudio.Threading;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using StreamJsonRpc;
+using Newtonsoft.Json;
 
 [assembly: InternalsVisibleTo("Substrate.NetApi.Test")]
 
@@ -245,16 +246,25 @@ namespace Substrate.NetApi
 
             if (standardSubstrate)
             {
+                // Genesis hash is needed for request generator
                 var genesis = new BlockNumber();
                 genesis.Create(0);
                 GenesisHash = await Chain.GetBlockHashAsync(genesis, token);
                 Logger.Debug("Genesis hash parsed.");
 
+                // Runtime version hash is needed for request generator
                 RuntimeVersion = await State.GetRuntimeVersionAsync(token);
                 Logger.Debug("Runtime version parsed.");
 
-                Properties = await System.PropertiesAsync(token);
-                Logger.Debug("Properties parsed.");
+                try
+                {
+                    Properties = await System.PropertiesAsync(token);
+                    Logger.Debug("Properties parsed.");
+                }
+                catch (JsonSerializationException ex)
+                {
+                    Logger.Warning(ex, "Could not deserialize properties on connect.");
+                }
             }
 
             //_jsonRpc.TraceSource.Switch.Level = SourceLevels.All;
