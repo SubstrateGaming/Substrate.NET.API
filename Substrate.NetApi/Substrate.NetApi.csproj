@@ -24,7 +24,7 @@
 		<PackageReference Include="Serilog" Version="3.0.1" />
 		<PackageReference Include="SerilogTraceListener" Version="3.2.0" />
 		<PackageReference Include="StreamJsonRpc" Version="2.16.36" />
-		<PackageReference Include="Substrate.NET.Schnorrkel" Version="1.2.1" />
+		<PackageReference Include="Substrate.NET.Schnorrkel" Version="1.2.2" />
 	</ItemGroup>
 
 	<ItemGroup>

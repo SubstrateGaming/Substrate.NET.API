@@ -87,5 +87,25 @@ namespace Substrate.NetApi.Test.Keys
             var simpleSign2 = Utils.HexToByteArray(polkadotJsSignature);
             Assert.True(Substrate.NET.Schnorrkel.Sr25519v091.Verify(simpleSign2, keyPairAlice.Public.Key, messageBytes));
         }
+
+        [Test]
+        [TestCase("0x5c42ac4e2d55b8e59d9b255af370de03fe177f5545eecbbd784531cb2eb1f2553e0e2b91656f99fae930eb6ff8ac1a3eca4e19d307ecb39832a479a478a8608a")]
+        public void AccountSr25519SignatureTestComparePolkadotJs(string polkadotJsSignature)
+        {
+            var miniSecretAlice = new MiniSecret(Utils.HexToByteArray("0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a"), ExpandMode.Ed25519);
+
+            var account = Account.Build(KeyType.Sr25519, miniSecretAlice.ExpandToSecret().ToEd25519Bytes(), miniSecretAlice.GetPair().Public.Key);
+
+            var message = "I test this signature!";
+            var messageBytes = WrapMessage.Wrap(message);
+
+            var simpleSign = account.Sign(messageBytes);
+            var singatureHexString = Utils.Bytes2HexString(simpleSign);
+            // SIGn C#: 0x2A6346A8707A9929B65167C448F719FE977F2EE04D2CB250685C98C79CCBF2458901F9B386D08422D9102FBD8BF7CFECDF7605F4CDC5FA8D121E2E9730F9098C
+
+            // SIGn PolkaJS:0x5c42ac4e2d55b8e59d9b255af370de03fe177f5545eecbbd784531cb2eb1f2553e0e2b91656f99fae930eb6ff8ac1a3eca4e19d307ecb39832a479a478a8608a
+            var simpleSign2 = Utils.HexToByteArray(polkadotJsSignature);
+            Assert.True(account.Verify(simpleSign2, account.Bytes, messageBytes));
+        }
     }
 }

@@ -160,7 +160,7 @@ namespace Substrate.NetApi.Model.Types
                     return Ed25519.Sign(message, PrivateKey);
 
                 case KeyType.Sr25519:
-                    return Sr25519v091.SignEd25519(Bytes, PrivateKey, message);
+                    return Sr25519v091.SignSimpleFromEd25519(Bytes, PrivateKey, message);
 
                 default:
                     throw new NotSupportedException($"Unknown key type found '{KeyType}'.");
@@ -200,7 +200,7 @@ namespace Substrate.NetApi.Model.Types
                     return Ed25519.Verify(signature, message, publicKey);
 
                 case KeyType.Sr25519:
-                    return Sr25519v091.VerifyEd25519(signature, publicKey, message);
+                    return Sr25519v091.Verify(signature, publicKey, message);
 
                 default:
                     throw new NotSupportedException($"Unknown key type found '{KeyType}'.");
