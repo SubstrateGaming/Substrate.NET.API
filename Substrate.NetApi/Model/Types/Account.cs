@@ -1,6 +1,6 @@
 ﻿using Chaos.NaCl;
 using Newtonsoft.Json;
-using Schnorrkel;
+using Substrate.NET.Schnorrkel;
 using Substrate.NetApi.Model.Extrinsics;
 using Substrate.NetApi.Model.Types.Base;
 using System;
@@ -160,7 +160,7 @@ namespace Substrate.NetApi.Model.Types
                     return Ed25519.Sign(message, PrivateKey);
 
                 case KeyType.Sr25519:
-                    return Sr25519v091.SignSimple(Bytes, PrivateKey, message);
+                    return Sr25519v091.SignSimpleFromEd25519(Bytes, PrivateKey, message);
 
                 default:
                     throw new NotSupportedException($"Unknown key type found '{KeyType}'.");

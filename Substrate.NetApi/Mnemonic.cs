@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Substrate.NetApi.BIP39;
 using Substrate.NetApi.Model.Types;
-using Schnorrkel.Keys;
+using Substrate.NET.Schnorrkel.Keys;
 using Substrate.NetApi.Extensions;
 
 namespace Substrate.NetApi
@@ -233,7 +233,7 @@ namespace Substrate.NetApi
 
                 case KeyType.Sr25519:
                     var miniSecret = new MiniSecret(secretBytes, expandMode);
-                    return Account.Build(KeyType.Sr25519, miniSecret.ExpandToSecret().ToBytes(), miniSecret.GetPair().Public.Key);
+                    return Account.Build(KeyType.Sr25519, miniSecret.ExpandToSecret().ToEd25519Bytes(), miniSecret.GetPair().Public.Key);
 
                 default:
                     throw new NotImplementedException($"KeyType {keyType} isn't implemented!");

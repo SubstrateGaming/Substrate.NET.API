@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Substrate.NetApi.Model.Types;
 using NUnit.Framework;
-using Schnorrkel.Keys;
+using Substrate.NET.Schnorrkel.Keys;
 using static Substrate.NetApi.Mnemonic;
 
 namespace Substrate.NetApi.Test
