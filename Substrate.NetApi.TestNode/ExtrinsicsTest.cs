@@ -71,18 +71,24 @@ namespace Substrate.NetApi.TestNode
         [Test]
         public async Task Extrinsic_SubmitAndWatchExtrinsicAsync()
         {
-            var iType = new BaseVec<U8>(new U8[] { (U8) 0x04, (U8) 0xFF });
+            var iType = new BaseVec<U8>(new U8[] { (U8)0x04, (U8)0xFF });
 
             var method = new Method(0, "System", 0, "remark", new IType[] { iType });
 
             var taskCompletionSource = new TaskCompletionSource<(bool, Hash)>();
             await _substrateClient.Author.SubmitAndWatchExtrinsicAsync((string subscriptionId, ExtrinsicStatus extrinsicUpdate) =>
             {
-                if (extrinsicUpdate.ExtrinsicState == ExtrinsicState.Finalized ||
-                    extrinsicUpdate.ExtrinsicState == ExtrinsicState.Dropped ||
-                    extrinsicUpdate.ExtrinsicState == ExtrinsicState.Invalid)
+                switch (extrinsicUpdate.ExtrinsicState)
                 {
-                    taskCompletionSource.SetResult((true, extrinsicUpdate.Hash));
+                    case ExtrinsicState.Finalized:
+                        taskCompletionSource.SetResult((true, extrinsicUpdate.Hash));
+                        break;
+                    case ExtrinsicState.Dropped:
+                        Assert.Fail("Extrinsic was dropped!");
+                        break;
+                    case ExtrinsicState.Invalid:
+                        Assert.Fail("Extrinsic was invalid!");
+                        break;
                 }
             }, method, Alice, _chargeType, 64, CancellationToken.None);
 
@@ -102,12 +108,23 @@ namespace Substrate.NetApi.TestNode
             var taskCompletionSource = new TaskCompletionSource<(bool, Hash)>();
             _ = await _substrateClient.Unstable.TransactionUnstableSubmitAndWatchAsync((string subscriptionId, TransactionEventInfo extrinsicUpdate) =>
             {
-                if (extrinsicUpdate.TransactionEvent == TransactionEvent.Finalized ||
-                    extrinsicUpdate.TransactionEvent == TransactionEvent.Dropped ||
-                    extrinsicUpdate.TransactionEvent == TransactionEvent.Invalid ||
-                    extrinsicUpdate.TransactionEvent == TransactionEvent.Error)
+                switch (extrinsicUpdate.TransactionEvent)
                 {
-                    taskCompletionSource.SetResult((true, extrinsicUpdate.Hash));
+                    case TransactionEvent.Finalized:
+                        taskCompletionSource.SetResult((true, extrinsicUpdate.Hash));
+                        break;
+
+                    case TransactionEvent.Dropped:
+                        Assert.Fail("Extrinsic was dropped!");
+                        break;
+
+                    case TransactionEvent.Invalid:
+                        Assert.Fail("Extrinsic was invalid!");
+                        break;
+
+                    case TransactionEvent.Error:
+                        Assert.Fail("Extrinsic was errored!");
+                        break;
                 }
             }, method, Alice, _chargeType, 64, CancellationToken.None);
 

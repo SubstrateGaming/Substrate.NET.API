@@ -1,10 +1,10 @@
 ﻿using Chaos.NaCl;
 using Newtonsoft.Json;
 using Substrate.NET.Schnorrkel;
+using Substrate.NET.Schnorrkel.Keys;
 using Substrate.NetApi.Model.Extrinsics;
 using Substrate.NetApi.Model.Types.Base;
 using System;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Substrate.NetApi.Model.Types
@@ -20,14 +20,14 @@ namespace Substrate.NetApi.Model.Types
         /// requiring fast signature verification. Commonly used in secure communication,
         /// authentication, and blockchain applications.
         /// </summary>
-        Ed25519,
+        Ed25519 = 0,
 
         /// <summary>
         /// Sr25519: Schnorr signature scheme using SHA-512 and Curve25519, implemented in Schnorrkel.
         /// Offers advantages in complex cryptographic constructions and potentially better performance.
         /// Frequently used in decentralized systems and advanced cryptographic protocols.
         /// </summary>
-        Sr25519
+        Sr25519 = 1
     }
 
     /// <summary>
@@ -73,28 +73,12 @@ namespace Substrate.NetApi.Model.Types
         /// Key Type Byte
         /// </summary>
         [JsonIgnore]
-        public byte KeyTypeByte
-        {
-            get
-            {
-                switch (KeyType)
-                {
-                    case KeyType.Ed25519:
-                        return 0;
-
-                    case KeyType.Sr25519:
-                        return 1;
-
-                    default:
-                        throw new NotSupportedException($"Unknown key type found '{KeyType}'.");
-                }
-            }
-        }
+        public byte KeyTypeByte => (byte)KeyType;
 
         /// <summary>
         /// Private Key
         /// </summary>
-        [JsonIgnore] 
+        [JsonIgnore]
         public byte[] PrivateKey { get; private set; }
 
         /// <summary>
@@ -138,6 +122,39 @@ namespace Substrate.NetApi.Model.Types
             var account = new Account();
             account.Create(keyType, privateKey, publicKey);
             return account;
+        }
+
+        /// <summary>
+        /// Builds the specified key type from seed.
+        /// </summary>
+        /// <param name="keyType"></param>
+        /// <param name="seed"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="NotImplementedException"></exception>
+        public static Account FromSeed(KeyType keyType, byte[] seed)
+        {
+            if (seed.Length != 32)
+            {
+                throw new InvalidOperationException($"Only 32 byte seeds allowed.");
+            }
+
+            var account = new Account();
+            switch (keyType)
+            {
+                case KeyType.Ed25519:
+                    Ed25519.KeyPairFromSeed(out byte[] pubKey, out byte[] priKey, seed);
+                    account.Create(keyType, priKey, pubKey);
+                    return account;
+
+                case KeyType.Sr25519:
+                    var miniSecret = new MiniSecret(seed, ExpandMode.Ed25519);
+                    account.Create(keyType, miniSecret.ExpandToSecret().ToEd25519Bytes(), miniSecret.ExpandToPublic().Key);
+                    return account;
+
+                default:
+                    throw new NotImplementedException($"KeyType {keyType} isn't implemented!");
+            }
         }
 
         /// <inheritdoc/>
