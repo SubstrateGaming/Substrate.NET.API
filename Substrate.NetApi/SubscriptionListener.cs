@@ -148,22 +148,11 @@ namespace Substrate.NetApi
         }
 
         /// <summary>
-        /// TODO: Probablly deprecated, Authors the submit and watch extrinsic.
-        /// </summary>
-        /// <param name="subscription"></param>
-        /// <param name="result"></param>
-        [JsonRpcMethod("transaction_unstable_submitExtrinsic")]
-        public void TransactionUnstableSubmitExtrinsic(string subscription, TransactionEventInfo result)
-        {
-            GenericCallBack(subscription, result);
-        }
-
-        /// <summary>
         /// Transaction unstable watch eventc.
         /// </summary>
         /// <param name="subscription"></param>
         /// <param name="result"></param>
-        [JsonRpcMethod("transaction_unstable_watchEvent")]
+        [JsonRpcMethod("transactionWatch_unstable_watchEven")]
         public void TransactionUnstableWatchEventc(string subscription, TransactionEventInfo result)
         {
             GenericCallBack(subscription, result);

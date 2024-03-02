@@ -51,7 +51,7 @@ namespace Substrate.NetApi.Modules
         public async Task<string> TransactionUnstableSubmitAndWatchAsync(Action<string, TransactionEventInfo> callback, string parameters, CancellationToken token)
         {
             var subscriptionId =
-                await _client.InvokeAsync<string>("transaction_unstable_submitAndWatch", new object[] { parameters }, token);
+                await _client.InvokeAsync<string>("transactionWatch_unstable_submitAndWatch", new object[] { parameters }, token);
             _client.Listener.RegisterCallBackHandler(subscriptionId, callback);
             return subscriptionId;
         }
@@ -66,7 +66,7 @@ namespace Substrate.NetApi.Modules
         public async Task<bool> TransactionUnstableUnwatchAsync(string subscriptionId, CancellationToken token)
         {
             var result =
-                await _client.InvokeAsync<bool>("transaction_unstable_unwatch", new object[] { subscriptionId }, token);
+                await _client.InvokeAsync<bool>("transactionWatch_unstable_unwatch", new object[] { subscriptionId }, token);
             if (result) _client.Listener.UnregisterHeaderHandler(subscriptionId);
             return result;
         }
