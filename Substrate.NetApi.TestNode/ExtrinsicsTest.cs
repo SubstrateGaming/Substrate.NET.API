@@ -106,26 +106,27 @@ namespace Substrate.NetApi.TestNode
             var method = new Method(0, "System", 0, "remark", new byte[] { 0x04, 0xFF });
 
             var taskCompletionSource = new TaskCompletionSource<(bool, Hash)>();
-            _ = await _substrateClient.Unstable.TransactionUnstableSubmitAndWatchAsync((string subscriptionId, TransactionEventInfo extrinsicUpdate) =>
-            {
-                switch (extrinsicUpdate.TransactionEvent)
-                {
-                    case TransactionEvent.Finalized:
-                        taskCompletionSource.SetResult((true, extrinsicUpdate.Hash));
-                        break;
+            _ = await _substrateClient.Unstable.TransactionUnstableSubmitAndWatchAsync(
+               (subscriptionId, extrinsicUpdate) =>
+               {
+                    switch (extrinsicUpdate.TransactionEvent)
+                    {
+                        case TransactionEvent.Finalized:
+                            taskCompletionSource.SetResult((true, extrinsicUpdate.Hash));
+                            break;
 
-                    case TransactionEvent.Dropped:
-                        Assert.Fail("Extrinsic was dropped!");
-                        break;
+                        case TransactionEvent.Dropped:
+                            Assert.Fail("Extrinsic was dropped!");
+                            break;
 
-                    case TransactionEvent.Invalid:
-                        Assert.Fail("Extrinsic was invalid!");
-                        break;
+                        case TransactionEvent.Invalid:
+                            Assert.Fail("Extrinsic was invalid!");
+                            break;
 
-                    case TransactionEvent.Error:
-                        Assert.Fail("Extrinsic was errored!");
-                        break;
-                }
+                        case TransactionEvent.Error:
+                            Assert.Fail("Extrinsic was errored!");
+                            break;
+                    }
             }, method, Alice, _chargeType, 64, CancellationToken.None);
 
             var finished = await Task.WhenAny(taskCompletionSource.Task, Task.Delay(TimeSpan.FromMinutes(1)));
