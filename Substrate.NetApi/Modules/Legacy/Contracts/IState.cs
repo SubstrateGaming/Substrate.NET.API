@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Substrate.NetApi.Model.Rpc;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Substrate.NetApi.Modules.Contracts
 {
@@ -65,7 +65,6 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <returns>A task that represents the asynchronous operation and returns the metadata as a string at the specified block.</returns>
         Task<string> GetMetaDataAsync(byte[] blockHash, CancellationToken token);
 
-
         /// <summary>
         /// Asynchronously retrieves key-value pairs from the state with a specified prefix.
         /// </summary>
@@ -89,7 +88,6 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token">A cancellation token.</param>
         /// <returns>A task that represents the asynchronous operation and returns a JArray of key-value pairs at the specified block.</returns>
         Task<JArray> GetPairsAsync(byte[] keyPrefix, byte[] blockHash, CancellationToken token);
-
 
         /// <summary>
         /// Asynchronously retrieves a read-proof for a set of keys in the state.
@@ -115,7 +113,6 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <returns>A task that represents the asynchronous operation and returns the read-proof at the specified block.</returns>
         Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes, byte[] blockHash, CancellationToken token);
 
-
         /// <summary>
         /// Asynchronously retrieves the current runtime version of the blockchain.
         /// </summary>
@@ -136,7 +133,6 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token">A cancellation token.</param>
         /// <returns>A task that represents the asynchronous operation and returns the runtime version at the specified block.</returns>
         Task<RuntimeVersion> GetRuntimeVersionAsync(byte[] blockHash, CancellationToken token);
-
 
         /// <summary>
         /// Asynchronously retrieves the storage data for given parameters.
@@ -185,7 +181,6 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="token">A cancellation token.</param>
         /// <returns>A task that represents the asynchronous operation and returns the storage hash.</returns>
         Task<Hash> GetStorageHashAsync(byte[] key, byte[] blockHash, CancellationToken token);
-
 
         /// <summary>
         /// Asynchronously retrieves the storage size for given parameters.

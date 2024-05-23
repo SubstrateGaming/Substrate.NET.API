@@ -79,7 +79,7 @@ namespace Substrate.NetApi
             Payment = new Payment(this);
             State = new State(this);
             Author = new Author(this);
-            Unstable = new UnstableCalls(this);
+            TransactionWatchCalls = new TransactionWatchCalls(this);
 
             _requestTokenSourceDict = new ConcurrentDictionary<CancellationTokenSource, string>();
         }
@@ -125,7 +125,7 @@ namespace Substrate.NetApi
         /// <summary>
         /// New Api 2
         /// </summary>
-        public UnstableCalls Unstable { get; }
+        public TransactionWatchCalls TransactionWatchCalls { get; }
 
         public SubscriptionListener Listener { get; } = new SubscriptionListener();
 

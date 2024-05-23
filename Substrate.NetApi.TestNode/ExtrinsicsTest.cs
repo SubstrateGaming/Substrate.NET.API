@@ -19,7 +19,7 @@ namespace Substrate.NetApi.TestNode
         public MiniSecret MiniSecretBob => new MiniSecret(Utils.HexToByteArray("0x398f0c28f98885e046333d4a41c19cee4c37368a9832c6502f6cfd182e2aef89"), ExpandMode.Ed25519);
         public Account Bob => Account.Build(KeyType.Sr25519, MiniSecretBob.ExpandToSecret().ToEd25519Bytes(), MiniSecretBob.GetPair().Public.Key);
 
-        protected const string WebSocketUrl = "ws://127.0.0.1:9944";
+        protected const string WebSocketUrl = "ws://127.0.0.1:9999";
 
         protected SubstrateClient _substrateClient;
 
@@ -40,7 +40,7 @@ namespace Substrate.NetApi.TestNode
         [OneTimeSetUp]
         public async Task SetupAsync()
         {
-            _chargeType = ChargeAssetTxPayment.Default();
+            _chargeType = ChargeTransactionPayment.Default();
             _substrateClient = new SubstrateClient(new Uri(WebSocketUrl), _chargeType);
 
             try
@@ -83,9 +83,11 @@ namespace Substrate.NetApi.TestNode
                     case ExtrinsicState.Finalized:
                         taskCompletionSource.SetResult((true, extrinsicUpdate.Hash));
                         break;
+
                     case ExtrinsicState.Dropped:
                         Assert.Fail("Extrinsic was dropped!");
                         break;
+
                     case ExtrinsicState.Invalid:
                         Assert.Fail("Extrinsic was invalid!");
                         break;
@@ -97,54 +99,54 @@ namespace Substrate.NetApi.TestNode
         }
 
         /// <summary>
-        /// Transaction Unstable Submit And Watch
+        /// Transaction V1 Submit And Watch
         /// </summary>
         /// <returns></returns>
         [Test]
-        public async Task Extrinsic_TransactionUnstableSubmitAndWatchAsync()
+        public async Task Extrinsic_TransactionV1SubmitAndWatchAsync()
         {
             var method = new Method(0, "System", 0, "remark", new byte[] { 0x04, 0xFF });
 
             var taskCompletionSource = new TaskCompletionSource<(bool, Hash)>();
-            _ = await _substrateClient.Unstable.TransactionUnstableSubmitAndWatchAsync(
+            _ = await _substrateClient.TransactionWatchCalls.TransactionWatchV1SubmitAndWatchAsync(
                (subscriptionId, extrinsicUpdate) =>
                {
-                    switch (extrinsicUpdate.TransactionEvent)
-                    {
-                        case TransactionEvent.Finalized:
-                            taskCompletionSource.SetResult((true, extrinsicUpdate.Hash));
-                            break;
+                   switch (extrinsicUpdate.TransactionEvent)
+                   {
+                       case TransactionEvent.Finalized:
+                           taskCompletionSource.SetResult((true, extrinsicUpdate.Hash));
+                           break;
 
-                        case TransactionEvent.Dropped:
-                            Assert.Fail("Extrinsic was dropped!");
-                            break;
+                       case TransactionEvent.Dropped:
+                           Assert.Fail("Extrinsic was dropped!");
+                           break;
 
-                        case TransactionEvent.Invalid:
-                            Assert.Fail("Extrinsic was invalid!");
-                            break;
+                       case TransactionEvent.Invalid:
+                           Assert.Fail("Extrinsic was invalid!");
+                           break;
 
-                        case TransactionEvent.Error:
-                            Assert.Fail("Extrinsic was errored!");
-                            break;
-                    }
-            }, method, Alice, _chargeType, 64, CancellationToken.None);
+                       case TransactionEvent.Error:
+                           Assert.Fail("Extrinsic was errored!");
+                           break;
+                   }
+               }, method, Alice, _chargeType, 64, CancellationToken.None);
 
             var finished = await Task.WhenAny(taskCompletionSource.Task, Task.Delay(TimeSpan.FromMinutes(1)));
             Assert.AreEqual(taskCompletionSource.Task, finished, "Test timed out waiting for final callback");
         }
 
         /// <summary>
-        /// Transaction Unstable Unwatch
+        /// Transaction V1 Unwatch
         /// </summary>
         /// <returns></returns>
         [Test, Timeout(10000)] // Timeout after 10 seconds
-        public async Task Extrinsic_TransactionUnstableUnwatchAsync()
+        public async Task Extrinsic_TransactionV1UnwatchAsync()
         {
             var method = new Method(0, "System", 0, "remark", new byte[] { 0x04, 0xFF });
             var cancellationTokenSource = new CancellationTokenSource();
 
             var taskCompletionSource = new TaskCompletionSource<bool>();
-            var subscriptionId = await _substrateClient.Unstable.TransactionUnstableSubmitAndWatchAsync(
+            var subscriptionId = await _substrateClient.TransactionWatchCalls.TransactionWatchV1SubmitAndWatchAsync(
                 (subscriptionId, extrinsicUpdate) =>
                 {
                     if (extrinsicUpdate.TransactionEvent != TransactionEvent.Validated)
@@ -154,7 +156,7 @@ namespace Substrate.NetApi.TestNode
                 },
                 method, Alice, _chargeType, 64, cancellationTokenSource.Token);
 
-            var unsubscribed = await _substrateClient.Unstable.TransactionUnstableUnwatchAsync(subscriptionId);
+            var unsubscribed = await _substrateClient.TransactionWatchCalls.TransactionWatchV1UnwatchAsync(subscriptionId);
             Assert.IsTrue(unsubscribed, "Unsubscribing from transaction should be successful.");
 
             // Optionally: wait for the callback to be called, which should not happen

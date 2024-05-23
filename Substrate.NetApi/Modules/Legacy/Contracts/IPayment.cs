@@ -1,7 +1,6 @@
-﻿using System.Threading;
+﻿using Substrate.NetApi.Model.Rpc;
+using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using Substrate.NetApi.Model.Rpc;
 
 namespace Substrate.NetApi.Modules.Contracts
 {

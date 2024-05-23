@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Substrate.NetApi.Model.Rpc;
+﻿using Substrate.NetApi.Model.Rpc;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Modules.Contracts;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Substrate.NetApi.Modules
 {
@@ -74,7 +74,6 @@ namespace Substrate.NetApi.Modules
         {
             return await GetBlockHashAsync(CancellationToken.None);
         }
-
 
         /// <inheritdoc/>
         public async Task<Hash> GetBlockHashAsync(BlockNumber blockNumber)
