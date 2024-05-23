@@ -162,6 +162,7 @@ namespace Substrate.NetApi
         /// 16, 20, 24, 28, 32 Bytes Entropy supported.
         /// </summary>
         /// <param name="entropyBytes"></param>
+        /// <param name="wordlistType"></param>
         /// <returns></returns>
         public static string[] MnemonicFromEntropy(byte[] entropyBytes, BIP39Wordlist wordlistType)
         {
@@ -218,6 +219,7 @@ namespace Substrate.NetApi
         /// </summary>
         /// <param name="mnemonic"></param>
         /// <param name="password"></param>
+        /// <param name="keyType"></param>
         /// <param name="bIP39Wordlist"></param>
         /// <param name="expandMode"></param>
         /// <returns></returns>

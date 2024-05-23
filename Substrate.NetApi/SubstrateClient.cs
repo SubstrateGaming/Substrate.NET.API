@@ -127,6 +127,9 @@ namespace Substrate.NetApi
         /// </summary>
         public TransactionWatchCalls TransactionWatchCalls { get; }
 
+        /// <summary>
+        /// Subscription listener
+        /// </summary>
         public SubscriptionListener Listener { get; } = new SubscriptionListener();
 
         /// <summary> Gets a value indicating whether this object is connected. </summary>

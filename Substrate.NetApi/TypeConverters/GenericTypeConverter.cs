@@ -4,6 +4,10 @@ using Newtonsoft.Json;
 
 namespace Substrate.NetApi.TypeConverters
 {
+    /// <summary>
+    /// Generic Type Converter
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class GenericTypeConverter<T> : JsonConverter<T>, ITypeConverter where T : IType, new()
     {
         /// <summary>Gets the name of the type.</summary>

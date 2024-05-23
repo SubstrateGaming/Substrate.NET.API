@@ -261,6 +261,7 @@ namespace Substrate.NetApi
         /// Gets the address from.
         /// </summary>
         /// <param name="bytes">The bytes.</param>
+        /// <param name="ss58Prefix">The ss58 prefix.</param>
         /// <returns></returns>
         public static string GetAddressFrom(byte[] bytes, short ss58Prefix = 42)
         {
