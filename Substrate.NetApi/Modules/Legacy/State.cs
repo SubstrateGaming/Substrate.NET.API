@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Substrate.NetApi.Model.Rpc;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
 using Substrate.NetApi.Modules.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Substrate.NetApi.Modules
 {
@@ -105,21 +105,17 @@ namespace Substrate.NetApi.Modules
             return await _client.InvokeAsync<JArray>("state_getPairs", fullParams, token);
         }
 
-
         /// <inheritdoc/>
         public Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes)
          => GetReadProofAsync(keyPrefixes, CancellationToken.None);
-
 
         /// <inheritdoc/>
         public Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes, CancellationToken token)
             => GetReadProofAsync(keyPrefixes, string.Empty, token);
 
-
         /// <inheritdoc/>
         public Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes, byte[] blockHash, CancellationToken token)
             => GetReadProofAsync(keyPrefixes, Utils.Bytes2HexString(blockHash), token);
-
 
         /// <inheritdoc/>
         public async Task<ReadProof> GetReadProofAsync(IEnumerable<byte[]> keyPrefixes, string blockHash, CancellationToken token)
@@ -266,7 +262,6 @@ namespace Substrate.NetApi.Modules
         /// <inheritdoc/>
         public Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, string blockHash)
             => GetQueryStorageAtAsync(keysList, blockHash, CancellationToken.None);
-
 
         /// <inheritdoc/>
         public async Task<IEnumerable<StorageChangeSet>> GetQueryStorageAtAsync(List<byte[]> keysList, string blockHash, CancellationToken token)

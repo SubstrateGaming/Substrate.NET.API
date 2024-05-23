@@ -1,8 +1,8 @@
+using Substrate.NetApi.Model.Rpc;
+using Substrate.NetApi.Modules.Contracts;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Substrate.NetApi.Model.Rpc;
-using Substrate.NetApi.Modules.Contracts;
 
 namespace Substrate.NetApi.Modules
 {
@@ -11,7 +11,6 @@ namespace Substrate.NetApi.Modules
     /// </summary>
     public class System : ISystem
     {
-
         private readonly SubstrateClient _client;
 
         /// <summary>

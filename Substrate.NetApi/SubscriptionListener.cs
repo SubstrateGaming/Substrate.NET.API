@@ -148,12 +148,12 @@ namespace Substrate.NetApi
         }
 
         /// <summary>
-        /// Transaction unstable watch eventc.
+        /// Transaction Watch v1 watch event.
         /// </summary>
         /// <param name="subscription"></param>
         /// <param name="result"></param>
-        [JsonRpcMethod("transactionWatch_unstable_watchEvent")]
-        public void TransactionUnstableWatchEventc(string subscription, TransactionEventInfo result)
+        [JsonRpcMethod("transactionWatch_v1_watchEvent")]
+        public void TransactionWatchV1WatchEvent(string subscription, TransactionEventInfo result)
         {
             GenericCallBack(subscription, result);
         }

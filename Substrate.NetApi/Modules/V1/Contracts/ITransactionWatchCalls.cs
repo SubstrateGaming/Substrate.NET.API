@@ -4,14 +4,13 @@ using System.Threading.Tasks;
 using Substrate.NetApi.Model.Extrinsics;
 using Substrate.NetApi.Model.Rpc;
 using Substrate.NetApi.Model.Types;
-using Substrate.NetApi.Model.Types.Base;
 
 namespace Substrate.NetApi.Modules.Contracts
 {
     /// <summary>
     /// UnstableCalls Module Interface
     /// </summary>
-    public interface IUnstableCalls
+    public interface ITransactionWatchCalls
     {
         /// <summary>
         /// Submit and subscribe to watch an extrinsic until unsubscribed
@@ -22,7 +21,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="charge"></param>
         /// <param name="lifeTime"></param>
         /// <returns></returns>
-        Task<string> TransactionUnstableSubmitAndWatchAsync(Action<string, TransactionEventInfo> callback, Method method, Account account, ChargeType charge, uint lifeTime);
+        Task<string> TransactionWatchV1SubmitAndWatchAsync(Action<string, TransactionEventInfo> callback, Method method, Account account, ChargeType charge, uint lifeTime);
 
         /// <summary>
         /// Submit and subscribe to watch an extrinsic until unsubscribed
@@ -34,7 +33,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="lifeTime"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task<string> TransactionUnstableSubmitAndWatchAsync(Action<string, TransactionEventInfo> callback, Method method, Account account, ChargeType charge, uint lifeTime, CancellationToken token);
+        Task<string> TransactionWatchV1SubmitAndWatchAsync(Action<string, TransactionEventInfo> callback, Method method, Account account, ChargeType charge, uint lifeTime, CancellationToken token);
 
         /// <summary>
         /// Submit and subscribe to watch an extrinsic until unsubscribed
@@ -42,7 +41,7 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="callback"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        Task<string> TransactionUnstableSubmitAndWatchAsync(Action<string, TransactionEventInfo> callback, string parameters);
+        Task<string> TransactionWatchV1SubmitAndWatchAsync(Action<string, TransactionEventInfo> callback, string parameters);
 
         /// <summary>
         /// Submit and subscribe to watch an extrinsic until unsubscribed
@@ -51,14 +50,14 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="parameters"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task<string> TransactionUnstableSubmitAndWatchAsync(Action<string, TransactionEventInfo> callback, string parameters, CancellationToken token);
+        Task<string> TransactionWatchV1SubmitAndWatchAsync(Action<string, TransactionEventInfo> callback, string parameters, CancellationToken token);
 
         /// <summary>
         /// Unsuscribe to given subscription id
         /// </summary>
         /// <param name="subscriptionId"></param>
         /// <returns></returns>
-        Task<bool> TransactionUnstableUnwatchAsync(string subscriptionId);
+        Task<bool> TransactionWatchV1UnwatchAsync(string subscriptionId);
 
         /// <summary>
         /// Unsuscribe to given subscription id
@@ -66,6 +65,6 @@ namespace Substrate.NetApi.Modules.Contracts
         /// <param name="subscriptionId"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task<bool> TransactionUnstableUnwatchAsync(string subscriptionId, CancellationToken token);
+        Task<bool> TransactionWatchV1UnwatchAsync(string subscriptionId, CancellationToken token);
     }
 }
