@@ -31,15 +31,13 @@ namespace Substrate.NetApi.Modules
         /// <inheritdoc/>
         public async Task<object> AddLogFilterAsync(string directives, CancellationToken token)
         {
-            throw new NotImplementedException();
-            //return await _client.InvokeAsync<uint>("system_addLogFilter", new object[] { directives }, token);
+            return await _client.InvokeAsync<uint>("system_addLogFilter", new object[] { directives }, token);
         }
 
         /// <inheritdoc/>
         public async Task<object> AddReservedPeerAsync(string peer, CancellationToken token)
         {
-            throw new NotImplementedException();
-            //return await _client.InvokeAsync<uint>("system_addReservedPeer", new object[] { peer }, token);
+            return await _client.InvokeAsync<uint>("system_addReservedPeer", new object[] { peer }, token);
         }
 
         /// <inheritdoc/>
@@ -69,15 +67,13 @@ namespace Substrate.NetApi.Modules
         /// <inheritdoc/>
         public async Task<object> DryRunAsync(string extrinsicHex, CancellationToken token)
         {
-            throw new NotImplementedException();
-            //return await _client.InvokeAsync<string>("system_dryRun", new object[] { extrinsicHex }, token);
+            return await _client.InvokeAsync<string>("system_dryRun", new object[] { extrinsicHex }, token);
         }
 
         /// <inheritdoc/>
         public async Task<string> DryRunAtAsync(string extrinsicHex, string blockHashHex, CancellationToken token)
         {
-            throw new NotImplementedException();
-            //return await _client.InvokeAsync<string>("system_dryRunAt", new object[] { extrinsicHex, blockHashHex }, token);
+            return await _client.InvokeAsync<string>("system_dryRunAt", new object[] { extrinsicHex, blockHashHex }, token);
         }
 
         /// <inheritdoc/>

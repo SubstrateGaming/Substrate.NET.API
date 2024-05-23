@@ -152,10 +152,11 @@ namespace Substrate.NetApi.Test.Keys
 
             Assert.IsTrue(signature1.SequenceEqual(signature2));
 
-            Assert.True(account.Verify(signature1, account.Bytes, messageBytes));
-            Assert.True(account.Verify(signature2, account.Bytes, messageBytes));
+            Assert.True(await account.VerifyAsync(signature1, account.Bytes, messageBytes));
+            Assert.True(await account.VerifyAsync(signature2, account.Bytes, messageBytes));
 
-            Assert.True(account.Verify(Utils.HexToByteArray(polkadotJsSignature), account.Bytes, messageBytes));
+            Assert.True(await account.VerifyAsync(Utils.HexToByteArray(polkadotJsSignature), account.Bytes, messageBytes));
         }
+
     }
 }
