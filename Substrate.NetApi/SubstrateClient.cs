@@ -55,7 +55,22 @@ namespace Substrate.NetApi
         private ClientWebSocket _socket;
 
         /// <summary>
-        /// Bypass Remote Certificate Validation. Useful when testing with self-signed SSL certificates. 
+        /// Task to received connection state
+        /// </summary>
+        private Task _receivedTask;
+
+        /// <summary>
+        /// The connexion lost event trigger when the websocket change state to disconnected
+        /// </summary>
+        public event EventHandler ConnectionLost;
+
+        /// <summary>
+        /// Event triggered when the connection is set
+        /// </summary>
+        public event EventHandler ConnectionSet;
+
+        /// <summary>
+        /// Bypass Remote Certificate Validation. Useful when testing with self-signed SSL certificates.
         /// </summary>
         private readonly bool _bypassRemoteCertificateValidation;
 
@@ -88,7 +103,7 @@ namespace Substrate.NetApi
         /// <value> Information describing the meta. </value>
         public MetaData MetaData { get; private set; }
 
-        /// <summary> 
+        /// <summary>
         /// Network runtime version
         /// </summary>
         public RuntimeVersion RuntimeVersion { get; private set; }
@@ -205,7 +220,7 @@ namespace Substrate.NetApi
 #if NETSTANDARD2_0
                     throw new NotSupportedException("Bypass remote certification validation not supported in NETStandard2.0");
 #elif NETSTANDARD2_1_OR_GREATER
-                    _socket.Options.RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true;    
+                    _socket.Options.RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true;
 #endif
                 }
             }
@@ -213,9 +228,13 @@ namespace Substrate.NetApi
             _connectTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token, _connectTokenSource.Token);
             await _socket.ConnectAsync(_uri, linkedTokenSource.Token);
+            
+            // Triger the event
+            OnConnectionSet();
+
             linkedTokenSource.Dispose();
-            _connectTokenSource.Dispose();
-            _connectTokenSource = null;
+            //_connectTokenSource.Dispose();
+            //_connectTokenSource = null;
             Logger.Debug("Connected to Websocket.");
 
             var formatter = new JsonMessageFormatter();
@@ -270,7 +289,45 @@ namespace Substrate.NetApi
                 }
             }
 
+            _receivedTask = Task.Run(CheckStateAsync);
             //_jsonRpc.TraceSource.Switch.Level = SourceLevels.All;
+        }
+
+        /// <summary>
+        /// Continuously checks the state of the WebSocket connection in an asynchronous loop.
+        /// </summary>
+        private async Task CheckStateAsync() {
+            var buffer = new byte[1024 * 4];
+
+            try {
+                while(_socket.State == WebSocketState.Open) {
+                    var result = await _socket.ReceiveAsync(new ArraySegment<byte>(buffer), _connectTokenSource.Token);
+
+                    if(result.MessageType == WebSocketMessageType.Close) {
+                        await _socket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+
+                        OnConnectionLost();
+                    }
+                }
+            } catch(WebSocketException) {
+                // Maybe check : ex.WebSocketErrorCode
+                OnConnectionLost();
+            }
+        }
+
+        /// <summary>
+        /// Raises the event when the connection to the server is lost.
+        /// </summary>
+        protected virtual void OnConnectionLost() {
+            ConnectionLost?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the event when the connection to the server is set.
+        /// </summary>
+        protected virtual void OnConnectionSet()
+        {
+            ConnectionSet?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -446,9 +503,7 @@ namespace Substrate.NetApi
         /// <returns> An asynchronous result. </returns>
         public async Task CloseAsync(CancellationToken token)
         {
-            _connectTokenSource?.Cancel();
-
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 // cancel remaining request tokens
                 foreach (var key in _requestTokenSourceDict.Keys) key?.Cancel();
@@ -456,6 +511,8 @@ namespace Substrate.NetApi
 
                 if (_socket != null && _socket.State == WebSocketState.Open)
                 {
+                    await _socket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+                    _connectTokenSource?.Cancel();
                     _jsonRpc?.Dispose();
                     Logger.Debug("Client closed.");
                 }
