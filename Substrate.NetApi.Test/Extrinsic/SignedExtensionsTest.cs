@@ -41,10 +41,10 @@ namespace Substrate.NetApi.Test.Extrinsic
             var signedExtensions = new SignedExtensions(259, 1, genesis, startEra, era, 0, assetTxPayment);
 
             var bytes = Utils.StringValueArrayBytesArray(
-                "58, 6, 0, 0, 0, 3, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0");
+                "58, 6, 0, 0, 0, 0, 3, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0");
 
-            Assert.AreEqual(bytes.AsMemory().Slice(0, 5).ToArray(), signedExtensions.GetExtra());
-            Assert.AreEqual(bytes.AsMemory().Slice(5, 72).ToArray(), signedExtensions.GetAdditionalSigned());
+            Assert.AreEqual(bytes.AsMemory().Slice(0, 6).ToArray(), signedExtensions.GetExtra());
+            Assert.AreEqual(bytes.AsMemory().Slice(6, 73).ToArray(), signedExtensions.GetAdditionalSigned());
             Assert.AreEqual(bytes, signedExtensions.Encode());
         }
     }
