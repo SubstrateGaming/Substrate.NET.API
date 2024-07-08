@@ -42,6 +42,11 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// Charge
         /// </summary>
         public ChargeType Charge { get; }
+        
+        /// <summary>
+        /// CheckMetadataHash; only disabled supported for now.
+        /// </summary>
+        public CheckMetadataHash MetadataHashSignedExt { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SignedExtensions"/> class.
@@ -62,6 +67,7 @@ namespace Substrate.NetApi.Model.Extrinsics
             Mortality = mortality;
             Nonce = nonce;
             Charge = charge;
+            MetadataHashSignedExt = new CheckMetadataHash();
         }
 
         /// <summary>
@@ -80,6 +86,9 @@ namespace Substrate.NetApi.Model.Extrinsics
 
             // ChargeType
             bytes.AddRange(Charge.Encode());
+            
+            // CheckMetadataHash
+            bytes.AddRange(MetadataHashSignedExt.EncodeExtra());
 
             return bytes.ToArray();
         }
@@ -103,6 +112,9 @@ namespace Substrate.NetApi.Model.Extrinsics
 
             // CheckMortality, Additional Blockhash check. Immortal = genesis_hash, Mortal = logic
             bytes.AddRange(StartEra.Bytes);
+            
+            // CheckMetadataHash
+            bytes.AddRange(MetadataHashSignedExt.EncodeAdditional());
 
             return bytes.ToArray();
         }
