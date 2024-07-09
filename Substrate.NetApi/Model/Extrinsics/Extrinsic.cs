@@ -162,6 +162,7 @@ namespace Substrate.NetApi.Model.Extrinsics
             Era = era;
             Nonce = nonce;
             Charge = charge;
+            CheckMetadataHash = new CheckMetadataHash();
             Method = method;
         }
 
