@@ -129,7 +129,8 @@ namespace Substrate.NetApi.Model.Extrinsics
                 // charge type
                 Charge = chargeType;
                 Charge.Decode(memory.ToArray(), ref p);
-                
+
+                CheckMetadataHash = new CheckMetadataHash();
                 CheckMetadataHash.Decode(memory.ToArray(), ref p);
             }
 
@@ -183,6 +184,7 @@ namespace Substrate.NetApi.Model.Extrinsics
                 result.AddRange(Era.Encode());
                 result.AddRange(Nonce.Encode());
                 result.AddRange(Charge.Encode());
+                result.AddRange(CheckMetadataHash.EncodeExtra());
             }
 
             result.AddRange(Method.Encode());
