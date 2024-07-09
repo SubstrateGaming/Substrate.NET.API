@@ -21,6 +21,12 @@ namespace Substrate.NetApi.TestNode
             _client = new SubstrateClient(new Uri("ws://rpc-parachain.bajun.network"), ChargeTransactionPayment.Default());
         }
 
+        [TearDown]
+        public async Task TeardownAsync()
+        {
+            await _client.CloseAsync();
+        }
+
         [Test]
         public async Task Connect_ShouldConnectSuccessfullyAsync()
         {

@@ -289,30 +289,23 @@ namespace Substrate.NetApi
                 }
             }
 
-            _receivedTask = Task.Run(CheckStateAsync);
-            //_jsonRpc.TraceSource.Switch.Level = SourceLevels.All;
-        }
+            // Start a background task to monitor the WebSocket connection
+            _ = Task.Run(async () =>
+            {
+                while (IsConnected)
+                {
+                    await Task.Delay(1000); // Adjust the delay as needed
 
-        /// <summary>
-        /// Continuously checks the state of the WebSocket connection in an asynchronous loop.
-        /// </summary>
-        private async Task CheckStateAsync() {
-            var buffer = new byte[1024 * 4];
-
-            try {
-                while(_socket.State == WebSocketState.Open) {
-                    var result = await _socket.ReceiveAsync(new ArraySegment<byte>(buffer), _connectTokenSource.Token);
-
-                    if(result.MessageType == WebSocketMessageType.Close) {
-                        await _socket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
-
-                        OnConnectionLost();
+                    if (!IsConnected)
+                    {
+                        // Raise the ConnectionLost event on a separate thread
+                        ThreadPool.QueueUserWorkItem(state =>
+                        {
+                            OnConnectionLost();
+                        });
                     }
                 }
-            } catch(WebSocketException) {
-                // Maybe check : ex.WebSocketErrorCode
-                OnConnectionLost();
-            }
+            });
         }
 
         /// <summary>
