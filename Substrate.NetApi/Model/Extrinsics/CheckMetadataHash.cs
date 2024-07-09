@@ -1,11 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Substrate.NetApi.Model.Types.Base;
+﻿using Substrate.NetApi.Model.Types.Base;
 using System;
-using Newtonsoft.Json;
-using Substrate.NetApi.Model.Types;
-
-
 
 namespace Substrate.NetApi.Model.Extrinsics
 {
@@ -49,13 +43,12 @@ namespace Substrate.NetApi.Model.Extrinsics
         }
 
         /// <summary>
-        /// Simplifies the calling code a bit, as we only need this in static contexts for now `Encode`.
+        /// Corresponds to the extra that _is_ sent with the extrinsic.
         /// </summary>
         /// <returns></returns>
         public byte[] EncodeExtra()
         {
-            // // We provide no metadata hash in the signer payload to align with the above.
-            return new byte[1];
+            return new BaseEnum<Mode>(_mode).Encode();
         }
 
         /// <summary>
@@ -64,7 +57,7 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <returns></returns>
         public byte[] EncodeAdditional()
         {
-            // // We provide no metadata hash in the signer payload to align with the above.
+            // We provide no metadata hash in the signer payload to align with the above.
             return new byte[1];
         }
 
@@ -77,11 +70,7 @@ namespace Substrate.NetApi.Model.Extrinsics
                 throw new ArgumentException($"{modeByte} is not a valid representation of CheckMetadata Mode.");
             }
 
-            if (modeByte == 0) {
-                _mode = Mode.Disabled;
-            } else {
-                _mode = Mode.Enabled;
-            }
+            _mode = modeByte == 0 ? Mode.Disabled : Mode.Enabled;
         }
     }
 }
