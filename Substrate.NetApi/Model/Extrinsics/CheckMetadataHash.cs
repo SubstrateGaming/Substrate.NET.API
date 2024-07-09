@@ -24,11 +24,16 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// </summary>  
         Enabled
     }
+    /// <summary>
+    /// CheckMetadataHash signed extension.
+    /// </summary>
     public class CheckMetadataHash: BaseType
     {
-        
-        Mode _mode;
+        private Mode _mode;
 
+        /// <summary>
+        /// Initialize with `Mode.Disabled`.
+        /// </summary>
         public CheckMetadataHash() { 
             // Don't allow enabling the mode, as we don't support it.
             _mode = Mode.Disabled;
@@ -63,6 +68,7 @@ namespace Substrate.NetApi.Model.Extrinsics
             return new byte[1];
         }
 
+        /// <inheritdoc />
         public override void Decode(byte[] byteArray, ref int p)
         {
             uint modeByte = byteArray[p++];
