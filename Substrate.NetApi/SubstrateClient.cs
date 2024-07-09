@@ -55,9 +55,9 @@ namespace Substrate.NetApi
         private ClientWebSocket _socket;
 
         /// <summary>
-        /// Task to received connection state
+        /// The "ping" to check the connection status
         /// </summary>
-        private Task _receivedTask;
+        private int _connectionCheckDelay = 500;
 
         /// <summary>
         /// The connexion lost event trigger when the websocket change state to disconnected
@@ -294,7 +294,7 @@ namespace Substrate.NetApi
             {
                 while (IsConnected)
                 {
-                    await Task.Delay(1000); // Adjust the delay as needed
+                    await Task.Delay(_connectionCheckDelay);
 
                     if (!IsConnected)
                     {
