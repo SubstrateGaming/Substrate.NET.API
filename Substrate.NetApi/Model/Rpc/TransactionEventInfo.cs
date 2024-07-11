@@ -13,11 +13,6 @@ namespace Substrate.NetApi.Model.Rpc
         Validated,
 
         /// <summary>
-        /// The broadcasted event indicates the number of other peers this transaction has been broadcasted to.
-        /// </summary>
-        Broadcasted,
-
-        /// <summary>
         /// The bestChainBlockIncluded event indicates which block of the best chain the transaction is included in.
         /// </summary>
         BestChainBlockIncluded,
