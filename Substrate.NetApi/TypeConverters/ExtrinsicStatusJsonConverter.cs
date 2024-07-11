@@ -43,18 +43,15 @@ namespace Substrate.NetApi.TypeConverters
                         case TransactionEvent.Validated:
                             break;
 
-                        case TransactionEvent.Broadcasted:
-                            transactionEventStatus.NumPeers = uint.Parse(jObject["numPeers"].ToString());
-                            break;
-
                         case TransactionEvent.BestChainBlockIncluded:
                         case TransactionEvent.Finalized:
                             transactionEventStatus.Hash = null;
                             transactionEventStatus.Index = null;
-                            if (jObject["block"] != null)
+                            var block = jObject["block"];
+                            if (block != null && block.Type == JTokenType.Object)
                             {
-                                transactionEventStatus.Hash = new Hash(jObject["block"]["hash"].ToString());
-                                transactionEventStatus.Index = uint.Parse(jObject["block"]["index"].ToString());
+                                transactionEventStatus.Hash = new Hash(block["hash"]?.ToString());
+                                transactionEventStatus.Index = uint.Parse(block["index"]?.ToString());
                             }
                             break;
 
