@@ -233,8 +233,9 @@ namespace Substrate.NetApi
             OnConnectionSet();
 
             linkedTokenSource.Dispose();
-            //_connectTokenSource.Dispose();
-            //_connectTokenSource = null;
+            _connectTokenSource.Dispose();
+            _connectTokenSource = null;
+
             Logger.Debug("Connected to Websocket.");
 
             var formatter = new JsonMessageFormatter();
@@ -252,6 +253,13 @@ namespace Substrate.NetApi
             _jsonRpc = new JsonRpc(new WebSocketMessageHandler(_socket, formatter));
             _jsonRpc.TraceSource.Listeners.Add(new SerilogTraceListener.SerilogTraceListener());
             _jsonRpc.TraceSource.Switch.Level = SourceLevels.Warning;
+
+            _jsonRpc.Disconnected += (sender, args) =>
+            {
+                Logger.Debug("Disconnected from websocket.");
+                OnConnectionLost();
+            };
+
             _jsonRpc.AddLocalRpcTarget(Listener, new JsonRpcTargetOptions { AllowNonPublicInvocation = false });
             _jsonRpc.StartListening();
             Logger.Debug("Listening to websocket.");
@@ -288,24 +296,6 @@ namespace Substrate.NetApi
                     Logger.Warning(ex, "Could not deserialize properties on connect.");
                 }
             }
-
-            // Start a background task to monitor the WebSocket connection
-            _ = Task.Run(async () =>
-            {
-                while (IsConnected)
-                {
-                    await Task.Delay(_connectionCheckDelay);
-
-                    if (!IsConnected)
-                    {
-                        // Raise the ConnectionLost event on a separate thread
-                        ThreadPool.QueueUserWorkItem(state =>
-                        {
-                            OnConnectionLost();
-                        });
-                    }
-                }
-            });
         }
 
         /// <summary>
@@ -496,6 +486,8 @@ namespace Substrate.NetApi
         /// <returns> An asynchronous result. </returns>
         public async Task CloseAsync(CancellationToken token)
         {
+            _connectTokenSource?.Cancel();
+
             await Task.Run(async () =>
             {
                 // cancel remaining request tokens
@@ -505,7 +497,6 @@ namespace Substrate.NetApi
                 if (_socket != null && _socket.State == WebSocketState.Open)
                 {
                     await _socket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
-                    _connectTokenSource?.Cancel();
                     _jsonRpc?.Dispose();
                     Logger.Debug("Client closed.");
                 }
