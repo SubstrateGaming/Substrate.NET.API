@@ -25,6 +25,29 @@ namespace Substrate.NetApi.Modules
         }
 
         /// <inheritdoc/>
+        public async Task<BaseVec<U8>> MetadataAsync( CancellationToken token)
+        {
+            var fullParams = new object[]
+            {
+                "Metadata_metadata",
+                Array.Empty<byte>(),
+                null
+            };
+
+            var str = await _client.InvokeAsync<string>("state_call", fullParams, token);
+
+            if (str == null || str.Length == 0)
+            {
+                return default;
+            }
+
+            var t = new BaseVec<U8>();
+            t.Create(str);
+
+            return t;
+        }
+
+        /// <inheritdoc/>
         public async Task<BaseOpt<BaseVec<U8>>> MetadataAtVersionAsync(uint version, CancellationToken token)
         {
             var fullParams = new object[]
