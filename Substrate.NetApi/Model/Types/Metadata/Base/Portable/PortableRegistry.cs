@@ -1,6 +1,6 @@
 ﻿using Substrate.NetApi.Model.Types.Base;
 
-namespace Substrate.NetApi.Model.Types.Metadata.V14
+namespace Substrate.NetApi.Model.Types.Metadata.Base.Portable
 {
     /// <summary>
     /// Portable Registry

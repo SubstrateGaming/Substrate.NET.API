@@ -20,6 +20,7 @@ using Newtonsoft.Json.Linq;
 using Serilog;
 using StreamJsonRpc;
 using Newtonsoft.Json;
+using Substrate.NetApi.Model.Types.Metadata.V14;
 
 [assembly: InternalsVisibleTo("Substrate.NetApi.Test")]
 
@@ -79,6 +80,7 @@ namespace Substrate.NetApi
             Payment = new Payment(this);
             State = new State(this);
             Author = new Author(this);
+            RuntimeCall = new RuntimeCall(this);
             TransactionWatchCalls = new TransactionWatchCalls(this);
 
             _requestTokenSourceDict = new ConcurrentDictionary<CancellationTokenSource, string>();
@@ -121,6 +123,8 @@ namespace Substrate.NetApi
         /// <summary> Gets the author. </summary>
         /// <value> The author. </value>
         public Author Author { get; }
+
+        public RuntimeCall RuntimeCall { get; }
 
         /// <summary>
         /// New Api 2
@@ -241,7 +245,7 @@ namespace Substrate.NetApi
             {
                 var result = await State.GetMetaDataAsync(token);
 
-                var mdv14 = new RuntimeMetadata();
+                var mdv14 = new RuntimeMetadata<RuntimeMetadataV14>();
                 mdv14.Create(result);
                 MetaData = new MetaData(mdv14, _uri.OriginalString);
                 Logger.Debug("MetaData parsed.");

@@ -34,12 +34,12 @@ namespace Substrate.NetApi.TestNode
         }
 
         [Test]
-        [TestCase("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000")]
-        public async Task GetQueryStorageAtAsyncTestAsync(string storageKeyHex)
+        [TestCase("0x26aa394eea5630e07c48ae0c9558cef702a5c1b19ab7a04f536c519aca4983ac", "0xa6aeb4a363120918b0a844e2bb17113d7d96f512c025dacd0fa015b9125669cf")]
+        public async Task GetQueryStorageAtAsyncTestAsync(string storageKeyHex, string blockHash)
         {
             var storageKeys = new List<byte[]>() { Utils.HexToByteArray(storageKeyHex) };
 
-            var results = await _substrateClient.State.GetQueryStorageAtAsync(storageKeys, string.Empty, CancellationToken.None);
+            var results = await _substrateClient.State.GetQueryStorageAtAsync(storageKeys, blockHash, CancellationToken.None);
 
             Assert.IsNotNull(results);
             Assert.IsNotNull(results.First());
@@ -47,8 +47,8 @@ namespace Substrate.NetApi.TestNode
             var result = results.First();
             Assert.True(result.Block.Value.StartsWith("0x"));
             Assert.AreEqual(1, result.Changes.Length);
-            Assert.AreEqual("0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000", result.Changes[0][0]);
-            Assert.AreEqual("0x35a06bfec2edf0ff4be89a6428ccd9ff5bd0167d618c5a0d4341f9600a458d14", result.Changes[0][1]);
+            Assert.AreEqual("0x26aa394eea5630e07c48ae0c9558cef702a5c1b19ab7a04f536c519aca4983ac", result.Changes[0][0]);
+            Assert.AreEqual("0xc50c4e01", result.Changes[0][1]);
         }
 
         [Test]

@@ -1,6 +1,7 @@
-﻿using System;
-using Substrate.NetApi.Model.Types.Base;
+﻿using Substrate.NetApi.Model.Types.Base;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using Substrate.NetApi.Model.Types.Primitive;
+using System;
 
 namespace Substrate.NetApi.Model.Types.Metadata.V14
 {
@@ -52,7 +53,7 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
         /// Type Definition
         /// </summary>
         public BaseEnumExt<TypeDefEnum, TypeDefComposite, TypeDefVariant, TypeDefSequence, TypeDefArray, TypeDefTuple, BaseEnum<TypeDefPrimitive>, TypeDefCompact, TypeDefBitSequence, BaseVoid> TypeDef { get; private set; }
-        
+
         /// <summary>
         /// Docs
         /// </summary>
