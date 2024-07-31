@@ -12,6 +12,15 @@ namespace Substrate.NetApi.TestNode
     public class ModuleRuntimeCallTest : NodeTest
     {
         [Test]
+        public async Task GetMetadataTestAsync()
+        {
+            var result14 = await _substrateClient.RuntimeCall.MetadataAsync(CancellationToken.None);
+            var mdv14 = new RuntimeMetadata<RuntimeMetadataV14>();
+            mdv14.Create(result14.Value.Select(p => p.Value).ToArray());
+            Assert.IsNotNull(mdv14);
+        }
+
+        [Test]
         public async Task GetMetadataAtVersionTestAsync()
         {
             var result14 = await _substrateClient.RuntimeCall.MetadataAtVersionAsync(14, CancellationToken.None);
