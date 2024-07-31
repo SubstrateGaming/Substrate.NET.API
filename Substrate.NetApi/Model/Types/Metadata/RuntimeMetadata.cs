@@ -1,13 +1,13 @@
-﻿using System;
-using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+﻿using Substrate.NetApi.Model.Types.Base;
+using Substrate.NetApi.Model.Types.Metadata.Base;
+using System;
 
 namespace Substrate.NetApi.Model.Types.Metadata
 {
     /// <summary>
     /// Runtime Metadata Type
     /// </summary>
-    public class RuntimeMetadata : BaseType
+    public class RuntimeMetadata<T> : BaseType where T : BaseType, new()
     {
         /// <inheritdoc/>
         public override string TypeName() => "RuntimeMetadata";
@@ -26,7 +26,7 @@ namespace Substrate.NetApi.Model.Types.Metadata
             MetaDataInfo = new MetaDataInfo();
             MetaDataInfo.Decode(byteArray, ref p);
 
-            RuntimeMetadataData = new RuntimeMetadataV14();
+            RuntimeMetadataData = new T();
             RuntimeMetadataData.Decode(byteArray, ref p);
 
             TypeSize = p - start;
@@ -36,10 +36,10 @@ namespace Substrate.NetApi.Model.Types.Metadata
         /// Meta Data Info
         /// </summary>
         public MetaDataInfo MetaDataInfo { get; private set; }
-        
+
         /// <summary>
         /// Runtime Metadata Data
         /// </summary>
-        public RuntimeMetadataV14 RuntimeMetadataData { get; private set; }
+        public T RuntimeMetadataData { get; private set; }
     }
 }

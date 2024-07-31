@@ -1,5 +1,5 @@
 ﻿using System;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 
 namespace Substrate.NetApi.Attributes
 {

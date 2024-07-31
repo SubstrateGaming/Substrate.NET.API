@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Substrate.NetApi.Model.Types.Base;
 
 namespace Substrate.NetApi.TestNode
 {
     public abstract class NodeTest
     {
-        protected const string WebSocketUrl = "ws://rpc-parachain.bajun.network";
+        protected const string WebSocketUrl = "wss://rpc-paseo.bajun.network";
+        //protected const string WebSocketUrl = "wss://rpc-parachain.bajun.network";
+        //protected const string WebSocketUrl = "wss://polkadot-rpc.dwellir.com";
 
         protected SubstrateClient _substrateClient;
 
@@ -43,14 +46,13 @@ namespace Substrate.NetApi.TestNode
         /// Return the 20th hash block from now (totally arbitrary)
         /// </summary>
         /// <returns></returns>
-        protected async Task<byte[]> GivenBlockAsync()
+        protected async Task<Hash> GivenBlockAsync()
         {   
             var lastBlockData = await _substrateClient.Chain.GetBlockAsync();
             var lastBlockNumber = lastBlockData.Block.Header.Number.Value;
 
-            var blockNumber = new Model.Types.Base.BlockNumber();
-            blockNumber.Create((uint)(lastBlockNumber - 20));
-            return (await _substrateClient.Chain.GetBlockHashAsync(blockNumber)).Bytes;
+            var blockNumber = new BlockNumber((uint)(lastBlockNumber - 20));
+            return await _substrateClient.Chain.GetBlockHashAsync(blockNumber);
         }
     }
 }
