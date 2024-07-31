@@ -18,7 +18,7 @@ namespace Substrate.NetApi.TestNode
         [Test]
         public async Task GetBlockAsyncTestAsync()
         {
-            var result = await _substrateClient.InvokeAsync<BlockData>("chain_getBlock", new object[] { "0xc3bc40a6dea74478ecfdd99761b53e60e04945a05e7eec125a80a6cf04e81281" }, CancellationToken.None);
+            var result = await _substrateClient.Chain.GetBlockAsync(CancellationToken.None);
 
             Assert.IsNotNull(result);
         }

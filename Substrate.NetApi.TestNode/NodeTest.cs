@@ -11,9 +11,9 @@ namespace Substrate.NetApi.TestNode
 {
     public abstract class NodeTest
     {
-        protected const string WebSocketUrl = "wss://rpc-paseo.bajun.network";
+        //protected const string WebSocketUrl = "wss://rpc-paseo.bajun.network";
         //protected const string WebSocketUrl = "wss://rpc-parachain.bajun.network";
-        //protected const string WebSocketUrl = "wss://polkadot-rpc.dwellir.com";
+        protected const string WebSocketUrl = "wss://polkadot-rpc.dwellir.com";
 
         protected SubstrateClient _substrateClient;
 
