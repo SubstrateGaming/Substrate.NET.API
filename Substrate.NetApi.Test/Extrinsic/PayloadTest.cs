@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Substrate.NetApi.Model.Extrinsics;
 using Substrate.NetApi.Model.Types.Base;
 using NUnit.Framework;
+using Substrate.NetApi.Model.Types.Primitive;
 
 namespace Substrate.NetApi.Test.Extrinsic
 {
@@ -52,7 +53,7 @@ namespace Substrate.NetApi.Test.Extrinsic
             var startEra = new Hash();
             startEra.Create(blockHash);
 
-            var assetTxPayment = new ChargeAssetTxPayment(0, 0);
+            var assetTxPayment = new ChargeAssetTxPayment(0, new BaseOpt<I64>());
 
             var signedExtensions = new SignedExtensions(259, 1, genesis, startEra, era, 0, assetTxPayment);
 
