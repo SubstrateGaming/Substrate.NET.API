@@ -53,7 +53,7 @@ namespace Substrate.NetApi.Test.Extrinsic
             var startEra = new Hash();
             startEra.Create(blockHash);
 
-            var assetTxPayment = new ChargeAssetTxPayment(0, new BaseOpt<I64>());
+            var assetTxPayment = new ChargeAssetTxPayment(0, new BaseOpt<I32>());
 
             var signedExtensions = new SignedExtensions(259, 1, genesis, startEra, era, 0, assetTxPayment);
 
