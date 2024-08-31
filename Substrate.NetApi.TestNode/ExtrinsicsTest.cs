@@ -73,6 +73,7 @@ namespace Substrate.NetApi.TestNode
         {
             var iType = new BaseVec<U8>(new U8[] { (U8)0x04, (U8)0xFF });
 
+            var assetCharge = ChargeAssetTxPayment.NewWithAsset(0, new I32(0));
             var method = new Method(0, "System", 0, "remark", new IType[] { iType });
 
             var taskCompletionSource = new TaskCompletionSource<(bool, Hash)>();
@@ -92,7 +93,7 @@ namespace Substrate.NetApi.TestNode
                         Assert.Fail("Extrinsic was invalid!");
                         break;
                 }
-            }, method, Alice, _chargeType, 64, CancellationToken.None);
+            }, method, Alice, assetCharge, 64, CancellationToken.None);
 
             var finished = await Task.WhenAny(taskCompletionSource.Task, Task.Delay(TimeSpan.FromMinutes(1)));
             Assert.AreEqual(taskCompletionSource.Task, finished, "Test timed out waiting for final callback");
