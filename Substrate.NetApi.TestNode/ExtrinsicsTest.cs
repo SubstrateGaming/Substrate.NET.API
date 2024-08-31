@@ -20,7 +20,7 @@ namespace Substrate.NetApi.TestNode
         public MiniSecret MiniSecretBob => new MiniSecret(Utils.HexToByteArray("0x398f0c28f98885e046333d4a41c19cee4c37368a9832c6502f6cfd182e2aef89"), ExpandMode.Ed25519);
         public Account Bob => Account.Build(KeyType.Sr25519, MiniSecretBob.ExpandToSecret().ToEd25519Bytes(), MiniSecretBob.GetPair().Public.Key);
 
-        protected const string WebSocketUrl = "ws://127.0.0.1:9944";
+        protected const string WebSocketUrl = "ws://127.0.0.1:9999";
 
         protected SubstrateClient _substrateClient;
 
@@ -51,7 +51,7 @@ namespace Substrate.NetApi.TestNode
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to connect to Substrate node: {ex.Message}");
-                Assert.Ignore("Skipped test because no active Substrate node was found on 127.0.0.1:9944");
+                Assert.Ignore("Skipped test because no active Substrate node was found on 127.0.0.1:9999");
             }
         }
 
