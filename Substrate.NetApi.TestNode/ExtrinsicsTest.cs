@@ -7,6 +7,7 @@ using Substrate.NetApi.Model.Types;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -79,6 +80,8 @@ namespace Substrate.NetApi.TestNode
             var taskCompletionSource = new TaskCompletionSource<(bool, Hash)>();
             await _substrateClient.Author.SubmitAndWatchExtrinsicAsync((string subscriptionId, ExtrinsicStatus extrinsicUpdate) =>
             {
+                Debug.WriteLine($"ExtrinsicUpdate: {extrinsicUpdate.ExtrinsicState}");
+
                 switch (extrinsicUpdate.ExtrinsicState)
                 {
                     case ExtrinsicState.Finalized:
@@ -112,6 +115,8 @@ namespace Substrate.NetApi.TestNode
             _ = await _substrateClient.TransactionWatchCalls.TransactionWatchV1SubmitAndWatchAsync(
                (subscriptionId, extrinsicUpdate) =>
                {
+                   Debug.WriteLine($"ExtrinsicUpdate: {extrinsicUpdate.TransactionEvent.ToString()}");
+
                    switch (extrinsicUpdate.TransactionEvent)
                    {
                        case TransactionEvent.Finalized:
