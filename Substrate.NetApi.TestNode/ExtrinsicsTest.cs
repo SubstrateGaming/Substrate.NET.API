@@ -66,7 +66,7 @@ namespace Substrate.NetApi.TestNode
         }
 
         /// <summary>
-        /// Extrinsic Submit And Watch
+        /// Extrinsic Submit And Watch with non-native payment.
         /// </summary>
         /// <returns></returns>
         [Test]
@@ -74,7 +74,7 @@ namespace Substrate.NetApi.TestNode
         {
             var iType = new BaseVec<U8>(new U8[] { (U8)0x04, (U8)0xFF });
 
-            // Pay in with the asset with asset id one, e.g. DOT on Ajuna Polkadot or PAS on Ajuna Paseo.
+            // Pay with a non-native asset with `assetId=0`, e.g. DOT on Ajuna Polkadot or PAS on Ajuna Paseo.
             var assetCharge = ChargeAssetTxPayment.NewWithAsset(0, new I32(0));
             var method = new Method(0, "System", 0, "remark", new IType[] { iType });
 
