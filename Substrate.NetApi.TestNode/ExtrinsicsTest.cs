@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using Substrate.NET.Schnorrkel.Keys;
 using Substrate.NetApi.Model.Extrinsics;
 using Substrate.NetApi.Model.Rpc;
@@ -75,7 +74,7 @@ namespace Substrate.NetApi.TestNode
             var iType = new BaseVec<U8>(new U8[] { (U8)0x04, (U8)0xFF });
 
             // Pay with a non-native asset with `assetId=0`, e.g. DOT on Ajuna Polkadot or PAS on Ajuna Paseo.
-            var assetCharge = ChargeAssetTxPayment.NewWithAsset(0, new I32(0));
+            var assetCharge = ChargeAssetTxPayment.NewWithAsset(0, new U32(0));
             var method = new Method(0, "System", 0, "remark", new IType[] { iType });
 
             var taskCompletionSource = new TaskCompletionSource<(bool, Hash)>();

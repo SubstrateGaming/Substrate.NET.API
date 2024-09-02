@@ -29,7 +29,7 @@ namespace Substrate.NetApi.Model.Extrinsics
     /// <summary>
     /// Asset Identifier for AssetHubs and the Ajuna Chain.
     /// </summary>
-    public sealed class EnumNativeOrWithId : BaseEnumExt<NativeOrWithId, BaseVoid, I32>
+    public sealed class EnumNativeOrWithId : BaseEnumExt<NativeOrWithId, BaseVoid, U32>
     {
     }
 
@@ -90,7 +90,7 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <param name="tip"></param>
         /// <param name="assetId"></param>
         /// <returns></returns>
-        public static ChargeAssetTxPayment NewWithAsset(CompactInteger tip, I32 assetId)
+        public static ChargeAssetTxPayment NewWithAsset(CompactInteger tip, U32 assetId)
         {
             var asset = new EnumNativeOrWithId();
             asset.Create(NativeOrWithId.WithId, assetId);
