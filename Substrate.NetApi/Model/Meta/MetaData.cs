@@ -19,6 +19,12 @@ namespace Substrate.NetApi.Model.Meta
         /// <summary>
         /// Meta Data Constructor
         /// </summary>
+        public MetaData()
+        { }
+
+        /// <summary>
+        /// Meta Data Constructor
+        /// </summary>
         /// <param name="rtmd"></param>
         /// <param name="origin"></param>
         public MetaData(RuntimeMetadata<RuntimeMetadataV14> rtmd, string origin = "unknown")
