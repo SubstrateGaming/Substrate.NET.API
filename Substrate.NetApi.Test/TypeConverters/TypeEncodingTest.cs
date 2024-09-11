@@ -112,7 +112,7 @@ namespace Substrate.NetApi.Test
         [Test]
         public void ExtEnumEncodingTest()
         {
-            var extEnumType = new BaseEnumExt<PhaseState, U8, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid>();
+            var extEnumType = new BaseEnumExt<PhaseState, U8, BaseVoid, BaseVoid>();
 
             int p = 0;
             extEnumType.Decode(new byte[] { 0x00, 0x01 }, ref p);
@@ -125,7 +125,7 @@ namespace Substrate.NetApi.Test
         [Test]
         public void ExtEnumDencodingTest()
         {
-            var extEnumType = new BaseEnumExt<PhaseState, U8, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid>();
+            var extEnumType = new BaseEnumExt<PhaseState, U8, BaseVoid, BaseVoid>();
 
             int p = 0;
             extEnumType.Decode(new byte[] { 0x00, 0x01 }, ref p);
