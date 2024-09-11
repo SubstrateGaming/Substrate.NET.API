@@ -115,6 +115,15 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = bytes.ToArray();
         }
 
+        /// <summary>
+        /// Create from enum only with BaseVoid
+        /// </summary>
+        /// <param name="t"></param>
+        public void Create(TEnum t)
+        {
+            Create(t, new BaseVoid());
+        }
+
         /// <inheritdoc/>
         public TEnum Value { get; set; }
         /// <inheritdoc/>
