@@ -7,30 +7,30 @@ namespace Substrate.NetApi.Model.Types.Base
     /// Next version of BaseEnumExt to support Rust enums
     /// </summary>
     /// <typeparam name="TEnum"></typeparam>
-    public class BaseEnumRust<TEnum> : BaseEnumType where TEnum : Enum
+    public class BaseEnumRust<TEnum> : BaseType where TEnum : Enum
     {
-        private readonly Dictionary<byte, Func<byte[], int, Tuple<IType, int>>> _typeDecoders;
+        private readonly Dictionary<TEnum, Func<byte[], int, Tuple<IType, int>>> _typeDecoders;
 
         /// <summary>
         /// Constructor
         /// </summary>
         public BaseEnumRust()
         {
-            _typeDecoders = new Dictionary<byte, Func<byte[], int, Tuple<IType, int>>>();
+            _typeDecoders = new Dictionary<TEnum, Func<byte[], int, Tuple<IType, int>>>();
         }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public BaseEnumRust(Dictionary<byte, Type> typeDecoderMap)
+        public BaseEnumRust(Dictionary<TEnum, Type> typeDecoderMap)
         {
-            _typeDecoders = new Dictionary<byte, Func<byte[], int, Tuple<IType, int>>>();
+            _typeDecoders = new Dictionary<TEnum, Func<byte[], int, Tuple<IType, int>>>();
             foreach (var decoder in typeDecoderMap)
             {
-                var enumByte = decoder.Key;
+                var enumValue = decoder.Key;
                 var type = decoder.Value;
 
-                _typeDecoders.Add(enumByte, (byteArray, p) =>
+                _typeDecoders.Add(enumValue, (byteArray, p) =>
                 {
                     var typeInstance = (IType)Activator.CreateInstance(type);
                     typeInstance.Decode(byteArray, ref p);
@@ -43,10 +43,10 @@ namespace Substrate.NetApi.Model.Types.Base
         /// Add a type decoder
         /// </summary>
         /// <typeparam name="TType"></typeparam>
-        /// <param name="enumByte"></param>
-        public void AddTypeDecoder<TType>(byte enumByte) where TType : IType, new()
+        /// <param name="enumValue"></param>
+        public void AddTypeDecoder<TType>(TEnum enumValue) where TType : IType, new()
         {
-            _typeDecoders.Add(enumByte, (byteArray, p) =>
+            _typeDecoders.Add(enumValue, (byteArray, p) =>
             {
                 var typeInstance = new TType();
                 typeInstance.Decode(byteArray, ref p);
@@ -61,9 +61,16 @@ namespace Substrate.NetApi.Model.Types.Base
             var enumByte = byteArray[p];
             p += 1;
 
-            Value = (TEnum)Enum.Parse(typeof(TEnum), enumByte.ToString(), true);
+            try
+            {
+                Value = (TEnum)Enum.Parse(typeof(TEnum), enumByte.ToString(), true);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new Exception($"Invalid enum value: {enumByte}", ex);
+            }
 
-            if (_typeDecoders.TryGetValue(enumByte, out var decoder))
+            if (_typeDecoders.TryGetValue(Value, out var decoder))
             {
                 var result = decoder(byteArray, p);
                 Value2 = result.Item1;
@@ -94,7 +101,7 @@ namespace Substrate.NetApi.Model.Types.Base
         {
             var enumByte = Convert.ToByte(t);
 
-            if (!_typeDecoders.ContainsKey(enumByte))
+            if (!_typeDecoders.ContainsKey(t))
             {
                 throw new Exception($"No decoder found for enum byte {enumByte}, make sure to use BaseVoid, if there is no value.");
             }
