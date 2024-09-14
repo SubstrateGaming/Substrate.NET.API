@@ -67,11 +67,6 @@ namespace Substrate.NetApi
         internal ClientWebSocket _socket;
 
         /// <summary>
-        /// Check if the client has been disconnected manually (to avoid auto-reconnect)
-        /// </summary>
-        private bool _isDisconnectedManually = false;
-
-        /// <summary>
         /// The "ping" to check the connection status
         /// </summary>
         private int _connectionCheckDelay = 500;
@@ -388,11 +383,7 @@ namespace Substrate.NetApi
             Logger.Error(e.Exception, $"JsonRpc disconnected: {e.Reason}");
             OnConnectionLost();
 
-            if(_isDisconnectedManually)
-            {
-                _isDisconnectedManually = false;
-                return;
-            }
+            if (_jsonRpc == null || _jsonRpc.IsDisposed) return;
 
             // Attempt to reconnect asynchronously
             _ = Task.Run(async () =>
@@ -624,7 +615,6 @@ namespace Substrate.NetApi
         public async Task CloseAsync(CancellationToken token)
         {
             _connectTokenSource?.Cancel();
-            _isDisconnectedManually = true;
 
             await Task.Run(async () =>
             {
