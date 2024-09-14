@@ -23,6 +23,7 @@ using Newtonsoft.Json;
 using Substrate.NetApi.Model.Types.Metadata.V14;
 
 [assembly: InternalsVisibleTo("Substrate.NetApi.Test")]
+[assembly: InternalsVisibleTo("Substrate.NetApi.TestNode")]
 
 namespace Substrate.NetApi
 {
@@ -63,7 +64,12 @@ namespace Substrate.NetApi
         private JsonRpc _jsonRpc;
 
         /// <summary> The socket. </summary>
-        private ClientWebSocket _socket;
+        internal ClientWebSocket _socket;
+
+        /// <summary>
+        /// Check if the client has been disconnected manually (to avoid auto-reconnect)
+        /// </summary>
+        private bool _isDisconnectedManually = false;
 
         /// <summary>
         /// The "ping" to check the connection status
@@ -79,6 +85,12 @@ namespace Substrate.NetApi
         /// Event triggered when the connection is set
         /// </summary>
         public event EventHandler ConnectionSet;
+
+        /// <summary>
+        /// Event triggered when the connection is reconnected
+        /// </summary>
+
+        public event EventHandler<int> OnReconnected;
 
         /// <summary>
         /// Bypass Remote Certificate Validation. Useful when testing with self-signed SSL certificates.
@@ -196,6 +208,30 @@ namespace Substrate.NetApi
             }
             _jsonRpc.TraceSource.Switch.Level = sourceLevels;
             return true;
+        }
+
+        /// <summary>
+        /// Raises the event when the connection to the server is lost.
+        /// </summary>
+        protected virtual void OnConnectionLost()
+        {
+            ConnectionLost?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the event when the connection to the server is set.
+        /// </summary>
+        protected virtual void OnConnectionSet()
+        {
+            ConnectionSet?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the event when reconnected
+        /// </summary>
+        protected virtual void OnReconnectedSet(int nbTry)
+        {
+            OnReconnected?.Invoke(this, nbTry);
         }
 
         /// <summary>
@@ -350,6 +386,13 @@ namespace Substrate.NetApi
         private void OnJsonRpcDisconnected(object sender, JsonRpcDisconnectedEventArgs e)
         {
             Logger.Error(e.Exception, $"JsonRpc disconnected: {e.Reason}");
+            OnConnectionLost();
+
+            if(_isDisconnectedManually)
+            {
+                _isDisconnectedManually = false;
+                return;
+            }
 
             // Attempt to reconnect asynchronously
             _ = Task.Run(async () =>
@@ -385,6 +428,8 @@ namespace Substrate.NetApi
                     );
 
                     Logger.Information("Reconnected successfully.");
+
+                    OnReconnectedSet(retry);
                 }
                 catch (Exception ex)
                 {
@@ -579,6 +624,7 @@ namespace Substrate.NetApi
         public async Task CloseAsync(CancellationToken token)
         {
             _connectTokenSource?.Cancel();
+            _isDisconnectedManually = true;
 
             await Task.Run(async () =>
             {

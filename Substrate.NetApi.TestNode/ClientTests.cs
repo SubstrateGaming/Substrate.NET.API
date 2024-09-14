@@ -70,5 +70,27 @@ namespace Substrate.NetApi.TestNode
             await Task.WhenAny(onConnectionLostTriggered.Task, Task.Delay(TimeSpan.FromMinutes(1)));
             Assert.That(onConnectionLostTriggered.Task.IsCompleted, Is.True);
         }
+
+        [Test]
+        public async Task ManuallyDisconnect_ShouldNotTryToReconnectAsync()
+        {
+            await _client.ConnectAsync();
+            await _client.CloseAsync();
+
+            Assert.That(_client.IsConnected, Is.False);
+        }
+
+        [Test]
+        public async Task Disconnect_ShouldTryToReconnectAsync()
+        {
+            var onReconnectedTriggered = new TaskCompletionSource<(bool, int)>();
+            _client.OnReconnected += (sender, e) => onReconnectedTriggered.SetResult((true, e));
+
+            await _client.ConnectAsync();
+            await _client._socket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+
+            await Task.WhenAny(onReconnectedTriggered.Task, Task.Delay(TimeSpan.FromMinutes(1)));
+            Assert.That(_client.IsConnected, Is.True);
+        }
     }
 }
