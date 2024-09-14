@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Substrate.NetApi.Model.Types.Base
 {
     /// <summary>
-    /// This implemetation is just a fast hack, and misses to be complete.
+    /// This implementation is just a fast hack, and misses to be complete.
     /// TODO: rework proper implementation https://docs.rs/bitvec/latest/bitvec/
     /// </summary>
     /// <typeparam name="T1"></typeparam>
