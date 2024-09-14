@@ -26,12 +26,14 @@ using Substrate.NetApi.Model.Types.Metadata.V14;
 
 namespace Substrate.NetApi
 {
-    /// <summary> A substrate client. </summary>
-    /// <remarks> 19.09.2020. </remarks>
-    /// <seealso cref="IDisposable" />
+    /// <summary>
+    /// Substrate client
+    /// </summary>
     public class SubstrateClient : IDisposable
     {
-        /// <summary> The logger. </summary>
+        /// <summary>
+        /// The logger.
+        /// </summary>
         private static readonly ILogger Logger = new LoggerConfiguration().CreateLogger();
 
         private readonly ExtrinsicJsonConverter _extrinsicJsonConverter;
@@ -40,23 +42,33 @@ namespace Substrate.NetApi
 
         private readonly TransactionEventJsonConverter _transactionEventJsonConverter;
 
-        /// <summary> The request token sources. </summary>
+        /// <summary>
+        /// The request token sources
+        /// </summary>
         private readonly ConcurrentDictionary<CancellationTokenSource, string> _requestTokenSourceDict;
 
-        /// <summary> _URI of the resource. </summary>
+        /// <summary>
+        /// _URI of the resource
+        /// </summary>
         private readonly Uri _uri;
 
-        /// <summary> The connect token source. </summary>
+        /// <summary>
+        /// The connect token source
+        /// </summary>
         private CancellationTokenSource _connectTokenSource;
 
-        /// <summary> The JSON RPC. </summary>
+        /// <summary>
+        /// The JSON RPC
+        /// </summary>
         private JsonRpc _jsonRpc;
 
-        /// <summary> The socket. </summary>
+        /// <summary>
+        /// The socket
+        /// </summary>
         private ClientWebSocket _socket;
 
         /// <summary>
-        /// Bypass Remote Certificate Validation. Useful when testing with self-signed SSL certificates. 
+        /// Bypass Remote Certificate Validation. Useful when testing with self-signed SSL certificates.
         /// </summary>
         private readonly bool _bypassRemoteCertificateValidation;
 
@@ -86,11 +98,12 @@ namespace Substrate.NetApi
             _requestTokenSourceDict = new ConcurrentDictionary<CancellationTokenSource, string>();
         }
 
-        /// <summary> Gets or sets information describing the meta. </summary>
-        /// <value> Information describing the meta. </value>
+        /// <summary>
+        /// Gets or sets information describing the meta
+        /// </summary>
         public MetaData MetaData { get; private set; }
 
-        /// <summary> 
+        /// <summary>
         /// Network runtime version
         /// </summary>
         public RuntimeVersion RuntimeVersion { get; private set; }
@@ -100,28 +113,34 @@ namespace Substrate.NetApi
         /// </summary>
         public Properties Properties { get; private set; }
 
-        /// <summary> Gets or sets the genesis hash. </summary>
-        /// <value> The genesis hash. </value>
+        /// <summary>
+        /// Gets or sets the genesis hash
+        /// </summary>
         public Hash GenesisHash { get; private set; }
 
-        /// <summary> Gets the system. </summary>
-        /// <value> The system. </value>
+        /// <summary>
+        /// Gets the system.
+        /// </summary>
         public Modules.System System { get; }
 
-        /// <summary> Gets the chain. </summary>
-        /// <value> The chain. </value>
+        /// <summary>
+        /// Gets the chain.
+        /// </summary>
         public Chain Chain { get; }
 
-        /// <summary> Gets the payment. </summary>
-        /// <value> The payment. </value>
+        /// <summary>
+        /// Gets the payment.
+        /// </summary>
         public Payment Payment { get; }
 
-        /// <summary> Gets the state. </summary>
-        /// <value> The state. </value>
+        /// <summary>
+        /// Gets the state.
+        /// </summary>
         public State State { get; }
 
-        /// <summary> Gets the author. </summary>
-        /// <value> The author. </value>
+        /// <summary>
+        /// Gets the author.
+        /// </summary>
         public Author Author { get; }
 
         public RuntimeCall RuntimeCall { get; }
@@ -136,9 +155,20 @@ namespace Substrate.NetApi
         /// </summary>
         public SubscriptionListener Listener { get; } = new SubscriptionListener();
 
-        /// <summary> Gets a value indicating whether this object is connected. </summary>
-        /// <value> True if this object is connected, false if not. </value>
+        /// <summary>
+        /// Gets a value indicating whether this object is connected.
+        /// </summary>
         public bool IsConnected => _socket?.State == WebSocketState.Open && _jsonRpc != null;
+
+        /// <summary>
+        /// Maximum number of retry attempts to connect to the node.
+        /// </summary>
+        private int _maxRetryAttempts;
+
+        /// <summary>
+        /// Delay in milliseconds before retrying to connect to the node.
+        /// </summary>
+        private int _delayRetryMilliseconds;
 
         /// <summary>
         /// Sets the JSON-RPC logging level.
@@ -165,7 +195,7 @@ namespace Substrate.NetApi
         }
 
         /// <summary>
-        /// Asynchronously connects to the node.
+        /// Connect to the node asynchronously.
         /// </summary>
         /// <param name="token">Cancellation token.</param>
         /// <returns></returns>
@@ -175,7 +205,7 @@ namespace Substrate.NetApi
         }
 
         /// <summary>
-        /// Asynchronously connects to the node.
+        /// Connect to the node asynchronously.
         /// </summary>
         /// <param name="useMetaData">Parse metadata on connect.</param>
         /// <param name="token">Cancellation token.</param>
@@ -186,21 +216,41 @@ namespace Substrate.NetApi
         }
 
         /// <summary>
-        /// Asynchronously connects to the node.
+        /// Connect to the node asynchronously.
         /// </summary>
-        /// <param name="useMetaData">Parse metadata on connect.</param>
-        /// <param name="standardSubstrate">Get blocknumber and runtime information from standard susbtrate node.</param>
-        /// <param name="token">Cancellation token.</param>
+        /// <param name="useMetaData"></param>
+        /// <param name="standardSubstrate"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
         public async Task ConnectAsync(bool useMetaData, bool standardSubstrate, CancellationToken token)
         {
+            await ConnectAsync(useMetaData, standardSubstrate, 5, 2000, token);
+        }
+
+        /// <summary>
+        /// Connect to the node asynchronously.
+        /// </summary>
+        /// <param name="useMetaData"></param>
+        /// <param name="standardSubstrate"></param>
+        /// <param name="maxRetryAttempts"></param>
+        /// <param name="delayRetryMilliseconds"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public async Task ConnectAsync(bool useMetaData, bool standardSubstrate, int maxRetryAttempts, int delayRetryMilliseconds, CancellationToken token)
+        {
+            _maxRetryAttempts = maxRetryAttempts;
+            _delayRetryMilliseconds = delayRetryMilliseconds;
+
             if (_socket != null && _socket.State == WebSocketState.Open)
+            {
                 return;
+            }
 
             if (_socket == null || _socket.State != WebSocketState.None)
             {
                 _jsonRpc?.Dispose();
                 _socket?.Dispose();
+
                 _socket = new ClientWebSocket();
 
                 // Set RemoteCertificateValidationCallback to return true
@@ -209,7 +259,7 @@ namespace Substrate.NetApi
 #if NETSTANDARD2_0
                     throw new NotSupportedException("Bypass remote certification validation not supported in NETStandard2.0");
 #elif NETSTANDARD2_1_OR_GREATER
-                    _socket.Options.RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true;    
+                    _socket.Options.RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true;
 #endif
                 }
             }
@@ -220,6 +270,7 @@ namespace Substrate.NetApi
             linkedTokenSource.Dispose();
             _connectTokenSource.Dispose();
             _connectTokenSource = null;
+
             Logger.Debug("Connected to Websocket.");
 
             var formatter = new JsonMessageFormatter();
@@ -235,10 +286,12 @@ namespace Substrate.NetApi
             formatter.JsonSerializer.Converters.Add(_transactionEventJsonConverter);
 
             _jsonRpc = new JsonRpc(new WebSocketMessageHandler(_socket, formatter));
+            _jsonRpc.Disconnected += OnJsonRpcDisconnected;
             _jsonRpc.TraceSource.Listeners.Add(new SerilogTraceListener.SerilogTraceListener());
             _jsonRpc.TraceSource.Switch.Level = SourceLevels.Warning;
             _jsonRpc.AddLocalRpcTarget(Listener, new JsonRpcTargetOptions { AllowNonPublicInvocation = false });
             _jsonRpc.StartListening();
+
             Logger.Debug("Listening to websocket.");
 
             if (useMetaData)
@@ -275,6 +328,64 @@ namespace Substrate.NetApi
             }
 
             //_jsonRpc.TraceSource.Switch.Level = SourceLevels.All;
+        }
+
+        private void OnJsonRpcDisconnected(object sender, JsonRpcDisconnectedEventArgs e)
+        {
+            Logger.Error(e.Exception, $"JsonRpc disconnected: {e.Reason}");
+
+            // Attempt to reconnect asynchronously
+            _ = Task.Run(async () =>
+            {
+                Console.WriteLine("JsonRpc disconnected attempting to reconnect...");
+                await ReconnectAsync();
+            });
+        }
+
+        private readonly SemaphoreSlim _reconnectSemaphore = new SemaphoreSlim(1, 1);
+
+        private async Task ReconnectAsync()
+        {
+            if (!await _reconnectSemaphore.WaitAsync(0))
+            {
+                // Another reconnection attempt is already in progress
+                return;
+            }
+
+            for (int retry = 1; retry <= _maxRetryAttempts; retry++)
+            {
+                try
+                {
+                    Logger.Information("Attempting to reconnect...");
+
+                    // You may need to store the parameters used during the initial connection
+                    await ConnectAsync(
+                        useMetaData: true,
+                        standardSubstrate: true,
+                        maxRetryAttempts: _maxRetryAttempts,
+                        delayRetryMilliseconds: _delayRetryMilliseconds,
+                        token: CancellationToken.None
+                    );
+
+                    Logger.Information("Reconnected successfully.");
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warning(ex, $"Reconnection attempt {retry} failed.");
+                    if (retry == _maxRetryAttempts)
+                    {
+                        Logger.Error("Max reconnection attempts reached. Unable to reconnect.");
+                        throw;
+                    }
+
+                    await Task.Delay(_delayRetryMilliseconds * retry, CancellationToken.None);
+                }
+                finally
+                {
+                    _reconnectSemaphore.Release();
+            
+                }
+            }
         }
 
         /// <summary>
@@ -487,10 +598,19 @@ namespace Substrate.NetApi
                     _connectTokenSource?.Dispose();
 
                     // dispose remaining request tokens
-                    foreach (var key in _requestTokenSourceDict.Keys) key?.Dispose();
+                    foreach (var key in _requestTokenSourceDict.Keys)
+                    {
+                        key?.Dispose();
+                    }
+
                     _requestTokenSourceDict.Clear();
 
-                    _jsonRpc?.Dispose();
+                    if (_jsonRpc != null)
+                    {
+                        _jsonRpc.Disconnected -= OnJsonRpcDisconnected;
+                        _jsonRpc.Dispose();
+                    }
+
                     _socket?.Dispose();
                     Logger.Debug("Client disposed.");
                 }
