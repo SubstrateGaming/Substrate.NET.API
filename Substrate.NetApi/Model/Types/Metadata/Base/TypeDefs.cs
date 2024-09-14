@@ -1,9 +1,10 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Substrate.NetApi.Model.Types.Base;
+using Substrate.NetApi.Model.Types.Metadata.V14;
 using Substrate.NetApi.Model.Types.Primitive;
+using System;
 
-namespace Substrate.NetApi.Model.Types.Metadata.V14
+namespace Substrate.NetApi.Model.Types.Metadata.Base
 {
     /// <summary>
     /// Compact Integer Type
@@ -252,7 +253,7 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
         /// Len
         /// </summary>
         public U32 Len { get; private set; }
-        
+
         /// <summary>
         /// Type Param
         /// </summary>
@@ -404,7 +405,7 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
         /// Bit Store Type
         /// </summary>
         public TType BitStoreType { get; private set; }
-        
+
         /// <summary>
         /// Bit Order Type
         /// </summary>

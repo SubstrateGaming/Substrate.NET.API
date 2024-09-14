@@ -4,7 +4,10 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Substrate.NetApi.Model.Types.Metadata;
+using Substrate.NetApi.Model.Types.Metadata.Base;
+using Substrate.NetApi.Model.Types.Metadata.Base.Portable;
 using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.V15;
 
 namespace Substrate.NetApi.Model.Meta
 {
@@ -16,9 +19,15 @@ namespace Substrate.NetApi.Model.Meta
         /// <summary>
         /// Meta Data Constructor
         /// </summary>
+        public MetaData()
+        { }
+
+        /// <summary>
+        /// Meta Data Constructor
+        /// </summary>
         /// <param name="rtmd"></param>
         /// <param name="origin"></param>
-        public MetaData(RuntimeMetadata rtmd, string origin = "unknown")
+        public MetaData(RuntimeMetadata<RuntimeMetadataV14> rtmd, string origin = "unknown")
         {
             Origin = origin;
             Magic = Utils.Bytes2HexString(rtmd.MetaDataInfo.Magic.Bytes);
@@ -255,7 +264,7 @@ namespace Substrate.NetApi.Model.Meta
         /// <param name="modules"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public static Dictionary<uint, PalletModule> CreateModuleDict(PalletMetadata[] modules)
+        public static Dictionary<uint, PalletModule> CreateModuleDict(PalletMetadataV14[] modules)
         {
             var result = new Dictionary<uint, PalletModule>();
 
@@ -286,7 +295,7 @@ namespace Substrate.NetApi.Model.Meta
                             Modifier = entry.StorageModifier.Value,
                             StorageType = entry.StorageType.Value,
                             Default = entry.StorageDefault.Value.Select(p => p.Value).ToArray(),
-                            Docs = entry.Documentation.Value.Select(p => p.Value).ToArray(),
+                            Docs = entry.Docs.Value.Select(p => p.Value).ToArray(),
                         };
 
                         switch (entry.StorageType.Value)
@@ -339,7 +348,7 @@ namespace Substrate.NetApi.Model.Meta
                         Name = constant.ConstantName.Value,
                         TypeId = (uint)constant.ConstantType.Value,
                         Value = constant.ConstantValue.Value.Select(p => p.Value).ToArray(),
-                        Docs = constant.Documentation.Value.Select(p => p.Value).ToArray()
+                        Docs = constant.Docs.Value.Select(p => p.Value).ToArray()
                     };
                 }
 
@@ -361,7 +370,7 @@ namespace Substrate.NetApi.Model.Meta
         /// </summary>
         /// <param name="extrinsic"></param>
         /// <returns></returns>
-        private static ExtrinsicMetadata CreateExtrinsic(ExtrinsicMetadataStruct extrinsic)
+        private static ExtrinsicMetadata CreateExtrinsic(ExtrinsicMetadataV14 extrinsic)
         {
             return new ExtrinsicMetadata()
             {

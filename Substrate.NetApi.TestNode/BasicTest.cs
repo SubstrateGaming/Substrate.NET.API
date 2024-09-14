@@ -40,7 +40,7 @@ namespace Substrate.NetApi.TestNode
         {
             var result = await _substrateClient.System.ChainAsync(CancellationToken.None);
 
-            Assert.AreEqual("Bajun Kusama", result);
+            Assert.AreEqual("Polkadot", result);
         }
 
         [Test]
@@ -80,9 +80,9 @@ namespace Substrate.NetApi.TestNode
         {
             var result = await _substrateClient.System.PropertiesAsync(CancellationToken.None);
 
-            Assert.AreEqual(1337, result.Ss58Format);
-            Assert.AreEqual(12, result.TokenDecimals);
-            Assert.AreEqual("BAJU", result.TokenSymbol);
+            Assert.AreEqual(0, result.Ss58Format);
+            Assert.AreEqual(10, result.TokenDecimals);
+            Assert.AreEqual("DOT", result.TokenSymbol);
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace Substrate.NetApi.TestNode
 
             var result = await _substrateClient.Chain.GetBlockHashAsync(blockNumber, CancellationToken.None);
 
-            Assert.AreEqual("0x35A06BFEC2EDF0FF4BE89A6428CCD9FF5BD0167D618C5A0D4341F9600A458D14", result.Value);
+            Assert.AreEqual("0x91B171BB158E2D3848FA23A9F1C25182FB8E20313B2C1EB49219DA7A70CE90C3", result.Value);
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace Substrate.NetApi.TestNode
             var result = await _substrateClient.GetStorageAsync<Arr32U8>(parameters, CancellationToken.None);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual("0x35A06BFEC2EDF0FF4BE89A6428CCD9FF5BD0167D618C5A0D4341F9600A458D14", Utils.Bytes2HexString(result.Value.Select(p => p.Value).ToArray()));
+            Assert.AreEqual("0x91B171BB158E2D3848FA23A9F1C25182FB8E20313B2C1EB49219DA7A70CE90C3", Utils.Bytes2HexString(result.Value.Select(p => p.Value).ToArray()));
 
             blockNumber.Create(999999999);
 

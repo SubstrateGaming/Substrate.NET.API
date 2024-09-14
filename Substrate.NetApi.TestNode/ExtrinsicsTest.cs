@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using Substrate.NET.Schnorrkel.Keys;
 using Substrate.NetApi.Model.Extrinsics;
 using Substrate.NetApi.Model.Rpc;
@@ -7,6 +6,7 @@ using Substrate.NetApi.Model.Types;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -40,7 +40,7 @@ namespace Substrate.NetApi.TestNode
         [OneTimeSetUp]
         public async Task SetupAsync()
         {
-            _chargeType = ChargeTransactionPayment.Default();
+            _chargeType = ChargeAssetTxPayment.Default();
             _substrateClient = new SubstrateClient(new Uri(WebSocketUrl), _chargeType);
 
             try
@@ -50,7 +50,7 @@ namespace Substrate.NetApi.TestNode
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to connect to Substrate node: {ex.Message}");
-                Assert.Ignore("Skipped test because no active Substrate node was found on 127.0.0.1:9944");
+                Assert.Ignore("Skipped test because no active Substrate node was found on 127.0.0.1:9999");
             }
         }
 
@@ -65,7 +65,7 @@ namespace Substrate.NetApi.TestNode
         }
 
         /// <summary>
-        /// Extrinsic Submit And Watch
+        /// Extrinsic Submit And Watch with non-native payment.
         /// </summary>
         /// <returns></returns>
         [Test]
@@ -73,11 +73,15 @@ namespace Substrate.NetApi.TestNode
         {
             var iType = new BaseVec<U8>(new U8[] { (U8)0x04, (U8)0xFF });
 
+            // Pay with a non-native asset with `assetId=0`, e.g. DOT on Ajuna Polkadot or PAS on Ajuna Paseo.
+            var assetCharge = ChargeAssetTxPayment.NewWithAsset(0, new U32(0));
             var method = new Method(0, "System", 0, "remark", new IType[] { iType });
 
             var taskCompletionSource = new TaskCompletionSource<(bool, Hash)>();
             await _substrateClient.Author.SubmitAndWatchExtrinsicAsync((string subscriptionId, ExtrinsicStatus extrinsicUpdate) =>
             {
+                Debug.WriteLine($"ExtrinsicUpdate: {extrinsicUpdate.ExtrinsicState}");
+
                 switch (extrinsicUpdate.ExtrinsicState)
                 {
                     case ExtrinsicState.Finalized:
@@ -92,7 +96,7 @@ namespace Substrate.NetApi.TestNode
                         Assert.Fail("Extrinsic was invalid!");
                         break;
                 }
-            }, method, Alice, _chargeType, 64, CancellationToken.None);
+            }, method, Alice, assetCharge, 64, CancellationToken.None);
 
             var finished = await Task.WhenAny(taskCompletionSource.Task, Task.Delay(TimeSpan.FromMinutes(1)));
             Assert.AreEqual(taskCompletionSource.Task, finished, "Test timed out waiting for final callback");
@@ -111,6 +115,8 @@ namespace Substrate.NetApi.TestNode
             _ = await _substrateClient.TransactionWatchCalls.TransactionWatchV1SubmitAndWatchAsync(
                (subscriptionId, extrinsicUpdate) =>
                {
+                   Debug.WriteLine($"ExtrinsicUpdate: {extrinsicUpdate.TransactionEvent.ToString()}");
+
                    switch (extrinsicUpdate.TransactionEvent)
                    {
                        case TransactionEvent.Finalized:

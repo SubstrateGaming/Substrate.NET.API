@@ -44,6 +44,11 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// Method
         /// </summary>
         public Method Method { get; set; }
+        
+        /// <summary>
+        /// CheckMetadataHash
+        /// </summary>
+        public CheckMetadataHash CheckMetadataHash { get; set; }
 
         /// <summary>
         /// Signature
@@ -124,6 +129,9 @@ namespace Substrate.NetApi.Model.Extrinsics
                 // charge type
                 Charge = chargeType;
                 Charge.Decode(memory.ToArray(), ref p);
+
+                CheckMetadataHash = new CheckMetadataHash();
+                CheckMetadataHash.Decode(memory.ToArray(), ref p);
             }
 
             // method
@@ -154,6 +162,7 @@ namespace Substrate.NetApi.Model.Extrinsics
             Era = era;
             Nonce = nonce;
             Charge = charge;
+            CheckMetadataHash = new CheckMetadataHash();
             Method = method;
         }
 
@@ -176,6 +185,7 @@ namespace Substrate.NetApi.Model.Extrinsics
                 result.AddRange(Era.Encode());
                 result.AddRange(Nonce.Encode());
                 result.AddRange(Charge.Encode());
+                result.AddRange(CheckMetadataHash.EncodeExtra());
             }
 
             result.AddRange(Method.Encode());

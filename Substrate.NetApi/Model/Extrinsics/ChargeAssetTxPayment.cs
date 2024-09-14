@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Substrate.NetApi.Model.Types.Base;
+using Substrate.NetApi.Model.Types.Primitive;
 
 namespace Substrate.NetApi.Model.Extrinsics
 {
@@ -7,7 +8,31 @@ namespace Substrate.NetApi.Model.Extrinsics
     /// Charge Type
     /// </summary>
     public abstract class ChargeType : BaseType
-    { }
+    {
+    }
+
+    /// <summary>
+    /// Asset Identifier for AssetHubs and the Ajuna Chain.
+    /// </summary>
+    public enum NativeOrWithId
+    {
+        /// <summary>
+        /// Native token. However, in the `ChargeAssetTxPayment` this is unused, as the none implies the Native asset.
+        /// </summary>
+        Native = 0,
+        /// <summary>
+        /// Some asset with a corresponding asset should be used for payment.
+        /// </summary>
+        WithId = 1,
+    }
+
+    /// <summary>
+    /// Asset Identifier for AssetHubs and the Ajuna Chain.
+    /// </summary>
+    public sealed class EnumNativeOrWithId : BaseEnumExt<NativeOrWithId, BaseVoid, U32>
+    {
+    }
+
 
     /// <summary>
     /// Charge Asset Tx Payment
@@ -15,17 +40,17 @@ namespace Substrate.NetApi.Model.Extrinsics
     public class ChargeAssetTxPayment : ChargeType
     {
         private CompactInteger _tip;
-        private CompactInteger _assetId;
+        private BaseOpt<EnumNativeOrWithId> _assetId;
 
         /// <summary>
         /// Charge Asset Tx Payment Constructor
         /// </summary>
         /// <param name="tip"></param>
-        /// <param name="asset"></param>
-        public ChargeAssetTxPayment(CompactInteger tip, CompactInteger asset)
+        /// <param name="assetId"></param>
+        public ChargeAssetTxPayment(CompactInteger tip, BaseOpt<EnumNativeOrWithId> assetId)
         {
             _tip = tip;
-            _assetId = asset;
+            _assetId = assetId;
         }
 
         /// <inheritdoc/>
@@ -36,7 +61,7 @@ namespace Substrate.NetApi.Model.Extrinsics
             // Tip
             bytes.AddRange(_tip.Encode());
 
-            // Asset Id
+            // AssetId
             bytes.AddRange(_assetId.Encode());
 
             return bytes.ToArray();
@@ -46,7 +71,8 @@ namespace Substrate.NetApi.Model.Extrinsics
         public override void Decode(byte[] byteArray, ref int p)
         {
             _tip = CompactInteger.Decode(byteArray, ref p);
-            _assetId = CompactInteger.Decode(byteArray, ref p);
+            _assetId = new BaseOpt<EnumNativeOrWithId>();
+            _assetId.Decode(byteArray, ref p);
         }
 
         /// <summary>
@@ -55,7 +81,21 @@ namespace Substrate.NetApi.Model.Extrinsics
         /// <returns></returns>
         public static ChargeAssetTxPayment Default()
         {
-            return new ChargeAssetTxPayment(0, 0);
+            return new ChargeAssetTxPayment(0, new BaseOpt<EnumNativeOrWithId>());
+        }
+
+        /// <summary>
+        /// Defines extrinsic payment with the asset id 
+        /// </summary>
+        /// <param name="tip"></param>
+        /// <param name="assetId"></param>
+        /// <returns></returns>
+        public static ChargeAssetTxPayment NewWithAsset(CompactInteger tip, U32 assetId)
+        {
+            var asset = new EnumNativeOrWithId();
+            asset.Create(NativeOrWithId.WithId, assetId);
+
+            return new ChargeAssetTxPayment(tip, new BaseOpt<EnumNativeOrWithId>(asset));
         }
     }
 

@@ -13,11 +13,13 @@ namespace Substrate.NetApi.Model.Types.Base
         {
             return "(" + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
             return new byte[0];
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -50,12 +52,14 @@ namespace Substrate.NetApi.Model.Types.Base
         {
             Create(t1);
         }
+
         /// <inheritdoc/>
         public override string TypeName()
         {
             return "(" +
                 new T1().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -66,6 +70,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -123,6 +128,7 @@ namespace Substrate.NetApi.Model.Types.Base
         {
             Create(t1, t2);
         }
+
         /// <inheritdoc/>
         public override string TypeName()
         {
@@ -130,6 +136,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T1().TypeName() + "," +
                 new T2().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -140,6 +147,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -202,6 +210,7 @@ namespace Substrate.NetApi.Model.Types.Base
         {
             Create(t1, t2, t3);
         }
+
         /// <inheritdoc/>
         public override string TypeName()
         {
@@ -210,6 +219,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T2().TypeName() + "," +
                 new T3().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -220,6 +230,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -309,6 +320,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -380,6 +392,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T4().TypeName() + "," +
                 new T5().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -390,6 +403,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -468,6 +482,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T5().TypeName() + "," +
                 new T6().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -478,6 +493,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -563,6 +579,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T6().TypeName() + "," +
                 new T7().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -573,6 +590,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -665,6 +683,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T7().TypeName() + "," +
                 new T8().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -675,6 +694,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -774,6 +794,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T8().TypeName() + "," +
                 new T9().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -784,6 +805,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -890,6 +912,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T9().TypeName() + "," +
                 new T10().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -900,6 +923,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -2595,7 +2619,7 @@ namespace Substrate.NetApi.Model.Types.Base
         /// </summary>
         public IType[] Value { get; internal set; }
     }
-    
+
     /// <summary>
     /// Base class for multiple tuples type
     /// </summary>
@@ -3059,6 +3083,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T22().TypeName() + "," +
                 new T23().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -3069,6 +3094,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -3273,6 +3299,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T23().TypeName() + "," +
                 new T24().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -3283,6 +3310,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -3494,6 +3522,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T24().TypeName() + "," +
                 new T25().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -3504,6 +3533,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -3722,6 +3752,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T25().TypeName() + "," +
                 new T26().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -3732,6 +3763,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -3957,6 +3989,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T26().TypeName() + "," +
                 new T27().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -3967,6 +4000,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -4199,6 +4233,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T27().TypeName() + "," +
                 new T28().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -4209,6 +4244,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -4448,6 +4484,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T28().TypeName() + "," +
                 new T29().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -4458,6 +4495,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -4704,9 +4742,9 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T29().TypeName() + "," +
                 new T30().TypeName() + ")";
         }
-        
-       /// <inheritdoc/>
-       public override byte[] Encode()
+
+        /// <inheritdoc/>
+        public override byte[] Encode()
         {
             var result = new List<byte>();
             foreach (var v in Value)
@@ -4715,6 +4753,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -4968,6 +5007,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T30().TypeName() + "," +
                 new T31().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -4978,6 +5018,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -5238,6 +5279,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T31().TypeName() + "," +
                 new T32().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -5248,6 +5290,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -5515,6 +5558,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T32().TypeName() + "," +
                 new T33().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -5525,6 +5569,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -5799,6 +5844,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T33().TypeName() + "," +
                 new T34().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -5809,6 +5855,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -6090,6 +6137,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T34().TypeName() + "," +
                 new T35().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -6100,6 +6148,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -6388,6 +6437,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T35().TypeName() + "," +
                 new T36().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -6398,6 +6448,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -6693,6 +6744,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T36().TypeName() + "," +
                 new T37().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -6703,6 +6755,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -7005,6 +7058,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T37().TypeName() + "," +
                 new T38().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -7015,6 +7069,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {
@@ -7324,6 +7379,7 @@ namespace Substrate.NetApi.Model.Types.Base
                 new T38().TypeName() + "," +
                 new T39().TypeName() + ")";
         }
+
         /// <inheritdoc/>
         public override byte[] Encode()
         {
@@ -7334,6 +7390,7 @@ namespace Substrate.NetApi.Model.Types.Base
             }
             return result.ToArray();
         }
+
         /// <inheritdoc/>
         public override void Decode(byte[] byteArray, ref int p)
         {

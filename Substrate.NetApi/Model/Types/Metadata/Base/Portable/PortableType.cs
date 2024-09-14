@@ -1,8 +1,9 @@
-﻿using System;
-using Substrate.NetApi.Model.Types.Base;
+﻿using Substrate.NetApi.Model.Types.Base;
+using Substrate.NetApi.Model.Types.Metadata.V14;
 using Substrate.NetApi.Model.Types.Primitive;
+using System;
 
-namespace Substrate.NetApi.Model.Types.Metadata.V14
+namespace Substrate.NetApi.Model.Types.Metadata.Base.Portable
 {
     /// <summary>
     /// Portable Type
@@ -37,7 +38,7 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
         /// Id
         /// </summary>
         public U32 Id { get; private set; }
-        
+
         /// <summary>
         /// Ty
         /// </summary>
