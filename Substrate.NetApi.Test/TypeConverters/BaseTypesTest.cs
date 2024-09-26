@@ -5,9 +5,63 @@ using Substrate.NetApi.Model.Types.Primitive;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using System.Collections;
 
 namespace Substrate.NetApi.Test
 {
+    public sealed class Lsb0 : BaseType
+    {
+
+        /// <inheritdoc/>
+        public override string TypeName()
+        {
+            return "Lsb0";
+        }
+
+        /// <inheritdoc/>
+        public override byte[] Encode()
+        {
+            var result = new List<byte>();
+            return result.ToArray();
+        }
+
+        /// <inheritdoc/>
+        public override void Decode(byte[] byteArray, ref int p)
+        {
+            var start = p;
+            var bytesLength = p - start;
+            TypeSize = bytesLength;
+            Bytes = new byte[bytesLength];
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+        }
+    }
+
+    public sealed class Msb0 : BaseType
+    {
+
+        /// <inheritdoc/>
+        public override string TypeName()
+        {
+            return "Msb0";
+        }
+
+        /// <inheritdoc/>
+        public override byte[] Encode()
+        {
+            var result = new List<byte>();
+            return result.ToArray();
+        }
+
+        /// <inheritdoc/>
+        public override void Decode(byte[] byteArray, ref int p)
+        {
+            var start = p;
+            var bytesLength = p - start;
+            TypeSize = bytesLength;
+            Bytes = new byte[bytesLength];
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+        }
+    }
     public class BaseTypesTest
     {
         [Test]
@@ -188,27 +242,52 @@ namespace Substrate.NetApi.Test
         }
 
         [Test]
+        public void BaseBitSeq_DisplayTest()
+        {
+            var testCase1 = "0xa00b80050000";
+            var baseBitSeqLsb0_1 = new BaseBitSeq<U8, Lsb0>();
+            var baseBitSeqMsb0_1 = new BaseBitSeq<U8, Msb0>();
+            baseBitSeqLsb0_1.Create(testCase1);
+            baseBitSeqMsb0_1.Create(testCase1);
+
+            Assert.That(baseBitSeqLsb0_1.Encode(), Is.EquivalentTo(baseBitSeqMsb0_1.Encode()));
+            Assert.That(baseBitSeqLsb0_1.DisplayToBits(), Is.EqualTo("0b11010000_00000001_10100000_00000000_00000000"));
+            Assert.That(baseBitSeqMsb0_1.DisplayToBits(), Is.EqualTo("0b00001011_10000000_00000101_00000000_00000000"));
+
+        }
+
+        [Test]
         public void BaseBitSeqTest()
         {
             var testCase1 = "0xa00b80050000";
-            var bitSeqTest1 = FromBitString("0b11010000_00000001_10100000_00000000_00000000");
-            var baseBitSeq1 = new BaseBitSeq<U8, U8>();
-            baseBitSeq1.Create(testCase1);
+            var bits = "0b11010000_00000001_10100000_00000000_00000000";
+            var bitSeqTest1 = FromBitString(bits);
+            var baseBitSeqLsb0_1 = new BaseBitSeq<U8, Lsb0>();
+            var baseBitSeqMsb0_1 = new BaseBitSeq<U8, Msb0>();
+            baseBitSeqLsb0_1.Create(testCase1);
+            baseBitSeqMsb0_1.Create(testCase1);
             for (int i = 0; i < bitSeqTest1.Length; i++)
             {
-                Assert.AreEqual(bitSeqTest1[i], baseBitSeq1.Value[i].Value);
+                Assert.AreEqual(bitSeqTest1[i], baseBitSeqLsb0_1.Value[i].Value);
             }
-            Assert.AreEqual(testCase1, Utils.Bytes2HexString(baseBitSeq1.Encode()).ToLower());
+            Assert.AreEqual(testCase1, Utils.Bytes2HexString(baseBitSeqLsb0_1.Encode()).ToLower());
+
+            var baseBitSeq1_bits = new BaseBitSeq<U8, Lsb0>();
+            baseBitSeq1_bits.CreateFromBitString(bits);
+            Assert.That(testCase1, Is.EqualTo(Utils.Bytes2HexString(baseBitSeq1_bits.Encode()).ToLower()));
+
+            var baseBitSeqMsb0_bits = new BaseBitSeq<U8, Msb0>();
+            baseBitSeqMsb0_bits.CreateFromBitString(bits);
+            Assert.That(bits, Is.EqualTo(baseBitSeqMsb0_bits.DisplayToBits()));
 
             // Let's create the same object but with the other Create() method
-            var baseBitSeq1_1 = new BaseBitSeq<U8, U8>();
-            baseBitSeq1_1.Create(baseBitSeq1.Value);
-            Assert.AreEqual(baseBitSeq1.Bytes, baseBitSeq1_1.Bytes);
-            Assert.AreEqual(baseBitSeq1.Value, baseBitSeq1_1.Value);
-            Assert.AreEqual(baseBitSeq1.TypeSize, baseBitSeq1_1.TypeSize);
+            var baseBitSeq1_1 = new BaseBitSeq<U8, Lsb0>();
+            baseBitSeq1_1.Create(baseBitSeqLsb0_1.Encode());
+            Assert.AreEqual(baseBitSeqLsb0_1.Bytes, baseBitSeq1_1.Bytes);
+            Assert.AreEqual(baseBitSeqLsb0_1.TypeSize, baseBitSeq1_1.TypeSize);
 
             var bitSeqTest2 = FromBitString("0b10000010_10000010_00101000_00000000_00000000");
-            var baseBitSeq2 = new BaseBitSeq<U8, U8>();
+            var baseBitSeq2 = new BaseBitSeq<U8, Lsb0>();
             baseBitSeq2.Create("0xa04141140000");
             for (int i = 0; i < bitSeqTest1.Length; i++)
             {

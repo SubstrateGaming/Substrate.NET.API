@@ -1,6 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Substrate.NetApi.Model.Types.Primitive;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Substrate.NetApi.Model.Types.Base
 {
@@ -31,19 +34,38 @@ namespace Substrate.NetApi.Model.Types.Base
         [JsonIgnore]
         public byte[] Bytes { get; internal set; }
 
+        private BitArray _bits { get; set; }
+
+        /// <summary>
+        /// Return if it is LSB (Least Significant Bit first) or MSB (Most Significant Bit first)
+        /// </summary>
+        public bool IsLsb {
+            get
+            {
+                switch (typeof(T2).Name.ToLower())
+                {
+                    case "lsb0":
+                        return true;
+                    case "msb0":
+                        return false;
+                    default:
+                        return true; // not sure if I should throw an exception here or just assume lsb0 (which is the default)
+                }
+            }
+        }
+
         /// <summary>
         /// Encode to Bytes
         /// </summary>
         /// <returns></returns>
         public byte[] Encode()
         {
-            var result = new List<byte>
-            {
-                Reverse((byte)Value.Length)
-            };
+            var result = new List<byte>();
+            result.AddRange(new CompactInteger(Value.Length * 8).Encode());
+
             for (int i = 0; i < Value.Length; i++)
             {
-                result.AddRange(Reverse(Value[i].Encode()));
+                result.AddRange(IsLsb ? Reverse(Value[i].Encode()) : Value[i].Encode());
             }
             return result.ToArray();
         }
@@ -56,16 +78,19 @@ namespace Substrate.NetApi.Model.Types.Base
         public void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-
-            var length = Reverse(byteArray[0]);
-
-            p++;
+            int lengthInner = CompactInteger.Decode(byteArray, ref p);
+            var length = (int)Math.Ceiling((decimal)lengthInner / (decimal)8);
+            var tmpBytes = byteArray;
+            if (IsLsb)
+            {
+                tmpBytes = Reverse(byteArray);
+            }
 
             var array = new T1[length];
             for (var i = 0; i < length; i++)
             {
                 var t = new T1();
-                t.Decode(Reverse(byteArray), ref p);
+                t.Decode(tmpBytes, ref p);
                 array[i] = t;
             }
 
@@ -74,6 +99,9 @@ namespace Substrate.NetApi.Model.Types.Base
             Bytes = new byte[TypeSize];
             Array.Copy(byteArray, start, Bytes, 0, TypeSize);
             Value = array;
+
+            // By default, BitArray is using Lsb0. So we need to reverse the bits again
+            _bits = new BitArray(array.SelectMany(x => Reverse(x.Encode())).ToArray());
         }
 
         /// <summary>
@@ -105,6 +133,27 @@ namespace Substrate.NetApi.Model.Types.Base
         public void CreateFromJson(string str) => Create(Utils.HexToByteArray(str));
 
         /// <summary>
+        /// Create <see cref="BaseBitSeq{T1, T2}"/> from string bits
+        /// Example : CreateFromBitString("0b11010000_00000001_10100000_00000000_00000000")
+        /// </summary>
+        /// <param name="bits"></param>
+        public void CreateFromBitString(string bits)
+        {
+            var s = bits.Replace("0b", "").Split('_');
+
+            var result = new List<byte>();
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                byte b = Convert.ToByte(s[i], 2);
+                result.Add(IsLsb ? Reverse(b) : b);
+            }
+
+            result.InsertRange(0, new CompactInteger(result.Count * 8).Encode());
+            Create(result.ToArray());
+        }
+
+        /// <summary>
         /// Create from a byte array
         /// </summary>
         /// <param name="byteArray"></param>
@@ -121,7 +170,30 @@ namespace Substrate.NetApi.Model.Types.Base
         public IType New() => this;
 
         /// <inheritdoc/>
-        public override string ToString() => JsonConvert.SerializeObject(this);
+        public override string ToString() => $"{{ bits = {_bits.Count}, capacity = {_bits.Count}}} => [{DisplayToBits()}]";
+
+        /// <summary>
+        /// Display this instance to bits
+        /// </summary>
+        /// <returns></returns>
+        public string DisplayToBits()
+        {
+            var bitString = new System.Text.StringBuilder(_bits.Count);
+            bitString.Append("0b");
+            for(int i = 0; i < _bits.Length; i++)
+            {
+                bitString.Append(_bits[i] ? '1' : '0');
+                
+                if ((i + 1) % 8 == 0 && i != _bits.Count - 1)
+                {
+                    bitString.Append("_");
+                }
+            }
+
+            return bitString.ToString();
+        }
+
+        public int InternalLength => _bits.Length;
 
         /// <summary>
         /// Reverse
