@@ -9,8 +9,15 @@ namespace Substrate.NetApi.Model.Types.Base
     /// </summary>
     public enum BitOrder
     {
-        Lsb0, // Least Significant Bit first
-        Msb0  // Most Significant Bit first
+        /// <summary>
+        /// Least Significant Bit first
+        /// </summary>
+        Lsb0,
+
+        /// <summary>
+        /// Most Significant Bit first
+        /// </summary>
+        Msb0
     }
 
     /// <summary>
