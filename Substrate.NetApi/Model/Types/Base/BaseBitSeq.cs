@@ -25,7 +25,6 @@ namespace Substrate.NetApi.Model.Types.Base
     /// TODO: rework proper implementation https://docs.rs/bitvec/latest/bitvec/
     /// </summary>
     /// <typeparam name="T1"></typeparam>
-    /// <typeparam name="T2"></typeparam>
     public class BaseBitSeq<T1> : IType
         where T1 : IType, new()
     {
