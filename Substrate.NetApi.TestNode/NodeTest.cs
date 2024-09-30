@@ -17,6 +17,12 @@ namespace Substrate.NetApi.TestNode
 
         protected SubstrateClient _substrateClient;
 
+        public string Url { get; }
+
+        protected NodeTest(string url = null)
+        {
+            Url = url ?? WebSocketUrl;
+        }
 
         [SetUp]
         public async Task ConnectAsync()
@@ -33,7 +39,7 @@ namespace Substrate.NetApi.TestNode
         [OneTimeSetUp]
         public void CreateClient()
         {
-            _substrateClient = new SubstrateClient(new Uri(WebSocketUrl), ChargeTransactionPayment.Default());
+            _substrateClient = new SubstrateClient(new Uri(Url), ChargeTransactionPayment.Default());
         }
 
         [OneTimeTearDown]

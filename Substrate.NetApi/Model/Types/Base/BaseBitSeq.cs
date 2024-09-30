@@ -57,7 +57,7 @@ namespace Substrate.NetApi.Model.Types.Base
         {
             var start = p;
 
-            var length = Reverse(byteArray[0]);
+            var length = Reverse(byteArray[p]);
 
             p++;
 
