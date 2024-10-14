@@ -58,30 +58,30 @@ namespace Substrate.NetApi.Model.Types.Primitive
         /// <inheritdoc/>
         public override void Create(byte[] byteArray)
         {
+            byte[] newByteArray = new byte[32];
             // make sure it is unsigned we add 00 at the end
             if (byteArray.Length < TypeSize)
             {
-                var newByteArray = new byte[TypeSize];
+                newByteArray = new byte[TypeSize];
                 byteArray.CopyTo(newByteArray, 0);
                 byteArray = newByteArray;
             }
-            else if (byteArray.Length == TypeSize)
-            {
-                byte[] newArray = new byte[byteArray.Length + 2];
-                byteArray.CopyTo(newArray, 0);
-                newArray[byteArray.Length - 1] = 0x00;
-            }
-            else
+            else if (byteArray.Length > TypeSize)
             {
                 throw new NotSupportedException($"Wrong byte array size for {TypeName()}, max. {TypeSize} bytes!");
             }
 
+            newByteArray = byteArray;
+
+            if ((byteArray[TypeSize - 1] & 0x80) != 0)
+            {
+                newByteArray = new byte[byteArray.Length + 1];
+                byteArray.CopyTo(newByteArray, 0);
+                //byteArray = newByteArray; // leaves us with a inconsistency.
+            }
+
             Bytes = byteArray;
-#if NETSTANDARD2_0
-            Value = new BigInteger(byteArray);
-#elif NETSTANDARD2_1_OR_GREATER
-            Value = new BigInteger(byteArray, isUnsigned: true, isBigEndian: true);
-#endif
+            Value = new BigInteger(newByteArray);
         }
 
         /// <inheritdoc/>
