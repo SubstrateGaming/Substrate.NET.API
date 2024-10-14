@@ -77,7 +77,11 @@ namespace Substrate.NetApi.Model.Types.Primitive
             }
 
             Bytes = byteArray;
+#if NETSTANDARD2_0
             Value = new BigInteger(byteArray);
+#elif NETSTANDARD2_1_OR_GREATER
+            Value = new BigInteger(byteArray, isUnsigned: true, isBigEndian: true);
+#endif
         }
 
         /// <inheritdoc/>
