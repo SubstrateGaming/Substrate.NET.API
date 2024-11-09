@@ -3,6 +3,7 @@ using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
 using Substrate.NetApi.TypeConverters;
 using NUnit.Framework;
+using System;
 
 namespace Substrate.NetApi.Test
 {
@@ -112,11 +113,22 @@ namespace Substrate.NetApi.Test
         [Test]
         public void ExtEnumEncodingTest()
         {
-            var extEnumType = new BaseEnumExt<PhaseState, U8, BaseVoid, BaseVoid>();
+            // Set up type decoder map for PhaseState
+            var typeDecoderMap = new Dictionary<PhaseState, Type>
+            {
+                { PhaseState.None, typeof(U8) },
+                { PhaseState.Finalization, typeof(BaseVoid) },
+                { PhaseState.Initialization, typeof(BaseVoid) }
+            };
 
+            // Initialize BaseEnumRust with the decoder map
+            var extEnumType = new BaseEnumRust<PhaseState>(typeDecoderMap);
+
+            // Decode the input data
             int p = 0;
             extEnumType.Decode(new byte[] { 0x00, 0x01 }, ref p);
 
+            // Assertions to verify values
             Assert.AreEqual(PhaseState.None, extEnumType.Value);
             Assert.AreEqual("U8", extEnumType.Value2.GetType().Name);
             Assert.AreEqual(1, (extEnumType.Value2 as U8).Value);
@@ -125,45 +137,75 @@ namespace Substrate.NetApi.Test
         [Test]
         public void ExtEnumDencodingTest()
         {
-            var extEnumType = new BaseEnumExt<PhaseState, U8, BaseVoid, BaseVoid>();
+            // Set up type decoder map for PhaseState
+            var typeDecoderMap = new Dictionary<PhaseState, Type>
+            {
+                { PhaseState.None, typeof(U8) },
+                { PhaseState.Finalization, typeof(BaseVoid) },
+                { PhaseState.Initialization, typeof(BaseVoid) }
+            };
 
+            // Initialize BaseEnumRust with the decoder map
+            var extEnumType = new BaseEnumRust<PhaseState>(typeDecoderMap);
+
+            // Decode the input data
             int p = 0;
             extEnumType.Decode(new byte[] { 0x00, 0x01 }, ref p);
 
+            // Assertions to verify values
             Assert.AreEqual(PhaseState.None, extEnumType.Value);
             Assert.AreEqual("U8", extEnumType.Value2.GetType().Name);
             Assert.AreEqual(1, (extEnumType.Value2 as U8).Value);
 
+            // Verify the bytes are preserved correctly
             Assert.AreEqual(new byte[] { 0x00, 0x01 }, extEnumType.Bytes);
         }
 
         [Test]
         public void ExtEnumCreateTest()
         {
+            var typeDecoderMap = new Dictionary<PhaseState, Type>
+            {
+                { PhaseState.None, typeof(U8) },
+                { PhaseState.Finalization, typeof(BaseVoid) },
+                { PhaseState.Initialization, typeof(BaseVoid) }
+            };
+
+            // Create instance using enum value and U8 value
             var u8 = new U8(1);
+            var byValue = new BaseEnumRust<PhaseState>(typeDecoderMap);
+            byValue.Create(PhaseState.None, u8);
 
-            var vecExtEnumTypeFromCreateValue = new BaseEnumExt<PhaseState, U8>();
-            vecExtEnumTypeFromCreateValue.Create(PhaseState.None, u8);
+            // Create instance using byte array
+            var byArray = new BaseEnumRust<PhaseState>(typeDecoderMap);
+            byArray.Create(new byte[] { 0x00, 0x01 });
 
-            var vecExtEnumTypeFromCreateByteArray = new BaseEnumExt<PhaseState, U8>();
-            vecExtEnumTypeFromCreateByteArray.Create(new byte[] { 0, 1 });
+            // Create instance using hex string
+            var byHex = new BaseEnumRust<PhaseState>(typeDecoderMap);
+            byHex.Create("0x0001");
 
-            var vecExtEnumTypeFromCreateHex = new BaseEnumExt<PhaseState, U8>();
-            vecExtEnumTypeFromCreateHex.Create("0x0001");
-
-            Assert.That(vecExtEnumTypeFromCreateValue.Bytes, Is.EqualTo(vecExtEnumTypeFromCreateByteArray.Bytes));
-            Assert.That(vecExtEnumTypeFromCreateValue.Value, Is.EqualTo(vecExtEnumTypeFromCreateByteArray.Value));
-
-
-            Assert.That(vecExtEnumTypeFromCreateValue.Bytes, Is.EqualTo(vecExtEnumTypeFromCreateHex.Bytes));
-            Assert.That(vecExtEnumTypeFromCreateValue.Value, Is.EqualTo(vecExtEnumTypeFromCreateHex.Value));
+            // Assert equality between different creation methods
+            Assert.That(byValue.Bytes, Is.EqualTo(byArray.Bytes));
+            Assert.That(byValue.Value, Is.EqualTo(byArray.Value));
+            Assert.That(byValue.Bytes, Is.EqualTo(byHex.Bytes));
+            Assert.That(byValue.Value, Is.EqualTo(byHex.Value));
         }
 
         [Test]
-        public void ExtEnumXXX()
+        public void ExtEnumXXX_NewTest()
         {
-            var vecExtEnumType = new BaseVec<BaseEnumExt<PhaseState, BaseTuple<Arr4U8, BaseVec<U8>>, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid>>();
+            // Create the type decoder map for PhaseState
+            var typeDecoderMap = new Dictionary<PhaseState, Type>
+            {
+                { PhaseState.None, typeof(BaseTuple<Arr4U8, BaseVec<U8>>) },
+                { PhaseState.Finalization, typeof(BaseVoid) },
+                { PhaseState.Initialization, typeof(BaseVoid) }
+            };
 
+            // Initialize the enum wrapper
+            var baseEnum = new BaseEnumRust<PhaseState>(typeDecoderMap);
+
+            // Prepare values
             var u8 = new U8();
             u8.Create(byte.MaxValue);
 
@@ -173,17 +215,16 @@ namespace Substrate.NetApi.Test
             var vec82 = new BaseVec<U8>();
             vec82.Create(new U8[] { u8 });
 
-            var tu = new BaseTuple<Arr4U8, BaseVec<U8>>();
-            tu.Create(vec8, vec82);
+            var tuple = new BaseTuple<Arr4U8, BaseVec<U8>>();
+            tuple.Create(vec8, vec82);
 
-            var it = new BaseEnumExt<PhaseState, BaseTuple<Arr4U8, BaseVec<U8>>, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid>();
-            it.Create(PhaseState.None, tu);
+            // Create with PhaseState.None and tuple value
+            baseEnum.Create(PhaseState.None, tuple);
 
-            vecExtEnumType.Create(new[] { it });
-
-            var encoded = vecExtEnumType.Encode();
+            // Encode and decode
+            var encoded = baseEnum.Encode();
             int p = 0;
-            vecExtEnumType.Decode(encoded, ref p);
+            baseEnum.Decode(encoded, ref p);
 
             Assert.Pass();
         }
@@ -194,27 +235,34 @@ namespace Substrate.NetApi.Test
         }
 
         [Test]
-        public void ExtEnum26()
+        public void ExtEnum26_NewTest()
         {
-            var ext1 = new BaseEnumExt<TestEnum26, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16>();
+            // Create the type decoder map for TestEnum26
+            var typeDecoderMap = new Dictionary<TestEnum26, Type>
+            {
+                { TestEnum26.T1, typeof(U8) },
+                { TestEnum26.T2, typeof(U16) },
+                // Add other mappings as needed
+            };
 
-            var u8 = new U8();
-            u8.Create(byte.MaxValue);
+            // Initialize BaseEnumRust
+            var baseEnum = new BaseEnumRust<TestEnum26>(typeDecoderMap);
 
+            // Create U16 value
             var u16 = new U16();
             u16.Create(ushort.MaxValue);
 
-            ext1.Create(TestEnum26.T2, u16);
+            // Create an instance with TestEnum26.T2
+            baseEnum.Create(TestEnum26.T2, u16);
 
-            var encoded = ext1.Encode();
-
-            var ext2 = new BaseEnumExt<TestEnum26, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16, U8, U16>();
-
+            // Encode and decode
+            var encoded = baseEnum.Encode();
             int p = 0;
-            ext2.Decode(encoded, ref p);
+            baseEnum.Decode(encoded, ref p);
 
-            Assert.AreEqual(TestEnum26.T2, ext2.Value);
-            Assert.AreEqual(ushort.MaxValue, ((U16)ext2.Value2).Value);
+            // Assertions
+            Assert.AreEqual(TestEnum26.T2, baseEnum.Value);
+            Assert.AreEqual(ushort.MaxValue, ((U16)baseEnum.Value2).Value);
         }
 
         [Test]

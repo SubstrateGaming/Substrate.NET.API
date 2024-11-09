@@ -2,6 +2,7 @@
 using Substrate.NetApi.Model.Types.Metadata.Base;
 using Substrate.NetApi.Model.Types.Primitive;
 using System;
+using System.Collections.Generic;
 
 namespace Substrate.NetApi.Model.Types.Metadata.V14
 {
@@ -30,7 +31,20 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
             TypeParams = new BaseVec<TypeParameter>();
             TypeParams.Decode(byteArray, ref p);
 
-            TypeDef = new BaseEnumExt<TypeDefEnum, TypeDefComposite, TypeDefVariant, TypeDefSequence, TypeDefArray, TypeDefTuple, BaseEnum<TypeDefPrimitive>, TypeDefCompact, TypeDefBitSequence, BaseVoid>();
+            // Update to use BaseEnumRust
+            var typeDecoderMap = new Dictionary<TypeDefEnum, Type>
+            {
+                { TypeDefEnum.Composite, typeof(TypeDefComposite) },
+                { TypeDefEnum.Variant, typeof(TypeDefVariant) },
+                { TypeDefEnum.Sequence, typeof(TypeDefSequence) },
+                { TypeDefEnum.Array, typeof(TypeDefArray) },
+                { TypeDefEnum.Tuple, typeof(TypeDefTuple) },
+                { TypeDefEnum.Primitive, typeof(BaseEnum<TypeDefPrimitive>) },
+                { TypeDefEnum.Compact, typeof(TypeDefCompact) },
+                { TypeDefEnum.BitSequence, typeof(TypeDefBitSequence) },
+            };
+
+            TypeDef = new BaseEnumRust<TypeDefEnum>(typeDecoderMap);
             TypeDef.Decode(byteArray, ref p);
 
             Docs = new BaseVec<Str>();
@@ -52,7 +66,7 @@ namespace Substrate.NetApi.Model.Types.Metadata.V14
         /// <summary>
         /// Type Definition
         /// </summary>
-        public BaseEnumExt<TypeDefEnum, TypeDefComposite, TypeDefVariant, TypeDefSequence, TypeDefArray, TypeDefTuple, BaseEnum<TypeDefPrimitive>, TypeDefCompact, TypeDefBitSequence, BaseVoid> TypeDef { get; private set; }
+        public BaseEnumRust<TypeDefEnum> TypeDef { get; private set; }
 
         /// <summary>
         /// Docs
