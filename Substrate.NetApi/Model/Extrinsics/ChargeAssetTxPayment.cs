@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
 
@@ -29,10 +30,17 @@ namespace Substrate.NetApi.Model.Extrinsics
     /// <summary>
     /// Asset Identifier for AssetHubs and the Ajuna Chain.
     /// </summary>
-    public sealed class EnumNativeOrWithId : BaseEnumExt<NativeOrWithId, BaseVoid, U32>
+    public sealed class EnumNativeOrWithId : BaseEnumRust<NativeOrWithId>
     {
+        /// <summary>
+        /// EnumNativeOrWithId Constructor
+        /// </summary>
+        public EnumNativeOrWithId() : base(new Dictionary<NativeOrWithId, Type>
+        {
+            { NativeOrWithId.Native, typeof(BaseVoid) },
+            { NativeOrWithId.WithId, typeof(U32) }
+        }) { }
     }
-
 
     /// <summary>
     /// Charge Asset Tx Payment

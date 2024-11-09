@@ -317,5 +317,60 @@ namespace Substrate.NetApi
             return Base58Local.Encode(plainAddr);
         }
 
+        /// <summary>
+        /// Reverse
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static byte[] Reverse(byte[] b)
+        {
+            byte[] p = new byte[b.Length];
+            for (int i = 0; i < b.Length; i++)
+            {
+                p[i] = Reverse(b[i]);
+            }
+            return p;
+        }
+
+        /// <summary>
+        /// Reverse
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static byte Reverse(byte b)
+        {
+            int a = 0;
+            for (int i = 0; i < 8; i++)
+                if ((b & (1 << i)) != 0)
+                    a |= 1 << (7 - i);
+            return (byte)a;
+        }
+
+        /// <summary>
+        /// Convert a bit string to a byte array
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static byte[] FromBitString(string str)
+        {
+            var s = str.Replace("0b", "").Split('_');
+            var result = new byte[s.Length];
+            for (int i = 0; i < s.Length; i++)
+            {
+                result[i] = Convert.ToByte(s[i], 2);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Convert a byte array to a bit string
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public static string ToBitString(byte[] bytes)
+        {
+            var bitStrings = bytes.Select(b => Convert.ToString(b, 2).PadLeft(8, '0'));
+            return "0b" + string.Join("_", bitStrings);
+        }
     }
 }

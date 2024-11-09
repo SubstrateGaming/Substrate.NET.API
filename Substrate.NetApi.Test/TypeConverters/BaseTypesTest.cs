@@ -5,6 +5,7 @@ using Substrate.NetApi.Model.Types.Primitive;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 namespace Substrate.NetApi.Test
 {
@@ -191,8 +192,8 @@ namespace Substrate.NetApi.Test
         public void BaseBitSeqTest()
         {
             var testCase1 = "0xa00b80050000";
-            var bitSeqTest1 = FromBitString("0b11010000_00000001_10100000_00000000_00000000");
-            var baseBitSeq1 = new BaseBitSeq<U8, U8>();
+            var bitSeqTest1 = Utils.FromBitString("0b11010000_00000001_10100000_00000000_00000000");
+            var baseBitSeq1 = new BaseBitSeq<U8>();
             baseBitSeq1.Create(testCase1);
             for (int i = 0; i < bitSeqTest1.Length; i++)
             {
@@ -201,31 +202,20 @@ namespace Substrate.NetApi.Test
             Assert.AreEqual(testCase1, Utils.Bytes2HexString(baseBitSeq1.Encode()).ToLower());
 
             // Let's create the same object but with the other Create() method
-            var baseBitSeq1_1 = new BaseBitSeq<U8, U8>();
-            baseBitSeq1_1.Create(baseBitSeq1.Value);
+            var baseBitSeq1_1 = new BaseBitSeq<U8>();
+            baseBitSeq1_1.Create(baseBitSeq1.Value, BitOrder.Lsb0);
             Assert.AreEqual(baseBitSeq1.Bytes, baseBitSeq1_1.Bytes);
             Assert.AreEqual(baseBitSeq1.Value, baseBitSeq1_1.Value);
             Assert.AreEqual(baseBitSeq1.TypeSize, baseBitSeq1_1.TypeSize);
 
-            var bitSeqTest2 = FromBitString("0b10000010_10000010_00101000_00000000_00000000");
-            var baseBitSeq2 = new BaseBitSeq<U8, U8>();
+            var bitSeqTest2 = Utils.FromBitString("0b10000010_10000010_00101000_00000000_00000000");
+            var baseBitSeq2 = new BaseBitSeq<U8>();
             baseBitSeq2.Create("0xa04141140000");
             for (int i = 0; i < bitSeqTest1.Length; i++)
             {
                 Assert.AreEqual(bitSeqTest2[i], baseBitSeq2.Value[i].Value);
             }
             Assert.AreEqual("0xa04141140000", Utils.Bytes2HexString(baseBitSeq2.Encode()).ToLower());
-        }
-
-        private byte[] FromBitString(string str)
-        {
-            var s = str.Replace("0b", "").Split('_');
-            var result = new byte[s.Length];
-            for (int i = 0; i < s.Length; i++)
-            {
-                result[i] = Convert.ToByte(s[i], 2);
-            }
-            return result;
         }
 
         [Test]

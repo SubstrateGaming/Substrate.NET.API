@@ -3,6 +3,8 @@ using System.Numerics;
 using Substrate.NetApi.Model.Types.Primitive;
 using NUnit.Framework;
 using Newtonsoft.Json.Linq;
+using System.Linq;
+using System.Net;
 
 namespace Substrate.NetApi.Test
 {
@@ -232,6 +234,14 @@ namespace Substrate.NetApi.Test
 
             BigInteger primImplicit = new U256(value);
             Assert.AreEqual(value, primImplicit);
+
+            var testArray = Utils.GetPublicKeyFrom("unixuHLc4UoAjwLpkQHUWy2NpT5LV4tUqJFnFVNyLaeqBfq22").Reverse().ToArray();
+
+            var test = new U256();
+            test.Create(testArray);
+
+            Assert.AreEqual("88948098633472856107773808278376342488924045139856962685537580476255925753211", test.Value.ToString());
+            Assert.IsTrue(test.Bytes.SequenceEqual(testArray));
         }
 
         [Test]

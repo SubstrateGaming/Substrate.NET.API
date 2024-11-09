@@ -19,16 +19,6 @@
             /// Map
             /// </summary>
             Map,
-
-            /// <summary>
-            /// Double Map
-            /// </summary>
-            DoubleMap,
-
-            /// <summary>
-            /// NMap
-            /// </summary>
-            NMap
         }
 
         /// <summary>

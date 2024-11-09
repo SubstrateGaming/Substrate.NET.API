@@ -2,6 +2,7 @@
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
 using System;
+using System.Collections.Generic;
 using static Substrate.NetApi.Model.Meta.Storage;
 
 namespace Substrate.NetApi.Model.Types.Metadata.Base
@@ -28,7 +29,13 @@ namespace Substrate.NetApi.Model.Types.Metadata.Base
             StorageModifier = new BaseEnum<Modifier>();
             StorageModifier.Decode(byteArray, ref p);
 
-            StorageType = new BaseEnumExt<Storage.Type, TType, StorageEntryTypeMap>();
+            var typeDecoderMap = new Dictionary<Storage.Type, System.Type>
+            {
+                { Storage.Type.Plain, typeof(TType) },
+                { Storage.Type.Map, typeof(StorageEntryTypeMap) }
+            };
+
+            StorageType = new BaseEnumRust<Storage.Type>(typeDecoderMap);
             StorageType.Decode(byteArray, ref p);
 
             StorageDefault = new ByteGetter();
@@ -53,7 +60,7 @@ namespace Substrate.NetApi.Model.Types.Metadata.Base
         /// <summary>
         /// Storage Type
         /// </summary>
-        public BaseEnumExt<Storage.Type, TType, StorageEntryTypeMap> StorageType { get; private set; }
+        public BaseEnumRust<Storage.Type> StorageType { get; private set; }
 
         /// <summary>
         /// Storage Default

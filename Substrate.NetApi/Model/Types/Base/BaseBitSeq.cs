@@ -5,20 +5,39 @@ using System.Collections.Generic;
 namespace Substrate.NetApi.Model.Types.Base
 {
     /// <summary>
+    /// Bit Order
+    /// </summary>
+    public enum BitOrder
+    {
+        /// <summary>
+        /// Least Significant Bit first
+        /// </summary>
+        Lsb0,
+
+        /// <summary>
+        /// Most Significant Bit first
+        /// </summary>
+        Msb0
+    }
+
+    /// <summary>
     /// This implemetation is just a fast hack, and misses to be complete.
     /// TODO: rework proper implementation https://docs.rs/bitvec/latest/bitvec/
     /// </summary>
     /// <typeparam name="T1"></typeparam>
-    /// <typeparam name="T2"></typeparam>
-    public class BaseBitSeq<T1, T2> : IType
+    public class BaseBitSeq<T1> : IType
         where T1 : IType, new()
-        where T2 : IType, new()
     {
+        /// <summary>
+        /// Bit Order (Msb0 or Lsb0).
+        /// </summary>
+        public BitOrder BitOrder { get; private set; }
+
         /// <summary>
         /// Type Name
         /// </summary>
         /// <returns></returns>
-        public virtual string TypeName() => $"BitSequence<{new T1().TypeName()},{new T2().TypeName()}>";
+        public virtual string TypeName() => $"BitSequence<{new T1().TypeName()},{BitOrder}>";
 
         /// <summary>
         /// Type Size
@@ -39,11 +58,11 @@ namespace Substrate.NetApi.Model.Types.Base
         {
             var result = new List<byte>
             {
-                Reverse((byte)Value.Length)
+               Utils.Reverse((byte)Value.Length)
             };
             for (int i = 0; i < Value.Length; i++)
             {
-                result.AddRange(Reverse(Value[i].Encode()));
+                result.AddRange(Utils.Reverse(Value[i].Encode()));
             }
             return result.ToArray();
         }
@@ -57,7 +76,7 @@ namespace Substrate.NetApi.Model.Types.Base
         {
             var start = p;
 
-            var length = Reverse(byteArray[0]);
+            var length = Utils.Reverse(byteArray[p]);
 
             p++;
 
@@ -65,7 +84,7 @@ namespace Substrate.NetApi.Model.Types.Base
             for (var i = 0; i < length; i++)
             {
                 var t = new T1();
-                t.Decode(Reverse(byteArray), ref p);
+                t.Decode(Utils.Reverse(byteArray), ref p);
                 array[i] = t;
             }
 
@@ -85,11 +104,12 @@ namespace Substrate.NetApi.Model.Types.Base
         /// Create from a string
         /// </summary>
         /// <param name="list"></param>
-        public void Create(T1[] list)
+        public void Create(T1[] list, BitOrder bitOrder)
         {
             Value = list;
             Bytes = Encode();
             TypeSize = Bytes.Length;
+            BitOrder = bitOrder;
         }
 
         /// <summary>
@@ -123,33 +143,5 @@ namespace Substrate.NetApi.Model.Types.Base
         /// <inheritdoc/>
         public override string ToString() => JsonConvert.SerializeObject(this);
 
-        /// <summary>
-        /// Reverse
-        /// </summary>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        public byte[] Reverse(byte[] b)
-        {
-            byte[] p = new byte[b.Length];
-            for (int i = 0; i < b.Length; i++)
-            {
-                p[i] = Reverse(b[i]);
-            }
-            return p;
-        }
-
-        /// <summary>
-        /// Reverse
-        /// </summary>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        public byte Reverse(byte b)
-        {
-            int a = 0;
-            for (int i = 0; i < 8; i++)
-                if ((b & (1 << i)) != 0)
-                    a |= 1 << (7 - i);
-            return (byte)a;
-        }
     }
 }
