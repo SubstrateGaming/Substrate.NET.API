@@ -3,22 +3,35 @@ using System.Numerics;
 
 namespace Substrate.NetApi.Model.Types.Primitive
 {
+
     /// <summary>
     /// U256
     /// </summary>
-    public class U256 : BasePrim<BigInteger>
+    public class U256 : BasePrim<u256>
     {
+        /// <summary>
+        /// Explicitly cast a u256 to a U256
+        /// </summary>
+        /// <param name="p"></param>
+        public static explicit operator U256(u256 p) => new U256(p);
+
         /// <summary>
         /// Explicitly cast a BigInteger to a U256
         /// </summary>
         /// <param name="p"></param>
-        public static explicit operator U256(BigInteger p) => new U256(p);
+        public static explicit operator U256(BigInteger p) => new U256(u256.FromBigInteger(p));
 
         /// <summary>
-        /// Implicitly cast a U256 to a BigInteger
+        /// Implicitly cast a U256 to a u256
         /// </summary>
         /// <param name="p"></param>
-        public static implicit operator BigInteger(U256 p) => p.Value;
+        public static implicit operator u256(U256 p) => p.Value;
+
+        /// <summary>
+        /// Implicit conversion to BigInteger
+        /// </summary>
+        /// <param name="p"></param>
+        public static implicit operator BigInteger(U256 p) => p.Value.ToBigInteger();
 
         /// <summary>
         /// U256 Constructor
@@ -30,7 +43,7 @@ namespace Substrate.NetApi.Model.Types.Primitive
         /// U256 Constructor
         /// </summary>
         /// <param name="value"></param>
-        public U256(BigInteger value)
+        public U256(u256 value)
         {
             Create(value);
         }
@@ -58,11 +71,9 @@ namespace Substrate.NetApi.Model.Types.Primitive
         /// <inheritdoc/>
         public override void Create(byte[] byteArray)
         {
-            byte[] newByteArray = new byte[32];
-            // make sure it is unsigned we add 00 at the end
             if (byteArray.Length < TypeSize)
             {
-                newByteArray = new byte[TypeSize];
+                var newByteArray = new byte[TypeSize];
                 byteArray.CopyTo(newByteArray, 0);
                 byteArray = newByteArray;
             }
@@ -71,26 +82,19 @@ namespace Substrate.NetApi.Model.Types.Primitive
                 throw new NotSupportedException($"Wrong byte array size for {TypeName()}, max. {TypeSize} bytes!");
             }
 
-            newByteArray = byteArray;
-
-            if ((byteArray[TypeSize - 1] & 0x80) != 0)
-            {
-                newByteArray = new byte[byteArray.Length + 1];
-                byteArray.CopyTo(newByteArray, 0);
-                //byteArray = newByteArray; // leaves us with a inconsistency.
-            }
-
             Bytes = byteArray;
-            Value = new BigInteger(newByteArray);
+            Value = new u256(byteArray);
         }
 
         /// <inheritdoc/>
-        public override void Create(BigInteger value)
+        public void Create(BigInteger value)
         {
-            // Ensure we have a positive number
-            if (value.Sign < 0)
-                throw new InvalidOperationException($"Unable to create a {nameof(U256)} instance while value is negative");
+            Create(u256.FromBigInteger(value));
+        }
 
+        /// <inheritdoc/>
+        public override void Create(u256 value)
+        {
             var byteArray = value.ToByteArray();
 
             if (byteArray.Length > TypeSize)

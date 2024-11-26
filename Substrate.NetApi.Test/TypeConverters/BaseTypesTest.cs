@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using System.Numerics;
 
 namespace Substrate.NetApi.Test
 {
@@ -248,9 +249,9 @@ namespace Substrate.NetApi.Test
             Assert.AreNotEqual(baseComFromValue.Value, new BaseCom<U64>(new CompactInteger(new U64(20))).Value);
             Assert.AreEqual(baseComFromValue.TypeSize, new BaseCom<U64>(new CompactInteger(new U64(20))).TypeSize);
 
-            Assert.AreEqual(baseComFromValue.Bytes, new BaseCom<U128>(new CompactInteger(new U128(10))).Bytes);
-            Assert.AreEqual(baseComFromValue.Value, new BaseCom<U128>(new CompactInteger(new U128(10))).Value);
-            Assert.AreEqual(baseComFromValue.TypeSize, new BaseCom<U128>(new CompactInteger(new U128(10))).TypeSize);
+            Assert.AreEqual(baseComFromValue.Bytes, new BaseCom<U128>(new CompactInteger((U128) new BigInteger(10))).Bytes);
+            Assert.AreEqual(baseComFromValue.Value, new BaseCom<U128>(new CompactInteger((U128)new BigInteger(10))).Value);
+            Assert.AreEqual(baseComFromValue.TypeSize, new BaseCom<U128>(new CompactInteger((U128)new BigInteger(10))).TypeSize);
 
             // Test explicit conversion from CompactInteger to BaseCom
             var compactInt = new CompactInteger(new U64(10));

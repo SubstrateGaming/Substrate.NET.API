@@ -6,19 +6,31 @@ namespace Substrate.NetApi.Model.Types.Primitive
     /// <summary>
     /// U128
     /// </summary>
-    public class U128 : BasePrim<BigInteger>
+    public class U128 : BasePrim<u128>
     {
+        /// <summary>
+        /// Explicitly cast a u128 to a U128
+        /// </summary>
+        /// <param name="p"></param>
+        public static explicit operator U128(u128 p) => new U128(p);
+
         /// <summary>
         /// Explicitly cast a BigInteger to a U128
         /// </summary>
         /// <param name="p"></param>
-        public static explicit operator U128(BigInteger p) => new U128(p);
+        public static explicit operator U128(BigInteger p) => new U128(u128.FromBigInteger(p));
 
         /// <summary>
-        /// Implicitly cast a U128 to a BigInteger
+        /// Implicitly cast a U128 to a u128
         /// </summary>
         /// <param name="p"></param>
-        public static implicit operator BigInteger(U128 p) => p.Value;
+        public static implicit operator u128(U128 p) => p.Value;
+
+        /// <summary>
+        /// Implicit conversion to BigInteger
+        /// </summary>
+        /// <param name="p"></param>
+        public static implicit operator BigInteger(U128 p) => p.Value.ToBigInteger();
 
         /// <summary>
         /// U128 Constructor
@@ -30,7 +42,7 @@ namespace Substrate.NetApi.Model.Types.Primitive
         /// U128 Constructor
         /// </summary>
         /// <param name="value"></param>
-        public U128(BigInteger value)
+        public U128(u128 value)
         {
             Create(value);
         }
@@ -60,35 +72,30 @@ namespace Substrate.NetApi.Model.Types.Primitive
         /// <inheritdoc/>
         public override void Create(byte[] byteArray)
         {
-            // make sure it is unsigned we add 00 at the end
             if (byteArray.Length < TypeSize)
             {
                 var newByteArray = new byte[TypeSize];
                 byteArray.CopyTo(newByteArray, 0);
                 byteArray = newByteArray;
             }
-            else if (byteArray.Length == TypeSize)
-            {
-                byte[] newArray = new byte[byteArray.Length + 2];
-                byteArray.CopyTo(newArray, 0);
-                newArray[byteArray.Length - 1] = 0x00;
-            }
-            else
+            else if(byteArray.Length > TypeSize)
             {
                 throw new NotSupportedException($"Wrong byte array size for {TypeName()}, max. {TypeSize} bytes!");
             }
 
             Bytes = byteArray;
-            Value = new BigInteger(byteArray);
+            Value = new u128(byteArray);
         }
 
         /// <inheritdoc/>
-        public override void Create(BigInteger value)
+        public void Create(BigInteger value)
         {
-            // Ensure we have a positive number
-            if (value.Sign < 0)
-                throw new InvalidOperationException($"Unable to create a {nameof(U128)} instance while value is negative");
+            Create(u128.FromBigInteger(value));
+        }
 
+        /// <inheritdoc/>
+        public override void Create(u128 value)
+        {
             var byteArray = value.ToByteArray();
 
             if (byteArray.Length > TypeSize)

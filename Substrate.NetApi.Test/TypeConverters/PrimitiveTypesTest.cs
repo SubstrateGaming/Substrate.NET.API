@@ -172,15 +172,15 @@ namespace Substrate.NetApi.Test
 
             var prim = new U128();
             prim.Create("0xffffff00ffffff00ffffff00ffffff00");
-            Assert.AreEqual(value, prim.Value);
+            Assert.AreEqual(((U128)value).Value, prim.Value);
 
-            var primCtor = new U128(value);
+            var primCtor = (U128)value;
             Assert.AreEqual(prim.Value, primCtor.Value);
 
             U128 primExplicit = (U128)value;
-            Assert.AreEqual(value, primExplicit.Value);
+            Assert.AreEqual(((U128)value).Value, primExplicit.Value);
 
-            BigInteger primImplicit = new U128(value);
+            BigInteger primImplicit = (BigInteger) (U128) value;
             Assert.AreEqual(value, primImplicit);
         }
 
@@ -194,23 +194,23 @@ namespace Substrate.NetApi.Test
 
             var prim2 = new U128();
             prim2.Create("0x35820000000000000000000000000000");
-            Assert.AreEqual(number, prim2.Value);
+            Assert.AreEqual(((U128)number).Value, prim2.Value);
 
             Assert.AreEqual(prim.Bytes, prim2.Bytes);
 
-            var primCtor = new U128(number);
+            var primCtor = (U128) number;
             Assert.AreEqual(prim.Value, primCtor.Value);
 
             // 0 is a valid input
-            var primZero = new U128(0);
-            Assert.That(primZero.Value, Is.EqualTo(BigInteger.Zero));
+            var primZero = new U128(u128.FromBigInteger(0));
+            Assert.That((BigInteger) primZero, Is.EqualTo(BigInteger.Zero));
         }
 
         [Test]
         public void PrimU128_WithNegativeNumber_ShouldFail()
         {
             var number = new BigInteger(-1000);
-            Assert.Throws<InvalidOperationException>(() => new U128(number));
+            Assert.Throws<OverflowException>(() => new U128(u128.FromBigInteger(number)));
         }
 
         [Test]
@@ -220,19 +220,19 @@ namespace Substrate.NetApi.Test
 
             var prim = new U256();
             prim.Create("0xffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00");
-            Assert.AreEqual(value, prim.Value);
+            Assert.AreEqual(((U256)value).Value, prim.Value);
 
-            var primCtor = new U256(value);
+            var primCtor = (U256) value;
             Assert.AreEqual(prim.Value, primCtor.Value);
 
             // 0 is a valid input
-            var primZero = new U256(0);
-            Assert.That(primZero.Value, Is.EqualTo(BigInteger.Zero));
+            var primZero = new U256(u256.FromBigInteger(0));
+            Assert.That((BigInteger) primZero, Is.EqualTo(BigInteger.Zero));
 
             U256 primExplicit = (U256)value;
-            Assert.AreEqual(value, primExplicit.Value);
+            Assert.AreEqual(((U256)value).Value, primExplicit.Value);
 
-            BigInteger primImplicit = new U256(value);
+            BigInteger primImplicit = (BigInteger) (U256) value;
             Assert.AreEqual(value, primImplicit);
 
             var testArray = Utils.GetPublicKeyFrom("unixuHLc4UoAjwLpkQHUWy2NpT5LV4tUqJFnFVNyLaeqBfq22").Reverse().ToArray();
@@ -248,7 +248,7 @@ namespace Substrate.NetApi.Test
         public void PrimU256_WithNegativeNumber_ShouldFail()
         {
             var bigNumber = BigInteger.Parse("452312821728632006638659744032470891714787547825123743022878680681856106495") * (-1);
-            Assert.Throws<InvalidOperationException>(() => new U256(bigNumber));
+            Assert.Throws<OverflowException>(() => new U256(u256.FromBigInteger(bigNumber)));
         }
 
         [Test]
@@ -334,15 +334,15 @@ namespace Substrate.NetApi.Test
 
             var prim = new I128();
             prim.Create("0xf5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5");
-            Assert.AreEqual(value, prim.Value);
+            Assert.AreEqual(((I128)value).Value, prim.Value);
 
-            var primCtor = new I128(value);
+            var primCtor = (I128)value;
             Assert.AreEqual(prim.Value, primCtor.Value);
 
             I128 primExplicit = (I128)value;
-            Assert.AreEqual(value, primExplicit.Value);
+            Assert.AreEqual(((I128)value).Value, primExplicit.Value);
 
-            BigInteger primImplicit = new I128(value);
+            BigInteger primImplicit = (BigInteger) (I128) value;
             Assert.AreEqual(value, primImplicit);
         }
 
@@ -353,15 +353,15 @@ namespace Substrate.NetApi.Test
 
             var prim = new I256();
             prim.Create("0xf5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5");
-            Assert.AreEqual(value, prim.Value);
+            Assert.AreEqual(((I256)value).Value, prim.Value);
 
-            var primCtor = new I256(value);
+            var primCtor = (I256) value;
             Assert.AreEqual(prim.Value, primCtor.Value);
 
             I256 primExplicit = (I256)value;
-            Assert.AreEqual(value, primExplicit.Value);
+            Assert.AreEqual(((I256)value).Value, primExplicit.Value);
 
-            BigInteger primImplicit = new I256(value);
+            BigInteger primImplicit = (BigInteger) (I256) value;
             Assert.AreEqual(value, primImplicit);
         }
 

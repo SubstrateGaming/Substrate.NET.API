@@ -43,13 +43,13 @@ namespace Substrate.NetApi
         /// Value
         /// </summary>
         /// <param name="value"></param>
-        public CompactInteger(I128 value) => Value = value.Value;
+        public CompactInteger(I128 value) => Value = value.Value.ToBigInteger();
 
         /// <summary>
         /// Value
         /// </summary>
         /// <param name="value"></param>
-        public CompactInteger(I256 value) => Value = value.Value;
+        public CompactInteger(I256 value) => Value = value.Value.ToBigInteger();
 
         /// <summary>
         /// Value
@@ -79,13 +79,13 @@ namespace Substrate.NetApi
         /// Value
         /// </summary>
         /// <param name="value"></param>
-        public CompactInteger(U128 value) => Value = value.Value;
+        public CompactInteger(U128 value) => Value = value.Value.ToBigInteger();
 
         /// <summary>
         /// Value
         /// </summary>
         /// <param name="value"></param>
-        public CompactInteger(U256 value) => Value = value.Value;
+        public CompactInteger(U256 value) => Value = value.Value.ToBigInteger();
 
         /// <summary> Indicates whether this instance and a specified object are equal. </summary>
         /// <remarks> 19.09.2020. </remarks>
@@ -96,7 +96,11 @@ namespace Substrate.NetApi
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj is CompactInteger i) return Value.Equals(i.Value);
+            if (obj is CompactInteger i)
+            {
+                return Value.Equals(i.Value);
+            }
+
             return Value.Equals(obj);
         }
 
@@ -414,6 +418,42 @@ namespace Substrate.NetApi
             return new CompactInteger(i);
         }
 
+        /// <summary>
+        /// Implicit cast that converts the given I128 to a CompactInteger.
+        /// </summary>
+        /// <param name="i"></param>
+        public static implicit operator CompactInteger(I128 i)
+        {
+            return new CompactInteger(i);
+        }
+
+        /// <summary>
+        /// Implicit cast that converts the given U128 to a CompactInteger.
+        /// </summary>
+        /// <param name="i"></param>
+        public static implicit operator CompactInteger(U128 i)
+        {
+            return new CompactInteger(i);
+        }
+
+        /// <summary>
+        /// Implicit cast that converts the given I256 to a CompactInteger.
+        /// </summary>
+        /// <param name="i"></param>
+        public static implicit operator CompactInteger(I256 i)
+        {
+            return new CompactInteger(i);
+        }
+
+        /// <summary>
+        /// Implicit cast that converts the given U256 to a CompactInteger.
+        /// </summary>
+        /// <param name="i"></param>
+        public static implicit operator CompactInteger(U256 i)
+        {
+            return new CompactInteger(i);
+        }
+
         /// <summary> Gets the value. </summary>
         /// <value> The value. </value>
         public BigInteger Value { get; }
@@ -496,14 +536,19 @@ namespace Substrate.NetApi
         /// <returns> A byte[]. </returns>
         public byte[] Encode()
         {
-            if (this <= 63) return new byte[] { this << 2 };
+            if (this <= 63)
+            {
+                return new byte[] { this << 2 };
+            }
 
             if (this <= 0x3FFF)
+            {
                 return new byte[]
                 {
                     ((this & 0x3F) << 2) | 0x01,
                     (this & 0xFFC0) >> 6
                 };
+            }
 
             if (this <= 0x3FFFFFFF)
             {
