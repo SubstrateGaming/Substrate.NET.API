@@ -6,19 +6,31 @@ namespace Substrate.NetApi.Model.Types.Primitive
     /// <summary>
     /// I256 Type
     /// </summary>
-    public class I256 : BasePrim<BigInteger>
+    public class I256 : BasePrim<i256>
     {
         /// <summary>
         /// Explicit conversion to I256
         /// </summary>
         /// <param name="p"></param>
-        public static explicit operator I256(BigInteger p) => new I256(p);
+        public static explicit operator I256(i256 p) => new I256(p);
+
+        /// <summary>
+        /// Explicitly cast a BigInteger to a I256
+        /// </summary>
+        /// <param name="p"></param>
+        public static explicit operator I256(BigInteger p) => new I256(i256.FromBigInteger(p));
+
+        /// <summary>
+        /// Implicit conversion to i256
+        /// </summary>
+        /// <param name="p"></param>
+        public static implicit operator i256(I256 p) => p.Value;
 
         /// <summary>
         /// Implicit conversion to BigInteger
         /// </summary>
         /// <param name="p"></param>
-        public static implicit operator BigInteger(I256 p) => p.Value;
+        public static implicit operator BigInteger(I256 p) => p.Value.ToBigInteger();
 
         /// <summary>
         /// I256 Constructor
@@ -30,13 +42,13 @@ namespace Substrate.NetApi.Model.Types.Primitive
         /// I256 Constructor
         /// </summary>
         /// <param name="value"></param>
-        public I256(BigInteger value)
+        public I256(i256 value)
         {
             Create(value);
         }
 
         /// <inheritdoc/>
-        public override string TypeName() => "i128";
+        public override string TypeName() => "i256";
 
         /// <inheritdoc/>
         public override int TypeSize => 32;
@@ -68,17 +80,17 @@ namespace Substrate.NetApi.Model.Types.Primitive
             }
 
             Bytes = byteArray;
-            Value = new BigInteger(byteArray);
+            Value = new i256(byteArray);
         }
 
         /// <inheritdoc/>
-        public void Create(long value)
+        public void Create(BigInteger value)
         {
-            Create(new BigInteger(value));
+            Create(i256.FromBigInteger(value));
         }
 
         /// <inheritdoc/>
-        public override void Create(BigInteger value)
+        public override void Create(i256 value)
         {
             var byteArray = value.ToByteArray();
 

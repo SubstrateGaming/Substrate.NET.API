@@ -6,19 +6,31 @@ namespace Substrate.NetApi.Model.Types.Primitive
     /// <summary>
     /// I128 Type
     /// </summary>
-    public class I128 : BasePrim<BigInteger>
+    public class I128 : BasePrim<i128>
     {
         /// <summary>
         /// Explicit conversion to I128
         /// </summary>
         /// <param name="p"></param>
-        public static explicit operator I128(BigInteger p) => new I128(p);
+        public static explicit operator I128(i128 p) => new I128(p);
+
+        /// <summary>
+        /// Explicitly cast a BigInteger to a I128
+        /// </summary>
+        /// <param name="p"></param>
+        public static explicit operator I128(BigInteger p) => new I128(i128.FromBigInteger(p));
+
+        /// <summary>
+        /// Implicit conversion to i128
+        /// </summary>
+        /// <param name="p"></param>
+        public static implicit operator i128(I128 p) => p.Value;
 
         /// <summary>
         /// Implicit conversion to BigInteger
         /// </summary>
         /// <param name="p"></param>
-        public static implicit operator BigInteger(I128 p) => p.Value;
+        public static implicit operator BigInteger(I128 p) => p.Value.ToBigInteger();
 
         /// <summary>
         /// I128 Constructor
@@ -30,7 +42,7 @@ namespace Substrate.NetApi.Model.Types.Primitive
         /// I128 Constructor
         /// </summary>
         /// <param name="value"></param>
-        public I128(BigInteger value)
+        public I128(i128 value)
         {
             Create(value);
         }
@@ -68,20 +80,17 @@ namespace Substrate.NetApi.Model.Types.Primitive
             }
 
             Bytes = byteArray;
-            Value = new BigInteger(byteArray);
+            Value = new i128(byteArray);
         }
 
         /// <inheritdoc/>
-        public void Create(long value)
+        public void Create(BigInteger value)
         {
-            var bytes = new byte[TypeSize];
-            BitConverter.GetBytes(value).CopyTo(bytes, 0);
-            Bytes = bytes;
-            Value = value;
+            Create(i128.FromBigInteger(value));
         }
 
         /// <inheritdoc/>
-        public override void Create(BigInteger value)
+        public override void Create(i128 value)
         {
             var byteArray = value.ToByteArray();
 
