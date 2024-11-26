@@ -184,6 +184,19 @@ namespace Substrate.NetApi.Test
             Assert.AreEqual(value, primImplicit);
         }
 
+        /// <summary>
+        /// From real use case here : https://mythos.subscan.io/block/2826170?tab=event&event=2826170-189
+        /// </summary>
+        [Test]
+        [TestCase("310789037729451024594500450253905211276")]
+        public void PrimU128_FromMaxBigIntegerValue_Test(string valueStr)
+        {
+            var value = BigInteger.Parse(valueStr);
+
+            var prim = new U128(value);
+            Assert.That(prim.Value, Is.EqualTo(value));
+        }
+
         [Test]
         public void PrimU128CreateTest()
         {
@@ -211,6 +224,22 @@ namespace Substrate.NetApi.Test
         {
             var number = new BigInteger(-1000);
             Assert.Throws<InvalidOperationException>(() => new U128(number));
+        }
+
+        [Test]
+        public void PrimU256_MaxValue()
+        {
+            BigInteger u256Max = BigInteger.Pow(2, 256) - 1;
+            var u256 = new U256(u256Max);
+
+            Assert.That(u256.Value, Is.EqualTo(u256Max));
+        }
+
+        [Test]
+        public void PrimU256_BasicNumberTest()
+        {
+            var u256 = new U256(new BigInteger(10));
+            Assert.That(u256.Value, Is.EqualTo(new BigInteger(10)));
         }
 
         [Test]
