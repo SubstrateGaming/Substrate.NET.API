@@ -236,6 +236,13 @@ namespace Substrate.NetApi.Test
         }
 
         [Test]
+        public void PrimU256_BasicNumberTest()
+        {
+            var u256 = new U256(new BigInteger(10));
+            Assert.That(u256.Value, Is.EqualTo(new BigInteger(10)));
+        }
+
+        [Test]
         public void PrimU256Test()
         {
             var value = BigInteger.Parse("452312821728632006638659744032470891714787547825123743022878680681856106495");

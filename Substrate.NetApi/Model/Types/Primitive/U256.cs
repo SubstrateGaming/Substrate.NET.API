@@ -92,14 +92,20 @@ namespace Substrate.NetApi.Model.Types.Primitive
                 throw new InvalidOperationException($"Unable to create a {nameof(U256)} instance while value is negative");
 
             var byteArray = value.ToByteArray();
-
+            
             if (byteArray.Length > TypeSize + 1)
             {
                 throw new NotSupportedException($"Wrong byte array size for {TypeName()}, max. {TypeSize} bytes!");
             }
 
             var bytes = new byte[TypeSize];
-            Array.Copy(byteArray, 0, bytes, 0, TypeSize);
+            if(byteArray.Length == TypeSize + 1) {
+                Array.Copy(byteArray, 0, bytes, 0, TypeSize);
+            }
+            else {
+                byteArray.CopyTo(bytes, 0);
+            }
+            
             Bytes = bytes;
             Value = value;
         }

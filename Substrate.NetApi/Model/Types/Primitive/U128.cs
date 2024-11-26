@@ -97,7 +97,14 @@ namespace Substrate.NetApi.Model.Types.Primitive
             }
 
             var bytes = new byte[TypeSize];
-            Array.Copy(byteArray, 0, bytes, 0, TypeSize);
+            if (byteArray.Length == TypeSize + 1)
+            {
+                Array.Copy(byteArray, 0, bytes, 0, TypeSize);
+            }
+            else
+            {
+                byteArray.CopyTo(bytes, 0);
+            }
             Bytes = bytes;
             Value = value;
         }
