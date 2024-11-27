@@ -39,10 +39,21 @@ namespace Substrate.NetApi.Test.Extrinsic
         }
 
         [Test]
-        public void EraBeginTest()
+        [TestCase(64u, 49u, 1587u, 1585u)]
+        [TestCase(64u, 45u, 21604404u, 21604397u)]
+        public void EraBeginTest(ulong period, ulong phase, ulong currentBlock, ulong expectedBlock)
         {
-            var era = new Era(64, 49, false);
-            Assert.AreEqual(1585, era.EraStart(1587));
+            var era = new Era(period, phase, false);
+            Assert.AreEqual(expectedBlock, era.EraStart(currentBlock));
+        }
+
+        [Test]
+        [TestCase(64u, 49u, 1587u, 1649u)]
+        [TestCase(64u, 45u, 21604404u, 21604461u)]
+        public void EraEndTest(ulong period, ulong phase, ulong currentBlock, ulong expectedBlock)
+        {
+            var era = new Era(period, phase, false);
+            Assert.AreEqual(expectedBlock, era.EraEnd(currentBlock));
         }
 
         [Test]

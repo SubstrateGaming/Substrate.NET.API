@@ -32,6 +32,13 @@ namespace Substrate.NetApi.Model.Extrinsics
         public ulong EraStart(ulong currentBlockNumber) => IsImmortal ? 0 : (Math.Max(currentBlockNumber, Phase) - Phase) / Period * Period + Phase;
 
         /// <summary>
+        /// Era End
+        /// </summary>
+        /// <param name="currentBlockNumber"></param>
+        /// <returns></returns>
+        public ulong EraEnd(ulong currentBlockNumber) => EraStart(currentBlockNumber) + Period;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Era"/> class.
         /// </summary>
         /// <param name="period">The period.</param>

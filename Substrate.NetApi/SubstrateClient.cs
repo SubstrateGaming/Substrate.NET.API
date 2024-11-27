@@ -23,6 +23,7 @@ using Newtonsoft.Json;
 using Substrate.NetApi.Model.Types.Metadata.V14;
 
 [assembly: InternalsVisibleTo("Substrate.NetApi.Test")]
+[assembly: InternalsVisibleTo("Substrate.NetApi.TestNode")]
 
 namespace Substrate.NetApi
 {
@@ -62,10 +63,29 @@ namespace Substrate.NetApi
         /// </summary>
         private JsonRpc _jsonRpc;
 
+        /// <summary> The socket. </summary>
+        internal ClientWebSocket _socket;
+
         /// <summary>
-        /// The socket
+        /// The "ping" to check the connection status
         /// </summary>
-        private ClientWebSocket _socket;
+        private int _connectionCheckDelay = 500;
+
+        /// <summary>
+        /// The connexion lost event trigger when the websocket change state to disconnected
+        /// </summary>
+        public event EventHandler ConnectionLost;
+
+        /// <summary>
+        /// Event triggered when the connection is set
+        /// </summary>
+        public event EventHandler ConnectionSet;
+
+        /// <summary>
+        /// Event triggered when the connection is reconnected
+        /// </summary>
+
+        public event EventHandler<int> OnReconnected;
 
         /// <summary>
         /// Bypass Remote Certificate Validation. Useful when testing with self-signed SSL certificates.
@@ -186,6 +206,30 @@ namespace Substrate.NetApi
         }
 
         /// <summary>
+        /// Raises the event when the connection to the server is lost.
+        /// </summary>
+        protected virtual void OnConnectionLost()
+        {
+            ConnectionLost?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the event when the connection to the server is set.
+        /// </summary>
+        protected virtual void OnConnectionSet()
+        {
+            ConnectionSet?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the event when reconnected
+        /// </summary>
+        protected virtual void OnReconnectedSet(int nbTry)
+        {
+            OnReconnected?.Invoke(this, nbTry);
+        }
+
+        /// <summary>
         /// Asynchronously connects to the node.
         /// </summary>
         /// <returns></returns>
@@ -259,7 +303,7 @@ namespace Substrate.NetApi
 #if NETSTANDARD2_0
                     throw new NotSupportedException("Bypass remote certification validation not supported in NETStandard2.0");
 #elif NETSTANDARD2_1_OR_GREATER
-                    _socket.Options.RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true;
+                    _socket.Options.RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true;    
 #endif
                 }
             }
@@ -267,6 +311,10 @@ namespace Substrate.NetApi
             _connectTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token, _connectTokenSource.Token);
             await _socket.ConnectAsync(_uri, linkedTokenSource.Token);
+            
+            // Triger the event
+            OnConnectionSet();
+
             linkedTokenSource.Dispose();
             _connectTokenSource.Dispose();
             _connectTokenSource = null;
@@ -333,6 +381,9 @@ namespace Substrate.NetApi
         private void OnJsonRpcDisconnected(object sender, JsonRpcDisconnectedEventArgs e)
         {
             Logger.Error(e.Exception, $"JsonRpc disconnected: {e.Reason}");
+            OnConnectionLost();
+
+            if (_jsonRpc == null || _jsonRpc.IsDisposed) return;
 
             // Attempt to reconnect asynchronously
             _ = Task.Run(async () =>
@@ -368,6 +419,8 @@ namespace Substrate.NetApi
                     );
 
                     Logger.Information("Reconnected successfully.");
+
+                    OnReconnectedSet(retry);
                 }
                 catch (Exception ex)
                 {
@@ -563,7 +616,7 @@ namespace Substrate.NetApi
         {
             _connectTokenSource?.Cancel();
 
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 // cancel remaining request tokens
                 foreach (var key in _requestTokenSourceDict.Keys) key?.Cancel();
@@ -571,6 +624,7 @@ namespace Substrate.NetApi
 
                 if (_socket != null && _socket.State == WebSocketState.Open)
                 {
+                    await _socket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
                     _jsonRpc?.Dispose();
                     Logger.Debug("Client closed.");
                 }
